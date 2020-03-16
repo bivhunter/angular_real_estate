@@ -1,0 +1,34 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "public": "../public/",
+  "paginate": {
+    "default": 10,
+    "max": 50
+  },
+  "authentication": {
+    "secret": "1917333cdc64572c5619fcff022edeb5f9e4729e753bf9f8cf9ff37a496e5cc0e1156de57f7889fa7f64adcd360016dbc006b199938a386ccb793ad42442fed42937955f4c43c734082c55add4ff97487ca2941e109b593cc25230b19797004b621c3208fc27af0dad6a5d790e538c170e42253a42cfc46fc30b03fc178f45794baf3a78f022739cd17d88fc26a9f602b832488b8df7da45a060e954b3cc52301d377bc925b930a01f4f2bdde1b2426bfceac7e72475a327e912ba1b5fb23666c775b4ad4951351c896cb62d4a3a96557d23737bed5c9e1ae0225a405d73d9e176e659588b729b9b9e4d9aa86bb7b8de599085eadf09ac3c9b1f7e7756c8d828",
+    "strategies": [
+      "jwt",
+      "local"
+    ],
+    "path": "/authentication",
+    "service": "user",
+    "jwt": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "subject": "anonymous",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "entity": "user",
+      "usernameField": "email",
+      "passwordField": "password"
+    }
+  },
+  "mysql": "mysql://user:password@localhost:3306/real_estate"
+}
