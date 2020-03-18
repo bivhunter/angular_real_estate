@@ -1,4 +1,4 @@
-export interface User {
+export interface UserModel {
     id: number | string; //  should not be set up manually
     email: string;
     password: string;
