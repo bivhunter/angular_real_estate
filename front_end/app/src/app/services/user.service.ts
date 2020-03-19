@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { User } from './../models/user/user';
+import { User } from '../models/user/user';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { tap, catchError} from 'rxjs/operators';
+import { tap, catchError, map} from 'rxjs/operators';
+import { RouterModule, Router } from '@angular/router';
 
 
 @Injectable({
@@ -10,50 +11,85 @@ import { tap, catchError} from 'rxjs/operators';
 })
 export class UserService {
 
-  userUrl = 'http://localhost:3030/user';
-  authenticationnUrl = 'http://localhost:3030/authentication';
+  baseUrl = 'http://localhost:3030/';
+
+  userUrl = `${this.baseUrl}user`; // add user url
+  authenticationUrl = `${this.baseUrl}authentication`; // login
+  clientUrl =  `${this.baseUrl}client`; // for check athorization
+
+  authToken = localStorage.getItem('authToken');
+
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.authToken}`
+    })
   };
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
-  addUser(user: User): Observable<User> {
+  registerUser(user: User): Observable<User | string> {
     return this.http.post<User>(this.userUrl, user, this.httpOptions).pipe(
-      tap((newUser) => this.log(newUser)),
-      catchError(this.handleError)
+      catchError(this.handleAuthorizationError)
     );
   }
 
-  authorization(userData): Observable<string> {
-    const body = {...userData, strategy: 'local'};
-    return this.http.post<string>(this.authenticationnUrl, body, this.httpOptions).pipe(
-      tap((token) => this.log(token)),
-      catchError(this.handleError)
+  authorizeUser(user: User): Observable<any> {
+    const body = {...user, strategy: 'local'};
+    return this.http.post<any>(this.authenticationUrl, body, this.httpOptions).pipe(
+      tap((resp) => {
+        this.log(resp.accessToken);
+        localStorage.setItem('authToken', resp.accessToken);
+        this.router.navigateByUrl('dashboard');
+      }),
+      catchError(this.handleAuthorizationError)
     );
   }
 
-  private handleError(error: HttpErrorResponse): Observable<any> {
-    console.log(error);
-    if (error.statusText === 'Bad Request') {
-      const errorMessage = error.error.errors.map((curentError) => curentError.message).join('; ');
-      return throwError(errorMessage);
-    }
+  // for auth.guard
+  checkAuthorization(): Observable<boolean> {
+    return this.http.get<any>(this.clientUrl, this.httpOptions).pipe(
+      map(() => true),
+      catchError(error => {
+        if (error.statusText === 'Unauthorized') {
+          this.logError(error);
+          this.router.navigateByUrl('login');
+          return of(false);
+        }
+      })
+    );
+  }
 
-    if (error.statusText === 'Unauthorized') {
+  logOut(): void {
+    localStorage.removeItem('authToken');
+    this.router.navigateByUrl('login');
+  }
+
+  private handleAuthorizationError(error: HttpErrorResponse): Observable<User | string> {
+    this.logError(error);
+    if (error.statusText === 'Bad Request') {      // using when invalid data in request
+      if (error.error.errors instanceof Array) {   // respons has array of errors
+        const errorMessage = error.error.errors.map((curentError: any) => curentError.message).join('; ');
+        return throwError(errorMessage);
+      }
       return throwError(error.error.message);
     }
 
-    return throwError(error.statusText);
-  }
+    if (error.statusText === 'Unauthorized') {    // using when user Unauthorized
+      return throwError(error.error.message);
+    }
+
+    return throwError(error.statusText);         // other errors
+    }
 
   private log(user: User | string): void {
     console.log(user);
   }
 
-  private logError(error: string): void {
-    console.log(error);
+  private logError(error: HttpErrorResponse): void {
+    console.warn(error);
   }
 }

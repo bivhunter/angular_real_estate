@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './../../services/user.service';
-import { AppRoutingModule } from './../../app-routing.module';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,20 +10,13 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private router: AppRoutingModule
   ) { }
 
   ngOnInit(): void {
-    // this.userService.checkAuthorization().subscribe(
-    //   () => {
-    //     //
-    //   },
-    //   () => {}  //redirect
-    // );
   }
 
   onLogout(): void {
-    localStorage.removeItem('token');
+    this.userService.logOut();
   }
 
 }

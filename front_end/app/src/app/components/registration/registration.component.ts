@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './../../models/user/user';
-import { UserService } from './../../services/user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-registration',
@@ -22,7 +22,7 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.user);
-    this.userService.addUser(this.user).subscribe(
+    this.userService.registerUser(this.user).subscribe(
       (newUser) => {
         this.registration.text = 'Your registration is successfull';
         this.registration.status = true;

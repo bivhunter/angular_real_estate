@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './../../services/user.service';
+import { UserService } from '../../services/user.service';
+import { User } from './../../models/user/user';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ export class LoginComponent implements OnInit {
 
   email: string;
   password: string;
+  user: User = new User();
 
   constructor(
     private userService: UserService
@@ -23,11 +25,9 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password: this.password
     };
-    this.userService.authorization(userData).subscribe(
-      (token) => {
-        console.log(token);
-        localStorage.setItem('token', token);
-      },
+
+    this.userService.authorizeUser(this.user).subscribe(
+      () => { console.log('login is successfull'); },
       (error) => console.log(error)
     );
   }
