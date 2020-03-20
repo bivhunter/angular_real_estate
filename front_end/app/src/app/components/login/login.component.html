@@ -1,31 +1,68 @@
 <div class="container">
-    <h1>Login</h1>
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+    <h1>Sign In</h1>
+    <form #loginForm="ngForm" 
+        (ngSubmit)="
+            email.reset(user.email);
+            onSubmit()">
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" required
+            <input 
+                #email="ngModel"
+                type="email" 
+                class="form-control" 
+
+                id="email" 
+                required
                 [(ngModel)]="user.email"
-                name="email">
+                name="email"
+                placeholder="Enter your email"
+                pattern= "\w[[A-Za-z0-9_]*[@]\w\S+$">
+            <div class="alert-danger" *ngIf="email.invalid && (email.touched)">
+                Incorrect email
+            </div>    
         </div>
 
      
         <div class="form-group">
             <label for="paswword">Password</label>
-            <input type="text" class="form-control" id="paswword" required
+            <input 
+                #password="ngModel"
+                type="password" 
+                class="form-control" 
+                id="paswword" 
+                required
+                minlength="6"
                 [(ngModel)]="user.password"
-                name="password">
+                name="password" 
+                placeholder="Enter your password">
+            <div class="alert-danger" *ngIf="password.invalid && (password.touched)">
+                    Password must be longer than 5 characters
+            </div>   
+            <div class="alert-danger" *ngIf="!isCorrectLogin && email.pristine" >
+                Inccorect email or password, try again or register
+            </div> 
         </div>
 
-        <button type="submit" class="button-submit"
+        <div class="form-group-checkbox">
+            <input type="checkbox" class="form-control-checkbox" id="terms"
+                [(ngModel)]="isCheckedRememberMe"
+                name="terms">Remember me
+        </div>
+
+        <button type="submit" 
+            class="button-submit"
+            [disabled]="!loginForm.form.valid"
+
         >Sign in</button>
 
         
     </form>
+
+    <div class="line"></div>
+    
     <div>
-        <p>If you are not registered
-            <a routerLink='/registration'  class="button-sign-in">Sign up</a>
-            please
-        </p>
+        <button type="submit" routerLink="/registration" class="button-submit"
+        >Create account</button>
         
     </div>
 </div>

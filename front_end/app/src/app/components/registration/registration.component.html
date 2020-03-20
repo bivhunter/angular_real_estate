@@ -1,9 +1,10 @@
 <div class="container">
     <h1>Registration</h1>
-    <h3> Don't have an account? Creat free account</h3>
+    
     <form #registrationForm="ngForm"
         *ngIf = "!registration.status"
         (ngSubmit)="email.reset(user.email); onSubmit();"> 
+        <p class="h-text"> Don't have an account? Create free account</p>
         <div class="form-group">
             <label for="fullName">Full Name</label>
             <input 
@@ -41,9 +42,8 @@
                 [(ngModel)]="user.email"
                 name="email"
                 placeholder="Enter your email"
-                autocomplete
                 pattern= "\w[[A-Za-z0-9_]*[@]\w\S+$"
-                [class.invalid]="!isUniqueEmail && email.pristine"
+                [class.invalid]="!isUniqueEmail && email.pristine"  
                 >
             <div class="alert-danger" *ngIf="email.invalid && (email.touched)">
                 Incorrect email
@@ -58,6 +58,7 @@
             <label for="paswword">Password</label>
             <input 
                 #password="ngModel"
+                autocomplete="new-password"
                 type="password" 
                 class="form-control" 
                 id="paswword" 
@@ -66,7 +67,7 @@
                 [(ngModel)]="user.password"
                 name="password"
                 placeholder="Enter your password"
-                autocomplete="current-password">
+                >
             <div class="alert-danger" *ngIf="password.invalid && (password.touched)">
                 Password must be longer than 5 characters
             </div>           
@@ -102,8 +103,8 @@
 
     </form>
     <div>
-        <p>{{registration.text}}
-            <a routerLink='/login'   class="button-sign-in">Sign in</a>
+        <p class="h-text">{{registration.text}}
+            <a routerLink='/login' class="route-link">Sign in</a>
             please
         </p>
         

@@ -25,17 +25,18 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.user);
+    this.isUniqueEmail = true;
     this.userService.registerUser(this.user).subscribe(
       (newUser) => {
         this.registration.text = 'Your registration is successfull';
         this.registration.status = true;
         console.log('Add new User', newUser);
     },
-      (error) => this.onError(error)
+      (error) => this.onSubmitError(error)
     );
   }
 
-  onError(message: string) {
+  onSubmitError(message: string) {
     console.log(message);
     if (message === 'email must be unique')  {
       this.isUniqueEmail = false;

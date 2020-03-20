@@ -17,12 +17,17 @@ export class UserService {
   authenticationUrl = `${this.baseUrl}authentication`; // login
   clientUrl =  `${this.baseUrl}client`; // for check athorization
 
-  authToken = localStorage.getItem('authToken');
+  set authToken(value: string) {
+    localStorage.setItem('authToken', value);
+  }
+
+  get authToken(): string {
+    return localStorage.getItem('authToken');
+  }
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.authToken}`
+      'Content-Type': 'application/json'
     })
   };
 
@@ -42,7 +47,7 @@ export class UserService {
     return this.http.post<any>(this.authenticationUrl, body, this.httpOptions).pipe(
       tap((resp) => {
         this.log(resp.accessToken);
-        localStorage.setItem('authToken', resp.accessToken);
+        this.authToken = resp.accessToken;
         this.router.navigateByUrl('dashboard');
       }),
       catchError(this.handleAuthorizationError)
@@ -51,7 +56,7 @@ export class UserService {
 
   // for auth.guard
   checkAuthorization(): Observable<boolean> {
-    return this.http.get<any>(this.clientUrl, this.httpOptions).pipe(
+    return this.http.get<any>(this.clientUrl, this.getHttpAuthOption()).pipe(
       map(() => true),
       catchError(error => {
         if (error.statusText === 'Unauthorized') {
@@ -61,6 +66,15 @@ export class UserService {
         }
       })
     );
+  }
+
+  getHttpAuthOption() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.authToken}`
+      })
+    };
   }
 
   logOut(): void {

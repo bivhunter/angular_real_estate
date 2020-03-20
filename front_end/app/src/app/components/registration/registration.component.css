@@ -1,9 +1,17 @@
 .container {
     display: flex;
+    padding: 20px;
     flex-direction: column;
     align-items: center;
     border: 3px grey groove;
     border-radius: 5px;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+}
+
+h1 {
+    text-shadow: 2px 2px 4px rgba(165,42,42,1);
 }
 
 form {
@@ -20,8 +28,13 @@ form {
 }
 
 .form-control {
+    padding-left: 10px;
     width: 300px;
     height: 30px;
+    border-radius: 5px;
+    border: 2px black groove;
+    text-shadow: 1px 1px 2px rgba(192,192,192);
+    box-shadow: 1px 1px 2px rgba(192,192,192);
 }
 
 .button-submit {
@@ -29,10 +42,24 @@ form {
     width: 300px;
     height: 60px;
     margin: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
 }
 
-h3 {
-    margin: 10px;
+.button-submit:hover, .form-control-checkbox:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+}
+
+.button-submit:disabled:hover {
+    box-shadow: none;
+    cursor: no-drop;
+}
+
+.h-text {
+    margin: 20px;
+    
 }
 
 .alert-danger {
@@ -62,3 +89,30 @@ h3 {
 #email.invalid {
     border-left: 5px solid #a94442; 
 }
+
+.form-control-checkbox {
+    height: 30px;
+    width: 30px;
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+    margin-right: 10px;
+}
+
+.form-group-checkbox {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+label {
+    font-size: 15px;
+}
+
+.route-link {
+    text-decoration: unset;
+    color: black;
+    font-weight: 900;
+    font-size: 18px;
+    text-shadow: 1px 1px 2px rgba(165,42,42,1);
+}
+
+

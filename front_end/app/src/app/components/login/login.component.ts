@@ -9,9 +9,10 @@ import { User } from './../../models/user/user';
 })
 export class LoginComponent implements OnInit {
 
-  email: string;
-  password: string;
   user: User = new User();
+
+  isCorrectLogin = true;
+  isCheckedRememberMe = false;
 
   constructor(
     private userService: UserService
@@ -21,15 +22,22 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const userData = {
-      email: this.email,
-      password: this.password
-    };
 
+    this.isCorrectLogin = true;
+    if (this.isCheckedRememberMe) {
+      localStorage.setItem('rememberMe', 'true');
+    }
     this.userService.authorizeUser(this.user).subscribe(
       () => { console.log('login is successfull'); },
-      (error) => console.log(error)
+      (error) => this.onSubmitError(error)
     );
+  }
+
+  onSubmitError(message: string) {
+    console.log(message);
+    if (message === 'Invalid login') {
+      this.isCorrectLogin = false;
+    }
   }
 
 }
