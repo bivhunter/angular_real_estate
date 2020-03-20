@@ -1,51 +1,109 @@
 <div class="container">
     <h1>Registration</h1>
+    <h3> Don't have an account? Creat free account</h3>
     <form #registrationForm="ngForm"
         *ngIf = "!registration.status"
-        (ngSubmit)="onSubmit()"> 
+        (ngSubmit)="email.reset(user.email); onSubmit();"> 
         <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name"
-                [(ngModel)] = "user.name"
-                name="name">
+            <label for="fullName">Full Name</label>
+            <input 
+                #fullname="ngModel"
+                type="text" 
+                class="form-control" 
+                id="fullName"
+                [(ngModel)] = "user.fullName"
+                name="fullName"
+                placeholder="Enter your Name and Surname"
+                pattern="[A-Za-zА-Яа-яЁё]+\s[A-Za-zА-Яа-яЁё]+"
+                required
+               >
+                
+            <div class="alert-danger" *ngIf="fullname.invalid && (fullname.touched)">
+                Bad Full Name
+            </div>    
         </div>
       
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="surname">Surname</label>
             <input type="text" class="form-control" id="surname"
                 [(ngModel)]="user.surname"
                 name="surname">
-        </div>
+        </div> -->
 
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" required
+            <input 
+                #email="ngModel"
+                type="email" 
+                class="form-control" 
+                id="email" 
+                required
                 [(ngModel)]="user.email"
-                name="email">
+                name="email"
+                placeholder="Enter your email"
+                autocomplete
+                pattern= "\w[[A-Za-z0-9_]*[@]\w\S+$"
+                [class.invalid]="!isUniqueEmail && email.pristine"
+                >
+            <div class="alert-danger" *ngIf="email.invalid && (email.touched)">
+                Incorrect email
+            </div>    
+            <div class="alert-danger" *ngIf="!isUniqueEmail && email.pristine" >
+                This email already exists
+            </div> 
         </div>
 
      
         <div class="form-group">
             <label for="paswword">Password</label>
-            <input type="text" class="form-control" id="paswword" required
+            <input 
+                #password="ngModel"
+                type="password" 
+                class="form-control" 
+                id="paswword" 
+                required
+                minlength="6"
                 [(ngModel)]="user.password"
-                name="password">
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password">
+            <div class="alert-danger" *ngIf="password.invalid && (password.touched)">
+                Password must be longer than 5 characters
+            </div>           
         </div>
 
         <div class="form-group">
             <label for="rate">Rate</label>
-            <input type="text" class="form-control" id="rate"
+            <input 
+                #rate="ngModel"
+                type="text" 
+                class="form-control" 
+                id="rate"
                 [(ngModel)]="user.rate"
-                name="rate">
+                required
+                pattern="[1-9]\d*"
+                name="rate"
+                placeholder="Enter rate">
+            <div class="alert-danger" *ngIf="rate.invalid && (rate.touched)">
+                Incorrect number
+            </div>  
+        </div>
+
+        <div class="form-group-checkbox">
+            <input type="checkbox" class="form-control-checkbox" id="terms"
+                [(ngModel)]="isAcceptedTerms"
+                required
+                name="terms">I accept terms and Conditions
         </div>
 
       <button type="submit" class="button-submit"
-        >Sign up</button>
+        [disabled]="!registrationForm.form.valid"
+        >Create Account</button>
 
     </form>
     <div>
         <p>{{registration.text}}
-            <a routerLink='/login'  class="button-sign-in">Sign in</a>
+            <a routerLink='/login'   class="button-sign-in">Sign in</a>
             please
         </p>
         

@@ -69,7 +69,8 @@ export class UserService {
   }
 
   private handleAuthorizationError(error: HttpErrorResponse): Observable<User | string> {
-    this.logError(error);
+    // this.logError.call(this, error);
+    console.log(error);
     if (error.statusText === 'Bad Request') {      // using when invalid data in request
       if (error.error.errors instanceof Array) {   // respons has array of errors
         const errorMessage = error.error.errors.map((curentError: any) => curentError.message).join('; ');
@@ -89,7 +90,7 @@ export class UserService {
     console.log(user);
   }
 
-  private logError(error: HttpErrorResponse): void {
+  private logError(error: HttpErrorResponse | any): void {
     console.warn(error);
   }
 }

@@ -10,6 +10,9 @@ import { UserService } from '../../services/user.service';
 export class RegistrationComponent implements OnInit {
 
   user: User = new User();
+  isAcceptedTerms = false;
+
+  isUniqueEmail = true;
 
   registration = {
     text: 'If you already registered',
@@ -28,10 +31,16 @@ export class RegistrationComponent implements OnInit {
         this.registration.status = true;
         console.log('Add new User', newUser);
     },
-      (error) => console.log(error)
+      (error) => this.onError(error)
     );
   }
 
+  onError(message: string) {
+    console.log(message);
+    if (message === 'email must be unique')  {
+      this.isUniqueEmail = false;
+    }
+  }
 
 
 }

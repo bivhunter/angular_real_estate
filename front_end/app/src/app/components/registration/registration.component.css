@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 3px grey groove;
+    border-radius: 5px;
 }
 
 form {
@@ -12,18 +14,51 @@ form {
 
 .form-group {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     margin: 10px;
 }
 
 .form-control {
-    width: 250px;
-    margin-left: 20px;
+    width: 300px;
+    height: 30px;
 }
 
 .button-submit {
     align-self: center;
-    width: 60px;
-    height: 20px;
+    width: 300px;
+    height: 60px;
     margin: 10px;
+}
+
+h3 {
+    margin: 10px;
+}
+
+.alert-danger {
+    padding: 5px;
+    border-radius: 5px;
+    border: #F7907E 1px groove;
+    background-color: #E9D2C0;
+    font-size: 15px;
+}
+
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; 
+  }
+  
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; 
+  }
+
+#email.error  {
+    border-left: 5px solid #a94442; 
+}
+
+.valid {
+    border-left: 5px solid #42A948; 
+}
+
+#email.invalid {
+    border-left: 5px solid #a94442; 
 }
