@@ -1,5 +1,6 @@
 <div class="container">
-    <h1>Sign In</h1>
+    <div class="left-column">
+        <h1>Sign In</h1>
     <form #loginForm="ngForm" 
         (ngSubmit)="
             email.reset(user.email);
@@ -10,14 +11,15 @@
                 #email="ngModel"
                 type="email" 
                 class="form-control" 
-
+                autocomplete="email"
+                autofocus
                 id="email" 
                 required
                 [(ngModel)]="user.email"
                 name="email"
                 placeholder="Enter your email"
                 pattern= "\w[[A-Za-z0-9_]*[@]\w\S+$">
-            <div class="alert-danger" *ngIf="email.invalid && (email.touched)">
+            <div class="alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
                 Incorrect email
             </div>    
         </div>
@@ -34,8 +36,9 @@
                 minlength="6"
                 [(ngModel)]="user.password"
                 name="password" 
-                placeholder="Enter your password">
-            <div class="alert-danger" *ngIf="password.invalid && (password.touched)">
+                placeholder="Enter your password"
+                autocomplete="current-password">
+            <div class="alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
                     Password must be longer than 5 characters
             </div>   
             <div class="alert-danger" *ngIf="!isCorrectLogin && email.pristine" >
@@ -46,7 +49,8 @@
         <div class="form-group-checkbox">
             <input type="checkbox" class="form-control-checkbox" id="terms"
                 [(ngModel)]="isCheckedRememberMe"
-                name="terms">Remember me
+                name="terms"
+                >Remember me
         </div>
 
         <button type="submit" 
@@ -55,14 +59,24 @@
 
         >Sign in</button>
 
-        
-    </form>
-
-    <div class="line"></div>
+        <div class="line"></div>
     
-    <div>
-        <button type="submit" routerLink="/registration" class="button-submit"
-        >Create account</button>
-        
+        <div>
+            <button type="submit" routerLink="/registration" class="button-submit"
+            >Create account</button>
+            
+        </div>
+            
+    </form>
+    </div>
+
+    <div class="right-column" >
+        <div class="logo-wrapper">
+            <img class="logo" src="../../../assets/images/logo.png">
+            <div class="logo-text">
+                <p >Welcome to HunterData </p>
+                <p >Client Managment App </p>
+            </div>
+        </div>
     </div>
 </div>

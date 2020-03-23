@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   user: User = new User();
 
   isCorrectLogin = true;
-  isCheckedRememberMe = false;
+  isCheckedRememberMe = true;
 
   constructor(
     private userService: UserService
@@ -22,11 +22,13 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-
     this.isCorrectLogin = true;
     if (this.isCheckedRememberMe) {
       localStorage.setItem('rememberMe', 'true');
+    } else {
+      localStorage.setItem('rememberMe', 'false');
     }
+
     this.userService.authorizeUser(this.user).subscribe(
       () => { console.log('login is successfull'); },
       (error) => this.onSubmitError(error)

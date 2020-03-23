@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
 
   doRememberMe(): void {
     const isRememberMe = localStorage.getItem('rememberMe');
-    if (!isRememberMe) {
+    if (isRememberMe === 'false') {
       localStorage.removeItem('authToken');
     }
   }
