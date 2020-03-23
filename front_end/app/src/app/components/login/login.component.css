@@ -100,7 +100,12 @@ form {
     margin: 20px;
 }
 
+.alert {
+    height: 1em;
+}
+
 .alert-danger {
+
     padding: 5px;
     border-radius: 5px;
     border: #F7907E 1px groove;

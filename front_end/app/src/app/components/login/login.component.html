@@ -4,6 +4,7 @@
     <form #loginForm="ngForm" 
         (ngSubmit)="
             email.reset(user.email);
+            password.reset(user.password);
             onSubmit()">
         <div class="form-group">
             <label for="email">Email</label>
@@ -19,8 +20,10 @@
                 name="email"
                 placeholder="Enter your email"
                 pattern= "\w[[A-Za-z0-9_]*[@]\w\S+$">
-            <div class="alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
-                Incorrect email
+            <div class="alert" [ngSwitch]="email.invalid && (email.dirty || email.touched)">
+                <div class="alert-danger" *ngSwitchCase="true">Incorrect email</div>
+                <div *ngSwitchDefault> </div>
+                
             </div>    
         </div>
 
@@ -38,12 +41,15 @@
                 name="password" 
                 placeholder="Enter your password"
                 autocomplete="current-password">
-            <div class="alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-                    Password must be longer than 5 characters
+            <div class="alert" [ngSwitch]="password.invalid && (password.dirty || password.touched)">
+                    <div class="alert-danger" *ngSwitchCase="true">Password must be longer than 5 characters</div>
+                    <div class="alert-danger" *ngIf="!isCorrectLogin && (email.pristine && password.pristine)" >
+                        Inccorect email or password, try again or register
+                    </div> 
+                    <div *ngSwitchDefault> </div>
             </div>   
-            <div class="alert-danger" *ngIf="!isCorrectLogin && email.pristine" >
-                Inccorect email or password, try again or register
-            </div> 
+            
+            
         </div>
 
         <div class="form-group-checkbox">
