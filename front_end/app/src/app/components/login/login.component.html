@@ -41,12 +41,13 @@
                 name="password" 
                 placeholder="Enter your password"
                 autocomplete="current-password">
-            <div class="alert" [ngSwitch]="password.invalid && (password.dirty || password.touched)">
-                    <div class="alert-danger" *ngSwitchCase="true">Password must be longer than 5 characters</div>
-                    <div class="alert-danger" *ngIf="!isCorrectLogin && (email.pristine && password.pristine)" >
-                        Inccorect email or password, try again or register
-                    </div> 
-                    <div *ngSwitchDefault> </div>
+            <div class="alert" 
+                [ngSwitch]="password.invalid && (password.dirty || password.touched)">
+                <div class="alert-danger" *ngSwitchCase="true">Password must be longer than 5 characters</div>
+                <div class="alert-danger" *ngIf="!isCorrectLogin && (email.pristine && password.pristine)" >
+                    Inccorect email or password, try again or register
+                </div> 
+                <div *ngSwitchDefault> </div>
             </div>   
             
             

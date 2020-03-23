@@ -24,7 +24,7 @@ interface User {
 
 interface Client {
     id :  Number | String, //  should not be set up manually
-    mail : String,
+    email : String,
     name : String,
     surname : String,
     birthday : Date,

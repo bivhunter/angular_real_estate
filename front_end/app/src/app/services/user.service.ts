@@ -68,21 +68,21 @@ export class UserService {
     );
   }
 
-  getHttpAuthOption() {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authToken}`
-      })
-    };
-  }
-
   logOut(): void {
     localStorage.removeItem('authToken');
     this.router.navigateByUrl('login');
   }
 
-  private handleAuthorizationError(error: HttpErrorResponse): Observable<User | string> {
+  private getHttpAuthOption() {
+      return {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.authToken}`
+        })
+      };
+    }
+
+  private handleAuthorizationError(error: HttpErrorResponse): Observable<string> {
     // this.logError.call(this, error);
     console.log(error);
     if (error.statusText === 'Bad Request') {      // using when invalid data in request

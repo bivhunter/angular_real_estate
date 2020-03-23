@@ -8,13 +8,21 @@ import { AppComponent } from './app.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ClientsComponent } from './components/clients/clients.component';
+import { ClientsListComponent } from './components/clients/clients-list/clients-list.component';
+import { ClientCardComponent } from './components/clients/clients-list/client-card/client-card.component';
+import { ClientListItemComponent } from './components/clients/clients-list/client-list-item/client-list-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    ClientsComponent,
+    ClientsListComponent,
+    ClientCardComponent,
+    ClientListItemComponent
   ],
   imports: [
     BrowserModule,
