@@ -1,0 +1,13 @@
+<div class="container">
+    <img src="../../../../../assets/images/foto-card.png">
+    <h3>{{client.name + ' ' + client.surname}}</h3>
+    <p>{{client.email}}</p>
+
+    
+    <div class="buttons-wrapper">
+        <button class="profile-button">Profile</button>
+        <button class="delete-button"
+        (click)="onDeleteButton()"
+        >Delete</button>
+    </div>
+</div>

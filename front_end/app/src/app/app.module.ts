@@ -11,7 +11,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ClientsComponent } from './components/clients/clients.component';
 import { ClientsListComponent } from './components/clients/clients-list/clients-list.component';
 import { ClientCardComponent } from './components/clients/clients-list/client-card/client-card.component';
-import { ClientListItemComponent } from './components/clients/clients-list/client-list-item/client-list-item.component';
+import { ClientFormComponent } from './components/clients/client-form/client-form.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { ClientListItemComponent } from './components/clients/clients-list/clien
     ClientsComponent,
     ClientsListComponent,
     ClientCardComponent,
-    ClientListItemComponent
+    ClientFormComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './services/auth.guard';
 import { ClientsComponent } from './components/clients/clients.component';
+import { ClientFormComponent } from './components/clients/client-form/client-form.component';
 
 
 const routes: Routes = [
@@ -29,7 +30,16 @@ const routes: Routes = [
   {
     path: 'clients',
     canActivate: [ AuthGuard ],
-    component: ClientsComponent
+    children: [
+      {
+        path: 'adding',
+        component: ClientFormComponent
+      },
+      {
+        path: '',
+        component: ClientsComponent
+      }
+    ]
   }
 ];
 

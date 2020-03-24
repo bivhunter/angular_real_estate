@@ -1,10 +1,14 @@
 <div class="container">
     <h1>Registration</h1>
     
+    <!-- Registration form -->
     <form #registrationForm="ngForm"
         *ngIf = "!registration.status"
         (ngSubmit)="email.reset(user.email); onSubmit();"> 
+        
         <p class="h-text"> Don't have an account? Create free account</p>
+
+        <!-- FullName field -->
         <div class="form-group">
             <label for="fullName">Full Name</label>
             <input 
@@ -18,13 +22,15 @@
                 pattern="[A-Za-zА-Яа-яЁё]+\s[A-Za-zА-Яа-яЁё]+"
                 required
                >
+               <!-- NoValid alert -->
             <div class="alert" 
                 [ngSwitch]="fullname.invalid && (fullname.touched)">
-                <div class="alert-danger" *ngSwitchCase="true">Bad Full Name</div>
+                <div class="alert-danger" *ngSwitchCase="true">Incorrect Full Name</div>
                 <div *ngSwitchDefault> </div>
             </div>       
         </div>
       
+        <!-- Email field -->
         <div class="form-group">
             <label for="email">Email</label>
             <input 
@@ -39,9 +45,12 @@
                 pattern= "\w[[A-Za-z0-9_]*[@]\w\S+$"
                 [class.invalid]="!isUniqueEmail && email.pristine"  
                 >
+
+                <!-- NoValid alert -->
             <div class="alert" 
                 [ngSwitch]="email.invalid && (email.touched)">
                 <div class="alert-danger" *ngSwitchCase="true">Incorrect email</div>
+                <!-- No unique email -->
                 <div class="alert-danger" *ngIf="!isUniqueEmail && email.pristine" >
                     This email already exists
                 </div> 
@@ -49,7 +58,7 @@
             </div>   
         </div>
 
-     
+        <!-- Password field  -->
         <div class="form-group">
             <label for="paswword">Password</label>
             <input 
@@ -65,6 +74,7 @@
                 placeholder="Enter your password"
                 >
 
+                <!-- No valid alert -->
                 <div class="alert" 
                 [ngSwitch]="password.invalid && (password.touched)">
                 <div class="alert-danger" 
@@ -73,6 +83,7 @@
                 </div>     
         </div>
 
+        <!-- Rate field -->
         <div class="form-group">
             <label for="rate">Rate</label>
             <input 
@@ -86,6 +97,7 @@
                 name="rate"
                 placeholder="Enter rate">
 
+                <!-- No valid alert -->
                 <div class="alert" 
                 [ngSwitch]="rate.invalid && (rate.touched)">
                 <div class="alert-danger" 
@@ -94,6 +106,7 @@
                 </div>     
         </div>
 
+        <!-- Terms checkbox -->
         <div class="form-group-checkbox">
             <input type="checkbox" class="form-control-checkbox" id="terms"
                 [(ngModel)]="isAcceptedTerms"
@@ -101,11 +114,15 @@
                 name="terms">I accept terms and Conditions
         </div>
 
+        <!-- Submit button -->
       <button type="submit" class="button-submit"
         [disabled]="!registrationForm.form.valid"
         >Create Account</button>
 
     </form>
+
+
+    <!-- Successfull registration -->
     <div>
         <p class="h-text">{{registration.text}}
             <a routerLink='/login' class="route-link">Sign in</a>
