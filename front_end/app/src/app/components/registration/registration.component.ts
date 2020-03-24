@@ -21,6 +21,7 @@ export class RegistrationComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    console.log(this.registration)
   }
 
   onSubmit(): void {
