@@ -40,7 +40,7 @@ export class ClientService {
       .post<Client>(this.clientsUrl, client, this.getHttpAuthOption())
       .pipe(
         tap((newClient) => console.log(newClient)),
-        catchError(this.handlePostClientsError)
+        catchError(this.handlePostClientError)
       );
   }
 
@@ -49,16 +49,44 @@ export class ClientService {
       .delete<any>(`${this.clientsUrl}/${id}`, this.getHttpAuthOption())
       .pipe(
         tap((resp) => console.log(resp)),
-        catchError(this.handlePostClientsError)
+        catchError(this.handleDeleteClientError)
       );
   }
 
-  private handleDeleteClientsError(error: HttpErrorResponse): Observable<any> {
+  getClient(id: number | string): Observable<Client> {
+    return this.http
+      .get<Client>(`${this.clientsUrl}/${id}`, this.getHttpAuthOption())
+      .pipe(
+        tap((resp) => console.log(resp)),
+        catchError(this.handleGetClientError)
+      );
+  }
+
+  updateClient(client: Client): Observable<Client> {
+    return this.http
+      .patch<Client>(`${this.clientsUrl}/${client.id}`, client, this.getHttpAuthOption())
+      .pipe(
+        tap((resp) => console.log(resp)),
+        catchError(this.handlePatchClientError)
+      );
+  }
+
+  private handlePatchClientError(error: HttpErrorResponse): Observable<Client> {
     console.log(error);
     return throwError(error.statusText);
   }
 
-  private handlePostClientsError(error: HttpErrorResponse): Observable<Client> {
+  private handleGetClientError(error: HttpErrorResponse): Observable<Client> {
+    console.log(error);
+    return throwError(error.statusText);
+  }
+
+  private handleDeleteClientError(error: HttpErrorResponse): Observable<any> {
+    console.log(error);
+    return throwError(error.statusText);
+  }
+
+  private handlePostClientError(error: HttpErrorResponse): Observable<Client> {
     console.log(error);
     return throwError(error.statusText);
   }

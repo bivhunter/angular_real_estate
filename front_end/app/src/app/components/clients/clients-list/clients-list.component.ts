@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Client } from 'src/app/models/client/client';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clients-list',
@@ -11,14 +12,21 @@ export class ClientsListComponent implements OnInit {
   @Input() clients: Client[];
   @Input() viewMode: string;
   @Output() clientDeleteEvent: EventEmitter<string | number> = new EventEmitter();
+  @Output() clientProfileEvent: EventEmitter<string | number> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
   onClientDeleteEvent(id: number | string): void {
     this.clientDeleteEvent.emit(id);
+  }
+
+  onClientProfileEvent(id: number | string): void {
+    this.router.navigateByUrl('clients/profile/' + id);
   }
 
 }

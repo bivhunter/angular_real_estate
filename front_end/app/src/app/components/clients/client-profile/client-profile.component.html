@@ -1,11 +1,9 @@
 <div class="container">
-    <h1>Add client</h1>
+    <h1>Client's profile</h1>
     
-    <!-- Client form -->
-    <form #addClientForm="ngForm"> 
+    <!-- Profile form -->
+    <form *ngIf="isDataReady" #clientProfileForm="ngForm"> 
         
-        <p class="h-text"> Fill in all the fields</p>
-
         <!-- Name field -->
         <div class="form-group">
             <label for="name">Name</label>
@@ -141,13 +139,23 @@
                 <div *ngSwitchDefault> </div>
                 </div>     
         </div>
+
+        <div class="form-group">
+            <span class="label">Level</span>
+            <span class="info">{{client.level}}</span>
+        </div>
+
+        <div class="form-group">
+            <span class="label">Viewed Homes</span>
+            <span class="info"></span>
+        </div>
        
         <div class="button-wrapper">
              <!-- Submit button -->
         <button type="submit" class="button-submit"
-        [disabled]="!addClientForm.form.valid"
+        [disabled]="!clientProfileForm.form.valid"
         (click)="onSubmit()"
-        >Add Client</button>
+        >Save</button>
 
          <!-- Back button -->
          <button type="button" class="button-cancel"
@@ -161,3 +169,4 @@
     </form>
     
 </div>
+

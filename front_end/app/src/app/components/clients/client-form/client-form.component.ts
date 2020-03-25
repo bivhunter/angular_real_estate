@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from 'src/app/models/client/client';
 import { Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-client-form',
@@ -15,8 +16,8 @@ export class ClientFormComponent implements OnInit {
   currentDate: Date = new Date();
 
   constructor(
-    private router: Router,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -27,14 +28,14 @@ export class ClientFormComponent implements OnInit {
     this.backToClientsPage();
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.clientService.addClient(this.client).subscribe(
       () => this.backToClientsPage(),
       (error) => console.log(error)
     );
   }
 
-  private backToClientsPage() {
-    this.router.navigateByUrl('clients');
+  private backToClientsPage(): void {
+    this.location.back();
   }
 }

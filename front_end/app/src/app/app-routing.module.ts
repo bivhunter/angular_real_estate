@@ -6,6 +6,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './services/auth.guard';
 import { ClientsComponent } from './components/clients/clients.component';
 import { ClientFormComponent } from './components/clients/client-form/client-form.component';
+import { ClientProfileComponent } from './components/clients/client-profile/client-profile.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,10 @@ const routes: Routes = [
       {
         path: '',
         component: ClientsComponent
+      },
+      {
+        path: 'profile/:id',
+        component: ClientProfileComponent
       }
     ]
   }

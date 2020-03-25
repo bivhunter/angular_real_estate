@@ -10,6 +10,7 @@ export class ClientCardComponent implements OnInit {
 
   @Input() client: Client;
   @Output() clientDeleteEvent: EventEmitter<number | string> = new EventEmitter();
+  @Output() clientProfileEvent: EventEmitter<number | string> = new EventEmitter();
 
   constructor() { }
 
@@ -18,6 +19,10 @@ export class ClientCardComponent implements OnInit {
 
   onDeleteButton(): void {
     this.clientDeleteEvent.emit(this.client.id);
+  }
+
+  onProfileButton(): void {
+    this.clientProfileEvent.emit(this.client.id);
   }
 
 }

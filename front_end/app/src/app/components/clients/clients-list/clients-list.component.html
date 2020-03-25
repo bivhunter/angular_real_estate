@@ -16,7 +16,8 @@
                     <td>{{client.surname}}</td>
                     <td>{{client.name}}</td>
                     <td>{{client.email}}</td>
-                    <td class="profile-cell">Profile</td>
+                    <td class="profile-cell"
+                    (click)="onClientProfileEvent(client.id)">Profile</td>
                     <td class="delete-cell"
                     (click)="onClientDeleteEvent(client.id)">Delete</td>
                 </tr>
@@ -29,7 +30,8 @@
         <app-client-card 
         *ngFor="let client of clients"
         [client]="client"
-        (clientDeleteEvent)="onClientDeleteEvent($event)">
+        (clientDeleteEvent)="onClientDeleteEvent($event)"
+        (clientProfileEvent)="onClientProfileEvent($event)">
         </app-client-card>
     </div>
 </div>
