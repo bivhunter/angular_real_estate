@@ -1,29 +1,12 @@
 
 <div class="container" [ngSwitch]="viewMode">
     <div class=list-view *ngSwitchCase="'list'">
-        <table class="table">
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td>Surname</td>
-                    <td>Name</td>
-                    <td>Email</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr *ngFor="let client of clients">
-                    <td><img src="../../../../assets/images/foto-card.png"></td>
-                    <td>{{client.surname}}</td>
-                    <td>{{client.name}}</td>
-                    <td>{{client.email}}</td>
-                    <td class="profile-cell"
-                    (click)="onClientProfileEvent(client.id)">Profile</td>
-                    <td class="delete-cell"
-                    (click)="onClientDeleteEvent(client.id)">Delete</td>
-                </tr>
-            </tbody>
-        </table>
-        
+        <app-clients-table
+            [clients]="clients"
+            (clientDeleteEvent)="onClientDeleteEvent($event)"
+            (clientProfileEvent)="onClientProfileEvent($event)">
+
+        </app-clients-table>        
     </div>
 
     <div class="card-view" *ngSwitchCase="'cards'">

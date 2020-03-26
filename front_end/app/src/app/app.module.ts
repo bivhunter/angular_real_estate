@@ -13,6 +13,8 @@ import { ClientsListComponent } from './components/clients/clients-list/clients-
 import { ClientCardComponent } from './components/clients/clients-list/client-card/client-card.component';
 import { ClientFormComponent } from './components/clients/client-form/client-form.component';
 import { ClientProfileComponent } from './components/clients/client-profile/client-profile.component';
+import { PhonePipe } from './pipes/phone.pipe';
+import { ClientsTableComponent } from './components/clients/clients-list/clients-table/clients-table.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { ClientProfileComponent } from './components/clients/client-profile/clie
     ClientsListComponent,
     ClientCardComponent,
     ClientFormComponent,
-    ClientProfileComponent
+    ClientProfileComponent,
+    PhonePipe,
+    ClientsTableComponent
   ],
   imports: [
     BrowserModule,
