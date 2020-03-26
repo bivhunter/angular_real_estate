@@ -6,14 +6,16 @@
             <td>Surname</td>
             <td>Name</td>
             <td>Email</td>
+            <td>Phone</td>
             <td></td>
             <td></td>
         </tr>
         <tr *ngFor="let client of clients">
-            <td><img src="../../../../assets/images/foto-card.png"></td>
-            <td>{{client.surname}}</td>
-            <td>{{client.name}}</td>
-            <td>{{client.email}}</td>
+            <td class="img-cell"><img src="../../../../assets/images/foto-card.png"></td>
+            <td class="surname-cell">{{client.surname}}</td>
+            <td class="name-cell">{{client.name}}</td>
+            <td class="email-cell">{{client.email}}</td>
+            <td class="phone-cell">{{client.phone}}</td>
             <td class="profile-cell"
             (click)="onProfileButton(client.id)">Profile</td>
             <td class="delete-cell"

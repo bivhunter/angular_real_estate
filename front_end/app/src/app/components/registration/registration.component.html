@@ -23,10 +23,9 @@
                 required
                >
                <!-- NoValid alert -->
-            <div class="alert" 
-                [ngSwitch]="fullname.invalid && (fullname.touched)">
-                <div class="alert-danger" *ngSwitchCase="true">Incorrect Full Name</div>
-                <div *ngSwitchDefault> </div>
+            <div class="alert">
+                <div class="alert-danger" *ngIf="fullname.invalid && (fullname.touched)">Incorrect Full Name</div>
+                <div> </div>
             </div>       
         </div>
       
@@ -48,13 +47,15 @@
 
                 <!-- NoValid alert -->
             <div class="alert" 
-                [ngSwitch]="email.invalid && (email.touched)">
-                <div class="alert-danger" *ngSwitchCase="true">Incorrect email</div>
+                >
+                <div class="alert-danger" 
+                *ngIf="email.invalid && (email.touched)">Incorrect email</div>
                 <!-- No unique email -->
-                <div class="alert-danger" *ngIf="!isUniqueEmail && email.pristine" >
+                <div class="alert-danger" 
+                *ngIf="!isUniqueEmail && email.pristine" >
                     This email already exists
                 </div> 
-                <div *ngSwitchDefault> </div>
+                <div> </div>
             </div>   
         </div>
 
@@ -76,10 +77,10 @@
 
                 <!-- No valid alert -->
                 <div class="alert" 
-                [ngSwitch]="password.invalid && (password.touched)">
+                >
                 <div class="alert-danger" 
-                    *ngSwitchCase="true">Password must be longer than 5 characters</div>
-                <div *ngSwitchDefault> </div>
+                    *ngIf="password.invalid && (password.touched)">Password must be longer than 5 characters</div>
+                <div> </div>
                 </div>     
         </div>
 
@@ -98,11 +99,10 @@
                 placeholder="Enter rate">
 
                 <!-- No valid alert -->
-                <div class="alert" 
-                [ngSwitch]="rate.invalid && (rate.touched)">
+                <div class="alert">
                 <div class="alert-danger" 
-                    *ngSwitchCase="true">Incorrect number</div>
-                <div *ngSwitchDefault> </div>
+                   *ngIf="rate.invalid && (rate.touched)">Incorrect number</div>
+                <div> </div>
                 </div>     
         </div>
 

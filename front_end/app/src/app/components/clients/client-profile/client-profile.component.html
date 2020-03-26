@@ -19,10 +19,9 @@
                 required
                >
                <!-- NoValid alert -->
-            <div class="alert" 
-                [ngSwitch]="name.invalid && (name.touched)">
-                <div class="alert-danger" *ngSwitchCase="true">Incorrect name</div>
-                <div *ngSwitchDefault> </div>
+            <div class="alert" >
+                <div class="alert-danger" *ngIf="name.invalid && (name.touched)">Incorrect name</div>
+                <div> </div>
             </div>       
         </div>
 
@@ -41,10 +40,9 @@
                 required
                >
                <!-- NoValid alert -->
-            <div class="alert" 
-                [ngSwitch]="surname.invalid && (surname.touched)">
-                <div class="alert-danger" *ngSwitchCase="true">Incorrect surname</div>
-                <div *ngSwitchDefault> </div>
+            <div class="alert">
+                <div class="alert-danger" *ngIf="surname.invalid && (surname.touched)">Incorrect surname</div>
+                <div> </div>
             </div>       
         </div>
       
@@ -64,9 +62,9 @@
                >
                <!-- NoValid alert -->
             <div class="alert" 
-                [ngSwitch]="adress.invalid && (adress.touched)">
-                <div class="alert-danger" *ngSwitchCase="true">Incorrect Adress</div>
-                <div *ngSwitchDefault> </div>
+                >
+                <div class="alert-danger" *ngIf="adress.invalid && (adress.touched)">Incorrect Adress</div>
+                <div> </div>
             </div>       
         </div>
 
@@ -87,9 +85,9 @@
 
                 <!-- NoValid alert -->
             <div class="alert" 
-                [ngSwitch]="email.invalid && (email.touched)">
-                <div class="alert-danger" *ngSwitchCase="true">Incorrect email</div>
-                <div *ngSwitchDefault> </div>
+                >
+                <div class="alert-danger" *ngIf="email.invalid && (email.touched)">Incorrect email</div>
+                <div> </div>
             </div>   
         </div>
 
@@ -110,10 +108,10 @@
 
                 <!-- No valid alert -->
                 <div class="alert" 
-                [ngSwitch]="phone.invalid && (phone.touched)">
+                >
                 <div class="alert-danger" 
-                    *ngSwitchCase="true">Incorrect number</div>
-                <div *ngSwitchDefault> </div>
+                *ngIf="phone.invalid && (phone.touched)">Incorrect number</div>
+                <div> </div>
                 </div>     
         </div>
 
@@ -134,10 +132,10 @@
 
                 <!-- No valid alert -->
                 <div class="alert" 
-                [ngSwitch]="birthday.invalid && (birthday.touched)">
+                >
                 <div class="alert-danger" 
-                    *ngSwitchCase="true">Incorrect Date</div>
-                <div *ngSwitchDefault> </div>
+                *ngIf="birthday.invalid && (birthday.touched)">Incorrect Date</div>
+                <div> </div>
                 </div>     
         </div>
 
@@ -147,7 +145,7 @@
         </div>
 
         <div class="button-wrapper">
-             <!-- Submit button -->
+             <!-- Submit button for adding mode -->
         <button type="submit" 
         *ngIf = "isAddingMode"
         class="button-submit"
@@ -155,6 +153,7 @@
         (click)="onAddClient()"
         >Submit</button>
 
+        <!-- Submit button for editing mode -->
         <button type="submit" 
         *ngIf = "!isAddingMode"
         class="button-submit"
