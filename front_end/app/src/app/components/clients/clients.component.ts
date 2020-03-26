@@ -12,6 +12,7 @@ export class ClientsComponent implements OnInit {
 
   clients: Client[];
   isViewsMenu = false;
+  sortMethod: string;
 
   set viewMode(value: string) {
     localStorage.setItem('viewMode', value);
@@ -31,15 +32,7 @@ export class ClientsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-   this.getClients();
-  }
-
-  getClients(): void {
-    this.clientService.getClients()
-    .subscribe(
-      (clientsList) => this.clients = [...clientsList],
-      (error) => console.log(error)
-    );
+    this.getClients();
   }
 
   onActivateCardView() {
@@ -63,5 +56,17 @@ export class ClientsComponent implements OnInit {
     );
   }
 
+  onClientsSort(sortMethod: string): void {
+    console.log(sortMethod);
+    this.sortMethod = sortMethod;
+  }
+
+  private getClients(): void {
+    this.clientService.getClients()
+    .subscribe(
+      (clientsList) => this.clients = [...clientsList],
+      (error) => console.log(error)
+    );
+  }
 
 }

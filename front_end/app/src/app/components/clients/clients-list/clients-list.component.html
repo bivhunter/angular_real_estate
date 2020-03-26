@@ -4,7 +4,8 @@
         <app-clients-table
             [clients]="clients"
             (clientDeleteEvent)="onClientDeleteEvent($event)"
-            (clientProfileEvent)="onClientProfileEvent($event)">
+            (clientProfileEvent)="onClientProfileEvent($event)"
+            (clientsSortEvent)="onclientsSortEvent($event)">
 
         </app-clients-table>        
     </div>

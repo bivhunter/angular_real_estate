@@ -14,6 +14,7 @@ import { ClientCardComponent } from './components/clients/clients-list/client-ca
 import { ClientProfileComponent } from './components/clients/client-profile/client-profile.component';
 import { PhonePipe } from './pipes/phone.pipe';
 import { ClientsTableComponent } from './components/clients/clients-list/clients-table/clients-table.component';
+import { ClientsSortPipe } from './pipes/clients-sort.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ClientsTableComponent } from './components/clients/clients-list/clients
     ClientCardComponent,
     ClientProfileComponent,
     PhonePipe,
-    ClientsTableComponent
+    ClientsTableComponent,
+    ClientsSortPipe
   ],
   imports: [
     BrowserModule,

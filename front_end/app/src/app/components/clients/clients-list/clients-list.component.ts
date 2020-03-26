@@ -13,7 +13,7 @@ export class ClientsListComponent implements OnInit {
   @Input() viewMode: string;
   @Output() clientDeleteEvent: EventEmitter<string | number> = new EventEmitter();
   @Output() clientProfileEvent: EventEmitter<string | number> = new EventEmitter();
-
+  @Output() clientsSortEvent: EventEmitter<string> = new EventEmitter();
   constructor(
     private router: Router
   ) { }
@@ -27,6 +27,10 @@ export class ClientsListComponent implements OnInit {
 
   onClientProfileEvent(id: number | string): void {
     this.router.navigateByUrl('clients/profile/' + id);
+  }
+
+  onclientsSortEvent(sortMethod: string) {
+    this.clientsSortEvent.emit(sortMethod);
   }
 
 }

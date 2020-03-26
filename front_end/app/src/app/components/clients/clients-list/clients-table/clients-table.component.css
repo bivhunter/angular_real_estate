@@ -17,20 +17,40 @@
     box-shadow: 2px 2px 4px rgba(0,114,188,1); */
 }
 
+.head-row {
+    border: none;
+    font-size: 25px;
+    text-shadow: 2px 2px 4px rgba(165,42,42,1);
+    box-shadow: none;
+}
+
 td {
     padding: 10px;
-    flex-basis: 200px;
-    flex-grow: 3;
-    flex-shrink: 1;
+}
+
+.head-row .phone-cell, .head-row .email-cell {
+    font-size: 25px;
+}
+
+.head-row .surname-cell:hover, .head-row .name-cell:hover {
+    cursor: pointer;
 }
 
 .phone-cell, .email-cell {
     font-size: 15px;
-    flex-grow: 2;
+    flex: 2 1 150px;
+}
+
+.sort-up::before {
+    content: '↑';
+}
+
+.sort-down::before {
+    content: '↓';
 }
 
 .name-cell, .surname-cell {
-    
+    flex: 3 1 200px;
     text-shadow: 2px 2px 4px rgba(165,42,42,1);
 }
 
@@ -47,11 +67,8 @@ td {
 }
 
 .profile-cell, .delete-cell {
-    flex-basis: 100px;
-    flex-grow: 1;
+   flex: 1 1 100px;
 }
-
-
 
 .img-cell {
     flex-grow: 0;
@@ -68,12 +85,6 @@ tr {
     box-shadow: 2px 2px 4px rgba(0,114,188,1);
 }
 
-tr:first-child {
-    border: none;
-    font-size: 25px;
-    text-shadow: 2px 2px 4px rgba(165,42,42,1);
-    box-shadow: none;
-}
 
 
 img {

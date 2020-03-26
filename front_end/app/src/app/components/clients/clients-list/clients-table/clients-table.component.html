@@ -1,14 +1,23 @@
 <div class="container">
     <table class="table">
     <tbody>
-        <tr>
-            <td></td>
-            <td>Surname</td>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Phone</td>
-            <td></td>
-            <td></td>
+        <tr class="head-row">
+            <td class="img-cell"></td>
+            <td class="surname-cell"
+                [class.sort-up]="sortMethod === 'surname_up'"
+                [class.sort-down]="sortMethod === 'surname_down'"
+                (click)="onSurnameClick()">Surname
+            </td>
+            <td class="name-cell"
+                [class.sort-up]="sortMethod === 'name_up'"
+                [class.sort-down]="sortMethod === 'name_down'"
+                (click)="onNameClick()">Name
+                
+            </td>
+            <td class="email-cell">Email</td>
+            <td class="phone-cell">Phone</td>
+            <td class="profile-cell"></td>
+            <td class="delete-cell"></td>
         </tr>
         <tr *ngFor="let client of clients">
             <td class="img-cell"><img src="../../../../assets/images/foto-card.png"></td>
