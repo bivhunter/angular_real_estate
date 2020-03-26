@@ -5,7 +5,6 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './services/auth.guard';
 import { ClientsComponent } from './components/clients/clients.component';
-import { ClientFormComponent } from './components/clients/client-form/client-form.component';
 import { ClientProfileComponent } from './components/clients/client-profile/client-profile.component';
 
 
@@ -34,7 +33,10 @@ const routes: Routes = [
     children: [
       {
         path: 'adding',
-        component: ClientFormComponent
+        data: {
+          mode: 'Adding'
+        },
+        component: ClientProfileComponent
       },
       {
         path: '',
@@ -42,7 +44,10 @@ const routes: Routes = [
       },
       {
         path: 'profile/:id',
-        component: ClientProfileComponent
+        component: ClientProfileComponent,
+        data: {
+          mode: 'Editing'
+        },
       }
     ]
   }

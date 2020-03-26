@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Client's profile</h1>
+    <h1>{{title}}</h1>
     
     <!-- Profile form -->
     <form *ngIf="isDataReady" #clientProfileForm="ngForm"> 
@@ -146,16 +146,20 @@
             <span class="info">{{client.level}}</span>
         </div>
 
-        <div class="form-group">
-            <span class="label">Viewed Homes</span>
-            <span class="info"></span>
-        </div>
-       
         <div class="button-wrapper">
              <!-- Submit button -->
-        <button type="submit" class="button-submit"
+        <button type="submit" 
+        *ngIf = "isAddingMode"
+        class="button-submit"
         [disabled]="!clientProfileForm.form.valid"
-        (click)="onSubmit()"
+        (click)="onAddClient()"
+        >Submit</button>
+
+        <button type="submit" 
+        *ngIf = "!isAddingMode"
+        class="button-submit"
+        [disabled]="!clientProfileForm.form.valid"
+        (click)="onEditClient()"
         >Save</button>
 
          <!-- Back button -->

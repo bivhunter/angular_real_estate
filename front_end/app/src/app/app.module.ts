@@ -11,7 +11,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ClientsComponent } from './components/clients/clients.component';
 import { ClientsListComponent } from './components/clients/clients-list/clients-list.component';
 import { ClientCardComponent } from './components/clients/clients-list/client-card/client-card.component';
-import { ClientFormComponent } from './components/clients/client-form/client-form.component';
 import { ClientProfileComponent } from './components/clients/client-profile/client-profile.component';
 import { PhonePipe } from './pipes/phone.pipe';
 import { ClientsTableComponent } from './components/clients/clients-list/clients-table/clients-table.component';
@@ -25,7 +24,6 @@ import { ClientsTableComponent } from './components/clients/clients-list/clients
     ClientsComponent,
     ClientsListComponent,
     ClientCardComponent,
-    ClientFormComponent,
     ClientProfileComponent,
     PhonePipe,
     ClientsTableComponent
