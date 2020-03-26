@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../modules/authorization/user.service';
+import { AuthorizationService } from './../../services/authorization.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,14 +10,14 @@ import { UserService } from '../../services/user.service';
 export class DashboardComponent implements OnInit {
 
   constructor(
-    private userService: UserService,
+    private authorizationService: AuthorizationService,
   ) { }
 
   ngOnInit(): void {
   }
 
   onLogout(): void {
-    this.userService.logOut();
+    this.authorizationService.logOut();
   }
 
   onClients(): void {

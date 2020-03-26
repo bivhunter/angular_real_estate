@@ -28,7 +28,7 @@
     display: flex;
     align-items: baseline;
     margin-left: 10px;
-    background-image: url(../../../assets/images/background-office.jpg);
+    background-image: url(../../../../assets/images/background-office.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     align-self: stretch;

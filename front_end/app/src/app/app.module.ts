@@ -5,8 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegistrationComponent } from './components/registration/registration.component';
-import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ClientsComponent } from './components/clients/clients.component';
 import { ClientsListComponent } from './components/clients/clients-list/clients-list.component';
@@ -19,8 +17,6 @@ import { ClientsSortPipe } from './pipes/clients-sort.pipe';
 @NgModule({
   declarations: [
     AppComponent,
-    RegistrationComponent,
-    LoginComponent,
     DashboardComponent,
     ClientsComponent,
     ClientsListComponent,
@@ -34,9 +30,9 @@ import { ClientsSortPipe } from './pipes/clients-sort.pipe';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

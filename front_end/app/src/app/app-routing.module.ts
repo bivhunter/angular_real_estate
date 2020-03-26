@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
-import { RegistrationComponent } from './components/registration/registration.component';
-import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './services/auth.guard';
 import { ClientsComponent } from './components/clients/clients.component';
@@ -15,12 +13,9 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'registration',
-    component: RegistrationComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
+    path: 'authorization',
+    loadChildren: () => import('./modules/authorization/authorization.module')
+      .then(module => module.AuthorizationModule, (error) => console.log(error))
   },
   {
     path: 'dashboard',
