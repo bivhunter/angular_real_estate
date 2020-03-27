@@ -64,7 +64,7 @@ export class ClientProfileComponent implements OnInit {
       this.title = 'Add Client';
     } else {
       const id = this.getId();
-      this.title = "Client's profile";
+      this.title = `Client's profile`;
       this.clientService.getClient(id).subscribe(
       (client) => this.onGetClient(client),
       (error) => console.log(error)

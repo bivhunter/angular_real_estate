@@ -14,6 +14,8 @@ export class ClientsComponent implements OnInit, OnDestroy {
   clients: Client[];
   isViewsMenu = false;
   isSortMenu = false;
+  searchString = '';
+  // tslint:disable-next-line: variable-name
   _sortMethod: string ;
 
   set sortMethod(value: string) {

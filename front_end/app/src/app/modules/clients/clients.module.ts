@@ -11,6 +11,7 @@ import { ClientsSortPipe } from './pipes/clients-sort.pipe';
 import { PhonePipe } from './pipes/phone.pipe';
 import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientService } from './clients.service';
+import { ClientsFilterPipe } from './pipes/clients-filter.pipe';
 
 
 
@@ -24,6 +25,7 @@ import { ClientService } from './clients.service';
     ClientsTableComponent,
     ClientsSortPipe,
     PhonePipe,
+    ClientsFilterPipe,
   ],
   imports: [
     CommonModule,
