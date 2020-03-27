@@ -29,8 +29,4 @@ export class ClientsListComponent implements OnInit {
     this.router.navigateByUrl('clients/profile/' + id);
   }
 
-  onclientsSortEvent(sortMethod: string) {
-    this.clientsSortEvent.emit(sortMethod);
-  }
-
 }

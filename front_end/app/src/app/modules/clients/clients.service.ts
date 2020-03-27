@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
 import { Client } from './model/client';
 
 @Injectable()
 export class ClientService {
 
   baseUrl = 'http://localhost:3030/';
-
   clientsUrl = `${this.baseUrl}client`; // add clients url
 
+  clientsSortSubject: Subject<string> = new Subject();
+  clientsSortMethodBehaviorSubject: BehaviorSubject<string> = new BehaviorSubject('');
 
   set authToken(value: string) {
     localStorage.setItem('authToken', value);
@@ -68,6 +69,23 @@ export class ClientService {
         catchError(this.handlePatchClientError)
       );
   }
+
+  getClientsSortSubject(): Observable<string> {
+    return this.clientsSortSubject.asObservable();
+  }
+
+  getClientsSortMethodSubject(): Observable<string> {
+    return this.clientsSortMethodBehaviorSubject.asObservable();
+  }
+
+  sortClients(sortMethod: string): void {
+    this.clientsSortSubject.next(sortMethod);
+  }
+
+  setSortClientsMethod(sortMethod: string): void {
+    this.clientsSortMethodBehaviorSubject.next(sortMethod);
+  }
+
 
   private handlePatchClientError(error: HttpErrorResponse): Observable<Client> {
     console.log(error);

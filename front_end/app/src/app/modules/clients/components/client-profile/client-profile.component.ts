@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from 'src/app/modules/clients/client.service';
+import { ClientService } from 'src/app/modules/clients/clients.service';
 import { Location } from '@angular/common';
 
 @Component({

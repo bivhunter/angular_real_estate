@@ -1,18 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { ClientService } from 'src/app/modules/clients/client.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ClientService } from 'src/app/modules/clients/clients.service';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
+import { Observable, Subscriber, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.css']
 })
-export class ClientsComponent implements OnInit {
+export class ClientsComponent implements OnInit, OnDestroy {
 
   clients: Client[];
   isViewsMenu = false;
-  sortMethod: string;
+  isSortMenu = false;
+  _sortMethod: string ;
+
+  set sortMethod(value: string) {
+    this._sortMethod = value;
+    this.clientService.setSortClientsMethod(value);
+  }
+
+  get sortMethod(): string {
+    return this._sortMethod || '';
+}
+
+  clientsSortSubject: Observable<string>;
+  clientsSortSubscribtion: Subscription;
 
   set viewMode(value: string) {
     localStorage.setItem('viewMode', value);
@@ -32,7 +46,12 @@ export class ClientsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initSubscriptions();
     this.getClients();
+  }
+
+  ngOnDestroy(): void {
+    this.clientsSortSubscribtion.unsubscribe();
   }
 
   onActivateCardView() {
@@ -56,8 +75,14 @@ export class ClientsComponent implements OnInit {
     );
   }
 
-  onClientsSort(sortMethod: string): void {
-    this.sortMethod = sortMethod;
+  private initSubscriptions() {
+    this.sortMethod = 'surname_up';
+    this.clientsSortSubject = this.clientService.getClientsSortSubject();
+    this.clientsSortSubscribtion = this.clientsSortSubject.subscribe(
+      (sortMethod) => {
+        this.sortMethod = sortMethod;
+      }
+    );
   }
 
   private getClients(): void {

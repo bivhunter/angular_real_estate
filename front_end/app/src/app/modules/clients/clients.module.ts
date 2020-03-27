@@ -10,7 +10,7 @@ import { ClientsTableComponent } from './components/clients-table/clients-table.
 import { ClientsSortPipe } from './pipes/clients-sort.pipe';
 import { PhonePipe } from './pipes/phone.pipe';
 import { ClientsRoutingModule } from './clients-routing.module';
-import { ClientService } from './client.service';
+import { ClientService } from './clients.service';
 
 
 
