@@ -1,4 +1,4 @@
-import { Client } from '../client/client';
+import { Client } from '../../modules/clients/model/client';
 
 export interface HomeModel {
     id: number | string;

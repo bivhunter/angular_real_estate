@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { Client } from '../models/client/client';
+import { Client } from './model/client';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ClientService {
 
   baseUrl = 'http://localhost:3030/';

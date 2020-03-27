@@ -12,7 +12,7 @@ export class Client implements ClientModel {
     // tslint:disable-next-line: variable-name
     user_id: string | number;
     home_id?: string | number;
-    homes?: import('../home/home').Home[];
+    homes?: import('../../../models/home/home').Home[];
 
     constructor() {
         this.id = null;

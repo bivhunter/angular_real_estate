@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { AuthGuard } from './services/auth.guard';
-import { ClientsComponent } from './components/clients/clients.component';
-import { ClientProfileComponent } from './components/clients/client-profile/client-profile.component';
+import { AuthGuard } from './modules/shared/services/auth.guard';
+import { QuicklinkStrategy, QuicklinkModule } from 'ngx-quicklink';
 
 
 const routes: Routes = [
@@ -25,31 +24,18 @@ const routes: Routes = [
   {
     path: 'clients',
     canActivate: [ AuthGuard ],
-    children: [
-      {
-        path: 'adding',
-        data: {
-          mode: 'Adding'
-        },
-        component: ClientProfileComponent
-      },
-      {
-        path: '',
-        component: ClientsComponent
-      },
-      {
-        path: 'profile/:id',
-        component: ClientProfileComponent,
-        data: {
-          mode: 'Editing'
-        },
-      }
-    ]
+    loadChildren: () => import('./modules/clients/clients.module')
+    .then(module => module.ClientsModule, (error) => console.log(error))
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    QuicklinkModule,
+    RouterModule.forRoot(routes, {
+    preloadingStrategy: QuicklinkStrategy
+  })
+],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

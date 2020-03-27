@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { AuthorizationRoutingModule } from './authorization-routing.module';
-import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user.service';
+import { SharedModule } from '../shared/shared.module';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -18,8 +17,7 @@ import { UserService } from './user.service';
   imports: [
     CommonModule,
     AuthorizationRoutingModule,
-    FormsModule,
-    HttpClientModule
+    SharedModule
   ],
   providers: [
     UserService

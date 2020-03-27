@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Client } from '../models/client/client';
+import { Client } from '../model/client';
 
 @Pipe({
   name: 'clientsSort'

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../modules/authorization/user.service';
-import { AuthorizationService } from './../../services/authorization.service';
+import { AuthorizationService } from '../../modules/shared/services/authorization.service';
 
 @Component({
   selector: 'app-dashboard',

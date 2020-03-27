@@ -1,36 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ClientsComponent } from './components/clients/clients.component';
-import { ClientsListComponent } from './components/clients/clients-list/clients-list.component';
-import { ClientCardComponent } from './components/clients/clients-list/client-card/client-card.component';
-import { ClientProfileComponent } from './components/clients/client-profile/client-profile.component';
-import { PhonePipe } from './pipes/phone.pipe';
-import { ClientsTableComponent } from './components/clients/clients-list/clients-table/clients-table.component';
-import { ClientsSortPipe } from './pipes/clients-sort.pipe';
+import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './modules/shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    ClientsComponent,
-    ClientsListComponent,
-    ClientCardComponent,
-    ClientProfileComponent,
-    PhonePipe,
-    ClientsTableComponent,
-    ClientsSortPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
+    SharedModule
   ],
   providers: [ ],
   bootstrap: [AppComponent]

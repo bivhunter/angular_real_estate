@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Client } from 'src/app/models/client/client';
+import { Client } from 'src/app/modules/clients/model/client';
 
 @Component({
   selector: 'app-client-card',

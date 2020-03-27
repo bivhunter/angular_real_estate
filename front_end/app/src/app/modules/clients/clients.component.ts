@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ClientService } from 'src/app/services/client.service';
-import { Client } from 'src/app/models/client/client';
+import { ClientService } from 'src/app/modules/clients/client.service';
+import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
 
 @Component({
@@ -57,7 +57,6 @@ export class ClientsComponent implements OnInit {
   }
 
   onClientsSort(sortMethod: string): void {
-    console.log(sortMethod);
     this.sortMethod = sortMethod;
   }
 
