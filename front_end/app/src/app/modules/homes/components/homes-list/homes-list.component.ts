@@ -24,7 +24,6 @@ export class HomesListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.homes)
     this.initSubscribtion();
   }
 

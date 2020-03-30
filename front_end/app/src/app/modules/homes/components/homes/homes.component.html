@@ -6,7 +6,7 @@
 
     <div class="content-wrapper">
         <app-homes-list
-        [homes]="homes"
+        [homes]="homes | homesSort: sortingMethod"
         ></app-homes-list>
     </div>
 </div>

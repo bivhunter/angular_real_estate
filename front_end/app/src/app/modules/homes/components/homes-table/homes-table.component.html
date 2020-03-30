@@ -5,19 +5,28 @@
         <tr class="head-row">
             <td class="img-cell"></td>
             <td class="home-cell"
-                [class.sort-up]="sortMethod === 'home_up'"
-                [class.sort-down]="sortMethod === 'home_down'"
-                (click)="onHomeClick()">Home
+                [class.sort-up]="sortingMethod === 'HOME_UP'"
+                [class.sort-down]="sortingMethod === 'HOME_DOWN'"
+                (click)="setSortingField('HOME')">Home
             </td>
             <td class="street-cell"
-                [class.sort-up]="sortMethod === 'street_up'"
-                [class.sort-down]="sortMethod === 'street_down'"
-                (click)="onStreetClick()">Street
+                [class.sort-up]="sortingMethod === 'STREET_UP'"
+                [class.sort-down]="sortingMethod === 'STREET_DOWN'"
+                (click)="setSortingField('STREET')">Street
                 
             </td>
-            <td class="city-cell">City</td>
-            <td class="state-cell">State</td>
-            <td class="price-cell">Price</td>
+            <td class="city-cell"
+                [class.sort-up]="sortingMethod === 'CITY_UP'"
+                [class.sort-down]="sortingMethod === 'CITY_DOWN'"
+                (click)="setSortingField('CITY')">City</td>
+            <td class="state-cell"
+                [class.sort-up]="sortingMethod === 'STATE_UP'"
+                [class.sort-down]="sortingMethod === 'STATE_DOWN'"
+                (click)="setSortingField('STATE')">State</td>
+            <td class="price-cell"
+                [class.sort-up]="sortingMethod === 'PRICE_UP'"
+                [class.sort-down]="sortingMethod === 'PRICE_DOWN'"
+                (click)="setSortingField('PRICE')">Price</td>
             <td class="details-cell"></td>
             <td class="delete-cell"></td>
         </tr>

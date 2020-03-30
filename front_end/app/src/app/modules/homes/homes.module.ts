@@ -10,11 +10,21 @@ import { HomesControlPanelComponent } from './components/homes-control-panel/hom
 import { HomesRoutingModule } from './homes-routing.module';
 import { HomesService } from './homes.service';
 import { HomesViewService } from './services/homes-view.service';
+import { HomesSortService } from './services/homes-sort.service';
+import { HomesSortPipe } from './pipes/homes-sort.pipe';
 
 
 
 @NgModule({
-  declarations: [HomesComponent, HomeCardComponent, HomeFormComponent, HomesListComponent, HomesTableComponent, HomesControlPanelComponent],
+  declarations: [
+    HomesComponent,
+    HomeCardComponent,
+    HomeFormComponent,
+    HomesListComponent,
+    HomesTableComponent,
+    HomesControlPanelComponent,
+    HomesSortPipe
+  ],
   imports: [
     CommonModule,
     SharedModule,
@@ -22,7 +32,8 @@ import { HomesViewService } from './services/homes-view.service';
   ],
   providers: [
     HomesService,
-    HomesViewService
+    HomesViewService,
+    HomesSortService
   ]
 })
 export class HomesModule { }
