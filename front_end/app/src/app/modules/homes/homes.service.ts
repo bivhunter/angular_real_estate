@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject, Observable, throwError } from 'rxjs';
+import { Subject, BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
 import { Home } from './model/home';
 import { tap, catchError } from 'rxjs/operators';
@@ -12,6 +12,8 @@ export class HomesService {
 
   homesSortSubject: Subject<string> = new Subject();
   homesSortMethodBehaviorSubject: BehaviorSubject<string> = new BehaviorSubject('');
+
+  homesListChangesSubject: Subject<any> = new Subject();
 
   set authToken(value: string) {
     localStorage.setItem('authToken', value);
@@ -46,7 +48,7 @@ export class HomesService {
     return this.http
       .delete<any>(`${this.homesUrl}/${id}`, this.getHttpAuthOption())
       .pipe(
-        tap((resp) => console.log(resp)),
+        tap(() => this.updateHomesList()),
         catchError(this.handleDeleteHomeError)
       );
   }
@@ -85,6 +87,14 @@ export class HomesService {
     this.homesSortMethodBehaviorSubject.next(sortMethod);
   }
 
+  getHomesListChangesEvent(): Observable<any> {
+    return this.homesListChangesSubject.asObservable();
+  }
+
+  private updateHomesList(): void {
+    this.homesListChangesSubject
+      .next('');
+  }
 
   private handlePatchHomeError(error: HttpErrorResponse): Observable<Home> {
     console.log(error);

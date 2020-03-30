@@ -1,14 +1,14 @@
 <div class="container">
-    <img src="../../../../../assets/images/foto-card.png">
+    <img src="../../../../../assets/images/foto-house.png">
     <h3>{{home.price}}</h3>
     <p>{{home.home + ' ' + home.street}}</p>
     <p>{{home.city + ' ' + home.state}}</p>
     
     <div class="buttons-wrapper">
         <button class="profile-button"
-        (click)="onDetailsButton()">Profile</button>
+        (click)="onDetailsButton(home.id)">Details</button>
         <button class="delete-button"
-        (click)="onDeleteButton()"
+        (click)="onDeleteButton(home.id)"
         >Delete</button>
     </div>
 </div>

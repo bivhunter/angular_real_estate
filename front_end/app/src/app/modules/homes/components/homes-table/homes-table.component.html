@@ -22,14 +22,14 @@
             <td class="delete-cell"></td>
         </tr>
         <tr *ngFor="let home of homes">
-            <td class="img-cell"><img src="../../../../assets/images/foto-card.png"></td>
+            <td class="img-cell"><img src="../../../../assets/images/foto-house.png"></td>
             <td class="home-cell">{{home.home}}</td>
             <td class="street-cell">{{home.street}}</td>
             <td class="city-cell">{{home.city}}</td>
             <td class="state-cell">{{home.state}}</td>
-            <td class="price-cell">{{home.price}}</td>
-            <td class="detail-cell"
-            (click)="onDetailsButton(home.id)">Details</td>
+            <td class="price-cell">{{home.price | currency: 'CAD':'symbol-narrow':'1.0-0'}}</td>
+            <td class="details-cell"
+            (click)="onDetailsButton(home.id)">Details</td> 
             <td class="delete-cell"
             (click)="onDeleteButton(home.id)">Delete</td>
         </tr>

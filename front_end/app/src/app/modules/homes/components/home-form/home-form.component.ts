@@ -44,6 +44,11 @@ export class HomeFormComponent implements OnInit {
     this.navigateBack();
   }
 
+  onPriceChange(value: string): void {
+    const newValue = value.split(',').join('');
+    this.home.price = +newValue.slice(1);
+  }
+
   private getHome(): void {
     if (this.isAddingMode) {
       this.onGetHome(new Home());

@@ -61,3 +61,7 @@ h3 {
     margin-bottom: 5px;
     text-shadow: 2px 2px 4px rgba(165,42,42,1);
 }
+
+img {
+    height: 80px;
+}

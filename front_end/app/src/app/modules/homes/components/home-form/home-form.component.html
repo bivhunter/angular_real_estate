@@ -16,12 +16,12 @@
                 (ngModelChange) = "home.home = $event"
                 name="homeNum"
                 placeholder="Enter home's number"
-                pattern="\w+"
+                pattern="[1-9]+\w*"
                 required
                >
                <!-- NoValid alert -->
             <div class="alert" >
-                <div class="alert-danger" *ngIf="homeNum.invalid && (homeNum.touched)">Incorrect home's number</div>
+                <div class="alert-danger" *ngIf="homeNum.invalid && (homeNum.touched)">Incorrect number</div>
                 <div> </div>
             </div>       
         </div>
@@ -124,12 +124,12 @@
             <label for="price">Price</label>
             <input 
                 #price="ngModel"
-                type="number"
+                type="text"
                 class="form-control" 
                 id="price"
-                [ngModel]="home?.price"
-                (ngModelChange)="home.price = $event"
-                pattern="[1-9]{1}[0-9]*"
+                [ngModel]="home?.price | currency:'CAD':'symbol-narrow':'1.0-0'"
+                (ngModelChange)="onPriceChange($event)"
+                pattern="[$]{1}[0-9,\,]*"
                 required
                 name="price"
                 placeholder="Enter price">
@@ -145,7 +145,7 @@
 
             <!-- Adding Date -->
         <div class="form-group">
-            <span class="label">Since</span>
+            <span class="label">Sales Since</span>
             <span class="info">{{home?.start_date | date:'dd-MM-yyyy'}}</span>
         </div>
 

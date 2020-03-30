@@ -14,7 +14,6 @@ export class HomesListComponent implements OnInit, OnDestroy {
 
   @Input() homes: Home[];
   viewMode: TViewMode;
-  @Output() homeDeleteEvent: EventEmitter<string | number> = new EventEmitter();
 
   viewModeBehaviorSubject: Observable<TViewMode>;
   viewModeSubscribtion: Subscription;
@@ -25,15 +24,12 @@ export class HomesListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.homes)
     this.initSubscribtion();
   }
 
   ngOnDestroy() {
     this.viewModeSubscribtion.unsubscribe();
-  }
-
-  onHomeDeleteEvent(id: number | string): void {
-    this.homeDeleteEvent.emit(id);
   }
 
   onHomeProfileEvent(id: number | string): void {

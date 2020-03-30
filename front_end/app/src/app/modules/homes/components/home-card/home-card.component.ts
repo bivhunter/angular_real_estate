@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Home } from '../../model/home';
+import { Router } from '@angular/router';
+import { HomesService } from './../../homes.service';
 
 @Component({
   selector: 'app-home-card',
@@ -10,17 +12,21 @@ export class HomeCardComponent implements OnInit {
 
   @Input() home: Home;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private homesService: HomesService
+  ) { }
 
   ngOnInit(): void {
 
   }
 
-  onDeleteButton() {
-
+  onDeleteButton(id: string | number): void {
+    this.homesService.deleteHome(id)
+      .subscribe();
   }
 
-  onDetailsButton() {
-
+  onDetailsButton(id: string | number) {
+    this.router.navigateByUrl(`homes/details/${id}`);
   }
 }

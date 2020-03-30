@@ -1,0 +1,93 @@
+:host {
+    display: flex;
+    flex-grow: 1;
+}
+
+.container {
+    display: flex;
+    flex-grow: 1;
+}
+
+.table {
+    flex-grow: 1;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px rgba(192,192,192);
+    /* border: 3px grey groove;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1); */
+}
+
+.head-row {
+    border: none;
+    font-size: 25px;
+    text-shadow: 2px 2px 4px rgba(165,42,42,1);
+    box-shadow: none;
+}
+
+td {
+    padding: 10px;
+}
+
+.head-row .city-cell:hover, .head-row .state-cell:hover, 
+.head-row .street-cell:hover, .head-row .home-cell:hover,
+.head-row .price-cell:hover {
+    cursor: pointer;
+}
+
+.city-cell, .state-cell, .street-cell {
+    flex: 4 1 200px;
+}
+
+.sort-up::before {
+    content: '↑';
+}
+
+.sort-down::before {
+    content: '↓';
+}
+
+.home-cell {
+    flex: 1 1 50px;
+}
+
+.price-cell {
+    flex: 2 1 100px;
+    text-shadow: 2px 2px 4px rgba(165,42,42,1);
+}
+
+.details-cell:hover, .delete-cell:hover {
+    cursor: pointer;
+}
+
+.details-cell {
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+}
+
+.delete-cell {
+    text-shadow: 1px 1px 2px rgba(165, 16, 16, 1);
+}
+
+.details-cell, .delete-cell {
+   flex: 2 1 100px;
+}
+
+.img-cell {
+    flex-grow: 0;
+    flex-basis: 80px;
+}
+
+tr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+    border: 3px grey groove;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+}
+
+
+
+img {
+    height: 60px;
+}
