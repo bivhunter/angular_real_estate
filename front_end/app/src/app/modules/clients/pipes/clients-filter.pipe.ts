@@ -12,8 +12,10 @@ export class ClientsFilterPipe implements PipeTransform {
     }
     if (clients && clients.length) {
       const newClients = clients.filter((client) => {
-        return client.name.toLowerCase().includes(searchString.toLowerCase()) ||
-        client.surname.toLowerCase().includes(searchString.toLowerCase());
+        const fullname = client.name + ' ' + client.surname;
+        const fullnameRevers = client.surname + ' ' + client.name;
+        return fullname.toLowerCase().includes(searchString.toLowerCase()) ||
+        fullnameRevers.toLowerCase().includes(searchString.toLowerCase());
       });
       return newClients;
     } else {

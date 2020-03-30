@@ -31,11 +31,11 @@ export class ClientsComponent implements OnInit, OnDestroy {
   clientsSortSubscribtion: Subscription;
 
   set viewMode(value: string) {
-    localStorage.setItem('viewMode', value);
+    localStorage.setItem('viewClientsMode', value);
   }
 
   get viewMode(): string {
-    const mode = localStorage.getItem('viewMode');
+    const mode = localStorage.getItem('viewClientsMode');
     if (!mode)  {
       return 'cards';
     }

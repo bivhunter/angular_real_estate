@@ -1,0 +1,182 @@
+<div class="container">
+    <h1>{{title}}</h1>
+    
+    <!-- Profile form -->
+    <form  #homeForm="ngForm"> 
+        
+        <!-- Name field -->
+        <div class="form-group">
+            <label for="homeNum">Home Number</label>
+            <input 
+                #homeNum="ngModel"
+                type="text" 
+                class="form-control" 
+                id="homeNum"
+                [ngModel] = "home?.home"
+                (ngModelChange) = "home.home = $event"
+                name="homeNum"
+                placeholder="Enter home's number"
+                pattern="\w+"
+                required
+               >
+               <!-- NoValid alert -->
+            <div class="alert" >
+                <div class="alert-danger" *ngIf="homeNum.invalid && (homeNum.touched)">Incorrect home's number</div>
+                <div> </div>
+            </div>       
+        </div>
+
+         <!-- Street field -->
+         <div class="form-group">
+            <label for="street">Street</label>
+            <input 
+                #street="ngModel"
+                type="text" 
+                class="form-control" 
+                id="street"
+                [ngModel] = "home?.street"
+                (ngModelChange) = "home.street = $event"
+                name="street"
+                placeholder="Enter street"
+                pattern="[A-Za-zА-Яа-яЁё]+"
+                required
+               >
+               <!-- NoValid alert -->
+            <div class="alert">
+                <div class="alert-danger" *ngIf="street.invalid && (street.touched)">Incorrect street</div>
+                <div> </div>
+            </div>       
+        </div>
+      
+         <!-- city field -->
+         <div class="form-group">
+            <label for="city">City</label>
+            <input 
+                #city="ngModel"
+                type="text" 
+                class="form-control" 
+                id="city"
+                [ngModel] = "home?.city"
+                (ngModelChange) = "home.city = $event"
+                name="city"
+                placeholder="Enter city"
+                pattern="[A-Za-zА-Яа-яЁё]+"
+                required
+               >
+               <!-- NoValid alert -->
+            <div class="alert" 
+                >
+                <div class="alert-danger" *ngIf="city.invalid && (city.touched)">Incorrect city</div>
+                <div> </div>
+            </div>       
+        </div>
+
+        <!-- State field -->
+        <div class="form-group">
+            <label for="state">State</label>
+            <input 
+                #state="ngModel"
+                type="text" 
+                class="form-control" 
+                id="state" 
+                required
+                [ngModel] = "home?.state"
+                (ngModelChange) = "home.state = $event"
+                name="state"
+                placeholder="Enter home's state"
+                pattern= "\w+"
+                >
+
+                <!-- NoValid alert -->
+            <div class="alert" 
+                >
+                <div class="alert-danger" *ngIf="state.invalid && (state.touched)">Incorrect state</div>
+                <div> </div>
+            </div>   
+        </div>
+
+        <!-- Phone index -->
+        <div class="form-group">
+            <label for="index">Index</label>
+            <input 
+                #index="ngModel"
+                type="number" 
+                class="form-control" 
+                id="index"
+                [ngModel]="home?.index"
+                (ngModelChange)="home.index = $event"
+                required
+                pattern="[0-9]+"
+                name="index"
+                placeholder="Enter home's index">
+
+                <!-- No valid alert -->
+                <div class="alert" 
+                >
+                <div class="alert-danger" 
+                *ngIf="index.invalid && (index.touched)">Incorrect index</div>
+                <div> </div>
+                </div>     
+        </div>
+
+        <!-- Price field -->
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input 
+                #price="ngModel"
+                type="number"
+                class="form-control" 
+                id="price"
+                [ngModel]="home?.price"
+                (ngModelChange)="home.price = $event"
+                pattern="[1-9]{1}[0-9]*"
+                required
+                name="price"
+                placeholder="Enter price">
+
+                <!-- No valid alert -->
+                <div class="alert" 
+                >
+                <div class="alert-danger" 
+                *ngIf="price.invalid && (price.touched)">Incorrect price</div>
+                <div> </div>
+                </div>     
+        </div>
+
+            <!-- Adding Date -->
+        <div class="form-group">
+            <span class="label">Since</span>
+            <span class="info">{{home?.start_date | date:'dd-MM-yyyy'}}</span>
+        </div>
+
+        <div class="button-wrapper">
+             <!-- Submit button for adding mode -->
+        <button type="submit" 
+        *ngIf = "isAddingMode"
+        class="button-submit"
+        [disabled]="!homeForm.form.valid"
+        (click)="onAddHome()"
+        >Submit</button>
+
+        <!-- Submit button for editing mode -->
+        <button type="submit" 
+        *ngIf = "!isAddingMode"
+        class="button-submit"
+        [disabled]="!homeForm.form.valid"
+        (click)="onEditHome()"
+        >Save</button>
+
+         <!-- Back button -->
+         <button type="button" class="button-cancel"
+        (click)="onCancelButtonClick()"
+         >Cancel</button>
+        </div>
+
+
+       
+
+    </form>
+    
+</div>
+
+

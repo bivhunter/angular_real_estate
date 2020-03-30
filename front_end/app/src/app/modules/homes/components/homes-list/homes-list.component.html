@@ -1,0 +1,24 @@
+
+<div class="container" [ngSwitch]="viewMode">
+    <div class=list-view *ngSwitchCase="'list'">
+        <app-homes-table
+            [homes]="homes"
+            (clientDeleteEvent)="onHomeDeleteEvent($event)"
+            (clientProfileEvent)="onHomeProfileEvent($event)"
+            >
+
+        </app-homes-table>        
+    </div>
+
+    <div class="card-view" *ngSwitchCase="'cards'">
+        <h2 *ngIf="!homes.length">No homes</h2>
+        <app-home-card 
+        *ngFor="let home of homes"
+        [home]="home"
+        (clientDeleteEvent)="onHomeDeleteEvent($event)"
+        (clientProfileEvent)="onHomeProfileEvent($event)">
+        </app-home-card>
+    </div>
+</div>
+
+

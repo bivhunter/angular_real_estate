@@ -1,0 +1,13 @@
+
+<div class="container">
+    <div class="control-panel">
+        <app-homes-control-panel></app-homes-control-panel>
+    </div>
+
+    <div class="content-wrapper">
+        <app-homes-list
+        [homes]="homes"
+        (clientDeleteEvent)="onHomeDeleteEvent($event)"
+        ></app-homes-list>
+    </div>
+</div>

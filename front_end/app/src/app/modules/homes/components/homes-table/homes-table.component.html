@@ -1,0 +1,39 @@
+
+<div class="container">
+    <table class="table">
+    <tbody>
+        <tr class="head-row">
+            <td class="img-cell"></td>
+            <td class="home-cell"
+                [class.sort-up]="sortMethod === 'home_up'"
+                [class.sort-down]="sortMethod === 'home_down'"
+                (click)="onHomeClick()">Home
+            </td>
+            <td class="street-cell"
+                [class.sort-up]="sortMethod === 'street_up'"
+                [class.sort-down]="sortMethod === 'street_down'"
+                (click)="onStreetClick()">Street
+                
+            </td>
+            <td class="city-cell">City</td>
+            <td class="state-cell">State</td>
+            <td class="price-cell">Price</td>
+            <td class="details-cell"></td>
+            <td class="delete-cell"></td>
+        </tr>
+        <tr *ngFor="let home of homes">
+            <td class="img-cell"><img src="../../../../assets/images/foto-card.png"></td>
+            <td class="home-cell">{{home.home}}</td>
+            <td class="street-cell">{{home.street}}</td>
+            <td class="city-cell">{{home.city}}</td>
+            <td class="state-cell">{{home.state}}</td>
+            <td class="price-cell">{{home.price}}</td>
+            <td class="detail-cell"
+            (click)="onDetailsButton(home.id)">Details</td>
+            <td class="delete-cell"
+            (click)="onDeleteButton(home.id)">Delete</td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+

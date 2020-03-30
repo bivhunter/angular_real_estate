@@ -1,0 +1,15 @@
+<div class="container">
+    <img src="../../../../../assets/images/foto-card.png">
+    <h3>{{home.price}}</h3>
+    <p>{{home.home + ' ' + home.street}}</p>
+    <p>{{home.city + ' ' + home.state}}</p>
+    
+    <div class="buttons-wrapper">
+        <button class="profile-button"
+        (click)="onDetailsButton()">Profile</button>
+        <button class="delete-button"
+        (click)="onDeleteButton()"
+        >Delete</button>
+    </div>
+</div>
+

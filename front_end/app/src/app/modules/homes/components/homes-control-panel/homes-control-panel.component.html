@@ -1,0 +1,67 @@
+<div class="control-panel">
+    <button 
+    class=add-button
+    (click)="onAddButtonClick()">Add client
+    </button>
+
+    <div class="search-wrapper">
+        <input type=text [(ngModel)]="searchString"
+        placeholder="🔍"> 
+        <!-- <button class="search-button" type="button" >Search</button> -->
+    </div>
+
+    <div class="views-control-wrapper" >
+        <div class="sort-control" (mouseleave)="isSortMenu=false">
+            <button class="sort-button"
+            [disabled]="isSortMenu"
+            (click)="isSortMenu=true"
+            >Sort</button>
+
+             <!-- Downing Menu fot sort -->
+            <div  class="sort-menu" *ngIf="isSortMenu">
+                <button 
+                class="sort-surname"
+                (click)="sortMethod = 'surname_up'; isSortMenu=false"
+                [disabled]="sortMethod === 'surname_up'"
+                >Surname↑</button>
+
+                <button 
+                class="sort-surname"
+                (click)="sortMethod = 'surname_down'; isSortMenu=false"
+                [disabled]="sortMethod === 'surname_down'"
+                >Surname↓</button>
+                
+                <button class="sort-name"
+                (click)="sortMethod = 'name_up'; isSortMenu=false"
+                [disabled]="sortMethod === 'name_up'"
+                >Name↑</button>
+
+                <button class="sort-name"
+                (click)="sortMethod = 'name_down'; isSortMenu=false"
+                [disabled]="sortMethod === 'name_down'"
+                >Name↓</button>
+            </div>
+        </div>
+        
+         
+        <div class="views-control" (mouseleave)="isViewsMenu=false">
+            <button class="views-button"
+            [disabled]="isViewsMenu"
+            (click)="isViewsMenu=true"
+            >Views</button>
+           
+         <!-- Downing Menu fot views -->
+            <div  class="views-menu" *ngIf="isViewsMenu">
+                <button 
+                class="cards-views"
+                (click)="onActivateCardView()">Cards</button>
+                <button class="list-views"
+                (click)="onActivateListView()"
+                >List</button>
+            </div>
+        </div>
+
+
+    </div>
+
+    </div>

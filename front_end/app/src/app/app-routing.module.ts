@@ -26,7 +26,14 @@ const routes: Routes = [
     canActivate: [ AuthGuard ],
     loadChildren: () => import('./modules/clients/clients.module')
     .then(module => module.ClientsModule, (error) => console.log(error))
-  }
+  },
+  {
+    path: 'homes',
+    canActivate: [ AuthGuard ],
+    loadChildren: () => import('./modules/homes/homes.module')
+    .then(module => module.HomesModule, (error) => console.log(error))
+  },
+
 ];
 
 @NgModule({

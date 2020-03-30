@@ -7,8 +7,11 @@ import { parsePhoneNumberFromString, parsePhoneNumber } from 'libphonenumber-js'
 export class PhonePipe implements PipeTransform {
 
   transform(value: string): string {
-    const phoneNumber = parsePhoneNumberFromString(value);
+    if (!value) {
+      return '';
+    }
 
+    const phoneNumber = parsePhoneNumberFromString(value);
     if (phoneNumber) {
       return phoneNumber.format('INTERNATIONAL');
     }

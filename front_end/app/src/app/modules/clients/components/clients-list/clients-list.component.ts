@@ -12,8 +12,7 @@ export class ClientsListComponent implements OnInit {
   @Input() clients: Client[];
   @Input() viewMode: string;
   @Output() clientDeleteEvent: EventEmitter<string | number> = new EventEmitter();
-  @Output() clientProfileEvent: EventEmitter<string | number> = new EventEmitter();
-  @Output() clientsSortEvent: EventEmitter<string> = new EventEmitter();
+
   constructor(
     private router: Router
   ) { }
