@@ -15,11 +15,11 @@ export class HomesComponent implements OnInit, OnDestroy {
 
   homes: Home[] = [];
 
-  updateHomesListEvent: Observable<any>;
-  updateHomesListEventSubscribtion: Subscription;
+  private updateHomesListEvent: Observable<any>;
+  private updateHomesListEventSubscribtion: Subscription;
 
-  changingSortingMethodEvent: Observable<THomesSortingMethod>;
-  changingStoringMethodSubscription: Subscription;
+  private changingSortingMethodEvent: Observable<THomesSortingMethod>;
+  private changingStoringMethodSubscription: Subscription;
   sortingMethod: THomesSortingMethod;
 
 
@@ -40,9 +40,17 @@ export class HomesComponent implements OnInit, OnDestroy {
 
   private getHomes(): void {
     this.homesService.gethomes().subscribe(
-      (homesList) => this.homes = [...homesList],
+      (homesList) => this.getHomesHandler(homesList),
       (error) => console.log(error)
     );
+  }
+
+  private getHomesHandler(homesList: Home[]) {
+    this.homes = this.sortHomes(homesList);
+  }
+
+  private sortHomes(homes: Home[]): Home[] {
+    return this.homesSortService.sortHomes(homes, this.sortingMethod);
   }
 
   private initSubscribtion(): void {
@@ -54,7 +62,10 @@ export class HomesComponent implements OnInit, OnDestroy {
       .getChangingHomesSortingMethodEvent();
     this.changingStoringMethodSubscription =
       this.changingSortingMethodEvent.subscribe(
-        (method) => this.sortingMethod = method
+        (method) => {
+          this.sortingMethod = method;
+          this.homes = this.sortHomes(this.homes);
+        }
       );
   }
 }

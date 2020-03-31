@@ -11,9 +11,6 @@ import { HomesRoutingModule } from './homes-routing.module';
 import { HomesService } from './homes.service';
 import { HomesViewService } from './services/homes-view.service';
 import { HomesSortService } from './services/homes-sort.service';
-import { HomesSortPipe } from './pipes/homes-sort.pipe';
-
-
 
 @NgModule({
   declarations: [
@@ -23,7 +20,6 @@ import { HomesSortPipe } from './pipes/homes-sort.pipe';
     HomesListComponent,
     HomesTableComponent,
     HomesControlPanelComponent,
-    HomesSortPipe
   ],
   imports: [
     CommonModule,

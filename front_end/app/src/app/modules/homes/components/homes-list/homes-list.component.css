@@ -1,0 +1,47 @@
+.card-view, .list-view {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.sorting-button.sort-up::before {
+    content: '↑';
+}
+
+.sorting-button.sort-down::before {
+    content: '↓';
+}
+
+.sort-down, .sort-up {
+    background-color: #D8D8D8;
+}
+
+button, .main {
+    outline: none;
+    width: 60px;
+    font-size: 15px;
+    border-radius: 5px;
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+    margin: 5px;
+    padding: 5px;
+}
+
+.main {
+    width: auto;
+    font-size: 18px;
+    align-self: center;
+    justify-self: right;
+    margin-right: 0;
+
+}
+
+button:hover{
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+}
+
+.sorting-menu {
+    display: flex;
+    justify-content: center;
+}
+

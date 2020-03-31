@@ -3,7 +3,8 @@ import { Home } from '../../model/home';
 import { Router } from '@angular/router';
 import { HomesViewService } from '../../services/homes-view.service';
 import { Observable, Subscription } from 'rxjs';
-import { TViewMode } from 'src/app/modules/shared/types/types';
+import { TViewMode, THomesSortingMethod, THomesSortingField } from 'src/app/modules/shared/types/types';
+import { HomesSortService } from '../../services/homes-sort.service';
 
 @Component({
   selector: 'app-homes-list',
@@ -14,13 +15,18 @@ export class HomesListComponent implements OnInit, OnDestroy {
 
   @Input() homes: Home[];
   viewMode: TViewMode;
+  sortingMethod: THomesSortingMethod;
 
   viewModeBehaviorSubject: Observable<TViewMode>;
   viewModeSubscribtion: Subscription;
 
+  changingSortingMethodEvent: Observable<THomesSortingMethod>;
+  changingSortingMethodSubscription: Subscription;
+
   constructor(
     private router: Router,
-    private homesViewService: HomesViewService
+    private homesViewService: HomesViewService,
+    private homesSortService: HomesSortService
   ) { }
 
   ngOnInit(): void {
@@ -29,10 +35,15 @@ export class HomesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.viewModeSubscribtion.unsubscribe();
+    this.changingSortingMethodSubscription.unsubscribe();
   }
 
   onHomeProfileEvent(id: number | string): void {
     this.router.navigateByUrl('homes/details/' + id);
+  }
+
+  changeSortingMethod(field: THomesSortingField): void {
+    this.homesSortService.selectHomesSortingMethod(field);
   }
 
   private initSubscribtion(): void {
@@ -44,6 +55,12 @@ export class HomesListComponent implements OnInit, OnDestroy {
         this.viewMode = viewMode;
       }
     );
+
+    this.changingSortingMethodSubscription = this.homesSortService
+      .getChangingHomesSortingMethodEvent()
+      .subscribe(
+        (method) => this.sortingMethod = method
+      );
 
   }
 
