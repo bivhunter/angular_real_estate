@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HomesViewService } from '../../services/homes-view.service';
+import { HomesFilterService } from './../../services/homes-filter.service';
 
 @Component({
   selector: 'app-homes-control-panel',
@@ -9,16 +10,14 @@ import { HomesViewService } from '../../services/homes-view.service';
 })
 export class HomesControlPanelComponent implements OnInit {
 
-  searchString: string;
-  isSortMenu = false;
   isViewsMenu = false;
   viewMode: string;
-  sortMethod: string;
-
+  searchString: string;
 
   constructor(
     private router: Router,
-    private homesViewService: HomesViewService
+    private homesViewService: HomesViewService,
+    private homesFilterService: HomesFilterService
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +35,10 @@ export class HomesControlPanelComponent implements OnInit {
   onActivateListView() {
     this.homesViewService.setViewMode('list');
     this.isViewsMenu = false;
+  }
+
+  changeFilter(searchString: string): void {
+    this.homesFilterService.changeFilter(searchString);
   }
 
 }

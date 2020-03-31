@@ -4,6 +4,7 @@ import { HomesService } from '../../homes.service';
 import { Observable, Subscription } from 'rxjs';
 import { THomesSortingMethod } from 'src/app/modules/shared/types/types';
 import { HomesSortService } from '../../services/homes-sort.service';
+import { HomesFilterService } from './../../services/homes-filter.service';
 
 @Component({
   selector: 'app-homes',
@@ -14,18 +15,27 @@ export class HomesComponent implements OnInit, OnDestroy {
 
 
   homes: Home[] = [];
+  filteredHomes: Home[] = [];
 
+
+  // observable and subscription for homesUpdate
   private updateHomesListEvent: Observable<any>;
   private updateHomesListEventSubscribtion: Subscription;
 
+  // observable and subscription for sorting
   private changingSortingMethodEvent: Observable<THomesSortingMethod>;
   private changingStoringMethodSubscription: Subscription;
   sortingMethod: THomesSortingMethod;
 
+  // observable and subscription for filtering
+  private changingFilterEvent: Observable<string>;
+  private changingFilterSubscription: Subscription;
+  private filterString = '';
 
   constructor(
     private homesService: HomesService,
-    private homesSortService: HomesSortService
+    private homesSortService: HomesSortService,
+    private homesFilterService: HomesFilterService
   ) { }
 
   ngOnInit(): void {
@@ -46,26 +56,42 @@ export class HomesComponent implements OnInit, OnDestroy {
   }
 
   private getHomesHandler(homesList: Home[]) {
-    this.homes = this.sortHomes(homesList);
+    this.homes = homesList;
+    this.filteredHomes = this.filterHomes(this.homes);
+    this.filteredHomes = this.sortHomes(this.filteredHomes);
   }
 
   private sortHomes(homes: Home[]): Home[] {
     return this.homesSortService.sortHomes(homes, this.sortingMethod);
   }
 
+  private filterHomes(homes: Home[]): Home[] {
+    return this.homesFilterService.filterHomes(this.homes, this.filterString);
+  }
+
   private initSubscribtion(): void {
+    // updateHomes subscribe
     this.updateHomesListEvent = this.homesService.getHomesListChangesEvent();
     this.updateHomesListEventSubscribtion = this.updateHomesListEvent
       .subscribe(() => this.getHomes());
 
+      // sorting subscrib
     this.changingSortingMethodEvent = this.homesSortService
       .getChangingHomesSortingMethodEvent();
     this.changingStoringMethodSubscription =
       this.changingSortingMethodEvent.subscribe(
         (method) => {
           this.sortingMethod = method;
-          this.homes = this.sortHomes(this.homes);
+          this.filteredHomes = this.sortHomes(this.filteredHomes);
         }
       );
+    //  filtering subscribe
+    this.changingFilterEvent = this.homesFilterService.getChangingFilterEvent();
+    this.changingFilterSubscription = this.changingFilterEvent.subscribe(
+      filterString => {
+        this.filterString = filterString;
+        this.filteredHomes = this.filterHomes(this.homes);
+      }
+    );
   }
 }

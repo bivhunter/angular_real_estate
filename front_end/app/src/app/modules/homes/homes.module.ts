@@ -11,6 +11,7 @@ import { HomesRoutingModule } from './homes-routing.module';
 import { HomesService } from './homes.service';
 import { HomesViewService } from './services/homes-view.service';
 import { HomesSortService } from './services/homes-sort.service';
+import { HomesFilterService } from './services/homes-filter.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { HomesSortService } from './services/homes-sort.service';
   providers: [
     HomesService,
     HomesViewService,
-    HomesSortService
+    HomesSortService,
+    HomesFilterService
   ]
 })
 export class HomesModule { }
