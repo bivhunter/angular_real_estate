@@ -10,8 +10,7 @@ export class ClientService {
   baseUrl = 'http://localhost:3030/';
   clientsUrl = `${this.baseUrl}client`; // add clients url
 
-  clientsSortSubject: Subject<string> = new Subject();
-  clientsSortMethodBehaviorSubject: BehaviorSubject<string> = new BehaviorSubject('');
+  clientsListChangesSubject: Subject<any> = new Subject();
 
   set authToken(value: string) {
     localStorage.setItem('authToken', value);
@@ -47,7 +46,7 @@ export class ClientService {
     return this.http
       .delete<any>(`${this.clientsUrl}/${id}`, this.getHttpAuthOption())
       .pipe(
-        tap((resp) => console.log(resp)),
+        tap(() => this.updateClientsList),
         catchError(this.handleDeleteClientError)
       );
   }
@@ -70,22 +69,13 @@ export class ClientService {
       );
   }
 
-  getClientsSortSubject(): Observable<string> {
-    return this.clientsSortSubject.asObservable();
+  getClientsListChangesEvent(): Observable<any> {
+    return this.clientsListChangesSubject.asObservable();
   }
 
-  getClientsSortMethodSubject(): Observable<string> {
-    return this.clientsSortMethodBehaviorSubject.asObservable();
+  private updateClientsList(): void {
+    this.clientsListChangesSubject.next('');
   }
-
-  sortClients(sortMethod: string): void {
-    this.clientsSortSubject.next(sortMethod);
-  }
-
-  setSortClientsMethod(sortMethod: string): void {
-    this.clientsSortMethodBehaviorSubject.next(sortMethod);
-  }
-
 
   private handlePatchClientError(error: HttpErrorResponse): Observable<Client> {
     console.log(error);

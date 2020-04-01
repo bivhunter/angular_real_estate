@@ -12,9 +12,7 @@
     align-items: center;
     border: 3px grey groove;
     border-radius: 5px;
-   
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
-    /* justify-content: flex-start; */
+    box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
 }
 
 .cover-div {
@@ -27,34 +25,34 @@
     background-color: gray;
     opacity: 0.3;
     overflow: hidden;
-  }
-
-  .popup {
-      display: flex;
-      flex-direction: column;
-      z-index: 9900;
-      padding: 10px;
-      align-items: center;
-      position: absolute;
-      bottom: 0;
-      border: 3px grey groove;
-      border-radius: 5px;
-      opacity: 1;
-      box-shadow: 2px 2px 4px rgba(0,114,188,1);
-      background-color: white;
-  }
-
-  .popup-header {
-      margin: 8px;
-  }
-  
-  .no-button {
-    text-shadow: 1px 1px 2px rgba(0,114,188,1);
 }
 
-  .no-button:hover{
+.popup {
+    display: flex;
+    flex-direction: column;
+    z-index: 9900;
+    padding: 10px;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    border: 3px grey groove;
+    border-radius: 5px;
+    opacity: 1;
+    box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
+    background-color: white;
+}
+
+.popup-header {
+    margin: 8px;
+}
+
+.no-button {
+    text-shadow: 1px 1px 2px rgba(0, 114, 188, 1);
+}
+
+.no-button:hover {
     cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+    box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
 }
 
 .buttons-wrapper {
@@ -72,35 +70,32 @@ button {
 }
 
 .profile-button {
-    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+    text-shadow: 1px 1px 2px rgba(0, 114, 188, 1);
 }
 
-.delete-button, .yes-button{
-    
+.delete-button, .yes-button {
     text-shadow: 1px 1px 2px rgba(165, 16, 16, 1);
 }
 
-.profile-button:hover{
+.profile-button:hover {
     cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+    box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
 }
 
-.delete-button:hover, .yes-button:hover{
+.delete-button:hover, .yes-button:hover {
     cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(165, 16, 16,1);
+    box-shadow: 2px 2px 4px rgba(165, 16, 16, 1);
 }
-
-
 
 p {
     padding: 0;
     margin: 0;
-    text-shadow: 1px 1px 2px rgba(192,192,192);
+    text-shadow: 1px 1px 2px rgba(192, 192, 192);
 }
 
 h3 {
     margin-bottom: 5px;
-    text-shadow: 2px 2px 4px rgba(165,42,42,1);
+    text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
 }
 
 img {

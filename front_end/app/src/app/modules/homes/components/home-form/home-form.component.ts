@@ -39,7 +39,6 @@ export class HomeFormComponent implements OnInit {
     );
   }
 
-
   onCancelButtonClick() {
     this.navigateBack();
   }
@@ -47,7 +46,6 @@ export class HomeFormComponent implements OnInit {
   onPriceChange(value: string): void {
     const newValue = value.replace(/\s/g, '').replace(/\$/g, '');
     this.home.price = +newValue;
-    console.log(value, newValue, this.home.price);
   }
 
   private getHome(): void {

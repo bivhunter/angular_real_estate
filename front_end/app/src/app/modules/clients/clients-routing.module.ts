@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { ClientProfileComponent } from './components/client-profile/client-profile.component';
-import { ClientsComponent } from './clients.component';
+import { ClientsComponent } from './components/clients/clients.component';
 
 const routes: Routes = [
     {

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from '../../clients.service';
 import { Observable, Subscription } from 'rxjs';
+import { TClientsSortingMethod, TClientsSortingField } from 'src/app/modules/shared/types/types';
+import { ClientsSortingService } from './../../services/clients-sorting.service';
 
 @Component({
   selector: 'app-clients-table',
@@ -14,13 +15,13 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
   @Output() clientDeleteEvent: EventEmitter<number | string> = new EventEmitter();
   @Output() clientProfileEvent: EventEmitter<number | string> = new EventEmitter();
 
-  sortMethod: string;
-  sortMethodSubject: Observable<string>;
-  sortMethodSubscribtion: Subscription;
+  sortingMethod: TClientsSortingMethod;
+  private changingSortingMethodEvent: Observable<TClientsSortingMethod>;
+  private changingSortingMethodSubscription: Subscription;
 
 
   constructor(
-    private clientsService: ClientService
+    private clientsSortingService: ClientsSortingService
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +29,7 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sortMethodSubscribtion.unsubscribe();
+    this.changingSortingMethodSubscription.unsubscribe();
   }
 
   onDeleteButton(id: number | string): void {
@@ -39,28 +40,13 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
     this.clientProfileEvent.emit(id);
   }
 
-  onSurnameClick(): void {
-    if (this.sortMethod === 'surname_up') {
-      this.sortMethod = 'surname_down';
-    } else {
-      this.sortMethod = 'surname_up';
-    }
-    this.clientsService.sortClients(this.sortMethod);
+  setSortingField(field: TClientsSortingField): void {
+    this.clientsSortingService.selectClientsSortingMethod(field);
   }
-
-  onNameClick(): void {
-    if (this.sortMethod === 'name_up') {
-      this.sortMethod = 'name_down';
-    } else {
-      this.sortMethod = 'name_up';
-    }
-    this.clientsService.sortClients(this.sortMethod);
-  }
-
   private initSubscribtions(): void {
-    this.sortMethodSubject = this.clientsService.getClientsSortMethodSubject();
-    this.sortMethodSubscribtion = this.sortMethodSubject.subscribe(
-      (sortMethod) => this.sortMethod = sortMethod
+    this.changingSortingMethodEvent = this.clientsSortingService.getChangingSortingMethodEvent();
+    this.changingSortingMethodSubscription = this.changingSortingMethodEvent.subscribe(
+      (sortMethod) => this.sortingMethod = sortMethod
     );
   }
 

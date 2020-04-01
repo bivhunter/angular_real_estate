@@ -4,14 +4,14 @@
         <tr class="head-row">
             <td class="img-cell"></td>
             <td class="surname-cell"
-                [class.sort-up]="sortMethod === 'surname_up'"
-                [class.sort-down]="sortMethod === 'surname_down'"
-                (click)="onSurnameClick()">Surname
+                [class.sort-up]="sortingMethod === 'SURNAME_UP'"
+                [class.sort-down]="sortingMethod === 'SURNAME_DOWN'"
+                (click)="setSortingField('SURNAME')">Surname
             </td>
             <td class="name-cell"
-                [class.sort-up]="sortMethod === 'name_up'"
-                [class.sort-down]="sortMethod === 'name_down'"
-                (click)="onNameClick()">Name
+                [class.sort-up]="sortingMethod === 'NAME_UP'"
+                [class.sort-down]="sortingMethod === 'NAME_DOWN'"
+                (click)="setSortingField('NAME')">Name
                 
             </td>
             <td class="email-cell">Email</td>

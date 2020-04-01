@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Home } from '../../model/home';
-import { Router } from '@angular/router';
 import { HomesViewService } from '../../services/homes-view.service';
 import { Observable, Subscription } from 'rxjs';
 import { TViewMode, THomesSortingMethod, THomesSortingField } from 'src/app/modules/shared/types/types';
@@ -17,14 +16,13 @@ export class HomesListComponent implements OnInit, OnDestroy {
   viewMode: TViewMode;
   sortingMethod: THomesSortingMethod;
 
-  viewModeBehaviorSubject: Observable<TViewMode>;
-  viewModeSubscribtion: Subscription;
+  private viewModeBehaviorSubject: Observable<TViewMode>;
+  private viewModeSubscribtion: Subscription;
 
-  changingSortingMethodEvent: Observable<THomesSortingMethod>;
-  changingSortingMethodSubscription: Subscription;
+  private changingSortingMethodEvent: Observable<THomesSortingMethod>;
+  private changingSortingMethodSubscription: Subscription;
 
   constructor(
-    private router: Router,
     private homesViewService: HomesViewService,
     private homesSortService: HomesSortService
   ) { }
@@ -38,24 +36,22 @@ export class HomesListComponent implements OnInit, OnDestroy {
     this.changingSortingMethodSubscription.unsubscribe();
   }
 
-  onHomeProfileEvent(id: number | string): void {
-    this.router.navigateByUrl('homes/details/' + id);
-  }
-
+  // set new sorting method
   changeSortingMethod(field: THomesSortingField): void {
     this.homesSortService.selectHomesSortingMethod(field);
   }
 
   private initSubscribtion(): void {
+    // subscribe for changing view
     this.viewModeSubscribtion = this.homesViewService
     .getViewModeBehaviorSubject()
     .subscribe(
       (viewMode) => {
-        console.log(viewMode);
         this.viewMode = viewMode;
       }
     );
 
+    // subscribe for changing sorting method
     this.changingSortingMethodSubscription = this.homesSortService
       .getChangingHomesSortingMethodEvent()
       .subscribe(

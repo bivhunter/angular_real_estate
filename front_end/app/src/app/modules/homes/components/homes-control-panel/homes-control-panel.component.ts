@@ -11,7 +11,6 @@ import { HomesFilterService } from './../../services/homes-filter.service';
 export class HomesControlPanelComponent implements OnInit {
 
   isViewsMenu = false;
-  viewMode: string;
   searchString: string;
 
   constructor(

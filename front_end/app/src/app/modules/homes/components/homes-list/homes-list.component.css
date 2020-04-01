@@ -4,6 +4,12 @@
     justify-content: space-around;
 }
 
+/* styles for sorting panel */
+.sorting-menu {
+    display: flex;
+    justify-content: center;
+}
+
 .sorting-button.sort-up::before {
     content: '↑';
 }
@@ -26,6 +32,11 @@ button, .main {
     padding: 5px;
 }
 
+button:hover{
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+}
+
 .main {
     width: auto;
     font-size: 18px;
@@ -35,13 +46,4 @@ button, .main {
 
 }
 
-button:hover{
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
-}
-
-.sorting-menu {
-    display: flex;
-    justify-content: center;
-}
 

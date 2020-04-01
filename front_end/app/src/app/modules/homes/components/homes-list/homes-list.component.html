@@ -1,62 +1,58 @@
 
+<!-- sorting menu -->
+<div class="sorting-menu" *ngIf="viewMode === 'cards'">
+    <span class="main">Sort by:</span>
 
-        <div class="sorting-menu">
-            <span class="main">Sort by:</span>
-            <button class="sorting-button" 
-            type="button"
-            [class.sort-up]="sortingMethod === 'HOME_UP'"
-            [class.sort-down]="sortingMethod === 'HOME_DOWN'"
-            (click)="changeSortingMethod('HOME')"
-            >Home</button>
+    <button class="sorting-button" 
+    type="button"
+    [class.sort-up]="sortingMethod === 'HOME_UP'"
+    [class.sort-down]="sortingMethod === 'HOME_DOWN'"
+    (click)="changeSortingMethod('HOME')"
+    >Home</button>
 
-            <button class="sorting-button" 
-            type="button"
-            [class.sort-up]="sortingMethod === 'STREET_UP'"
-            [class.sort-down]="sortingMethod === 'STREET_DOWN'"
-            (click)="changeSortingMethod('STREET')"
-            >Street</button>
+    <button class="sorting-button" 
+    type="button"
+    [class.sort-up]="sortingMethod === 'STREET_UP'"
+    [class.sort-down]="sortingMethod === 'STREET_DOWN'"
+    (click)="changeSortingMethod('STREET')"
+    >Street</button>
+    
+    <button class="sorting-button" 
+    type="button"
+    [class.sort-up]="sortingMethod === 'CITY_UP'"
+    [class.sort-down]="sortingMethod === 'CITY_DOWN'"
+    (click)="changeSortingMethod('CITY')">City</button>
 
-            <button class="sorting-button" 
-            type="button"
-            [class.sort-up]="sortingMethod === 'CITY_UP'"
-            [class.sort-down]="sortingMethod === 'CITY_DOWN'"
-            (click)="changeSortingMethod('CITY')">City</button>
+    <button 
+    class="sorting-button" 
+    type="button"
+    [class.sort-up]="sortingMethod === 'STATE_UP'"
+    [class.sort-down]="sortingMethod === 'STATE_DOWN'"
+    (click)="changeSortingMethod('STATE')">State</button>
 
-            <button 
-            class="sorting-button" 
-            type="button"
-            [class.sort-up]="sortingMethod === 'STATE_UP'"
-            [class.sort-down]="sortingMethod === 'STATE_DOWN'"
-            (click)="changeSortingMethod('STATE')">State</button>
-
-            <button class="sorting-button" 
-            type="button"
-            [class.sort-up]="sortingMethod === 'PRICE_UP'"
-            [class.sort-down]="sortingMethod === 'PRICE_DOWN'"
-            (click)="changeSortingMethod('PRICE')">Price</button>
-        </div>
+    <button class="sorting-button" 
+    type="button"
+    [class.sort-up]="sortingMethod === 'PRICE_UP'"
+    [class.sort-down]="sortingMethod === 'PRICE_DOWN'"
+    (click)="changeSortingMethod('PRICE')">Price</button>
+</div>
 
 <div class="container" [ngSwitch]="viewMode">
     <!-- table-view -->
     <div class=list-view *ngSwitchCase="'list'">
         <app-homes-table
             [homes]="homes"
-            (clientProfileEvent)="onHomeProfileEvent($event)"
             >
-
         </app-homes-table>        
     </div>
 
     <!-- cards-view -->
     <div class="card-view" *ngSwitchCase="'cards'">
-
-        
-
         <h2 *ngIf="!homes?.length">No homes</h2>
         <app-home-card 
         *ngFor="let home of homes"
         [home]="home"
-        (clientProfileEvent)="onHomeProfileEvent($event)">
+        >
         </app-home-card>
     </div>
 </div>
