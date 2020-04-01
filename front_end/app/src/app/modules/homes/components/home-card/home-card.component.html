@@ -13,27 +13,33 @@
     </div>
 
     
-    
+    <!-- popup deleting menu -->
     <div class="popup"  *ngIf="isPopup">
         <h3 class=popup-header>Delete home!</h3>
+        
+        <h3>{{home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</h3>
+        <p>{{home.home + ' ' + home.street}}</p>
+        <p>{{home.city + ' ' + home.state}}</p>
         <h3 class=popup-header>Are you sure?</h3>
         <div class="buttons-wrapper">
+
             <button 
                 type=button 
                 (click)="deleteHome(home.id)"
                 class="yes-button">
-                Yes</button>
+                Yes
+            </button>
 
             <button 
-            (click)="isPopup=false"
-            type=button 
-            class="no-button">
-            No</button>
-        
+                (click)="isPopup=false"
+                type=button 
+                class="no-button">
+                No
+            </button>
         </div>
-       
     </div>
 
+     <!-- cover div -->
     <div *ngIf="isPopup" class="cover-div"></div>
     
     

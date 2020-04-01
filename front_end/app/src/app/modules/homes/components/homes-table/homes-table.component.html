@@ -1,7 +1,9 @@
-
 <div class="container">
+
+    <!-- table -->
     <table class="table">
     <tbody>
+        <!-- head row -->
         <tr class="head-row">
             <td class="img-cell"></td>
             <td class="home-cell"
@@ -30,6 +32,8 @@
             <td class="details-cell"></td>
             <td class="delete-cell"></td>
         </tr>
+    
+        <!-- content rows -->
         <tr *ngFor="let home of homes">
             <td class="img-cell"><img src="../../../../assets/images/foto-house.png"></td>
             <td class="home-cell">{{home.home}}</td>
@@ -40,9 +44,41 @@
             <td class="details-cell"
             (click)="onDetailsButton(home.id)">Details</td> 
             <td class="delete-cell"
-            (click)="onDeleteButton(home.id)">Delete</td>
-        </tr>
+            (click)="onDeleteButton(home)">Delete
+             </td>
+         </tr>
     </tbody>
     </table>
+
+        <!-- popup menu -->
+    <div class="popup-wrapper" *ngIf="isPopup">
+        <div class="popup"  >
+            <h3 class=popup-header>Delete home!</h3>
+            <h3>{{homeForDelete.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</h3>
+            <p>{{homeForDelete.home + ' ' + homeForDelete.street}}</p>
+            <p>{{homeForDelete.city + ' ' + homeForDelete.state}}</p>
+            <h3 class=popup-header>Are you sure?</h3>
+            <div class="buttons-wrapper">
+                <button 
+                    type=button 
+                    (click)="deleteHome(homeForDelete.id)"
+                    class="yes-button">
+                    Yes
+                </button>
+        
+                <button 
+                    (click)="isPopup=false"
+                    type=button 
+                    class="no-button">
+                    No
+                </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- cover div -->
+</div>
+<div *ngIf="isPopup" class="cover-div">
 </div>
 

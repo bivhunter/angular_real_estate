@@ -13,9 +13,11 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class HomesTableComponent implements OnInit, OnDestroy {
 
+  homeForDelete: Home;
+  isPopup = false;
   @Input() homes: Home[];
-  changingSortingMethodEvent: Observable<THomesSortingMethod>;
-  changingStoringMethodSubscription: Subscription;
+  private changingSortingMethodEvent: Observable<THomesSortingMethod>;
+  private changingStoringMethodSubscription: Subscription;
   sortingMethod: THomesSortingMethod;
 
   constructor(
@@ -32,24 +34,25 @@ export class HomesTableComponent implements OnInit, OnDestroy {
     this.changingStoringMethodSubscription.unsubscribe();
   }
 
-  onHomeClick(): void {
-
-  }
-
-  onStreetClick(): void {
-
-  }
-
   setSortingField(field: THomesSortingField) {
     this.homesSortService.selectHomesSortingMethod(field);
   }
 
+  // show home details
   onDetailsButton(id: string | number): void {
     this.router.navigateByUrl(`homes/details/${id}`);
   }
 
-  onDeleteButton(id: string | number): void {
-    this.homesService.deleteHome(id).subscribe();
+  // show popup menu
+  onDeleteButton(home: Home): void {
+    this.homeForDelete = {...home};
+    this.isPopup = true;
+  }
+
+  deleteHome(id: string | number): void {
+    this.homesService.deleteHome(id).subscribe(
+      () => this.isPopup = false
+    );
   }
 
   private initSubscription(): void {
