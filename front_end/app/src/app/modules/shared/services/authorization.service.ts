@@ -39,10 +39,8 @@ export class AuthorizationService {
     return this.http.get<any>(this.clientUrl, this.getHttpAuthOption()).pipe(
       map(() => true),
       catchError(error => {
-        if (error.statusText === 'Unauthorized') {
-          this.router.navigateByUrl('authorization/login');
-          return of(false);
-        }
+        this.router.navigateByUrl('authorization/login');
+        return of(false);
       })
     );
   }

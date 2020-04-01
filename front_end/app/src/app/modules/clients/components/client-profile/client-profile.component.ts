@@ -43,6 +43,10 @@ export class ClientProfileComponent implements OnInit {
     );
   }
 
+  onPhoneChange(phone: string): void {
+    console.log(phone);
+    this.client.phone = phone.slice(0, 18);
+  }
 
   onCancelButtonClick() {
     this.navigateBack();

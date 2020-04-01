@@ -35,7 +35,7 @@ td {
 }
 
 .city-cell, .state-cell, .street-cell {
-    flex: 4 1 200px;
+    flex: 4 4 200px;
 }
 
 .sort-up::before {
@@ -47,11 +47,11 @@ td {
 }
 
 .home-cell {
-    flex: 1 1 50px;
+    flex: 2 2 100px;
 }
 
 .price-cell {
-    flex: 2 1 100px;
+    flex: 2 2 100px;
     text-shadow: 2px 2px 4px rgba(165,42,42,1);
 }
 
@@ -68,7 +68,7 @@ td {
 }
 
 .details-cell, .delete-cell {
-   flex: 2 1 100px;
+   flex: 2 2 100px;
 }
 
 .img-cell {

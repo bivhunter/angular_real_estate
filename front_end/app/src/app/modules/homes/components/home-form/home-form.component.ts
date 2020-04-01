@@ -45,8 +45,9 @@ export class HomeFormComponent implements OnInit {
   }
 
   onPriceChange(value: string): void {
-    const newValue = value.split(',').join('');
-    this.home.price = +newValue.slice(1);
+    const newValue = value.replace(/\s/g, '').replace(/\$/g, '');
+    this.home.price = +newValue;
+    console.log(value, newValue, this.home.price);
   }
 
   private getHome(): void {
