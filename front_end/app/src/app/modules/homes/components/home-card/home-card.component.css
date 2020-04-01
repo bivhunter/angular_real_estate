@@ -5,6 +5,7 @@
 }
 
 .container {
+    position: relative;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -14,6 +15,46 @@
    
     box-shadow: 2px 2px 4px rgba(0,114,188,1);
     /* justify-content: flex-start; */
+}
+
+.cover-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9000;
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+    opacity: 0.3;
+    overflow: hidden;
+  }
+
+  .popup {
+      display: flex;
+      flex-direction: column;
+      z-index: 9900;
+      padding: 10px;
+      align-items: center;
+      position: absolute;
+      bottom: 0;
+      border: 3px grey groove;
+      border-radius: 5px;
+      opacity: 1;
+      box-shadow: 2px 2px 4px rgba(0,114,188,1);
+      background-color: white;
+  }
+
+  .popup-header {
+      margin: 0;
+  }
+  
+  .no-button {
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+}
+
+  .no-button:hover{
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
 }
 
 .buttons-wrapper {
@@ -34,7 +75,7 @@ button {
     text-shadow: 1px 1px 2px rgba(0,114,188,1);
 }
 
-.delete-button{
+.delete-button, .yes-button{
     
     text-shadow: 1px 1px 2px rgba(165, 16, 16, 1);
 }
@@ -44,7 +85,7 @@ button {
     box-shadow: 2px 2px 4px rgba(0,114,188,1);
 }
 
-.delete-button:hover {
+.delete-button:hover, .yes-button:hover{
     cursor: pointer;
     box-shadow: 2px 2px 4px rgba(165, 16, 16,1);
 }

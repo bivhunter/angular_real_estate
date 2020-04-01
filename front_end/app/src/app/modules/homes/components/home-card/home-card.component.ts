@@ -12,6 +12,8 @@ export class HomeCardComponent implements OnInit {
 
   @Input() home: Home;
 
+  isPopup = false;
+
   constructor(
     private router: Router,
     private homesService: HomesService
@@ -22,8 +24,14 @@ export class HomeCardComponent implements OnInit {
   }
 
   onDeleteButton(id: string | number): void {
+    this.isPopup = true;
+  }
+
+  deleteHome(id: string | number) {
     this.homesService.deleteHome(id)
-      .subscribe();
+    .subscribe(
+      () => this.isPopup = false
+    );
   }
 
   onDetailsButton(id: string | number) {
