@@ -10,11 +10,8 @@ export class PhonePipe implements PipeTransform {
     if (!value) {
       return '';
     }
-    console.log(value);
     value = value.replace(/\s/g, '');
-    console.log(value);
     value = value.replace(/[()]/g, '');
-    console.log(value);
     let resString = '+';
 
     for (let i = 1; i < value.length; i++) {
@@ -43,7 +40,6 @@ export class PhonePipe implements PipeTransform {
         break;
       }
     }
-    console.log('res', resString);
     return resString;
   }
 

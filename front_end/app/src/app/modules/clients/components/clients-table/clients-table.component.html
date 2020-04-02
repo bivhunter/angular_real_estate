@@ -28,9 +28,17 @@
             <td class="profile-cell"
             (click)="onProfileButton(client.id)">Profile</td>
             <td class="delete-cell"
-            (click)="onDeleteButton(client.id)">Delete</td>
+            (click)="onDeleteButton(client)">Delete</td>
         </tr>
     </tbody>
     </table>
 </div>
+
+    <app-clients-popup-deleting
+        class="popup-menu"
+        *ngIf="isPopumMenu"
+        [client]="clientForDelete"
+        (submitEvent)="deleteClient($event)"
+        (cancelEvent)="isPopumMenu=false"
+    ></app-clients-popup-deleting>
 

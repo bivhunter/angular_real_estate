@@ -5,6 +5,7 @@
 }
 
 .container {
+    position: relative;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -64,4 +65,18 @@ h3 {
 
 img {
     height: 80px;
+}
+
+
+.popup-wrapper {
+    /* position: absolute;
+    
+    
+    height: 100%;
+    width: 100%;
+    display: flex; */
+    position: absolute;
+    z-index: 9900;
+    top: 0;
+    left: 0;
 }

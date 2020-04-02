@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
+import { Router } from '@angular/router';
+import { ClientService } from '../../clients.service';
 
 @Component({
   selector: 'app-client-card',
@@ -8,21 +10,30 @@ import { Client } from 'src/app/modules/clients/model/client';
 })
 export class ClientCardComponent implements OnInit {
 
-  @Input() client: Client;
-  @Output() clientDeleteEvent: EventEmitter<number | string> = new EventEmitter();
-  @Output() clientProfileEvent: EventEmitter<number | string> = new EventEmitter();
+  isPopupMenu = false;
 
-  constructor() { }
+  @Input() client: Client;
+
+  constructor(
+    private router: Router,
+    private clientService: ClientService
+  ) { }
 
   ngOnInit(): void {
   }
 
   onDeleteButton(): void {
-    this.clientDeleteEvent.emit(this.client.id);
+    this.isPopupMenu = true;
+  }
+
+  deleteClient(id: string | number): void {
+    this.clientService.deleteClient(id).subscribe(
+      () => this.isPopupMenu = false
+    )
   }
 
   onProfileButton(): void {
-    this.clientProfileEvent.emit(this.client.id);
+    this.router.navigateByUrl(`clients/profile/${this.client.id}`);
   }
 
 }

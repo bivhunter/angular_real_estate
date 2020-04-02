@@ -12,4 +12,19 @@
         (click)="onDeleteButton()"
         >Delete</button>
     </div>
+
+    <div class="popup-wrapper" *ngIf="isPopupMenu">
+        <app-clients-popup-deleting
+        
+        [client]="client"
+        (cancelEvent)="isPopupMenu=false"
+        (submitEvent)="deleteClient($event)"
+        >
+
+        </app-clients-popup-deleting>
+
+    </div>
 </div>
+
+
+

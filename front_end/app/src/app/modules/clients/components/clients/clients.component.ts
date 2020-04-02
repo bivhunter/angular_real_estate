@@ -50,13 +50,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
     this.changingFilterSubscription.unsubscribe();
   }
 
-  onClientDeleteEvent(id: number | string): void {
-    this.clientService.deleteClient(id).subscribe(
-      () => this.getClients(),
-      (error) => console.log(error)
-    );
-  }
-
   private initSubscriptions(): void {
     // updateClients subscribe
     this.updateClientsListEvent = this.clientService.getClientsListChangesEvent();
@@ -82,8 +75,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
   }
 
   private getClients(): void {
-    this.clientService.getClients()
-    .subscribe(
+    this.clientService.getClients().subscribe(
       (clientsList) => this.getClientsHandler(clientsList),
       (error) => console.log(error)
     );

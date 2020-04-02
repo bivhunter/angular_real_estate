@@ -23,8 +23,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   private changingSortingMethodEvent: Observable<TClientsSortingMethod>;
   private changingSortingMethodSubscription: Subscription;
 
-  @Output() clientDeleteEvent: EventEmitter<string | number> = new EventEmitter();
-
   constructor(
     private router: Router,
     private clientsViewService: ClientsViewService,
@@ -43,10 +41,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   // set new sorting method
   changeSortingMethod(field: TClientsSortingField): void {
     this.clientsSortingService.selectClientsSortingMethod(field);
-  }
-
-  onClientDeleteEvent(id: number | string): void {
-    this.clientDeleteEvent.emit(id);
   }
 
   onClientProfileEvent(id: number | string): void {

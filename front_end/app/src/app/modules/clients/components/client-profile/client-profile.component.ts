@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from 'src/app/modules/clients/model/client';
 import { ClientService } from 'src/app/modules/clients/clients.service';
 import { Location } from '@angular/common';
+import { ClientsFilteringService } from './../../services/clients-filtering.service';
 
 @Component({
   selector: 'app-client-profile',
@@ -21,7 +22,8 @@ export class ClientProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private clientsFilteringService: ClientsFilteringService
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class ClientProfileComponent implements OnInit {
 
   onPhoneChange(phone: string): void {
     console.log(phone);
-    this.client.phone = phone.slice(0, 18);
+    this.client.phone = this.clientsFilteringService.filterPhone(phone);
   }
 
   onCancelButtonClick() {

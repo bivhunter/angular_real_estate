@@ -17,6 +17,10 @@ export class ClientsFilteringService {
     return this.changingFilterSubject.asObservable();
   }
 
+  filterPhone(phone: string): string {
+    return filterPhone(phone);
+  }
+
   filterClients(clients: Client[], searchString: string): Client[] {
     if (!clients.length) {
       return [];
@@ -41,4 +45,41 @@ export class ClientsFilteringService {
       return true;
     });
   }
+}
+
+function filterPhone(value: string): string {
+  if (!value) {
+    return '';
+  }
+  value = value.replace(/\s/g, '');
+  value = value.replace(/[()]/g, '');
+  let resString = '+';
+
+  for (let i = 1; i < value.length; i++) {
+    if (i < 3) {
+      resString = resString + value[i];
+    }
+    if (i === 3) {
+      resString = resString + ' (' + value[i];
+    }
+    if (4 <= i  && i < 6) {
+      resString = resString + value[i];
+    }
+    if (i === 6) {
+      resString = resString  + ') ' + value[i];
+    }
+    if (7 <= i  && i < 9) {
+      resString = resString + value[i];
+    }
+    if (i === 9) {
+      resString = resString + ' ' + value[i];
+    }
+    if (9 < i  && i < 13) {
+      resString = resString + value[i];
+    }
+    if (i >= 13) {
+      break;
+    }
+  }
+  return resString;
 }

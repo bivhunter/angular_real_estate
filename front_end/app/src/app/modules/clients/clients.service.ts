@@ -46,7 +46,7 @@ export class ClientService {
     return this.http
       .delete<any>(`${this.clientsUrl}/${id}`, this.getHttpAuthOption())
       .pipe(
-        tap(() => this.updateClientsList),
+        tap(() => this.updateClientsList()),
         catchError(this.handleDeleteClientError)
       );
   }

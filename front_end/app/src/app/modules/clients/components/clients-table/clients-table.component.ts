@@ -3,6 +3,8 @@ import { Client } from 'src/app/modules/clients/model/client';
 import { Observable, Subscription } from 'rxjs';
 import { TClientsSortingMethod, TClientsSortingField } from 'src/app/modules/shared/types/types';
 import { ClientsSortingService } from './../../services/clients-sorting.service';
+import { Router } from '@angular/router';
+import { ClientService } from '../../clients.service';
 
 @Component({
   selector: 'app-clients-table',
@@ -11,9 +13,10 @@ import { ClientsSortingService } from './../../services/clients-sorting.service'
 })
 export class ClientsTableComponent implements OnInit, OnDestroy {
 
+  isPopumMenu = false;
+  clientForDelete: Client;
+
   @Input() clients: Client[];
-  @Output() clientDeleteEvent: EventEmitter<number | string> = new EventEmitter();
-  @Output() clientProfileEvent: EventEmitter<number | string> = new EventEmitter();
 
   sortingMethod: TClientsSortingMethod;
   private changingSortingMethodEvent: Observable<TClientsSortingMethod>;
@@ -21,7 +24,9 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private clientsSortingService: ClientsSortingService
+    private clientsSortingService: ClientsSortingService,
+    private clientsService: ClientService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -32,12 +37,19 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
     this.changingSortingMethodSubscription.unsubscribe();
   }
 
-  onDeleteButton(id: number | string): void {
-    this.clientDeleteEvent.emit(id);
+  onDeleteButton(client: Client): void {
+    this.isPopumMenu = true;
+    this.clientForDelete = {...client};
+  }
+
+  deleteClient(id: number | string): void {
+    this.clientsService.deleteClient(id).subscribe(
+      () => this.isPopumMenu = false
+    );
   }
 
   onProfileButton(id: number | string): void {
-    this.clientProfileEvent.emit(id);
+    this.router.navigateByUrl(`clients/profile/${id}`);
   }
 
   setSortingField(field: TClientsSortingField): void {

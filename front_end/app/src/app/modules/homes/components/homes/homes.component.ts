@@ -46,6 +46,7 @@ export class HomesComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.updateHomesListEventSubscribtion.unsubscribe();
     this.changingStoringMethodSubscription.unsubscribe();
+    this.changingFilterSubscription.unsubscribe();
   }
 
   private getHomes(): void {
