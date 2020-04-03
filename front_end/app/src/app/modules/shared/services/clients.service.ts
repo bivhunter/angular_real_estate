@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
-import { Client } from './model/client';
+import { Client } from '../../clients/model/client';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ClientService {
 
   baseUrl = 'http://localhost:3030/';
@@ -40,6 +42,30 @@ export class ClientService {
         tap((newClient) => console.log(newClient)),
         catchError(this.handlePostClientError)
       );
+  }
+
+  addHomeToClient(homeId: string | number, clientId: string | number): Observable<Client> {
+    const body = {
+      homeAdd: homeId
+    };
+    return this.http
+    .patch<Client>(`${this.clientsUrl}/${clientId}`, body, this.getHttpAuthOption())
+    .pipe(
+      tap(() => this.updateClientsList()),
+      catchError((error) => throwError(error.statusText))
+    );
+  }
+
+  deleteHomeFromClient(homeId: string | number, clientId: string | number): Observable<Client> {
+    const body = {
+      homeRemove: homeId
+    };
+    return this.http
+    .patch<Client>(`${this.clientsUrl}/${clientId}`, body, this.getHttpAuthOption())
+    .pipe(
+      tap(() => this.updateClientsList()),
+      catchError((error) => throwError(error.statusText))
+    );
   }
 
   deleteClient(id: number | string): Observable<any> {

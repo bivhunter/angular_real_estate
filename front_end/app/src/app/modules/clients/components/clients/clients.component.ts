@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ClientService } from 'src/app/modules/clients/clients.service';
+import { ClientService } from 'src/app/modules/shared/services/clients.service';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
 import { Observable, Subscriber, Subscription } from 'rxjs';

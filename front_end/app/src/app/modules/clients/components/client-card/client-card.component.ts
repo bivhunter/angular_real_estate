@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
-import { ClientService } from '../../clients.service';
+import { ClientService } from '../../../shared/services/clients.service';
 
 @Component({
   selector: 'app-client-card',
@@ -10,7 +10,10 @@ import { ClientService } from '../../clients.service';
 })
 export class ClientCardComponent implements OnInit {
 
-  isPopupMenu = false;
+  isPopupDeleting = false;
+  isPopupListHomes = false;
+  isAdding: boolean;
+
 
   @Input() client: Client;
 
@@ -23,13 +26,23 @@ export class ClientCardComponent implements OnInit {
   }
 
   onDeleteButton(): void {
-    this.isPopupMenu = true;
+    this.isPopupDeleting = true;
   }
 
   deleteClient(id: string | number): void {
     this.clientService.deleteClient(id).subscribe(
-      () => this.isPopupMenu = false
-    )
+      () => this.isPopupDeleting = false
+    );
+  }
+
+  openHomes(): void {
+    this.isAdding = false;
+    this.isPopupListHomes = true;
+  }
+
+  addHome(): void {
+    this.isAdding = true;
+    this.isPopupListHomes = true;
   }
 
   onProfileButton(): void {

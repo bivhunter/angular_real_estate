@@ -1,0 +1,72 @@
+<div class="popup-wrapper">
+    <!-- main elem -->
+    <div class="popup">
+        <h3>Select Viewed Home</h3> 
+        <div 
+        class="close-button"
+        (click)="closeList()"
+        >X</div>
+
+        <!-- input for search -->
+        <form>
+            <input
+                type="text"
+                name="search"
+                placeholder="🔍"
+                [ngModel]
+                (ngModelChange)="filterHomes($event)"
+            >
+        </form>
+
+        <!-- homes list -->
+        <table>
+                <tr class="head-row">
+                    <div class="head-wrapper" >
+                        <td class="img-cell"></td>
+                        <td class="home-cell">Home</td>
+                        <td class="street-cell">Street</td>
+                        <td class="city-cell">City</td>
+                        <td class="state-cell">State</td>
+                    </div>
+                    <div class="delete-button">
+
+                    </div>
+                </tr>
+           
+                <tr *ngFor="let home of filteredHomes"
+                    class="table-item">
+
+                    <!-- wrapper for selected -->
+                    <div class="wrapper" 
+                    (click)="onClickHome(home)">
+                        <td class="img-cell"><img src="../../../../../assets/images/foto-house.png"></td>
+                        <td class="home-cell">{{home.home}}</td>
+                        <td class="street-cell">{{home.street}}</td>
+                        <td class="city-cell">{{home.city}}</td>
+                        <td class="state-cell">{{home.state}}</td>
+                    </div>
+
+                    <!-- delete button -->
+                    <div class="delete-button"
+                        (click)="onClickDelete(home)"
+                        *ngIf="!isAddingMode"
+                    >X</div>
+                </tr>
+        </table>
+    </div>
+</div>
+
+<div class="cover-div">
+    
+</div>
+
+<!-- popup question -->
+<app-popup-question
+    *ngIf = "isPopupQuestion"
+    [title] = "title"
+    [text] = "text"
+    (cancelEvent)="onCancel()"
+    (submitEvent)="onSubmit()"
+>
+
+</app-popup-question>

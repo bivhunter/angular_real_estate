@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Home } from '../model/home';
+import { Home } from '../../homes/model/home';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HomesFilterService {
 
   private changingHomesFilterSubject: Subject<string> = new Subject();
@@ -33,7 +35,6 @@ export class HomesFilterService {
       const searchWords =  searchString.trim().split(' ');
       for (const word of searchWords) {
         const match =  allFields.match(new RegExp(`\\b${word}`, 'i'));
-        console.log(word, searchWords, match);
         if (!match) {
           return false;
         }

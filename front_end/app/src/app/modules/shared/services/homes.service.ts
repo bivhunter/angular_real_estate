@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Subject, BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
-import { Home } from './model/home';
+import { Home } from '../../homes/model/home';
 import { tap, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HomesService {
 
   baseUrl = 'http://localhost:3030/';

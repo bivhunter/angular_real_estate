@@ -11,16 +11,12 @@
     overflow: hidden;
 }
 
-
-
 /* popup menu styles */
 .popup-wrapper {
     z-index: 9900;
     position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
+
 
 .popup {
     flex-direction: column;
@@ -44,11 +40,12 @@ p {
     text-shadow: 1px 1px 2px rgba(192, 192, 192);
 }
 
-h3 {
+h3, h2 {
     margin-bottom: 5px;
     text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
 }
 
+/* buttons style */
 .yes-button {
     text-shadow: 1px 1px 2px rgba(165, 16, 16, 1);
 }
@@ -75,7 +72,7 @@ h3 {
 }
 
 button {
-    width: 75px;
+    width: 60px;
     height: 30px;
     font-size: 15px;
     border-radius: 5px;

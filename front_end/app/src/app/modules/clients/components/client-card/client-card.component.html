@@ -13,11 +13,31 @@
         >Delete</button>
     </div>
 
-    <div class="popup-wrapper" *ngIf="isPopupMenu">
+    <div class="buttons-wrapper">
+        <button class="view-button"
+        (click)="openHomes()">Viewed Homes</button>
+        <button class="add-button"
+        (click)="addHome()"
+        >Add viewed Home</button>
+    </div>
+
+    <!-- adding home list popup -->
+    <div class="popup-homes-list" *ngIf="isPopupListHomes">
+        <app-homes-list-selector 
+            [client]="client"
+            (closeEvent)="isPopupListHomes = false"
+            [adding]="isAdding"
+        >
+
+        </app-homes-list-selector>
+    </div>
+
+    <!-- remove home list popup -->
+    <div class="popup-deleteing" *ngIf="isPopupDeleting">
         <app-clients-popup-deleting
         
         [client]="client"
-        (cancelEvent)="isPopupMenu=false"
+        (cancelEvent)="isPopupDeleting=false"
         (submitEvent)="deleteClient($event)"
         >
 

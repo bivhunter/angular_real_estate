@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Home } from '../../model/home';
 import { Router } from '@angular/router';
-import { HomesService } from './../../homes.service';
+import { HomesService } from '../../../shared/services/homes.service';
 import { HomesSortService } from '../../services/homes-sort.service';
 import { THomesSortingField, THomesSortingMethod } from 'src/app/modules/shared/types/types';
 import { Observable, Subscription } from 'rxjs';

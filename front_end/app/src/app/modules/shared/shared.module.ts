@@ -5,20 +5,27 @@ import { HttpClientModule } from '@angular/common/http';
 import { QuicklinkModule } from 'ngx-quicklink';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { HomesListSelectorComponent } from './components/homes-list-selector/homes-list-selector.component';
+import { PopupQuestionComponent } from './components/popup-question/popup-question.component';
 
 registerLocaleData(localeFr);
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    HomesListSelectorComponent,
+    PopupQuestionComponent
+  ],
   imports: [
     CommonModule,
-    QuicklinkModule
+    QuicklinkModule,
+    FormsModule
   ],
   exports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
-    QuicklinkModule
+    QuicklinkModule,
+    HomesListSelectorComponent
   ]
 })
 export class SharedModule { }

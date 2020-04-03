@@ -9,7 +9,6 @@ import { ClientsListComponent } from './components/clients-list/clients-list.com
 import { ClientsTableComponent } from './components/clients-table/clients-table.component';
 import { PhonePipe } from './pipes/phone.pipe';
 import { ClientsRoutingModule } from './clients-routing.module';
-import { ClientService } from './clients.service';
 import { ClientsControlPanelComponent } from './components/clients-control-panel/clients-control-panel.component';
 import { ClientsViewService } from './services/clients-view.service';
 import { ClientsSortingService } from './services/clients-sorting.service';
@@ -33,10 +32,9 @@ import { ClientsPopupDeletingComponent } from './components/clients-popup-deleti
   imports: [
     CommonModule,
     SharedModule,
-    ClientsRoutingModule
+    ClientsRoutingModule,
   ],
   providers: [
-    ClientService,
     ClientsViewService,
     ClientsSortingService,
     ClientsFilteringService

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HomesService } from '../../homes.service';
+import { HomesService } from '../../../shared/services/homes.service';
 import { Home } from '../../model/home';
 
 @Component({
