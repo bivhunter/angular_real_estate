@@ -13,14 +13,24 @@
 
 
 /* popup menu styles */
-.popup-wrapper {
+.popup-wrapper {          
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     z-index: 8800;
-    position: absolute;
-    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
 .popup {
+    position: relative;
     flex-direction: column;
+    flex: 1 1 500px;
     align-items: center;
     z-index: 8880;
     padding: 10px;
@@ -30,14 +40,37 @@
     box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
     background-color: white;
     max-height: 500px;
+    
 }
+
+.content-wrapper {
+    display: flex;
+    
+    overflow: auto;
+}
+
+.header-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+}
+
+
 
 
 /* buttons styles */
 .close-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    right: 35px;
-    top: 35px;
+    width: 40px;
+    height: 40px;
+    right: 5px;
+    top: 5px;
     text-shadow: 1px 1px 2px rgba(192, 192, 192, 1);
     font-size: 20px;
 }
@@ -48,32 +81,19 @@
     box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
 }
 
-.adding-button {
-    text-shadow: 1px 1px 2px rgba(20, 143, 85, 1);
-    font-size: 15px;
-}
-
-.adding-button:hover {
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(20, 143, 85, 1);
-}
-
 .delete-button {
     width: 40px;
     height: 40px;
     text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
-    text-align: center;
-    vertical-align: middle;
-    /* position: absolute;
-    right: 15px;
-    top: 15px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .delete-button:hover {
     cursor: pointer;
     box-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
 }
-
 
 /* table styles */
 
@@ -110,8 +130,6 @@ tr {
     flex: 1 1 30px; 
 }
 
-
-
 .home-cell {
     flex: 1 1 70px;
 }
@@ -143,26 +161,7 @@ h3 {
     text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
 }
 
-.popup-header {
-    margin: 8px;
-}
-
-.buttons-wrapper {
-    display: flex;
-    width: 200px;
-    justify-content: space-around;
-    margin: 20px 0 15px 0;
-}
-
-button {
-    width: 75px;
-    height: 30px;
-    font-size: 15px;
-    border-radius: 5px;
-}
-
-
-/* input styles */
+/* search input styles */
 input {
     margin: 10px;
     padding-left: 10px;

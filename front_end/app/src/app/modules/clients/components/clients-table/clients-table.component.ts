@@ -14,9 +14,12 @@ import { ClientService } from '../../../shared/services/clients.service';
 export class ClientsTableComponent implements OnInit, OnDestroy {
 
   isPopumMenu = false;
-  clientForDelete: Client;
 
   @Input() clients: Client[];
+
+  isPopupListHomes = false;
+  isAdding: boolean;
+  currentClient: Client;
 
   sortingMethod: TClientsSortingMethod;
   private changingSortingMethodEvent: Observable<TClientsSortingMethod>;
@@ -38,14 +41,26 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
   }
 
   onDeleteButton(client: Client): void {
+    this.currentClient = {...client};
     this.isPopumMenu = true;
-    this.clientForDelete = {...client};
   }
 
   deleteClient(id: number | string): void {
     this.clientsService.deleteClient(id).subscribe(
       () => this.isPopumMenu = false
     );
+  }
+
+  onAddHome(client: Client): void {
+    this.currentClient = client;
+    this.isAdding = true;
+    this.isPopupListHomes = true;
+  }
+
+  onViewedHome(client: Client): void {
+    this.currentClient = client;
+    this.isAdding = false;
+    this.isPopupListHomes = true;
   }
 
   onProfileButton(id: number | string): void {

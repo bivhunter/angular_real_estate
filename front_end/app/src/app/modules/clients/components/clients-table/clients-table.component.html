@@ -16,7 +16,7 @@
             </td>
             <td class="email-cell">Email</td>
             <td class="phone-cell">Phone</td>
-            <td class="profile-cell"></td>
+            <td class="profile-cell">Actions</td>
             <td class="delete-cell"></td>
         </tr>
         <tr *ngFor="let client of clients">
@@ -26,18 +26,47 @@
             <td class="email-cell">{{client.email}}</td>
             <td class="phone-cell">{{client.phone}}</td>
             <td class="profile-cell"
-            (click)="onProfileButton(client.id)">Profile</td>
-            <td class="delete-cell"
-            (click)="onDeleteButton(client)">Delete</td>
+            >
+                <button class="profile-button"
+                    (click)="onProfileButton(client.id)">
+                    Profile
+                </button>
+
+                <button class="viewed-homes-button"
+                (click)="onViewedHome(client)">
+                Viewed Homes
+                </button>
+
+                <button class="addhome-button"
+                    (click)="onAddHome(client)">
+                    Add viewed Home
+                </button>
+               
+            </td>
+            <td class="delete-cell">
+                <div class="delete-button"
+                    (click)="onDeleteButton(client)">X</div>    
+            </td>
         </tr>
     </tbody>
     </table>
 </div>
 
+ <!-- adding home list popup -->
+ <div class="popup-homes-list" *ngIf="isPopupListHomes">
+    <app-homes-list-selector 
+        [client]="currentClient"
+        (closeEvent)="isPopupListHomes = false"
+        [adding]="isAdding"
+    >
+
+    </app-homes-list-selector>
+</div>
+
     <app-clients-popup-deleting
         class="popup-menu"
         *ngIf="isPopumMenu"
-        [client]="clientForDelete"
+        [client]="currentClient"
         (submitEvent)="deleteClient($event)"
         (cancelEvent)="isPopumMenu=false"
     ></app-clients-popup-deleting>
