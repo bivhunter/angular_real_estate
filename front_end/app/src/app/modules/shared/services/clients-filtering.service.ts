@@ -40,7 +40,6 @@ export class ClientsFilteringService {
       const searchWords =  searchString.trim().split(' ');
       for (const word of searchWords) {
         const match =  allFields.match(new RegExp(`\\b${word}`, 'i'));
-        console.log(word, searchWords, match);
         if (!match) {
           return false;
         }

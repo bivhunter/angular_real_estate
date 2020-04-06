@@ -33,7 +33,12 @@ const routes: Routes = [
     loadChildren: () => import('./modules/homes/homes.module')
     .then(module => module.HomesModule, (error) => console.log(error))
   },
-
+  {
+    path: 'deals',
+    canActivate: [ AuthGuard ],
+    loadChildren: () => import('./modules/deal/deal.module')
+    .then(module => module.DealModule, (error) => console.log(error))
+  },
 ];
 
 @NgModule({

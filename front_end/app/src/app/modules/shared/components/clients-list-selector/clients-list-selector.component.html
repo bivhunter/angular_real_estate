@@ -19,22 +19,26 @@
                 >
             </form>
 
+            <table>
+                <tr class="head-row">
+                    <div class="head-wrapper" >
+                        <td class="img-cell"></td>
+                        <td class="surname-cell">Surname</td>
+                        <td class="name-cell">Name</td>
+                        <td class="email-cell">Email</td>
+                    </div>
+                    <div class="delete-button"
+                    *ngIf="!isAddingMode">
+                    </div>
+                </tr>
+            </table>
+
         </div>
 
         <div class="content-wrapper">
             <!-- clients list -->
             <table>
-                    <tr class="head-row">
-                        <div class="head-wrapper" >
-                            <td class="img-cell"></td>
-                            <td class="surname-cell">Surname</td>
-                            <td class="name-cell">Name</td>
-                            <td class="email-cell">Email</td>
-                        </div>
-                        <div class="delete-button"
-                        *ngIf="!isAddingMode">
-                        </div>
-                    </tr>
+                    
                
                     <tr *ngFor="let client of filteredClients"
                     
