@@ -14,6 +14,10 @@ import { Observable, Subscription } from 'rxjs';
 export class HomesTableComponent implements OnInit, OnDestroy {
 
   homeForDelete: Home;
+  currentHome: Home;
+
+  isPopupListClients = false;
+  isAdding: boolean;
   isPopup = false;
   @Input() homes: Home[];
   private changingSortingMethodEvent: Observable<THomesSortingMethod>;
@@ -55,6 +59,19 @@ export class HomesTableComponent implements OnInit, OnDestroy {
     );
   }
 
+  onAddClient(home: Home): void {
+    this.currentHome = home;
+    this.isAdding = true;
+    this.isPopupListClients = true;
+  }
+
+  onViewedClient(home: Home): void {
+    this.currentHome = home;
+    this.isAdding = false;
+    this.isPopupListClients = true;
+  }
+
+  
   private initSubscription(): void {
     this.changingSortingMethodEvent = this.homesSortService
       .getChangingHomesSortingMethodEvent();

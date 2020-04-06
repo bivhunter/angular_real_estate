@@ -13,6 +13,8 @@ export class HomeCardComponent implements OnInit {
   @Input() home: Home;
 
   isPopup = false;
+  isAdding: boolean;
+  isPopupListClients = false;
 
   constructor(
     private router: Router,
@@ -23,7 +25,7 @@ export class HomeCardComponent implements OnInit {
 
   }
 
-  onDeleteButton(id: string | number): void {
+  onDeleteButton(): void {
     this.isPopup = true;
   }
 
@@ -32,6 +34,16 @@ export class HomeCardComponent implements OnInit {
     .subscribe(
       () => this.isPopup = false
     );
+  }
+
+  openClients(): void {
+    this.isAdding = false;
+    this.isPopupListClients = true;
+  }
+
+  addClient(): void {
+    this.isAdding = true;
+    this.isPopupListClients = true;
   }
 
   onDetailsButton(id: string | number) {

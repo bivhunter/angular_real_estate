@@ -117,7 +117,7 @@ tr {
 .head-wrapper {
     display: flex;
     justify-content: center;
-    flex: 5 5 640px;
+    flex: 3 3 640px;
 }
 
 .wrapper:hover {
@@ -130,11 +130,7 @@ tr {
     flex: 0 1 30px; 
 }
 
-.home-cell {
-    flex: 1 1 70px;
-}
-
-.street-cell, .city-cell, .state-cell {
+.surname-cell, .name-cell, .email-cell {
     flex: 2 2 140px
 }
 
@@ -142,6 +138,7 @@ tr {
     text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
     font-size: 20px;
     font-weight: bold;
+    
 }
 
 

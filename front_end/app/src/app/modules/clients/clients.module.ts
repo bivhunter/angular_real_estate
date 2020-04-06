@@ -12,7 +12,6 @@ import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientsControlPanelComponent } from './components/clients-control-panel/clients-control-panel.component';
 import { ClientsViewService } from './services/clients-view.service';
 import { ClientsSortingService } from './services/clients-sorting.service';
-import { ClientsFilteringService } from './services/clients-filtering.service';
 import { ClientsPopupDeletingComponent } from './components/clients-popup-deleting/clients-popup-deleting.component';
 
 
@@ -37,7 +36,6 @@ import { ClientsPopupDeletingComponent } from './components/clients-popup-deleti
   providers: [
     ClientsViewService,
     ClientsSortingService,
-    ClientsFilteringService
   ]
 })
 export class ClientsModule { }

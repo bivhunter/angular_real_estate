@@ -4,18 +4,17 @@
     <p>{{client.email}}</p>
     <p>{{client.phone}}</p>
 
+    <div class="delete-button"
+    (click)="onDeleteButton()"
+    >X</div>
     
     <div class="buttons-wrapper">
         <button class="profile-button"
         (click)="onProfileButton()">Profile</button>
-        <button class="delete-button"
-        (click)="onDeleteButton()"
-        >Delete</button>
-    </div>
 
-    <div class="buttons-wrapper">
         <button class="view-button"
         (click)="openHomes()">Viewed Homes</button>
+
         <button class="add-button"
         (click)="addHome()"
         >Add viewed Home</button>
@@ -33,14 +32,12 @@
     </div>
 
     <!-- remove home list popup -->
-    <div class="popup-deleteing" *ngIf="isPopupDeleting">
+    <div class="popup-deleting" *ngIf="isPopupDeleting">
         <app-clients-popup-deleting
-        
-        [client]="client"
-        (cancelEvent)="isPopupDeleting=false"
-        (submitEvent)="deleteClient($event)"
+            [client]="client"
+            (cancelEvent)="isPopupDeleting=false"
+            (submitEvent)="deleteClient($event)"
         >
-
         </app-clients-popup-deleting>
 
     </div>

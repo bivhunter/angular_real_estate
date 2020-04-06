@@ -38,7 +38,7 @@ export class HomesListSelectorComponent implements OnInit {
     this.getHomes();
   }
 
-  filterHomes(searchString: string): void{
+  filterHomes(searchString: string): void {
     this.filteredHomes = this.homesFilterService.filterHomes(this.homes, searchString);
   }
 

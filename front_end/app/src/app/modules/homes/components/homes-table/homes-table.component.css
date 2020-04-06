@@ -89,7 +89,7 @@ h3 {
     margin: 20px 0 15px 0;
 }
 
-button {
+.popup-wrapper button {
     width: 75px;
     height: 30px;
     font-size: 15px;
@@ -153,15 +153,46 @@ td {
 }
 
 .details-cell {
-    text-shadow: 1px 1px 2px rgba(0, 114, 188, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+    flex: 1 1 200px;
+}
+
+.details-cell button {
+    border-radius: 5px;
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+    margin: 1px;
+}
+
+.details-cell button:hover{
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
 }
 
 .delete-cell {
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
     text-shadow: 1px 1px 2px rgba(165, 16, 16, 1);
 }
 
-.details-cell, .delete-cell {
-    flex: 2 2 100px;
+
+.delete-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 25px;
+}
+
+.delete-button:hover {
+    cursor: pointer;
+    text-shadow: 1px 1px 2px rgba(165, 16, 16, 1);
+    box-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
 }
 
 .img-cell {

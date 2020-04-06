@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { Client } from '../model/client';
+import { Client } from '../../clients/model/client';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
+
 export class ClientsFilteringService {
 
   private changingFilterSubject: Subject<string> = new Subject();

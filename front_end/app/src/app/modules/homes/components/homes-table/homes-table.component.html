@@ -41,16 +41,46 @@
             <td class="city-cell">{{home.city}}</td>
             <td class="state-cell">{{home.state}}</td>
             <td class="price-cell">{{home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</td>
-            <td class="details-cell"
-            (click)="onDetailsButton(home.id)">Details</td> 
-            <td class="delete-cell"
-            (click)="onDeleteButton(home)">Delete
+            <td class="details-cell">
+                <button class="profile-button"
+                    (click)="onDetailsButton(home.id)">
+                    Details
+                </button>
+
+                <button class="viewed-clients-button"
+                (click)="onViewedClient(home)">
+                Clients who viewed
+                </button>
+
+                <button class="addclient-button"
+                    (click)="onAddClient(home)">
+                    Add client who viewed
+                </button>
+            </td> 
+            <td class="delete-cell">
+                <div class="delete-button"
+                    (click)="onDeleteButton(home)">X
+                </div>  
              </td>
          </tr>
     </tbody>
     </table>
 
-        <!-- popup menu -->
+     <!-- adding clients list popup -->
+    <div class="popup-client-list" *ngIf="isPopupListClients">
+        <app-clients-list-selector
+            [home]="currentHome"
+            (closeEvent)="isPopupListClients = false"
+            [adding]="isAdding"
+        >
+
+        </app-clients-list-selector>
+    </div>
+
+
+
+
+        <!-- deleting popup menu -->
     <div class="popup-wrapper" *ngIf="isPopup">
         <div class="popup"  >
             <h3 class=popup-header>Delete home!</h3>

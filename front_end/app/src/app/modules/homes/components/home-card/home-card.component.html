@@ -3,16 +3,35 @@
     <h3>{{home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</h3>
     <p>{{home.home + ' ' + home.street}}</p>
     <p>{{home.city + ' ' + home.state}}</p>
+
+    <div class="delete-button"
+    (click)="onDeleteButton()"
+    >X</div>
     
-    <div class="buttons-wrapper">
-        <button class="profile-button"
+    <div class="main-buttons-wrapper">
+        <button class="details-button"
         (click)="onDetailsButton(home.id)">Details</button>
-        <button class="delete-button"
-        (click)="onDeleteButton(home.id)"
-        >Delete</button>
+
+        <button class="view-button"
+        (click)="openClients()">Clients who viewed Homes</button>
+
+        <button class="add-button"
+        (click)="addClient()"
+        >Add client who viewed Home</button>
     </div>
 
     
+      <!-- adding home list popup -->
+      <div class="popup-clients-list" *ngIf="isPopupListClients">
+        <app-clients-list-selector 
+            [home]="home"
+            (closeEvent)="isPopupListClients = false"
+            [adding]="isAdding"
+        >
+
+        </app-clients-list-selector>
+    </div>
+
     <!-- popup deleting menu -->
     <div class="popup"  *ngIf="isPopup">
         <h3 class=popup-header>Delete home!</h3>

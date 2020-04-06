@@ -4,7 +4,7 @@ import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
 import { Observable, Subscriber, Subscription } from 'rxjs';
 import { TClientsSortingMethod } from 'src/app/modules/shared/types/types';
-import { ClientsFilteringService } from './../../services/clients-filtering.service';
+import { ClientsFilteringService } from '../../../shared/services/clients-filtering.service';
 import { ClientsSortingService } from './../../services/clients-sorting.service';
 
 @Component({
