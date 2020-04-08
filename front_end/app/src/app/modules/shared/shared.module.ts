@@ -28,7 +28,8 @@ registerLocaleData(localeFr);
     HttpClientModule,
     QuicklinkModule,
     HomesListSelectorComponent,
-    ClientsListSelectorComponent
+    ClientsListSelectorComponent,
+    PopupQuestionComponent
   ]
 })
 export class SharedModule { }

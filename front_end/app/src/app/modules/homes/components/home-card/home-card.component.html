@@ -6,9 +6,10 @@
 
     <div class="delete-button"
     (click)="onDeleteButton()"
+    *ngIf="!home.clientOwner"
     >X</div>
     
-    <div class="main-buttons-wrapper">
+    <div class="main-buttons-wrapper" *ngIf="!home.clientOwner">
         <button class="details-button"
         (click)="onDetailsButton(home.id)">Details</button>
 
@@ -18,6 +19,19 @@
         <button class="add-button"
         (click)="addClient()"
         >Add client who viewed Home</button>
+    </div>
+
+    <div class="sold-out"
+        *ngIf="home.clientOwner"
+        (click)="onClientOwnerClick(home.clientOwner.id)"
+        >
+        <img class="client-img" src="../../../../../assets/images/foto-card.png">
+        <div class="client-info">
+            <h3>{{home.clientOwner.name + ' ' + home.clientOwner.surname}}</h3>
+            <p>{{home.clientOwner.email}}</p>
+            <p>{{home.clientOwner.phone}}</p>
+
+        </div>
     </div>
 
     
@@ -62,5 +76,7 @@
     <div *ngIf="isPopup" class="cover-div"></div>
     
     
+    <img class="sold-img" src="../../../../../assets/images/sold.png" *ngIf="home.clientOwner">
+
 </div>
 

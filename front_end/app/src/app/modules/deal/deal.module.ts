@@ -10,6 +10,10 @@ import { DealsControlPanelComponent } from './components/deals-control-panel/dea
 import { DealsListComponent } from './components/deals-list/deals-list.component';
 import { DealsTableComponent } from './components/deals-table/deals-table.component';
 import { DealsViewService } from './services/deals-view.service';
+import { DealsDetailsComponent } from './components/deals-details/deals-details.component';
+import { DealsClientsSelectorComponent } from './components/deals-clients-selector/deals-clients-selector.component';
+import { DealsHomesSelectorComponent } from './components/deals-homes-selector/deals-homes-selector.component';
+import { DealsMakingDealComponent } from './components/deals-making-deal/deals-making-deal.component';
 
 
 @NgModule({
@@ -19,14 +23,20 @@ import { DealsViewService } from './services/deals-view.service';
     DealCreatorComponent,
     DealsControlPanelComponent,
     DealsListComponent,
-    DealsTableComponent],
+    DealsTableComponent,
+    DealsDetailsComponent,
+    DealsClientsSelectorComponent,
+    DealsHomesSelectorComponent,
+    DealsMakingDealComponent],
   imports: [
     CommonModule,
     DealRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     DealsViewService
+  ],
+  exports: [
   ]
 
 })

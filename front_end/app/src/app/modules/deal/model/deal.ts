@@ -7,9 +7,9 @@ export class Deal implements IDeal {
     price: number;
     date: Date;
     // tslint:disable-next-line: variable-name
-    home_id: number | string;
+    homeId: number | string;
     // tslint:disable-next-line: variable-name
-    client_id: number | string;
+    clientId: number | string;
     // tslint:disable-next-line: variable-name
     user_id: number | string;
     home: Home;
@@ -19,8 +19,8 @@ export class Deal implements IDeal {
         this.id = null;
         this.price = 0;
         this.date = new Date();
-        this.home_id = '';
-        this.client_id = '';
+        this.homeId = '';
+        this.clientId = '';
         this.user_id = '';
     }
 }

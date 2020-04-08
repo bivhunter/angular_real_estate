@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="deal-wrapper">
+        <img class="deal-img" src="../../../../../assets/images/deal.png">
+        <h3>{{home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</h3>
+        <h3>{{getCurrentDate() | date:'dd-MM-yyyy'}}</h3>
+    </div>
+
+    <div class="content-wrapper">
+            <div class="client-wrapper">
+                <img src="../../../../../assets/images/foto-card.png">
+                <h3>{{client.name + ' ' + client.surname}}</h3>
+                <p>{{client.email}}</p>
+                <p>{{client.phone}}</p>
+            </div>
+        
+            <div class="home-wrapper">
+                <img src="../../../../../assets/images/foto-house.png">
+                <h3>{{home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</h3>
+                <p>{{home.home + ' ' + home.street}}</p>
+                <p>{{home.city + ' ' + home.state}}</p>
+            </div>
+    </div>
+
+
+    <div class="buttons-wrapper">
+        <button class="cancel-button"
+        (click)="cancelEvent.emit()">
+            Cancel
+        </button>
+
+        <button class="button"
+        (click)="backEvent.emit()"
+            >
+            Back
+        </button>
+
+        <button class="deal-button"
+        (click)="submitEvent.emit()"
+            >
+            Make a deal
+        </button>
+    </div>
+</div>

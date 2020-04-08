@@ -1,1 +1,40 @@
-<p>deals-list works!</p>
+
+<!-- sorting menu -->
+<div class="sorting-menu" *ngIf="viewMode === 'cards'">
+    <span class="main">Sort by:</span>
+
+    <button class="sorting-button" 
+    type="button"
+    [class.sort-up]="sortingMethod === 'DATE_UP'"
+    [class.sort-down]="sortingMethod === 'DATE_DOWN'"
+    (click)="changeSortingMethod('DATE')"
+    >Date</button>
+
+    <button class="sorting-button" 
+    type="button"
+    [class.sort-up]="sortingMethod === 'PRICE_UP'"
+    [class.sort-down]="sortingMethod === 'PRICE_DOWN'"
+    (click)="changeSortingMethod('PRICE')">Price</button>
+</div>
+
+<div class="container" [ngSwitch]="viewMode">
+    <!-- table-view -->
+    <div class=list-view *ngSwitchCase="'list'">
+        <app-deals-table
+            [deals]="deals"
+            >
+        </app-deals-table>        
+    </div>
+
+    <!-- cards-view -->
+    <div class="card-view" *ngSwitchCase="'cards'">
+        <h2 *ngIf="!deals?.length">No deals</h2>
+        <app-deal-card 
+        *ngFor="let deal of deals"
+        [deal]="deal"
+        >
+        </app-deal-card>
+    </div>
+</div>
+
+

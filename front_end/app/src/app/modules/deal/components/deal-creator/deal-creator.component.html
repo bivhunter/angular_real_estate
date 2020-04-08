@@ -1,1 +1,32 @@
-<p>deal-creator works!</p>
+<div class="container" [ngSwitch]="currentFrame">
+    <app-deals-clients-selector
+        *ngSwitchCase="'clientsSelector'"
+        [selectedClient]="selectedClient"
+        (cancelEvent)="onClientsSelectorCancel()"
+        (submitEvent)="onClientsSelectorSubmit($event)"
+    >
+
+    </app-deals-clients-selector>
+
+    <app-deals-homes-selector
+        *ngSwitchCase="'homesSelector'"
+        [selectedHome]="selectedHome"
+        (cancelEvent)="onHomesSelectorCancel()"
+        (submitEvent)="onHomesSelectorSubmit($event)"
+        (backEvent)="onHomesSelectorBack()"
+    >
+
+    </app-deals-homes-selector>
+
+    <app-deals-making-deal
+        *ngSwitchCase="'dealsMaker'"
+        [home]="selectedHome"
+        [client]="selectedClient"
+        (cancelEvent)="onDealsSelectorCancel()"
+        (submitEvent)="onDealsSelectorSubmit()"
+        (backEvent)="onDealsSelectorBack()"
+    >
+
+    </app-deals-making-deal>
+</div>
+

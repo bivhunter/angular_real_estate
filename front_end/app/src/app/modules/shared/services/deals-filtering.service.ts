@@ -5,8 +5,7 @@ import { Deal } from '../../deal/model/deal';
 @Injectable({
   providedIn: 'root'
 })
-export class DealsFilteringServiceService {
-
+export class DealsFilteringService {
   private changingFilterSubject: Subject<string> = new Subject();
 
   constructor() { }
@@ -29,7 +28,15 @@ export class DealsFilteringServiceService {
     }
 
     return deals.filter( (deal: Deal) => {
-      const allFields = [deal.client.name, deal.client.surname]
+      const allFields = [
+        deal.client.name,
+        deal.client.surname,
+        deal.home.home,
+        deal.home.street,
+        deal.home.city,
+        deal.home.state,
+        deal.home.price
+      ]
         .map(word => word.toString())
         .join(' ');
       const searchWords =  searchString.trim().split(' ');

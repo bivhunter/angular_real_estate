@@ -20,6 +20,8 @@ export class HomesTableComponent implements OnInit, OnDestroy {
   isAdding: boolean;
   isPopup = false;
   @Input() homes: Home[];
+
+  // for sorting
   private changingSortingMethodEvent: Observable<THomesSortingMethod>;
   private changingStoringMethodSubscription: Subscription;
   sortingMethod: THomesSortingMethod;
@@ -71,7 +73,6 @@ export class HomesTableComponent implements OnInit, OnDestroy {
     this.isPopupListClients = true;
   }
 
-  
   private initSubscription(): void {
     this.changingSortingMethodEvent = this.homesSortService
       .getChangingHomesSortingMethodEvent();

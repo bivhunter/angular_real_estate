@@ -30,14 +30,35 @@ img {
     height: 80px;
 }
 
+.client-img {
+    height: 40px;
+}
+
+.sold-img {
+    position: absolute;
+    height: 100px;
+}
+
 /* buttons styles */
-.main-buttons-wrapper {
+.main-buttons-wrapper  {
     display: flex;
     flex-direction: column;
     justify-content: stretch;
     align-self: stretch;
-    /* width: 200px; */
+    width: 220px;
     margin: 20px 0 15px 0;
+}
+
+.sold-out {
+    width: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sold-out:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
 }
 
 button {

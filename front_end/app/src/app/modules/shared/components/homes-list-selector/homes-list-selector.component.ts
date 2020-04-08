@@ -93,7 +93,7 @@ export class HomesListSelectorComponent implements OnInit {
   }
 
   private getHomes(): void {
-    this.homesService.gethomes().subscribe(
+    this.homesService.getHomes().subscribe(
       (homes) => {
         this.homes = this.isAddingMode ? this.cutOwnHomes(homes) : this.client.homes;
         this.filterHomes('');

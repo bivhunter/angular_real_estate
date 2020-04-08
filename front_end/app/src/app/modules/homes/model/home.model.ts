@@ -12,4 +12,5 @@ export interface HomeModel {
     client_id?: number | string; // used for post and patch
     clients?: Array<Client>; // used for GET
     user_id: number | string;
+    clientOwner?: Client;
 }

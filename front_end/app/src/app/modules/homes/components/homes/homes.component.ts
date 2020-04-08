@@ -50,7 +50,7 @@ export class HomesComponent implements OnInit, OnDestroy {
   }
 
   private getHomes(): void {
-    this.homesService.gethomes().subscribe(
+    this.homesService.getHomes().subscribe(
       (homesList) => this.getHomesHandler(homesList),
       (error) => console.log(error)
     );

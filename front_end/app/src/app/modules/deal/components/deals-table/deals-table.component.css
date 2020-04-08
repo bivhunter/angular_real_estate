@@ -1,0 +1,99 @@
+:host {
+    display: flex;
+    flex-grow: 1;
+}
+
+.container {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+}
+
+
+/* styles for table */
+.table {
+    flex-grow: 1;
+    font-size: 20px;
+    text-shadow: 1px 1px 2px rgba(192, 192, 192);
+}
+
+.head-row {
+    border: none;
+    font-size: 25px;
+    text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
+    box-shadow: none;
+}
+
+td {
+    margin: 10px;
+}
+
+.head-row .price-cell:hover, .head-row .date-cell:hover {
+    cursor: pointer;
+}
+
+.home-cell, .client-cell {
+    display: flex;
+    align-items: center;
+    flex: 4 4 200px;
+}
+
+.client-wrapper, .home-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.table-item .client-cell:hover, .table-item .home-cell:hover, .table-item .img-cell:hover {
+    cursor: pointer;
+    box-shadow: 4px 4px 6px rgba(0, 114, 188, 1);
+}
+
+.date-cell {
+    flex: 2 2 100px;
+}
+
+.sort-up::before {
+    content: '↑';
+}
+
+.sort-down::before {
+    content: '↓';
+}
+
+.price-cell {
+    flex: 2 2 100px;
+    text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
+}
+
+.img-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 0;
+    flex-basis: 80px;
+}
+
+tr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+    border: 3px grey groove;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
+}
+
+img {
+    height: 60px;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+h3 {
+    margin: 0;
+    padding: 0;
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DealsViewService } from '../../services/deals-view.service';
+import { DealsFilteringService } from './../../../shared/services/deals-filtering.service';
 
 @Component({
   selector: 'app-deals-control-panel',
@@ -8,13 +9,13 @@ import { DealsViewService } from '../../services/deals-view.service';
   styleUrls: ['./deals-control-panel.component.css']
 })
 export class DealsControlPanelComponent implements OnInit {
-  
+
   isViewsMenu = false;
 
   constructor(
     private router: Router,
     private dealsViewService: DealsViewService,
-    private clientsFilteringService: ClientsFilteringService
+    private dealsFilteringService: DealsFilteringService
   ) { }
 
   ngOnInit(): void {
@@ -31,11 +32,11 @@ export class DealsControlPanelComponent implements OnInit {
   }
 
   changeFilter(searchString: string): void {
-    this.clientsFilteringService.changeFilter(searchString);
+    this.dealsFilteringService.changeFilter(searchString);
   }
 
   onAddButtonClick(): void {
-    this.router.navigateByUrl('clients/adding');
+    this.router.navigateByUrl('deals/adding');
   }
 
 }

@@ -1,0 +1,79 @@
+<!-- Input:  selectedHome -->
+<!-- Output: submitEvent(Home)
+             cancelEvent()
+             backEvent()    -->
+
+<div class="container">
+    <!-- main elem -->
+    <div class="selector-wrapper">
+        <div class="header-wrapper">
+            <h3>Select Home</h3> 
+            
+            <!-- input for search -->
+            <form>
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="🔍"
+                    [ngModel]
+                    (ngModelChange)="filterHomes($event)"
+                >
+            </form>
+
+            <table>
+                <tr class="head-row">
+                    <div class="head-wrapper" >
+                        <td class="img-cell"></td>
+                        <td class="home-cell">Home</td>
+                        <td class="street-cell">Street</td>
+                        <td class="city-cell">City</td>
+                        <td class="state-cell">State</td>
+                    </div>
+                </tr>
+            </table>
+
+        </div>
+
+        <div class="content-wrapper">
+            <!-- homes list -->
+            <table>
+                    <tr *ngFor="let home of filteredHomes"
+                    
+                        class="table-item">
+    
+                        <!-- wrapper for selected -->
+                        <div class="wrapper" 
+                        [class.selected]="home.id === selectedHome?.id"
+                        (click)="selectedHome = home">
+                            <td class="img-cell"><img src="../../../../../assets/images/foto-house.png"></td>
+                            <td class="home-cell">{{home.home}}</td>
+                            <td class="street-cell">{{home.street}}</td>
+                            <td class="city-cell">{{home.city}}</td>
+                            <td class="state-cell">{{home.state}}</td>
+                        </div>
+                    </tr>
+            </table>
+        </div>
+
+        <div class="buttons-wrapper">
+            <button class="cancel-button"
+            (click)="cancelEvent.emit()">
+                Cancel
+            </button>
+
+            <button class="button"
+            (click)="backEvent.emit()"
+                >
+                Back
+            </button>
+
+            <button class="button"
+            (click)="submitEvent.emit(selectedHome)"
+            [disabled]="!selectedHome"
+                >
+                Next
+            </button>
+        </div>
+
+    </div>
+</div>

@@ -5,8 +5,8 @@ export interface IDeal {
     'id': number | string;
     'price': number;
     'date': Date;
-    'home_id': number | string;
-    'client_id': number | string;
+    'homeId': number | string;
+    'clientId': number | string;
     'user_id': number | string;
     'home'?: Home;
     'client'?: Client;

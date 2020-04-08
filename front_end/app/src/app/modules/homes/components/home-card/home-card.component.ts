@@ -36,6 +36,10 @@ export class HomeCardComponent implements OnInit {
     );
   }
 
+  onClientOwnerClick(id: string | number) {
+    this.router.navigateByUrl(`clients/profile/${id}`);
+  }
+
   openClients(): void {
     this.isAdding = false;
     this.isPopupListClients = true;
