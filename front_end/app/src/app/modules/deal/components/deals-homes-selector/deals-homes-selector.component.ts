@@ -38,7 +38,9 @@ export class DealsHomesSelectorComponent implements OnInit {
   }
 
   private getHomesHandler(homes: Home[]): void {
-    this.homes = homes;
+    this.homes = homes.filter(home => {
+      return !home.clientOwner;
+    });
     this.filterHomes('');
   }
 

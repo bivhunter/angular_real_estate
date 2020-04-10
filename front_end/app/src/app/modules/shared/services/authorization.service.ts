@@ -9,15 +9,16 @@ import { Router } from '@angular/router';
 })
 export class AuthorizationService {
 
-  baseUrl = 'http://localhost:3030/';
+  private baseUrl = 'http://localhost:3030/';
 
-  clientUrl =  `${this.baseUrl}client`;
+  private clientUrl =  `${this.baseUrl}client`;
+  private redirectUrl = 'dashboard';
 
-  set authToken(value: string) {
+  private set authToken(value: string) {
     localStorage.setItem('authToken', value);
   }
 
-  get authToken(): string {
+  private get authToken(): string {
     return localStorage.getItem('authToken');
   }
 
@@ -43,6 +44,14 @@ export class AuthorizationService {
         return of(false);
       })
     );
+  }
+
+  setRedirectUrl(url: string): void {
+    this.redirectUrl = url;
+  }
+
+  getRedirectUrl(): string {
+    return this.redirectUrl;
   }
 
   private getHttpAuthOption() {

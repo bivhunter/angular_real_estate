@@ -3,6 +3,7 @@ import { Subject, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Deal } from '../../deal/model/deal';
 import { tap, catchError } from 'rxjs/operators';
+import { Resolve } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'

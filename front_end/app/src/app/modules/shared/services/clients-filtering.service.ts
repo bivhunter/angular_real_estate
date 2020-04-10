@@ -54,32 +54,32 @@ function filterPhone(value: string): string {
     return '';
   }
   value = value.replace(/\s/g, '');
-  value = value.replace(/[()]/g, '');
+  value = value.replace(/[()+]/g, '');
   let resString = '+';
 
-  for (let i = 1; i < value.length; i++) {
-    if (i < 3) {
+  for (let i = 0; i < value.length; i++) {
+    if (i < 2) {
       resString = resString + value[i];
     }
-    if (i === 3) {
+    if (i === 2) {
       resString = resString + ' (' + value[i];
     }
-    if (4 <= i  && i < 6) {
+    if (3 <= i  && i < 5) {
       resString = resString + value[i];
     }
-    if (i === 6) {
+    if (i === 5) {
       resString = resString  + ') ' + value[i];
     }
-    if (7 <= i  && i < 9) {
+    if (6 <= i  && i < 8) {
       resString = resString + value[i];
     }
-    if (i === 9) {
+    if (i === 8) {
       resString = resString + ' ' + value[i];
     }
-    if (9 < i  && i < 13) {
+    if (8 < i  && i < 12) {
       resString = resString + value[i];
     }
-    if (i >= 13) {
+    if (i >= 12) {
       break;
     }
   }

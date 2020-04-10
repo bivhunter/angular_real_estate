@@ -4,6 +4,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { tap, catchError, map} from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthorizationService } from '../shared/services/authorization.service';
 
 
 @Injectable()
@@ -31,7 +32,8 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthorizationService
   ) { }
 
   registerUser(user: User): Observable<User | string> {
@@ -46,7 +48,8 @@ export class UserService {
       tap((resp) => {
         this.log(resp.accessToken);
         this.authToken = resp.accessToken;
-        this.router.navigateByUrl('dashboard');
+        const url = this.authService.getRedirectUrl();
+        this.router.navigateByUrl(url);
       }),
       catchError(this.handleAuthorizationError)
     );

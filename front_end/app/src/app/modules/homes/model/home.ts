@@ -1,4 +1,5 @@
 import { HomeModel } from './home.model';
+import { Client } from '../../clients/model/client';
 
 export class Home implements HomeModel {
 
@@ -13,6 +14,7 @@ export class Home implements HomeModel {
     client_id?: string | number;
     clients?: any[];
     user_id: string | number;
+    clientOwner: Client;
 
     constructor() {
         this.id = null;

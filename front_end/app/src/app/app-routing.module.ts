@@ -3,6 +3,8 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './modules/shared/services/auth.guard';
 import { QuicklinkStrategy, QuicklinkModule } from 'ngx-quicklink';
+import { PopupQuestionComponent } from './modules/shared/components/popup-question/popup-question.component';
+import { PopupDeactivateComponent } from './modules/shared/components/popup-deactivate/popup-deactivate.component';
 
 
 const routes: Routes = [
@@ -34,11 +36,17 @@ const routes: Routes = [
     .then(module => module.HomesModule, (error) => console.log(error))
   },
   {
+    path: 'popup',
+    outlet: 'popup',
+    component: PopupDeactivateComponent
+  },
+  {
     path: 'deals',
     canActivate: [ AuthGuard ],
     loadChildren: () => import('./modules/deal/deal.module')
     .then(module => module.DealModule, (error) => console.log(error))
   },
+ 
 ];
 
 @NgModule({
