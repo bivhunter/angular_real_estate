@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router, ChildActivationEnd } from '@angular/router';
 import { Client } from 'src/app/modules/clients/model/client';
 import { ClientService } from 'src/app/modules/shared/services/clients.service';
 import { Location } from '@angular/common';
 import { ClientsFilteringService } from '../../../shared/services/clients-filtering.service';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-client-profile',
@@ -17,6 +18,7 @@ export class ClientProfileComponent implements OnInit {
   isDataReady = false;
   title: string;
   isAddingMode: boolean;
+  @ViewChild('birthday') birthdayInput: NgModel;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,6 +54,18 @@ export class ClientProfileComponent implements OnInit {
 
   onCancelButtonClick() {
     this.navigateBack();
+  }
+
+  onBirthdayChange(date: string) {
+    console.log (this.birthdayInput)
+    if (Date.parse(date) > this.currentDate.valueOf()) {
+      console.log('no valid')
+      this.client.birthday = this.currentDate;
+      this.birthdayInput.viewModel = this.currentDate;
+      return;
+    }
+    this.client.birthday = new Date (Date.parse(date));
+    console.log(this.client.birthday)
   }
 
   private navigateBack(): void {

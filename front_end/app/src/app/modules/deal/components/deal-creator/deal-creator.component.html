@@ -11,6 +11,7 @@
     <app-deals-homes-selector
         *ngSwitchCase="'homesSelector'"
         [selectedHome]="selectedHome"
+        [selectedClient]="selectedClient"
         (cancelEvent)="onHomesSelectorCancel()"
         (submitEvent)="onHomesSelectorSubmit($event)"
         (backEvent)="onHomesSelectorBack()"

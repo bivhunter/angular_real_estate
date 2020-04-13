@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Home } from 'src/app/modules/homes/model/home';
 import { HomesService } from 'src/app/modules/shared/services/homes.service';
 import { HomesFilterService } from 'src/app/modules/shared/services/homes-filter.service';
+import { Client } from 'src/app/modules/clients/model/client';
 
 @Component({
   selector: 'app-deals-homes-selector',
@@ -10,9 +11,10 @@ import { HomesFilterService } from 'src/app/modules/shared/services/homes-filter
 })
 export class DealsHomesSelectorComponent implements OnInit {
 
-  homes: Home[] = [];
+  homes: Home[];
   filteredHomes: Home[] = [];
   @Input() selectedHome: Home;
+  @Input() selectedClient: Client;
 
   @Output() submitEvent: EventEmitter<Home> = new EventEmitter();
   @Output() cancelEvent: EventEmitter<any> = new EventEmitter();
@@ -32,9 +34,7 @@ export class DealsHomesSelectorComponent implements OnInit {
   }
 
   private getHomes(): void {
-    this.homesService.getHomes().subscribe(
-      (homes) => this.getHomesHandler(homes)
-    );
+    this.getHomesHandler(this.selectedClient.homes);
   }
 
   private getHomesHandler(homes: Home[]): void {

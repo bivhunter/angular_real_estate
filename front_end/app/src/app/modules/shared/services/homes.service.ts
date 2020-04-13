@@ -5,6 +5,7 @@ import { Home } from '../../homes/model/home';
 import { tap, catchError, map, switchMap } from 'rxjs/operators';
 import { DealsService } from './deals.service';
 import { Deal } from '../../deal/model/deal';
+import { Client } from '../../clients/model/client';
 
 @Injectable({
   providedIn: 'root'

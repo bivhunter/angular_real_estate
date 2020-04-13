@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, switchMap, map } from 'rxjs/operators';
 import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
 import { Client } from '../../clients/model/client';
+import { Deal } from '../../deal/model/deal';
+import { DealsService } from './deals.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,16 +25,42 @@ export class ClientService {
   }
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private dealsService: DealsService
   ) { }
 
 
   getClients(): Observable<Client[]> {
-    return this.http
-      .get<Client[]>(this.clientsUrl, this.getHttpAuthOption())
-      .pipe(
-        tap((clientList) => console.log(clientList)),
-        catchError(this.handleGetClientsError));
+
+    // add clientOwnerId field to sold out home
+    const mapClients = (clients: Client[], deals: Deal[]): Client[] => {
+      return clients.map(client => {
+          const homes = client.homes.map(home => {
+            for (const deal of deals) {
+              if (home.id === deal.home.id) {
+                return {...home, clientOwner: deal.client};
+              }
+            }
+            return home;
+          });
+
+          return {...client, homes};
+      });
+    };
+
+
+    const clientsObservable = this.dealsService.getDeals()
+      .pipe(switchMap(deals => {
+        return this.http
+        .get<Client[]>(this.clientsUrl, this.getHttpAuthOption())
+        .pipe(map(clients => mapClients(clients, deals)))
+        .pipe(
+          tap((clients) => console.log(clients)),
+          catchError(this.handleGetClientsError)
+        );
+      }));
+
+    return clientsObservable;
   }
 
   addClient(client: Client): Observable<Client> {
