@@ -35,30 +35,47 @@
     
         <!-- content rows -->
         <tr *ngFor="let home of homes">
-            <td class="img-cell"><img src="../../../../assets/images/foto-house.png"></td>
+            <td class="img-cell">
+                <img src="../../../../assets/images/foto-house.png">
+                <img class="sold-img" src="../../../../../assets/images/sold.png" *ngIf="home.clientOwner">
+            </td>
             <td class="home-cell">{{home.home}}</td>
             <td class="street-cell">{{home.street}}</td>
             <td class="city-cell">{{home.city}}</td>
             <td class="state-cell">{{home.state}}</td>
             <td class="price-cell">{{home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</td>
-            <td class="details-cell">
-                <button class="profile-button"
-                    (click)="onDetailsButton(home.id)">
-                    Details
-                </button>
+            <td class="details-cell"  >
+                <div class="details-button-wrapper" *ngIf="!home.clientOwner">
+                    <button class="profile-button"
+                        (click)="onDetailsButton(home.id)">
+                        Details
+                    </button>
+    
+                    <button class="viewed-clients-button"
+                    (click)="onViewedClient(home)">
+                    Clients who viewed
+                    </button>
+    
+                    <button class="addclient-button"
+                        (click)="onAddClient(home)">
+                        Add client who viewed
+                    </button>
+                </div>
 
-                <button class="viewed-clients-button"
-                (click)="onViewedClient(home)">
-                Clients who viewed
-                </button>
-
-                <button class="addclient-button"
-                    (click)="onAddClient(home)">
-                    Add client who viewed
-                </button>
+                <div class="client-wrapper"
+                    *ngIf="home.clientOwner"
+                    (click)="onClientClick(home.clientOwner.id)">
+                    <img src="../../../../../assets/images/foto-card.png">
+                    <div class="client-info-wrapper">
+                    <h3>{{home.clientOwner.name + ' ' + home.clientOwner.surname}}</h3>
+                    <p>{{home.clientOwner.email}}</p>
+                    <p>{{home.clientOwner.phone}}</p>
+                </div>
+                </div>
             </td> 
             <td class="delete-cell">
                 <div class="delete-button"
+                    *ngIf="!home.clientOwner"
                     (click)="onDeleteButton(home)">X
                 </div>  
              </td>

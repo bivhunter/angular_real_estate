@@ -19,7 +19,9 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
 
   isPopupListHomes = false;
   isAdding: boolean;
+  isViewedHomes: boolean;
   currentClient: Client;
+
 
   sortingMethod: TClientsSortingMethod;
   private changingSortingMethodEvent: Observable<TClientsSortingMethod>;
@@ -51,13 +53,22 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
     );
   }
 
+  openBoughtHomes(client: Client): void {
+    this.currentClient = client;
+    this.isViewedHomes = true;
+    this.isAdding = false;
+    this.isPopupListHomes = true;
+  }
+
   onAddHome(client: Client): void {
+    this.isViewedHomes = false;
     this.currentClient = client;
     this.isAdding = true;
     this.isPopupListHomes = true;
   }
 
   onViewedHome(client: Client): void {
+    this.isViewedHomes = false;
     this.currentClient = client;
     this.isAdding = false;
     this.isPopupListHomes = true;

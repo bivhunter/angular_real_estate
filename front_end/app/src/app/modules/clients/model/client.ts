@@ -13,6 +13,7 @@ export class Client implements ClientModel {
     user_id: string | number;
     home_id?: string | number;
     homes?: import('../../homes/model/home').Home[];
+    createdAt?: string;
 
     constructor() {
         this.id = null;

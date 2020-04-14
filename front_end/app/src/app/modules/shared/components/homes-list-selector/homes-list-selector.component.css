@@ -127,7 +127,15 @@ tr {
 }
 
 .img-cell {
+    position: relative;
     flex: 0 1 30px; 
+}
+
+.sold-img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%
 }
 
 .home-cell {

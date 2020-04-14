@@ -1,0 +1,106 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* header */
+h1 {
+    align-self: center;
+    text-shadow: 3px 3px 6px rgba(0,114,188,1);
+}
+
+/* table's styles */
+.table {
+    flex-grow: 1;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px rgba(192,192,192);
+}
+
+/* rows */
+.head-row {
+    border: none;
+    font-size: 20px;
+    text-shadow: 2px 2px 4px rgba(165,42,42,1);
+    box-shadow: none;
+}
+
+tr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-collapse: collapse;
+    border: 3px grey groove;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+}
+
+/* cells */
+td {
+    padding: 5px;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+}
+
+.img-cell {
+    flex: 0 0 70px;
+    margin-right: 10px;
+}
+
+.profile-img {
+    height: 60px;
+    background-image: url('../../../../../assets/images/foto-card.png');
+    background-size: contain;
+}
+
+.created-date-cell {
+    flex: 0 1 90px
+}
+
+.phone-cell, .email-cell {
+    flex: 2 1 100px;
+}
+
+.phone-cell {
+    flex: 0 1 120px;
+}
+
+.name-cell, .surname-cell {
+    flex: 3 0.3 200px;
+    text-shadow: 2px 2px 4px rgba(165,42,42,1);
+}
+
+/* buttons  */
+
+.img-cell:hover {
+    cursor: pointer;
+    box-shadow: 3px 3px 6px 4px rgb(2, 116, 192);
+}
+
+/* tooltip */
+
+.tooltip {
+    position: relative;
+  }
+  
+  .tooltip .tooltip-text {
+    visibility: hidden;
+    width: 70px;
+    text-align: center;
+    color: rgba(255,255,255,1);
+    position: absolute;
+    bottom: 7px;
+    left: 0px;
+    z-index: 1;
+  }
+
+  .tooltip:hover .profile-img {
+      background-image: url('../../../../../assets/images/foto-card-blue.png');
+  }
+  
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+  }

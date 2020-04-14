@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
 import { AuthGuard } from './modules/shared/services/auth.guard';
 import { QuicklinkStrategy, QuicklinkModule } from 'ngx-quicklink';
 import { PopupQuestionComponent } from './modules/shared/components/popup-question/popup-question.component';
@@ -21,7 +21,8 @@ const routes: Routes = [
   {
     path: 'dashboard',
     canActivate: [ AuthGuard ],
-    component: DashboardComponent
+    loadChildren: () => import('./modules/dashboard/dashboard.module')
+    .then(module => module.DashboardModule, (error) => console.log(error))
   },
   {
     path: 'clients',
@@ -46,7 +47,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/deal/deal.module')
     .then(module => module.DealModule, (error) => console.log(error))
   },
- 
+
 ];
 
 @NgModule({

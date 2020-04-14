@@ -65,7 +65,7 @@ export class ClientProfileComponent implements OnInit {
       return;
     }
     this.client.birthday = new Date (Date.parse(date));
-    console.log(this.client.birthday)
+    console.log(this.client.birthday);
   }
 
   private navigateBack(): void {

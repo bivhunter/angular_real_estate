@@ -44,6 +44,11 @@ export class HomesTableComponent implements OnInit, OnDestroy {
     this.homesSortService.selectHomesSortingMethod(field);
   }
 
+
+  onClientClick(id: string | number ): void {
+    this.router.navigateByUrl(`clients/profile/${id}`);
+  }
+
   // show home details
   onDetailsButton(id: string | number): void {
     this.router.navigateByUrl(`homes/details/${id}`);

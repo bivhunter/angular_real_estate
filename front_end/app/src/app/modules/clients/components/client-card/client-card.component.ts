@@ -13,6 +13,7 @@ export class ClientCardComponent implements OnInit {
   isPopupDeleting = false;
   isPopupListHomes = false;
   isAdding: boolean;
+  isViewedHomes: boolean;
 
 
   @Input() client: Client;
@@ -35,12 +36,20 @@ export class ClientCardComponent implements OnInit {
     );
   }
 
+  openBoughtHomes(): void {
+    this.isViewedHomes = true;
+    this.isAdding = false;
+    this.isPopupListHomes = true;
+  }
+
   openHomes(): void {
+    this.isViewedHomes = false;
     this.isAdding = false;
     this.isPopupListHomes = true;
   }
 
   addHome(): void {
+    this.isViewedHomes = false;
     this.isAdding = true;
     this.isPopupListHomes = true;
   }

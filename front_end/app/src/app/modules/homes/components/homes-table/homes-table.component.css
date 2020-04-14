@@ -123,6 +123,26 @@ td {
     padding: 10px;
 }
 
+.client-wrapper {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
+
+.client-wrapper:hover {
+    cursor: pointer;
+    box-shadow: 4px 4px 6px rgba(0, 114, 188, 1);
+}
+
+
+.client-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+
+
 .head-row .city-cell:hover, .head-row .state-cell:hover, .head-row .street-cell:hover, .head-row .home-cell:hover, .head-row .price-cell:hover {
     cursor: pointer;
 }
@@ -171,7 +191,7 @@ td {
     box-shadow: 2px 2px 4px rgba(0,114,188,1);
 }
 
-.delete-cell {
+.details-button-wrapper {
     align-self: start;
     display: flex;
     flex-direction: column;
@@ -196,8 +216,16 @@ td {
 }
 
 .img-cell {
+    position: relative;
     flex-grow: 0;
     flex-basis: 80px;
+
+}
+
+.sold-img {
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 tr {

@@ -20,16 +20,20 @@
             <td class="delete-cell"></td>
         </tr>
         <tr *ngFor="let client of clients">
-            <td class="img-cell"><img src="../../../../assets/images/foto-card.png"></td>
-            <td class="surname-cell">{{client.surname}}</td>
-            <td class="name-cell">{{client.name}}</td>
-            <td class="email-cell">{{client.email}}</td>
-            <td class="phone-cell">{{client.phone}}</td>
-            <td class="profile-cell"
-            >
+            <td class="img-cell">
+                <img src="../../../../assets/images/foto-card.png"
+                    (click)="onProfileButton(client.id)"
+                    class="profile-img">     
+                </td>
+                <td class="surname-cell">{{client.surname}}</td>
+                <td class="name-cell">{{client.name}}</td>
+                <td class="email-cell">{{client.email}}</td>
+                <td class="phone-cell">{{client.phone}}</td>
+                <td class="profile-cell"
+                >
                 <button class="profile-button"
-                    (click)="onProfileButton(client.id)">
-                    Profile
+                (click)="openBoughtHomes(client)">
+                    Bought homes
                 </button>
 
                 <button class="viewed-homes-button"
@@ -58,6 +62,7 @@
         [client]="currentClient"
         (closeEvent)="isPopupListHomes = false"
         [adding]="isAdding"
+        [isViewedHomes]="isViewedHomes"
     >
 
     </app-homes-list-selector>

@@ -2,7 +2,7 @@
     <!-- main elem -->
     <div class="popup">
         <div class="header-wrapper">
-            <h3>Select Viewed Home</h3> 
+            <h3>{{title}}</h3> 
             <div 
             class="close-button"
             (click)="closeList()"
@@ -29,7 +29,8 @@
                         <td class="state-cell">State</td>
                     </div>
                     <div class="delete-button"
-                    *ngIf="!isAddingMode">
+                    *ngIf="isAddingMode || isViewedHomes"
+                    >
 
                     </div>
                 </tr>
@@ -47,7 +48,11 @@
                         <!-- wrapper for selected -->
                         <div class="wrapper" 
                         (click)="onClickHome(home)">
-                            <td class="img-cell"><img src="../../../../../assets/images/foto-house.png"></td>
+                            <td class="img-cell">
+                                <img src="../../../../../assets/images/foto-house.png">
+                                <img class="sold-img" src="../../../../../assets/images/sold.png" 
+                                    *ngIf="home.clientOwner">
+                            </td>
                             <td class="home-cell">{{home.home}}</td>
                             <td class="street-cell">{{home.street}}</td>
                             <td class="city-cell">{{home.city}}</td>
@@ -57,7 +62,7 @@
                         <!-- delete button -->
                         <div class="delete-button"
                             (click)="onClickDelete(home)"
-                            *ngIf="!isAddingMode"
+                            *ngIf="!isAddingMode && !isViewedHomes && !home.clientOwner"
                         >X</div>
                     </tr>
             </table>

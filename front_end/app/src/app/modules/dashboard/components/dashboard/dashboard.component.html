@@ -1,0 +1,30 @@
+<div class="container">
+    <h1>Recent Clients</h1>
+    <table class="table">
+    <tbody>
+        <tr class="head-row">
+            <td class="img-cell"></td>
+            <td class="surname-cell">Surname</td>
+            <td class="name-cell">Name</td>
+            <td class="email-cell">Email</td>
+            <td class="phone-cell">Phone</td>
+            <td class="created-date-cell">Date</td>
+        </tr>
+        <tr *ngFor="let client of clients">
+            <td class="img-cell tooltip">
+                <span class="tooltip-text">Profile</span>
+                <div 
+                    (click)="onProfileButton(client.id)"
+                    class="profile-img">
+                </div>
+
+            </td>
+            <td class="surname-cell">{{client.surname}}</td>
+            <td class="name-cell">{{client.name}}</td>
+            <td class="email-cell">{{client.email}}</td>
+            <td class="phone-cell">{{client.phone}}</td>
+            <td class="created-date-cell">{{client.createdAt | date: 'yyyy-MM-dd'}}</td>
+        </tr>
+    </tbody>
+    </table>
+</div>

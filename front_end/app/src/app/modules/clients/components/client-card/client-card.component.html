@@ -1,16 +1,18 @@
 <div class="container">
-    <img src="../../../../../assets/images/foto-card.png">
+    <img class="profile-img" src="../../../../../assets/images/foto-card.png"
+        (click)="onProfileButton()" >
     <h3>{{client.name + ' ' + client.surname}}</h3>
     <p>{{client.email}}</p>
     <p>{{client.phone}}</p>
 
     <div class="delete-button"
+    
     (click)="onDeleteButton()"
     >X</div>
     
     <div class="buttons-wrapper">
         <button class="profile-button"
-        (click)="onProfileButton()">Profile</button>
+        (click)="openBoughtHomes()">Bought homes</button>
 
         <button class="view-button"
         (click)="openHomes()">Viewed Homes</button>
@@ -26,6 +28,7 @@
             [client]="client"
             (closeEvent)="isPopupListHomes = false"
             [adding]="isAdding"
+            [isViewedHomes]="isViewedHomes"
         >
 
         </app-homes-list-selector>

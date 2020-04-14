@@ -19,6 +19,8 @@ export class HomesListSelectorComponent implements OnInit {
   filteredHomes: Home[];
 
   @Input('adding') isAddingMode: boolean;
+  @Input() isViewedHomes: boolean;
+
   isPopupQuestion = false;
   title: string;
   text: string;
@@ -35,6 +37,7 @@ export class HomesListSelectorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.title = this.getTitle();
     this.getHomes();
   }
 
@@ -84,6 +87,15 @@ export class HomesListSelectorComponent implements OnInit {
       );
   }
 
+  private getTitle(): string {
+    if (this.isAddingMode) {
+      return 'Select Viewed Home';
+    }
+    if (this.isViewedHomes) {
+      return `Bought Home's List`;
+    }
+    return `Viewed Home's List`;
+  }
 
   private openPopupQuestion(home: Home, title: string): void {
     this.homeId = home.id;
@@ -95,14 +107,26 @@ export class HomesListSelectorComponent implements OnInit {
   private getHomes(): void {
     this.homesService.getHomes().subscribe(
       (homes) => {
-        this.homes = this.isAddingMode ? this.cutOwnHomes(homes) : this.client.homes;
+        if (this.isViewedHomes) {
+          this.homes = this.client.homes.filter(home => {
+          return home.clientOwner && (home.clientOwner.id === this.client.id);
+          });
+        } else {
+          this.homes = this.isAddingMode ? this.cutOwnHomes(homes) : this.client.homes;
+        }
         this.filterHomes('');
       }
     );
   }
 
   private cutOwnHomes(homes: Home[]): Home[] {
-    return homes.filter(home => {
+    const newHomes =  homes.filter(home => {
+      // cut sold out home
+      if (home.clientOwner) {
+        return false;
+      }
+
+      // cut already viewed homes
       for (const ownHome of this.client.homes) {
         if (ownHome.id === home.id) {
           return false;
@@ -110,6 +134,9 @@ export class HomesListSelectorComponent implements OnInit {
       }
       return true;
     });
+
+    console.log('new Homes: ', newHomes);
+    return newHomes;
   }
 
 }

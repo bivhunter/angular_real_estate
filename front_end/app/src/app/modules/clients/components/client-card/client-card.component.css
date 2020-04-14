@@ -26,6 +26,12 @@
     margin: 20px 0 15px 0;
 }
 
+
+.profile-img:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+}
+
 button {
     font-size: 15px;
     border-radius: 5px;
