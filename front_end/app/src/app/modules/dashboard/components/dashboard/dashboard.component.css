@@ -104,3 +104,33 @@ td {
   .tooltip:hover .tooltip-text {
     visibility: visible;
   }
+
+  /*stats  */
+
+  .stat-wrapper {
+      display: flex;
+      justify-content: space-evenly;
+  }
+
+  .homes-wrapper, .clients-wrapper, .deals-wrapper {
+      display: flex;
+      align-items: center;
+   }
+
+   .stat-text {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       margin: 10px;
+   }
+
+   .stat-img {
+       width: 40px;
+   }
+
+   .stat-header {
+       margin: 0;
+       text-shadow: 1px 1px 2px rgba(192,192,192);
+   }
+
+

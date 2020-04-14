@@ -9,6 +9,7 @@ import { HomesListSelectorComponent } from './components/homes-list-selector/hom
 import { PopupQuestionComponent } from './components/popup-question/popup-question.component';
 import { ClientsListSelectorComponent } from './components/clients-list-selector/clients-list-selector.component';
 import { PopupDeactivateComponent } from './components/popup-deactivate/popup-deactivate.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 registerLocaleData(localeFr);
 
@@ -17,7 +18,8 @@ registerLocaleData(localeFr);
     HomesListSelectorComponent,
     PopupQuestionComponent,
     ClientsListSelectorComponent,
-    PopupDeactivateComponent
+    PopupDeactivateComponent,
+    NavigationComponent
   ],
   imports: [
     CommonModule,
