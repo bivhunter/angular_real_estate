@@ -1,13 +1,17 @@
+:host {
+    height: 100%;
+}
+
 .control-panel {
-    margin: 30px 0 30px 0;
+    margin: 2vmin;
     display: flex;
     justify-content: space-between;
 }
 
 /* buttons styls */
 button {
-    width: 75px;
-    height: 30px;
+    max-width: 75px;
+    padding: 5px;
     font-size: 15px;
     border-radius: 5px;
     text-shadow: 1px 1px 2px rgba(0,114,188,1);
@@ -15,7 +19,7 @@ button {
 }
 
 .add-button {
-    width: 100px;
+    max-width: 100px;
 }
 
 button:hover{
@@ -24,15 +28,24 @@ button:hover{
 }
 
 /* input styles */
+
+form {
+    display: flex;
+}
+
 input {
     padding-left: 10px;
-    width: 300px;
+    flex: 1 1 300px;
     height: 30px;
     border-radius: 5px;
     border: 2px black groove;
-    font-size: 20px;
+    font-size: 14px;
     text-shadow: 1px 1px 2px rgba(192,192,192);
     box-shadow: 1px 1px 2px rgba(192,192,192);
+}
+
+.search-wrapper {
+    display: flex;
 }
 
 /* menu wrappers */
@@ -54,16 +67,6 @@ input {
     top: 35px;
     right: 5px;
 }
-
-.sort-menu {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    
-    top: 35px;
-    right: 5px;
-}
-
 
 /* menu's buttons */
 .cards-views, .list-views, .sort-surname, .sort-name {

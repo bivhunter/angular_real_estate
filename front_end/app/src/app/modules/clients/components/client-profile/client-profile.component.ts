@@ -61,11 +61,21 @@ export class ClientProfileComponent implements OnInit {
     if (Date.parse(date) > this.currentDate.valueOf()) {
       console.log('no valid')
       this.client.birthday = this.currentDate;
-      this.birthdayInput.viewModel = this.currentDate;
+      const dateString = this.reformatDate(new Date().toDateString());
+      console.log(dateString)
+      this.birthdayInput.reset(dateString);
       return;
     }
     this.client.birthday = new Date (Date.parse(date));
     console.log(this.client.birthday);
+  }
+
+  reformatDate(dateStr: string): string {
+    const date = new Date(Date.parse(dateStr));
+    const dateString = date.getFullYear() + '-'
+    + ('0' + (date.getMonth() + 1)).slice(-2) + '-'
+    + ('0' + (date.getDate() )).slice(-2);
+    return dateString;
   }
 
   private navigateBack(): void {

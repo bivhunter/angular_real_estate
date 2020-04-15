@@ -2,12 +2,22 @@
     display: flex;
     justify-content: center;
     height: 100%;
-    flex-basis: 1200px;
+
 }
 
 .container {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    max-width: 1200px;
+}
+
+.control-panel {
+    position: fixed;
+    z-index: 9;
+    width: 1300px;
+    justify-self: stretch;
+}
+
+.content-wrapper {
+    margin-top: 100px;
 }

@@ -1,3 +1,72 @@
 :host {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+}
+
+.container {
+    max-width: 1500px;
+    /* min-height: 100%; */
+    padding-right: 20px;
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: stretch;
+    box-sizing: border-box;
+    /* border: 3px grey groove;
+    border-radius: 5px; */
+    box-shadow: 0px -4px 4px 4px rgba(0, 114, 188, 1);
+    background-color: #F4F5F7;
+   
+}
+
+.navigation-wrapper {
+    flex: 1 0 165px;
+    margin-right: 20px;
+    background-color: #F5FAFF;
+    box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
+}
+
+.content-wrapper {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    padding: 50px 0 50px 0;
+}
+
+.header-content-wrapper {
+    max-width: 1500px;
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+}
+
+.router-outlet {
+    width: 100%;
+    /* overflow :auto;
+    max-height: 86vh; */
+}
+
+.header, .footer {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    flex: 0 0 50px;
+    background-color: #0747A6;
+    z-index: 9;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    justify-self: last baseline;
+    background-color:#C1C1C1;
 }

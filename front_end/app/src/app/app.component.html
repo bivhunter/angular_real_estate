@@ -1,4 +1,33 @@
-<router-outlet></router-outlet>
+<div class="header">
+    <div class="header-content-wrapper">
+        <app-header></app-header>
+        
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <div class="container">
+
+        <div class="navigation-wrapper">
+            <app-navigation *ngIf="isNavigation" ></app-navigation>
+        </div>
+        
+        
+        <div class="router-outlet">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+
+
+<div class="footer">
+    <div class="header-content-wrapper">
+        <app-footer></app-footer>
+        
+    </div>
+</div>
+
+
 
 <div class="popup-outlet">
     <router-outlet name="popup"></router-outlet>

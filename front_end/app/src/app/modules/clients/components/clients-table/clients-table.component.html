@@ -1,59 +1,72 @@
 <div class="container">
-    <table class="table">
-    <tbody>
-        <tr class="head-row">
-            <td class="img-cell"></td>
-            <td class="surname-cell"
-                [class.sort-up]="sortingMethod === 'SURNAME_UP'"
-                [class.sort-down]="sortingMethod === 'SURNAME_DOWN'"
-                (click)="setSortingField('SURNAME')">Surname
-            </td>
-            <td class="name-cell"
-                [class.sort-up]="sortingMethod === 'NAME_UP'"
-                [class.sort-down]="sortingMethod === 'NAME_DOWN'"
-                (click)="setSortingField('NAME')">Name
-                
-            </td>
-            <td class="email-cell">Email</td>
-            <td class="phone-cell">Phone</td>
-            <td class="profile-cell">Actions</td>
-            <td class="delete-cell"></td>
-        </tr>
-        <tr *ngFor="let client of clients">
-            <td class="img-cell">
-                <img src="../../../../assets/images/foto-card.png"
-                    (click)="onProfileButton(client.id)"
-                    class="profile-img">     
+    <div class="head-wrapper">
+        <table class="table">
+        <tbody>
+            <tr class="head-row">
+                <td class="img-cell">Client</td>
+                <td class="surname-cell"
+                    [class.sort-up]="sortingMethod === 'SURNAME_UP'"
+                    [class.sort-down]="sortingMethod === 'SURNAME_DOWN'"
+                    (click)="setSortingField('SURNAME')">Surname
                 </td>
-                <td class="surname-cell">{{client.surname}}</td>
-                <td class="name-cell">{{client.name}}</td>
-                <td class="email-cell">{{client.email}}</td>
-                <td class="phone-cell">{{client.phone}}</td>
-                <td class="profile-cell"
-                >
-                <button class="profile-button"
-                (click)="openBoughtHomes(client)">
-                    Bought homes
-                </button>
+                <td class="name-cell"
+                    [class.sort-up]="sortingMethod === 'NAME_UP'"
+                    [class.sort-down]="sortingMethod === 'NAME_DOWN'"
+                    (click)="setSortingField('NAME')">Name
+                    
+                </td>
+                <td class="email-cell">Email</td>
+                <td class="phone-cell">Phone</td>
+                <td class="profile-cell">Actions</td>
+                <td class="delete-cell"></td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
 
-                <button class="viewed-homes-button"
-                (click)="onViewedHome(client)">
-                Viewed Homes
-                </button>
+        <div class="content-wrapper">
+            <table class="table">
+            <tbody>
+            <tr *ngFor="let client of clients">
+                <td class="img-cell tooltip">
+                    <span class="tooltip-text">Profile</span>
+                    <div class="profile-img" 
+                        (click)="onProfileButton(client.id)"
+                        class="profile-img">     
+                        </div>
+                    </td>
+                    <td class="surname-cell">{{client.surname}}</td>
+                    <td class="name-cell">{{client.name}}</td>
+                    <td class="email-cell">{{client.email}}</td>
+                    <td class="phone-cell">{{client.phone}}</td>
+                    <td class="profile-cell"
+                    >
+                    <button class="profile-button"
+                    (click)="openBoughtHomes(client)">
+                        Bought homes
+                    </button>
+    
+                    <button class="viewed-homes-button"
+                    (click)="onViewedHome(client)">
+                    Viewed Homes
+                    </button>
+    
+                    <button class="addhome-button"
+                        (click)="onAddHome(client)">
+                        Add viewed Home
+                    </button>
+                   
+                </td>
+                <td class="delete-cell">
+                    <div class="delete-button"
+                        (click)="onDeleteButton(client)">X</div>    
+                </td>
+            </tr>
+        </tbody>
+        </table>
 
-                <button class="addhome-button"
-                    (click)="onAddHome(client)">
-                    Add viewed Home
-                </button>
-               
-            </td>
-            <td class="delete-cell">
-                <div class="delete-button"
-                    (click)="onDeleteButton(client)">X</div>    
-            </td>
-        </tr>
-    </tbody>
-    </table>
+        </div>
+
 </div>
 
  <!-- adding home list popup -->

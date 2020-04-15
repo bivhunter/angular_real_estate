@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { NavigationService } from './navigation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class AuthorizationService {
 
   constructor(
     private http: HttpClient,
+    private navigationService: NavigationService,
     private router: Router
   ) { }
 
@@ -38,9 +40,14 @@ export class AuthorizationService {
   // for auth.guard
   checkAuthorization(): Observable<boolean> {
     return this.http.get<any>(this.clientUrl, this.getHttpAuthOption()).pipe(
-      map(() => true),
+      map(() => {
+        this.navigationService.open();
+        return true;
+      }),
+
       catchError(error => {
         this.router.navigateByUrl('authorization/login');
+        this.navigationService.close();
         return of(false);
       })
     );

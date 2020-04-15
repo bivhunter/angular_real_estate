@@ -129,9 +129,10 @@
                 type="date" 
                 class="form-control birthday" 
                 id="birthday"
-                [ngModel]="client?.birthday | date:'yyyy-MM-dd'  "
+                [ngModel]="reformatDate(client?.birthday)"
                 (ngModelChange)="onBirthdayChange($event)"
                 [max]="currentDate | date:'yyyy-MM-dd'"
+                pattern="\d\d\d\d-\d\d-\d\d"
                 required
                 name="birthday"
                 placeholder="Enter client's Birthday Date">

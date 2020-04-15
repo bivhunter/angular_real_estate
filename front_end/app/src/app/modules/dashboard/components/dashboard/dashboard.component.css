@@ -12,10 +12,20 @@ h1 {
 }
 
 /* table's styles */
+.table-wrapper {
+    display: flex;
+    overflow: auto;
+    max-height: 58vh;
+    flex-grow: 1;
+    padding: 15px;
+    text-shadow: 1px 1px 2px rgba(192,192,192);
+    box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
+    background-color: #F5FAFF;
+}
+
 .table {
     flex-grow: 1;
     font-size: 14px;
-    text-shadow: 1px 1px 2px rgba(192,192,192);
 }
 
 /* rows */
@@ -24,6 +34,7 @@ h1 {
     font-size: 20px;
     text-shadow: 2px 2px 4px rgba(165,42,42,1);
     box-shadow: none;
+    background-color: inherit;
 }
 
 tr {
@@ -35,6 +46,8 @@ tr {
     border: 3px grey groove;
     border-radius: 5px;
     box-shadow: 2px 2px 4px rgba(0,114,188,1);
+    margin-bottom: 10px;
+    background-color: #F4F5F7;
 }
 
 /* cells */
@@ -60,7 +73,7 @@ td {
     flex: 0 1 90px
 }
 
-.phone-cell, .email-cell {
+.email-cell {
     flex: 2 1 100px;
 }
 
@@ -115,8 +128,11 @@ td {
   .homes-wrapper, .clients-wrapper, .deals-wrapper {
       display: flex;
       align-items: center;
+      background-color: #F5FAFF;
+      box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
    }
 
+  
    .stat-text {
        display: flex;
        flex-direction: column;
