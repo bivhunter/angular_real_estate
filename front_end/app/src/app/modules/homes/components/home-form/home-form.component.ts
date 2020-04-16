@@ -14,6 +14,8 @@ export class HomeFormComponent implements OnInit {
   home: Home;
   title: string;
 
+  isFormDisabled = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -55,6 +57,7 @@ export class HomeFormComponent implements OnInit {
     } else {
       const id = this.getId();
       this.title = `Home's details`;
+      
       this.homesService.getHome(id).subscribe(
       (home) => this.onGetHome(home),
       (error) => console.log(error)
@@ -72,6 +75,10 @@ export class HomeFormComponent implements OnInit {
   }
 
   private onGetHome(home: Home): void {
+    console.log(home)
+    if (home.clientOwner) {
+      this.isFormDisabled = true;
+    }
     this.home = home;
   }
 

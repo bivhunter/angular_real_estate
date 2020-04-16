@@ -10,11 +10,16 @@
     </div>
 
     <div class="content-wrapper">
-            <div class="client-wrapper">
+            <div class="client-wrapper"
+                [class.disabled]="!deal?.client">
                 <img src="../../../../../assets/images/foto-card.png">
-                <h3>{{client?.name + ' ' + client?.surname}}</h3>
-                <p>{{client?.email}}</p>
-                <p>{{client?.phone}}</p>
+                <h4 *ngIf="!deal?.client">Client remove </h4>
+                <div class="info-wrapper" *ngIf="deal?.client">
+                    <h3>{{client?.name + ' ' + client?.surname}}</h3>
+                    <p>{{client?.email}}</p>
+                    <p>{{client?.phone}}</p>
+                </div>
+                
             </div>
         
             <div class="home-wrapper">

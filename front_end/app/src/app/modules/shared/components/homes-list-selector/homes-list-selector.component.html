@@ -28,11 +28,6 @@
                         <td class="city-cell">City</td>
                         <td class="state-cell">State</td>
                     </div>
-                    <div class="delete-button"
-                    *ngIf="isAddingMode || isViewedHomes"
-                    >
-
-                    </div>
                 </tr>
             </table>
 
@@ -58,12 +53,6 @@
                             <td class="city-cell">{{home.city}}</td>
                             <td class="state-cell">{{home.state}}</td>
                         </div>
-    
-                        <!-- delete button -->
-                        <div class="delete-button"
-                            (click)="onClickDelete(home)"
-                            *ngIf="!isAddingMode && !isViewedHomes && !home.clientOwner"
-                        >X</div>
                     </tr>
             </table>
         </div>

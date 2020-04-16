@@ -8,4 +8,5 @@ export interface UserModel {
     level: number; // should be calculated based on sales number; 0 after user registration
     company: string;
     rate: number | string;
+    fullName: string;
 }

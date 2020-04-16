@@ -36,7 +36,7 @@ export class HomesService {
       return homes.map(home => {
         for (const deal of deals) {
           if (home.id === deal.home.id) {
-            return {...home, clientOwner: deal.client};
+            return {...home, clientOwner: deal.client || new Client()};
           }
         }
         return home;
@@ -76,12 +76,26 @@ export class HomesService {
   }
 
   getHome(id: number | string): Observable<Home> {
-    return this.http
+    return this.dealsService.getDeals().pipe(
+      switchMap(deals => {
+       return  this.http
       .get<Home>(`${this.homesUrl}/${id}`, this.getHttpAuthOption())
+      .pipe(map(
+        home => {
+          for (const deal of deals) {
+            if (deal.homeId === home.id) {
+              return {...home, clientOwner: deal.client || new Client()};
+            }
+          }
+          return home;
+        }
+      ))
       .pipe(
         tap((resp) => console.log(resp)),
         catchError(this.handleGetHomeError)
       );
+      })
+    );
   }
 
   updateHome(home: Home): Observable<Home> {

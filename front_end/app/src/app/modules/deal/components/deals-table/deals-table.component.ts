@@ -38,6 +38,9 @@ export class DealsTableComponent implements OnInit, OnDestroy {
   }
 
   onClientClick(id: string | number ): void {
+    if (!id) {
+      return;
+    }
     this.router.navigateByUrl(`clients/profile/${id}`);
   }
 

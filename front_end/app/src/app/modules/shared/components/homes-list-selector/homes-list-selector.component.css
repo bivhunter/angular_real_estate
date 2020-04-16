@@ -81,15 +81,6 @@
     box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
 }
 
-.delete-button {
-    width: 40px;
-    height: 40px;
-    text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .table-item .delete-button:hover {
     cursor: pointer;
     box-shadow: 2px 2px 4px rgba(165, 42, 42, 1);

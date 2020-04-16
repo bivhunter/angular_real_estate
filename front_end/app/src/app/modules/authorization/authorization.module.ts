@@ -19,8 +19,6 @@ import { CommonModule } from '@angular/common';
     AuthorizationRoutingModule,
     SharedModule
   ],
-  providers: [
-    UserService
-  ]
+  providers: []
 })
 export class AuthorizationModule { }

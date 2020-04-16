@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ClientService } from 'src/app/modules/shared/services/clients.service';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
 import { HomesService } from './../../../shared/services/homes.service';
 import { DealsService } from 'src/app/modules/shared/services/deals.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,7 @@ import { DealsService } from 'src/app/modules/shared/services/deals.service';
 
 
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   clients: Client[] = [];
 
@@ -21,17 +22,24 @@ export class DashboardComponent implements OnInit {
   homesTotal: number;
   dealsTotal: number;
 
+  clientsListChangingSubscription: Subscription;
+
   constructor(
     private clientsService: ClientService,
     private homesService: HomesService,
     private dealsService: DealsService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.getClients();
     this.getHomes();
     this.getDeals();
+    this.initSubscription();
+  }
+
+  ngOnDestroy(): void {
+    this.clientsListChangingSubscription.unsubscribe();
   }
 
   onProfileButton(id: string | number): void {
@@ -44,7 +52,9 @@ export class DashboardComponent implements OnInit {
         return Date.parse(clientB.createdAt).valueOf() - Date.parse(clientA.createdAt).valueOf();
       });
       this.clientsTotal = clients.length;
-      this.clients.length = 5;
+      if (clients.length > 5) {
+        this.clients.length = 5;
+      }
     });
   }
 
@@ -57,6 +67,12 @@ export class DashboardComponent implements OnInit {
   private getDeals(): void {
     this.dealsService.getDeals().subscribe(
       deals => this.dealsTotal = deals.length
+    );
+  }
+
+  private initSubscription(): void {
+    this.clientsListChangingSubscription = this.clientsService.getClientsListChangesEvent().subscribe(
+      () => this.getClients()
     );
   }
 

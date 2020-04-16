@@ -20,7 +20,7 @@
                 >
             </form>
 
-            <table>
+            <table *ngIf="filteredHomes.length">
                 <tr class="head-row">
                     <div class="head-wrapper" >
                         <td class="img-cell"></td>
@@ -31,6 +31,7 @@
                     </div>
                 </tr>
             </table>
+            <h4  *ngIf="!filteredHomes.length">No viewed Homes</h4>
 
         </div>
 

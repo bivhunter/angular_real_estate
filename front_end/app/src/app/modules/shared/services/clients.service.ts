@@ -38,7 +38,7 @@ export class ClientService {
           const homes = client.homes.map(home => {
             for (const deal of deals) {
               if (home.id === deal.home.id) {
-                return {...home, clientOwner: deal.client};
+                return {...home, clientOwner: deal.client || new Client()};
               }
             }
             return home;

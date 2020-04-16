@@ -36,9 +36,11 @@
                 </div>
             </td>
             <td class="client-cell"
-                (click)="onClientClick(deal.client.id)">
+                [class.disabled]="!deal.client"
+                (click)="onClientClick(deal.clientId)">
                 <img src="../../../../../assets/images/foto-card.png">
-                <div class="client-wrapper">
+                <h4 *ngIf="!deal.client">Client remove </h4>
+                <div class="client-wrapper" *ngIf="deal.client">
                     <h3>{{deal.client.name + ' ' + deal.client.surname}}</h3>
                     <p>{{deal.client.email}}</p>
                     <p>{{deal.client.phone}}</p>

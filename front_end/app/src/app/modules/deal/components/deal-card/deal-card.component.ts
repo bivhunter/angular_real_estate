@@ -29,6 +29,9 @@ export class DealCardComponent implements OnInit {
   }
 
   onClient(id: string | number) {
+    if (!id) {
+      return;
+    }
     this.router.navigateByUrl(`clients/profile/${id}`);
   }
 

@@ -1,15 +1,19 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, UrlTree } from '@angular/router';
 import { NavigationService } from './modules/shared/services/navigation.service';
+import { Subscriber, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'app';
   isNavigation: boolean;
+
+  private authenticationSubscription: Subscription;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -22,6 +26,10 @@ export class AppComponent implements OnInit {
     this.initSubscribtion();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe();
+  }
+
   doRememberMe(): void {
     const isRememberMe = localStorage.getItem('rememberMe');
     if (isRememberMe === 'false') {
@@ -30,9 +38,13 @@ export class AppComponent implements OnInit {
   }
 
   private initSubscribtion(): void {
-    this.navigationService.getAuthorizationEvent().subscribe(
+    this.authenticationSubscription = this.navigationService.getAuthorizationEvent().subscribe(
       checking => this.isNavigation = checking
-    )
+    );
+  }
+
+  private unsubscribe(): void {
+    this.authenticationSubscription.unsubscribe();
   }
 
 }

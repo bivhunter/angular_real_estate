@@ -28,18 +28,19 @@
     </div>
 
     <h1>Recent Clients</h1>
-    <div class=table-wrapper>
+    <h1  *ngIf="!clients.length">No Clients</h1>
+    <div class=table-wrapper *ngIf="clients.length">
         <table class="table">
         <tbody>
             <tr class="head-row">
-                <td class="img-cell"></td>
+                <td class="img-cell">Client</td>
                 <td class="surname-cell">Surname</td>
                 <td class="name-cell">Name</td>
                 <td class="email-cell">Email</td>
                 <td class="phone-cell">Phone</td>
                 <td class="created-date-cell">Date</td>
             </tr>
-            <tr *ngFor="let client of clients">
+            <tr class="table-item" *ngFor="let client of clients">
                 <td class="img-cell tooltip">
                     <span class="tooltip-text">Profile</span>
                     <div 

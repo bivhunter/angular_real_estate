@@ -57,10 +57,6 @@ export class HomesListSelectorComponent implements OnInit {
     }
   }
 
-  onClickDelete(home: Home) {
-    this.openPopupQuestion(home, 'Remove Home:');
-  }
-
   onCancel(): void {
     this.isPopupQuestion = false;
   }
@@ -68,8 +64,6 @@ export class HomesListSelectorComponent implements OnInit {
   onSubmit(): void {
     if (this.isAddingMode) {
       this.addHomeToClient();
-    } else {
-      this.deleteHomeFromClient();
     }
   }
 
@@ -80,12 +74,12 @@ export class HomesListSelectorComponent implements OnInit {
       );
   }
 
-  deleteHomeFromClient(): void {
-    this.clientService.deleteHomeFromClient(this.homeId, this.client.id)
-      .subscribe(
-        () => this.closeList()
-      );
-  }
+  // deleteHomeFromClient(): void {
+  //   this.clientService.deleteHomeFromClient(this.homeId, this.client.id)
+  //     .subscribe(
+  //       () => this.closeList()
+  //     );
+  // }
 
   private getTitle(): string {
     if (this.isAddingMode) {

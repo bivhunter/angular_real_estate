@@ -37,7 +37,7 @@
 }
 /* client styles */
 
-.home-column:hover, .client-column:hover, .deal-container:hover {
+.home-column:hover, .client-column:hover:not(.disabled), .deal-container:hover {
     cursor: pointer;
     box-shadow: 4px 4px 6px rgba(0, 114, 188, 1);
 }

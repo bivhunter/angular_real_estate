@@ -33,6 +33,8 @@ export class AuthorizationService {
 
   logOut(): void {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('authUserEmail');
+    this.navigationService.close();
     this.router.navigateByUrl('authorization');
   }
 
@@ -46,8 +48,7 @@ export class AuthorizationService {
       }),
 
       catchError(error => {
-        this.router.navigateByUrl('authorization/login');
-        this.navigationService.close();
+        this.logOut();
         return of(false);
       })
     );

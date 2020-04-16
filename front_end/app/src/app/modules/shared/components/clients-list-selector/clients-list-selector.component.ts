@@ -33,6 +33,7 @@ export class ClientsListSelectorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.title = this.getTitle();
     this.getClients();
   }
 
@@ -82,6 +83,9 @@ export class ClientsListSelectorComponent implements OnInit {
       );
   }
 
+  private getTitle(): string {
+   return this.isAddingMode ? 'Select Client who viewed Home' : 'Client who viewed Home'
+  }
 
   private openPopupQuestion(client: Client, title: string): void {
     this.clientId = client.id;

@@ -8,12 +8,15 @@
   
     <div class='content-wrapper'>
         <div class="client-column"
-        (click)="onClient(deal.client.id)">
+        (click)="onClient(deal.clientId)"
+        [class.disabled]="!deal?.client">
         <img class="client-img" src="../../../../../assets/images/foto-card.png">
-            <p>{{deal.client.name}}</p>
-            <p>{{deal.client.surname}}</p>
-            
+        <h4 *ngIf="!deal?.client">Client remove </h4>
+        <div class="info-wrapper" *ngIf="deal?.client">
+                <p>{{deal.client.name}}</p>
+                <p>{{deal.client.surname}}</p>
         </div>
+    </div>
 
         <div class="home-column"
             routerLink="/homes/details/{{deal.home.id}}"

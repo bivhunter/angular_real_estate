@@ -2,7 +2,7 @@
     <!-- main elem -->
     <div class="popup">
         <div class="header-wrapper">
-            <h3>Select Client who viewed Home</h3> 
+            <h3>{{title}}</h3> 
             <div 
             class="close-button"
             (click)="closeList()"
@@ -27,9 +27,6 @@
                         <td class="name-cell">Name</td>
                         <td class="email-cell">Email</td>
                     </div>
-                    <div class="delete-button"
-                    *ngIf="!isAddingMode">
-                    </div>
                 </tr>
             </table>
 
@@ -38,10 +35,7 @@
         <div class="content-wrapper">
             <!-- clients list -->
             <table>
-                    
-               
                     <tr *ngFor="let client of filteredClients"
-                    
                         class="table-item">
     
                         <!-- wrapper for selected -->
@@ -52,12 +46,6 @@
                             <td class="name-cell">{{client.name}}</td>
                             <td class="email-cell">{{client.email}}</td>
                         </div>
-    
-                        <!-- delete button -->
-                        <div class="delete-button"
-                            (click)="onClickDelete(client)"
-                            *ngIf="!isAddingMode"
-                        >X</div>
                     </tr>
             </table>
         </div>

@@ -1,4 +1,18 @@
 <div class="container">
     <img src="../../../assets/images/logo_clear_white.png">
     <h1>Client Managment Application</h1>
+
+    <span *ngIf="isAuthenticated">{{user?.fullName}}</span>
+
+    <div class="auth-button-wrapper">
+        <span *ngIf="isAuthenticated"
+            (click)="logOut()">LogOut</span>    
+
+        <span *ngIf="!isAuthenticated && isLogin"
+            routerLink="/authorization/registration">Sign Up</span>
+
+        <span 
+            routerLink="/authorization/login"    
+            *ngIf="!isAuthenticated && !isLogin">Sign In</span>
+    </div>
 </div>

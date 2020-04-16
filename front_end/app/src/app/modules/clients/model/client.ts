@@ -10,12 +10,12 @@ export class Client implements ClientModel {
     phone: string;
     level: number;
     // tslint:disable-next-line: variable-name
-    user_id: string | number;
+    userId: string | number;
     home_id?: string | number;
     homes?: import('../../homes/model/home').Home[];
     createdAt?: string;
 
-    constructor() {
+    constructor(surname: string = '', name: string = '') {
         this.id = null;
         this.email = '';
         this.name = '';
@@ -24,6 +24,6 @@ export class Client implements ClientModel {
         this.address = '';
         this.phone = '';
         this.level = 0;
-        this.user_id = '';
+        this.userId = '';
     }
 }

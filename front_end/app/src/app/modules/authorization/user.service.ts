@@ -1,13 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Pipe } from '@angular/core';
 import { User } from './model/user';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { tap, catchError, map} from 'rxjs/operators';
+import { tap, catchError, map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../shared/services/authorization.service';
+import { ClientService } from '../shared/services/clients.service';
+import { Client } from '../clients/model/client';
 
 
-@Injectable()
+@Injectable(
+  { providedIn: 'root'}
+)
 
 export class UserService {
 
@@ -16,12 +20,20 @@ export class UserService {
   userUrl = `${this.baseUrl}user`; // add user url
   authenticationUrl = `${this.baseUrl}authentication`; // login
 
-  set authToken(value: string) {
+  private set authToken(value: string) {
     localStorage.setItem('authToken', value);
   }
 
-  get authToken(): string {
+  private get authToken(): string {
     return localStorage.getItem('authToken');
+  }
+
+  set userEmail(value: string) {
+    localStorage.setItem('authUserEmail', value);
+  }
+
+  get userEmail(): string {
+    return localStorage.getItem('authUserEmail');
   }
 
   httpOptions = {
@@ -33,7 +45,8 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private authService: AuthorizationService
+    private authService: AuthorizationService,
+    private clientsService: ClientService
   ) { }
 
   registerUser(user: User): Observable<User | string> {
@@ -47,12 +60,78 @@ export class UserService {
     return this.http.post<any>(this.authenticationUrl, body, this.httpOptions).pipe(
       tap((resp) => {
         this.log(resp.accessToken);
+        this.userEmail = user.email;
         this.authToken = resp.accessToken;
         const url = this.authService.getRedirectUrl();
         this.router.navigateByUrl(url);
       }),
       catchError(this.handleAuthorizationError)
     );
+  }
+
+  // return current user
+  getUser(): Observable<User> {
+    return this.getUserId().pipe(
+      switchMap(id => {
+        if (!id) {
+          const getUserIdByEmail = this.getUserIdByEmail();
+          return getUserIdByEmail.pipe(
+            switchMap(newId => this.getUserById(newId))
+          );
+        }
+        return this.getUserById(id);
+      })
+    );
+  }
+
+  getUserById(id: number | string): Observable<User> {
+    return this.http.get<User>(`${this.userUrl}/${id}`, this.getHttpAuthOption());
+  }
+
+  // get users List
+  private getUsers(): Observable<User[]> {
+    return this.http.get<any>(this.userUrl, this.getHttpAuthOption())
+      .pipe(
+        map(respobject => {
+          return respobject.data;
+        })
+    );
+  }
+
+  // using when no clients
+  private getUserIdByEmail(): Observable<string | number> {
+    return this.getUsers().pipe(
+      switchMap(users => {
+        for (const user of users) {
+          if (user.email === this.userEmail) {
+            return of(user.id);
+          }
+        }
+        return of(null);
+      })
+    );
+  }
+
+  // get userId from clients list
+  private getUserId(): Observable<number | string> {
+    return this.clientsService.getClients().pipe(
+      switchMap(clients => {
+        if (clients.length) {
+          return of(clients[0].userId);
+        } else {
+          return of(null);
+        }
+      })
+    );
+  }
+
+  private getHttpAuthOption() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.authToken}`
+      })
+    };
   }
 
   private handleAuthorizationError(error: HttpErrorResponse): Observable<string> {

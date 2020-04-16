@@ -44,10 +44,14 @@ td {
     margin-left: 10px;
 }
 
-.table-item .client-cell:hover, .table-item .home-cell:hover, .table-item .img-cell:hover {
+.table-item .client-cell:hover:not(.disabled), .table-item .home-cell:hover, .table-item .img-cell:hover {
     cursor: pointer;
     box-shadow: 4px 4px 6px rgba(0, 114, 188, 1);
 }
+
+/* .disabled {
+    cursor: initial;
+} */
 
 .date-cell {
     flex: 2 2 100px;
