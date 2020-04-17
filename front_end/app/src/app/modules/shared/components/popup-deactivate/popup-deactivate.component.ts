@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PopupService } from '../../services/popup.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { PopupService } from '../../services/popup.service';
   templateUrl: './popup-deactivate.component.html',
   styleUrls: ['./popup-deactivate.component.css']
 })
-export class PopupDeactivateComponent implements OnInit {
+export class PopupDeactivateComponent implements OnInit, OnDestroy {
 
   constructor(
     private popupService: PopupService
@@ -14,6 +14,10 @@ export class PopupDeactivateComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('inir popup');
+  }
+
+  ngOnDestroy(): void {
+    console.log('popupdestroy')
   }
 
   onYes(): void {

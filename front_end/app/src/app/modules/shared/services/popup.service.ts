@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
-import { first, take, tap, map } from 'rxjs/operators';
+import { Subject, Observable, of, from } from 'rxjs';
+import { first, take, tap, map, switchMap, concatMap, mergeMap } from 'rxjs/operators';
 import { RouterStateSnapshot, Router } from '@angular/router';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { RouterStateSnapshot, Router } from '@angular/router';
 export class PopupService {
 
   private routeDeactivateSubject: Subject<boolean> = new Subject();
-  isCanDeactivate = false;
+  private isCanDeactivate = false;
   constructor(
     private router: Router
   ) { }
@@ -30,32 +30,29 @@ export class PopupService {
     this.routeDeactivateSubject.next(false);
   }
 
-//   async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
-//     if (this.isCanDeactivate) {
-//       return true;
-//     }
+  restartCanDeactivate(): void {
+    this.isCanDeactivate = false;
+  }
 
-//     // open popup
+  async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
+    if (this.isCanDeactivate) {
+      this.isCanDeactivate = false;
+      return true;
+    }
 
-//     await this.router.navigate([{ outlets: {popup: 'popup'}}]);
-    
-//     this.routeDeactivateSubject
-//       .pipe(
-//         tap((checking) => {
-//           console.log('tap', checking)
-//           if (checking) {
-//             //this.isCanDeactivate = true;
-//             return this.router.navigate([{ outlets: {popup: null}}]).then(
-//               () => this.router.navigateByUrl(next.url)
-//             );
+    // open popup
+    await this.router.navigate([{ outlets: {popup: 'popup'}}]);
 
-//           } else {
-//            return this.router.navigate([{ outlets: {popup: null}}]);
-//           }
-//         })
-//       ).subscribe();
-
-//      return this.routeDeactivateSubject.asObservable().toPromise();
-// }
+    return this.routeDeactivateSubject.pipe(
+      switchMap(async (checking) => {
+        if (checking) {
+          this.isCanDeactivate = true;
+          return await this.router.navigateByUrl(next.url);
+        } else {
+         return this.router.navigate([{ outlets: {popup: null}}]);
+        }
+      })
+    ).toPromise();
+}
 
 }

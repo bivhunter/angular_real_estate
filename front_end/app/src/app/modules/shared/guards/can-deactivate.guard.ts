@@ -25,8 +25,8 @@ export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate>
     nextState: RouterStateSnapshot
       ): Observable<boolean> | Promise<boolean> | boolean {
         console.log('canDiactivate');
-        return component.canDeactivate ? component.canDeactivate(nextState) : true;
+        //return component.canDeactivate ? component.canDeactivate(nextState) : true;
         
-        // return this.popupService.canDeactivate(nextState);
+         return this.popupService.canDeactivate(nextState);
   }
 }
