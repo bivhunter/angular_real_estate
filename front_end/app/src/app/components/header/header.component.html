@@ -1,18 +1,35 @@
 <div class="container">
     <img src="../../../assets/images/logo_clear_white.png">
-    <h1>Client Managment Application</h1>
+    <h2>Client Managment Application</h2>
 
-    <span *ngIf="isAuthenticated">{{user?.fullName}}</span>
+    <div class="right-container">
+        <span class="user-name" *ngIf="isAuthenticated">{{user?.fullName}}</span>
+        
+            <div class="user-button-wrapper">
+                <img class="user-img" src="../../../assets/images/user-white.png"
+                    (click)="isUserProfile=true">
+            </div>
+    
+        <div class="auth-button-wrapper">
+            <span class="auth-button" *ngIf="isAuthenticated"
+                (click)="logOut()">LogOut</span>    
+    
+            <span class="auth-button" *ngIf="!isAuthenticated && isLogin"
+                routerLink="/authorization/registration">Sign Up</span>
+    
+            <span 
+                class="auth-button"
+                routerLink="/authorization/login"    
+                *ngIf="!isAuthenticated && !isLogin">Sign In</span>
+        </div>
 
-    <div class="auth-button-wrapper">
-        <span *ngIf="isAuthenticated"
-            (click)="logOut()">LogOut</span>    
+    </div>
 
-        <span *ngIf="!isAuthenticated && isLogin"
-            routerLink="/authorization/registration">Sign Up</span>
-
-        <span 
-            routerLink="/authorization/login"    
-            *ngIf="!isAuthenticated && !isLogin">Sign In</span>
+    <div class="user-profile-wrapper" *ngIf="isUserProfile">
+        <app-user-profile 
+        [user]="user"
+        (submitEvent)="onPopupSubmit($event)"
+        (cancelEvent)="isUserProfile=false"
+        ></app-user-profile>
     </div>
 </div>

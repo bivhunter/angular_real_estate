@@ -8,6 +8,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 
 
@@ -16,7 +17,8 @@ import { FooterComponent } from './components/footer/footer.component';
     AppComponent,
     NavigationComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

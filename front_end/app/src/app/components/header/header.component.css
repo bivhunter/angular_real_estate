@@ -16,7 +16,37 @@ img {
     height: 40px;
 }
 
-h1 {
+h2 {
     margin: 0 20px 0 20px;
+}
+
+.user-name {
+    flex: 0 1 200px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.user-button-wrapper {
+    flex: 0 1 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-button-wrapper {
+    flex: 0 1 70px;
+    display: flex;
+    align-items: center;
+}
+
+.right-container {
+    display: flex;
+    flex: 1 1 300px;
+    justify-content: flex-end;
+}
+
+.auth-button, .user-img {
+    cursor: pointer;
 }
 

@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~9.0.3",
     "@angular/platform-browser-dynamic": "~9.0.3",
     "@angular/router": "~9.0.3",
+    "jwt-decode": "^2.2.0",
     "libphonenumber-js": "^1.7.48",
     "ngx-quicklink": "^0.2.1",
     "rxjs": "~6.5.4",

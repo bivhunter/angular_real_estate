@@ -12,19 +12,20 @@ export class User implements UserModel {
     level: number;
     company: string;
     rate: number | string;
+    createdAt?: Date;
     // _fullName: string;
 
     constructor(user?: User) {
         if (user) {
             this.id = user.id || null;
             this.email = user.email || '';
-            this.password = user.password || '';
             this.name = user.name || '';
             this.surname = user.surname || '';
             this.birthday = user.birthday || new Date('1980.01.01');
             this.level = user.level || 0;
             this.company = user.company || '';
             this.rate = user.rate || '';
+            this.createdAt = user.createdAt || new Date('1980.01.01');
         } else {
             this.id = null;
             this.email = '';

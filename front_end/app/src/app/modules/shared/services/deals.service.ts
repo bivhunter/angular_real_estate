@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable, throwError } from 'rxjs';
+import { Subject, Observable, throwError, Subscriber } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Deal } from '../../deal/model/deal';
 import { tap, catchError } from 'rxjs/operators';
 import { Resolve } from '@angular/router';
+import { UserService } from 'src/app/modules/authorization/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class DealsService {
   }
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private userService: UserService
   ) { }
 
   getDeals(): Observable<Deal[]> {
@@ -39,9 +41,15 @@ export class DealsService {
     return this.http
       .post<Deal>(this.dealsUrl, deal, this.getHttpAuthOption())
       .pipe(
-        tap((newDeal) => console.log(newDeal)),
+        tap((newDeal) => {
+          this.increaseUserLevel();
+        }),
         catchError(this.handlePostDealError)
       );
+  }
+
+  private increaseUserLevel() {
+     this.userService.increaseUserLevel().subscribe();
   }
 
   getDeal(id: number | string): Observable<Deal> {

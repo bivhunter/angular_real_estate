@@ -9,4 +9,5 @@ export interface UserModel {
     company: string;
     rate: number | string;
     fullName: string;
+    createdAt?: Date;
 }

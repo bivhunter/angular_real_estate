@@ -57,17 +57,13 @@ export class ClientProfileComponent implements OnInit {
   }
 
   onBirthdayChange(date: string) {
-    console.log (this.birthdayInput)
     if (Date.parse(date) > this.currentDate.valueOf()) {
-      console.log('no valid')
       this.client.birthday = this.currentDate;
       const dateString = this.reformatDate(new Date().toDateString());
-      console.log(dateString)
       this.birthdayInput.reset(dateString);
       return;
     }
     this.client.birthday = new Date (Date.parse(date));
-    console.log(this.client.birthday);
   }
 
   reformatDate(dateStr: string): string {

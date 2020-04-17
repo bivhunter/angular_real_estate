@@ -38,6 +38,7 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
         return true;
       }
 
+      // open popup
       this.router.navigate([{ outlets: {popup: 'popup'}}]);
       const o = this.popupService.getRouteDeactivateEvent()
         .pipe(

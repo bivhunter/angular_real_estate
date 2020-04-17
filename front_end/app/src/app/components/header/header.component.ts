@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isAuthenticated: boolean;
   isLogin: boolean;
+  isUserProfile = false;
   user: User;
 
   private authenticationSubscription: Subscription;
@@ -41,6 +42,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authorizationService.logOut();
   }
 
+  onPopupSubmit(user: User): void {
+    this.userService.updateUser(user).subscribe(
+      _ => {
+        this.isUserProfile = false;
+      }
+    );
+  }
 
 
   private initSubscribtion(): void {
@@ -80,6 +88,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private getUser(): void {
     this.userService.getUser().subscribe(
       (user) => {
+        console.log(user);
         const newUser = new User(user);
         this.user = newUser;
       },

@@ -1,13 +1,12 @@
 import { Injectable, Pipe } from '@angular/core';
 import { User } from './model/user';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, from } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { tap, catchError, map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../shared/services/authorization.service';
-import { ClientService } from '../shared/services/clients.service';
+import * as jwt_decode from "jwt-decode";
 import { Client } from '../clients/model/client';
-
 
 @Injectable(
   { providedIn: 'root'}
@@ -46,7 +45,6 @@ export class UserService {
     private http: HttpClient,
     private router: Router,
     private authService: AuthorizationService,
-    private clientsService: ClientService
   ) { }
 
   registerUser(user: User): Observable<User | string> {
@@ -71,58 +69,33 @@ export class UserService {
 
   // return current user
   getUser(): Observable<User> {
-    return this.getUserId().pipe(
-      switchMap(id => {
-        if (!id) {
-          const getUserIdByEmail = this.getUserIdByEmail();
-          return getUserIdByEmail.pipe(
-            switchMap(newId => this.getUserById(newId))
-          );
-        }
-        return this.getUserById(id);
-      })
-    );
-  }
-
-  getUserById(id: number | string): Observable<User> {
+    const id = this.getUserId();
     return this.http.get<User>(`${this.userUrl}/${id}`, this.getHttpAuthOption());
   }
 
-  // get users List
-  private getUsers(): Observable<User[]> {
-    return this.http.get<any>(this.userUrl, this.getHttpAuthOption())
-      .pipe(
-        map(respobject => {
-          return respobject.data;
-        })
-    );
+  updateUser(user: User): Observable<User> {
+    const id = this.getUserId();
+    return this.http.patch<User>(`${this.userUrl}/${id}`, user, this.getHttpAuthOption()).pipe(
+      tap(newUser => console.log(newUser)),
+      catchError(err => {
+        console.log(err);
+        return throwError('err');
+      }
+    ));
   }
 
-  // using when no clients
-  private getUserIdByEmail(): Observable<string | number> {
-    return this.getUsers().pipe(
-      switchMap(users => {
-        for (const user of users) {
-          if (user.email === this.userEmail) {
-            return of(user.id);
-          }
-        }
-        return of(null);
+  increaseUserLevel(): Observable<any> {
+    return this.getUser().pipe(
+      switchMap(user => {
+        const newUser = { level: ++ user.level} as User;
+        return this.updateUser(newUser);
       })
     );
   }
 
-  // get userId from clients list
-  private getUserId(): Observable<number | string> {
-    return this.clientsService.getClients().pipe(
-      switchMap(clients => {
-        if (clients.length) {
-          return of(clients[0].userId);
-        } else {
-          return of(null);
-        }
-      })
-    );
+  // get userId from token
+  private getUserId(): number | string {
+    return jwt_decode(this.authToken).userId;
   }
 
   private getHttpAuthOption() {
