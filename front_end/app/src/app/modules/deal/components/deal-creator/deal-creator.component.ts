@@ -19,9 +19,8 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
   currentFrame = 'clientsSelector';
   selectedClient: Client;
   selectedHome: Home;
-  isCanDeactivate = false;
 
-  private routeDeactivateEventSubscribtion: Subscription;
+  private isSubmit = false;
 
   constructor(
     private router: Router,
@@ -33,29 +32,11 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
 
   }
 
-  canDeactivate(next: RouterStateSnapshot): Promise<boolean> | boolean {
-      if (this.isCanDeactivate) {
-        return true;
-      }
-
-      // open popup
-      this.router.navigate([{ outlets: {popup: 'popup'}}]);
-      const o = this.popupService.getRouteDeactivateEvent()
-        .pipe(
-          tap((checking) => {
-            if (checking) {
-              this.isCanDeactivate = true;
-              this.router.navigate([{ outlets: {popup: null}}]).then(
-                () => this.router.navigateByUrl(next.url)
-              );
-
-            } else {
-              this.router.navigate([{ outlets: {popup: null}}]);
-            }
-          })
-        );
-
-      return o.toPromise();
+  async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
+    if (this.isSubmit) {
+      return true;
+    }
+    return this.popupService.canDeactivate(next);
   }
 
    // cliensSelector events handlers
@@ -92,6 +73,7 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
   }
 
   onDealsSelectorSubmit(): void {
+    this.isSubmit = true;
     const newDeal = {
       ... new Deal(),
       price: this.selectedHome.price,
@@ -102,7 +84,6 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
     this.dealsService.addDeal(newDeal).subscribe(
       () => {
         this.router.navigateByUrl('deals');
-        this.isCanDeactivate = true;
       }
     );
   }

@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user: User;
 
   private authenticationSubscription: Subscription;
-  private navigationEndSubscription: Subscription;
+  private routeChangingSubscription: Subscription;
 
   constructor(
     private navigationService: NavigationService,
@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logOut(): void {
-    this.authorizationService.logOut();
+      this.authorizationService.logOut();
   }
 
   onPopupSubmit(user: User): void {
@@ -52,43 +52,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   private initSubscribtion(): void {
-    // listen authorization Status
-    this.authenticationSubscription = this.navigationService.getAuthorizationEvent().subscribe(
-      checking => {
-        this.isAuthenticated = checking;
-        if (checking) {
-          this.getUser();
-        } else {
-          this.clearUser();
-        }
-      }
-    );
 
     // listen router navigation
-    this.navigationEndSubscription = this.router.events.pipe(
+    this.routeChangingSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(
       (event: NavigationEnd) => {
         const url = event.url;
+        console.log(url);
         if (url.includes('login')) {
           this.isLogin = true;
-        }
-        if (url.includes('registration')) {
+          this.clearUser();
+        } else if (url.includes('registration')) {
           this.isLogin = false;
+          this.clearUser();
+        } else {
+          this.getUser();
         }
       }
     );
   }
 
   private unsubscribe(): void {
-    this.authenticationSubscription.unsubscribe();
-    this.navigationEndSubscription.unsubscribe();
+    this.routeChangingSubscription.unsubscribe();
   }
 
   private getUser(): void {
     this.userService.getUser().subscribe(
       (user) => {
-        console.log(user);
+        this.isAuthenticated = true;
         const newUser = new User(user);
         this.user = newUser;
       },
@@ -100,6 +92,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private clearUser(): void {
     this.user = null;
+    this.isAuthenticated = false;
   }
 
 }

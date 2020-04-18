@@ -25,4 +25,6 @@ export class NavigationService {
     this.authorizationEvent.next(false);
   }
 
+  
+
 }

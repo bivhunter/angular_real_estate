@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { ClientProfileComponent } from './components/client-profile/client-profile.component';
 import { ClientsComponent } from './components/clients/clients.component';
+import { CanDeactivateGuard } from '../shared/guards/can-deactivate.guard';
 
 const routes: Routes = [
     {
         path: 'adding',
+        canDeactivate: [ CanDeactivateGuard ],
         data: {
           mode: 'Adding'
         },
@@ -17,6 +19,7 @@ const routes: Routes = [
       },
       {
         path: 'profile/:id',
+        canDeactivate: [ CanDeactivateGuard ],
         component: ClientProfileComponent,
         data: {
           mode: 'Editing'

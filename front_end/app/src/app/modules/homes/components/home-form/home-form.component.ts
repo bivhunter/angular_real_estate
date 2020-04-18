@@ -1,25 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 import { HomesService } from '../../../shared/services/homes.service';
 import { Home } from '../../model/home';
+import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
+import { PopupService } from 'src/app/modules/shared/services/popup.service';
 
 @Component({
   selector: 'app-home-form',
   templateUrl: './home-form.component.html',
   styleUrls: ['./home-form.component.css']
 })
-export class HomeFormComponent implements OnInit {
+export class HomeFormComponent implements OnInit, CanComponentDeactivate {
 
   isAddingMode: boolean;
   home: Home;
   title: string;
 
   isFormDisabled = false;
+  isSubmit = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private homesService: HomesService
+    private homesService: HomesService,
+    private popupService: PopupService
     ) { }
 
   ngOnInit(): void {
@@ -27,7 +31,15 @@ export class HomeFormComponent implements OnInit {
     this.getHome();
   }
 
+  async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
+    if (this.isSubmit) {
+      return true;
+    }
+    return this.popupService.canDeactivate(next);
+  }
+
   onEditHome(): void {
+    this.isSubmit = true;
     this.homesService.updateHome(this.home).subscribe(
       () => this.navigateBack(),
       (error) => console.log(error)
@@ -35,8 +47,11 @@ export class HomeFormComponent implements OnInit {
   }
 
   onAddHome(): void {
+    this.isSubmit = true;
     this.homesService.addHome(this.home).subscribe(
-      () => this.navigateBack(),
+      () => {
+        this.navigateBack();
+        },
       (error) => console.log(error)
     );
   }

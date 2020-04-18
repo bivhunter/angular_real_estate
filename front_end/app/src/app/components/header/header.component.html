@@ -5,7 +5,7 @@
     <div class="right-container">
         <span class="user-name" *ngIf="isAuthenticated">{{user?.fullName}}</span>
         
-            <div class="user-button-wrapper">
+            <div class="user-button-wrapper" *ngIf="isAuthenticated">
                 <img class="user-img" src="../../../assets/images/user-white.png"
                     (click)="isUserProfile=true">
             </div>
