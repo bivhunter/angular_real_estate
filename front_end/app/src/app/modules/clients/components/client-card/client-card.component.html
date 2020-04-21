@@ -1,6 +1,11 @@
 <div class="container">
-    <img class="profile-img" src="../../../../../assets/images/foto-card.png"
-        (click)="onProfileButton()" >
+    <div class="tooltip">
+        <span class="tooltip-text">Profile</span>
+        <div class="profile-img"
+            (click)="onProfileButton()" >
+        </div>
+    </div>
+    
     <h3>{{client.name}}</h3>
     <h3>{{client.surname}}</h3>
     <p>{{client.email}}</p>
@@ -35,7 +40,7 @@
         </app-homes-list-selector>
     </div>
 
-    <!-- remove home list popup -->
+    <!-- remove client popup -->
     <div class="popup-deleting" *ngIf="isPopupDeleting">
         <app-clients-popup-deleting
             [client]="client"

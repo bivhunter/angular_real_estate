@@ -15,6 +15,7 @@ export class Home implements HomeModel {
     clients?: any[];
     user_id: string | number;
     clientOwner: Client;
+    createdAt: Date;
 
     constructor() {
         this.id = null;

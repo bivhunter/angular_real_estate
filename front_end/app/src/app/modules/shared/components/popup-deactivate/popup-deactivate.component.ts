@@ -13,11 +13,9 @@ export class PopupDeactivateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log('inir popup');
   }
 
   ngOnDestroy(): void {
-    console.log('popupdestroy')
   }
 
   onYes(): void {

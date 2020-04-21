@@ -9,7 +9,7 @@
     *ngIf="!home.clientOwner"
     >X</div>
     
-    <div class="main-buttons-wrapper" *ngIf="!home.clientOwner">
+    <div class="main-buttons-wrapper">
         <button class="details-button"
         (click)="onDetailsButton(home.id)">Details</button>
 
@@ -21,20 +21,6 @@
         >Add client who viewed Home</button>
     </div>
 
-    <div class="sold-out"
-        *ngIf="home.clientOwner"
-        (click)="onClientOwnerClick(home.clientOwner.id)"
-        >
-        <img class="client-img" src="../../../../../assets/images/foto-card.png">
-        <div class="client-info">
-            <h3>{{home.clientOwner.name + ' ' + home.clientOwner.surname}}</h3>
-            <p>{{home.clientOwner.email}}</p>
-            <p>{{home.clientOwner.phone}}</p>
-
-        </div>
-    </div>
-
-    
       <!-- adding home list popup -->
       <div class="popup-clients-list" *ngIf="isPopupListClients">
         <app-clients-list-selector 

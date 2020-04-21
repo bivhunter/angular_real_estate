@@ -16,14 +16,12 @@ export class DealsMakingDealComponent implements OnInit {
   @Output() cancelEvent: EventEmitter<any> = new EventEmitter();
   @Output() backEvent: EventEmitter<any> = new EventEmitter();
 
+  currentDate: Date;
 
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  getCurrentDate(): Date {
-    return new Date();
+    this.currentDate = new Date();
   }
 
 }

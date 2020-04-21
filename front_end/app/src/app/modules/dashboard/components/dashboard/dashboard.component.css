@@ -5,6 +5,12 @@
     flex-grow: 1;
 }
 
+.no-clients {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 /* header */
 h1 {
     align-self: center;
@@ -81,10 +87,16 @@ td {
     flex: 0 1 120px;
 }
 
-.name-cell, .surname-cell {
-    flex: 3 0.3 200px;
+.surname-cell {
+    flex: 3 1 200px;
     text-shadow: 2px 2px 4px rgba(165,42,42,1);
 }
+
+.name-cell {
+    flex: 3 1 150px;
+    text-shadow: 2px 2px 4px rgba(165,42,42,1);
+}
+
 
 /* buttons  */
 
@@ -146,7 +158,24 @@ td {
 
    .stat-header {
        margin: 0;
+       text-align: center;
        text-shadow: 1px 1px 2px rgba(192,192,192);
    }
+
+   /* buttons styls */
+button {
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 5px;
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+    margin: 5px;
+}
+
+button:hover{
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+    text-shadow: -1px -1px 2px rgba(0,114,188,1);
+}
+
 
 

@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, UrlTree, NavigationEnd } from '@angular/router';
-import { NavigationService } from './modules/shared/services/navigation.service';
-import { Subscriber, Subscription } from 'rxjs';
+import { Router, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -18,12 +17,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private navigationService: NavigationService
   ) {}
 
   ngOnInit(): void {
-    console.log('init');
     this.doRememberMe();
     this.initSubscribtion();
   }
@@ -40,17 +36,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private initSubscribtion(): void {
-    // this.authenticationSubscription = this.navigationService.getAuthorizationEvent().subscribe(
-    //   checking => this.isNavigation = checking
-    // );
-
      // listen router navigation
     this.routeChangingSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(
       (event: NavigationEnd) => {
         const url = event.url;
-        console.log(url);
         this.isNavigation = !url.includes('authorization');
       }
     );

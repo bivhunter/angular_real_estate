@@ -52,7 +52,7 @@
       
          <!-- addres field -->
          <div class="form-group">
-            <label for="addres">addres</label>
+            <label for="addres">Location</label>
             <input 
                 #addres="ngModel"
                 type="text" 
@@ -146,27 +146,45 @@
                 </div>     
         </div>
 
+          <!-- Adding Date -->
+          <div class="form-group" *ngIf="!isAddingMode">
+            <span class="label">Registration date</span>
+            <span class="info">{{client?.createdAt | date:'dd-MM-yyyy'}}</span>
+        </div>
+
+         <!-- Level -->
+         <div class="form-group" *ngIf="!isAddingMode">
+            <span class="label">Bought Homes</span>
+            <span class="info">{{client?.homes.length || 0}}</span>
+        </div>
+
         <div class="button-wrapper">
-             <!-- Submit button for adding mode -->
-        <button type="submit" 
-        *ngIf = "isAddingMode"
-        class="button-submit"
-        [disabled]="!clientProfileForm.form.valid"
-        (click)="onAddClient()"
-        >Submit</button>
+            <!-- Cancel button -->
+            <button type="button" class="button-cancel"
+            (click)="onCancelButtonClick()"
+            >Cancel</button>
+            
+            <!-- Back button -->
+            <button type="button" class="button-cancel"
+            (click)="onCancelButtonClick()"
+            >Back</button>
+            
+                    <!-- Submit button for adding mode -->
+            <button type="submit" 
+            *ngIf = "isAddingMode"
+            class="button-submit"
+            [disabled]="!clientProfileForm.form.valid"
+            (click)="onAddClient()"
+            >Submit</button>
 
-        <!-- Submit button for editing mode -->
-        <button type="submit" 
-        *ngIf = "!isAddingMode"
-        class="button-submit"
-        [disabled]="!clientProfileForm.form.valid"
-        (click)="onEditClient()"
-        >Save</button>
-
-         <!-- Back button -->
-         <button type="button" class="button-cancel"
-        (click)="onCancelButtonClick()"
-         >Cancel</button>
+       <!-- Submit button for editing mode -->
+            <button type="submit" 
+            *ngIf = "!isAddingMode"
+            class="button-submit"
+            [disabled]="!clientProfileForm.form.valid"
+            (click)="onEditClient()"
+            >Save</button>
+       
         </div>
 
 

@@ -22,9 +22,7 @@
 <div class="container" [ngSwitch]="viewMode">
     <div class=list-view *ngSwitchCase="'list'">
         <app-clients-table
-            [clients]="clients"
-            >
-
+            [clients]="clients">
         </app-clients-table>        
     </div>
 

@@ -28,8 +28,16 @@
     </div>
 
     <h1>Recent Clients</h1>
-    <h1  *ngIf="!clients.length">No Clients</h1>
-    <div class=table-wrapper *ngIf="clients.length">
+
+    <div class="no-clients" *ngIf="isDataReady && !clients.length">
+        <h1>No Clients</h1>
+        <button 
+        class=add-button
+        routerLink="/clients/adding">+ Add first client
+        </button>
+    </div>
+
+    <div class=table-wrapper *ngIf="isDataReady && clients.length">
         <table class="table">
         <tbody>
             <tr class="head-row">

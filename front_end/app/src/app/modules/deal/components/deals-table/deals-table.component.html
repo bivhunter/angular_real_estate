@@ -1,11 +1,11 @@
 <div class="container">
-
-    <!-- table -->
+    <div class="head-wrapper">
+        <!-- table -->
     <table class="table">
     <tbody>
         <!-- head row -->
         <tr class="head-row">
-            <td class="img-cell"></td>
+            <td class="deal-cell">Deal</td>
             <td class="date-cell"
                 [class.sort-up]="sortingMethod === 'DATE_UP'"
                 [class.sort-down]="sortingMethod === 'DATE_DOWN'"
@@ -20,15 +20,22 @@
                 [class.sort-down]="sortingMethod === 'PRICE_DOWN'"
                 (click)="setSortingField('PRICE')">Price</td>
         </tr>
-    
-        <!-- content rows -->
+    </tbody>
+    </table>
+    </div>
+        
+    <div class="content-wrapper">
+        <table class="table">
+    <tbody>
         <tr *ngFor="let deal of deals" class="table-item">
-            <td class="img-cell" 
-                (click)="onDealClick(deal.id)"><img src="../../../../assets/images/deal.png"></td>
+            <td class="deal-cell" 
+                (click)="onDealClick(deal.id)">
+                <div class="deal-img"></div>
+            </td>
             <td class="date-cell">{{deal.date | date:'dd-MM-yyyy'}}</td>
             <td class="home-cell"
                 (click)="onHomeClick(deal.home.id)">
-                <img src="../../../../../assets/images/foto-house.png">
+                <div class="home-img"></div>
                 <div class="home-wrapper">
                     <h3>{{deal.home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</h3>
                     <p>{{deal.home.home + ' ' + deal.home.street}}</p>
@@ -38,17 +45,20 @@
             <td class="client-cell"
                 [class.disabled]="!deal.client"
                 (click)="onClientClick(deal.clientId)">
-                <img src="../../../../../assets/images/foto-card.png">
+                <div class="client-img"></div>
                 <h4 *ngIf="!deal.client">Client remove </h4>
                 <div class="client-wrapper" *ngIf="deal.client">
-                    <h3>{{deal.client.name + ' ' + deal.client.surname}}</h3>
-                    <p>{{deal.client.email}}</p>
-                    <p>{{deal.client.phone}}</p>
+                    <h3>{{deal.client.surname}}</h3>
+                    <h3>{{deal.client.name}}</h3>
                 </div>
             </td>
             <td class="price-cell">{{deal.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</td>
          </tr>
     </tbody>
     </table>
+    </div>    
+
+        <!-- content rows -->
+    
 
 </div>

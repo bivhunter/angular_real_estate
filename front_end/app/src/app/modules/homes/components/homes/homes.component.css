@@ -1,7 +1,7 @@
 :host {
     display: flex;
     justify-content: center;
-    height: 100%;
+    height: 85vh;
 
 }
 
@@ -9,15 +9,36 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    height: 100%;
 }
 
 .control-panel {
-    position: fixed;
-    z-index: 9;
-    width: 1300px;
-    justify-self: stretch;
+    height: 10%
 }
 
 .content-wrapper {
-    margin-top: 100px;
+    height: 95%
+}
+
+.no-homes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+}
+
+
+/* buttons styls */
+button {
+ padding: 5px;
+ font-size: 15px;
+ border-radius: 5px;
+ text-shadow: 1px 1px 2px rgba(0,114,188,1);
+ margin: 5px;
+}
+
+button:hover{
+ cursor: pointer;
+ box-shadow: 2px 2px 4px rgba(0,114,188,1);
+ text-shadow: -1px -1px 2px rgba(0,114,188,1);
 }

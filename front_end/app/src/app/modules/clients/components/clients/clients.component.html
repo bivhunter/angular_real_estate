@@ -4,7 +4,15 @@
         <app-clients-control-panel></app-clients-control-panel>    
     </div>
 
-    <div class="content-wrapper">
+    <div class="no-clients" *ngIf="isDataReady && !clients.length">
+        <h1>No Clients</h1>
+        <button 
+        class=add-button
+        routerLink="/clients/adding">+ Add first client
+        </button>
+    </div>
+
+    <div class="content-wrapper" *ngIf="isDataReady && clients.length">
         <app-clients-list 
         [clients]="filteredClients"
         ></app-clients-list>

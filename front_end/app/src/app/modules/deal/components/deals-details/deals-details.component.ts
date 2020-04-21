@@ -5,6 +5,7 @@ import { Home } from 'src/app/modules/homes/model/home';
 import { Router, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 import { DealsService } from 'src/app/modules/shared/services/deals.service';
 import { Route } from '@angular/compiler/src/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-deals-details',
@@ -20,7 +21,8 @@ export class DealsDetailsComponent implements OnInit {
   constructor(
     private router: Router,
     private dealsService: DealsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +30,8 @@ export class DealsDetailsComponent implements OnInit {
   }
 
   onCloseButton() {
-    this.router.navigateByUrl('deals');
+    this.location.back();
+    // this.router.navigateByUrl('deals');
   }
 
   private getDeal(): void {

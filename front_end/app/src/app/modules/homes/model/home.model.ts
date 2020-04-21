@@ -13,4 +13,5 @@ export interface HomeModel {
     clients?: Array<Client>; // used for GET
     user_id: number | string;
     clientOwner?: Client;
+    createdAt?: Date;
 }

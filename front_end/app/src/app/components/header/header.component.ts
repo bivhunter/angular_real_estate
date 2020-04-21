@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavigationService } from './../../modules/shared/services/navigation.service';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription} from 'rxjs';
 import { AuthorizationService } from 'src/app/modules/shared/services/authorization.service';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { User } from 'src/app/modules/authorization/model/user';
 import { UserService } from 'src/app/modules/authorization/user.service';
 
@@ -19,13 +18,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isUserProfile = false;
   user: User;
 
-  private authenticationSubscription: Subscription;
   private routeChangingSubscription: Subscription;
 
   constructor(
-    private navigationService: NavigationService,
     private authorizationService: AuthorizationService,
-    private activatedRoute: ActivatedRoute,
     private router: Router,
     private userService: UserService
   ) { }
@@ -42,24 +38,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.authorizationService.logOut();
   }
 
-  onPopupSubmit(user: User): void {
-    this.userService.updateUser(user).subscribe(
-      _ => {
-        this.isUserProfile = false;
-      }
-    );
-  }
-
-
   private initSubscribtion(): void {
-
     // listen router navigation
     this.routeChangingSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(
       (event: NavigationEnd) => {
         const url = event.url;
-        console.log(url);
         if (url.includes('login')) {
           this.isLogin = true;
           this.clearUser();

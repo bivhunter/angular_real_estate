@@ -32,6 +32,40 @@
     box-shadow: 2px 2px 4px rgba(0,114,188,1);
 }
 
+.profile-img {
+    background-image: url('../../../../../assets/images/foto-card.png');
+    height: 80px;
+    width: 80px;
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+
+/* tooltip */
+
+.tooltip {
+    position: relative;
+  }
+  
+  .tooltip .tooltip-text {
+    visibility: hidden;
+    width: 70px;
+    text-align: center;
+    color: rgba(255,255,255,1);
+    position: absolute;
+    bottom: 3px;
+    left: 7px;
+    z-index: 1;
+  }
+
+  .tooltip:hover .profile-img {
+      background-image: url('../../../../../assets/images/foto-card-blue.png');
+  }
+  
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+  }
+
+
 button {
     font-size: 15px;
     border-radius: 5px;

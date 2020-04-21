@@ -27,7 +27,6 @@
     padding: 0 15px 0 15px;
     /* flex-direction: column; */
     align-items: center;
-    height: 10%;
 }
 
 /* table's styles */
@@ -84,7 +83,7 @@ tr {
 
 
 /* cell-style */
-td {
+td:not(.profile-cell) {
     padding: 5px;
     word-wrap: break-word;
     word-break: break-all;
@@ -104,8 +103,13 @@ td {
     content: '↓';
 }
 
-.name-cell, .surname-cell {
+.surname-cell {
     flex: 3 1 200px;
+    text-shadow: 2px 2px 4px rgba(165,42,42,1);
+}
+
+.name-cell {
+    flex: 3 1 150px;
     text-shadow: 2px 2px 4px rgba(165,42,42,1);
 }
 
@@ -123,7 +127,7 @@ td {
     flex-direction: column;
     align-items: stretch;
     text-shadow: 1px 1px 2px rgba(0,114,188,1);
-    flex: 1 1 200px;
+    flex: 1 1 140px;
 }
 
 .profile-img:hover {
@@ -137,6 +141,7 @@ td {
 
 /* buttons */
 .profile-cell button {
+    white-space: normal;
     border-radius: 5px;
     text-shadow: 1px 1px 2px rgba(0,114,188,1);
     margin: 1px;

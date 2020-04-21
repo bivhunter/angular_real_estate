@@ -16,6 +16,7 @@ import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deacti
 export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
 
   client: Client;
+  initClient: Client;
   currentDate: Date = new Date();
   isDataReady = false;
   title: string;
@@ -30,7 +31,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     private location: Location,
     private popupService: PopupService,
     private clientService: ClientService,
-    private clientsFilteringService: ClientsFilteringService
+    private clientsFilteringService: ClientsFilteringService,
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +40,9 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
+    if (this.compareClient()) {
+      return true;
+    }
     if (this.isSubmit) {
       return true;
     }
@@ -89,9 +93,19 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   private navigateBack(): void {
-    this.router.navigateByUrl('/clients');
+    this.location.back();
+    // this.router.navigateByUrl('/clients');
   }
 
+  private compareClient(): boolean {
+    console.log(this.client, this.initClient);
+    for (const prop in this.client) {
+      if ((this.initClient[prop] === undefined) || (this.initClient[prop] !== this.client[prop])) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   private checkAddingMode() {
     const mode = this.route.snapshot.data.mode;
@@ -114,6 +128,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
 
   private onGetClient(client: Client): void {
     this.client = client;
+    this.initClient = {...client};
     this.isDataReady = true;
   }
 

@@ -1,47 +1,25 @@
-/* full screen opacity style */
-.cover-div {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 8000;
-    width: 100%;
-    height: 100%;
-    background-color: gray;
-    opacity: 0.3;
-    overflow: hidden;
-}
 
-
-/* popup menu styles */
-.popup-wrapper {          
+:host {
     display: flex;
     align-items: center;
     justify-content: center;
     align-self: stretch;
-    z-index: 8800;
-    position: fixed;
-    top: 0;
-    left: 0;
     height: 100%;
-    width: 100%;
-    overflow: hidden;
 }
 
-.popup {
-    position: relative;
+.container {
     display: flex;
     flex-basis: 400px;
     padding: 20px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 8880;
     border: 3px grey groove;
     border-radius: 5px;
+    font-size: 20px;
     text-shadow: 1px 1px 2px rgba(0,114,188,1);
     box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
     background-color: white;
-    color: black;
 }
 
 h1 {

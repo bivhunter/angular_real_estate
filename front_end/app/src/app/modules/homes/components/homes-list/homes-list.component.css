@@ -1,13 +1,29 @@
-.card-view, .list-view {
+.container {
+    height: 100%;
+    overflow: visible;
+}
+
+.list-view {
+    display: flex;
+    height: 100%;
+}
+.card-view {
+    box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    overflow: auto;
+    max-height: 93%;
+    box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
+    background-color: #F5FAFF;
 }
 
 /* styles for sorting panel */
 .sorting-menu {
     display: flex;
     justify-content: center;
+    height: 6%;
+    margin-bottom: 10px;
 }
 
 .sorting-button.sort-up::before {

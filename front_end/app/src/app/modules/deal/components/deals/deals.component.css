@@ -1,13 +1,43 @@
 :host {
     display: flex;
     justify-content: center;
-    height: 100%;
-    flex-basis: 1200px;
+    height: 85vh;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    max-width: 1200px;
+    height: 100%;
+}
+
+.control-panel {
+    height: 10%
+}
+
+.content-wrapper {
+    height: 95%
+}
+
+.no-deals {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+}
+
+
+/* buttons styls */
+button {
+ padding: 5px;
+ font-size: 15px;
+ border-radius: 5px;
+ text-shadow: 1px 1px 2px rgba(0,114,188,1);
+ margin: 5px;
+}
+
+button:hover{
+ cursor: pointer;
+ box-shadow: 2px 2px 4px rgba(0,114,188,1);
+ text-shadow: -1px -1px 2px rgba(0,114,188,1);
 }

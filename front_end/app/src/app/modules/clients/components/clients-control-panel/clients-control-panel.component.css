@@ -10,7 +10,6 @@
 
 /* buttons styls */
 button {
-    max-width: 75px;
     padding: 5px;
     font-size: 15px;
     border-radius: 5px;
@@ -18,17 +17,13 @@ button {
     margin: 5px;
 }
 
-.add-button {
-    max-width: 100px;
-}
-
 button:hover{
     cursor: pointer;
     box-shadow: 2px 2px 4px rgba(0,114,188,1);
+    text-shadow: -1px -1px 2px rgba(0,114,188,1);
 }
 
 /* input styles */
-
 form {
     display: flex;
 }
@@ -49,7 +44,7 @@ input {
 }
 
 /* menu wrappers */
-.views-control, .sort-control {
+.views-control {
     position: relative;
 }
 
@@ -57,23 +52,20 @@ input {
     display: flex;
 }
 
-
 /* menus styles */
 .views-menu {
     display: flex;
     flex-direction: column;
     position: absolute;
+    z-index: 9;
     
     top: 35px;
     right: 5px;
 }
 
 /* menu's buttons */
-.cards-views, .list-views, .sort-surname, .sort-name {
+.cards-views, .list-views {
     margin: 0;
 }
 
-.sort-surname, .sort-name, .sort-button {
-    width: 85px;
-}
 

@@ -37,6 +37,10 @@
 }
 /* client styles */
 
+.home-column, .client-column {
+    font-size: 12px;
+}
+
 .home-column:hover, .client-column:hover:not(.disabled), .deal-container:hover {
     cursor: pointer;
     box-shadow: 4px 4px 6px rgba(0, 114, 188, 1);
@@ -45,6 +49,20 @@
 .home-column:hover p, .client-column:hover p {
     text-shadow: 1px 1px 2px rgba(0,114,188,1);
 }
+
+.home-column:hover .home-img {
+    background-image: url('../../../../../assets/images/foto-house_blue.png');
+}
+
+.client-column:hover .client-img {
+    background-image: url('../../../../../assets/images/foto-card-blue.png');
+}
+
+.deal-container:hover .deal-img {
+    background-image: url('../../../../../assets/images/deal_blue.png');
+}
+
+
 
 
 p {
@@ -61,11 +79,33 @@ h3 {
 
 .deal-img {
     height: 80px;
+    width: 80px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.client-img, .home-img {
+.home-img, .client-img {
     height: 40px;
+    width: 40px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
+
+.home-img {
+   background-image: url('../../../../../assets/images/foto-house.png');
+}
+
+.client-img {
+    background-image: url('../../../../../assets/images/foto-card.png');
+ }
+
+ .deal-img {
+    background-image: url('../../../../../assets/images/deal.png');
+ }
+
+
 
 /* buttons styles */
 .main-buttons-wrapper {

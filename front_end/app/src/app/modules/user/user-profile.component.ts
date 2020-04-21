@@ -1,0 +1,137 @@
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { User } from 'src/app/modules/authorization/model/user';
+import { NgModel } from '@angular/forms';
+import { UserService } from '../authorization/user.service';
+import { CanComponentDeactivate } from '../shared/guards/can-deactivate.guard';
+import { RouterStateSnapshot } from '@angular/router';
+import { PopupService } from './../shared/services/popup.service';
+import { Location } from '@angular/common';
+
+@Component({
+  selector: 'app-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.css']
+})
+export class UserProfileComponent implements OnInit, CanComponentDeactivate {
+
+  currentDate: Date = new Date();
+
+  isPopupQuestion = false;
+  title: string;
+  text: string;
+
+  private isSubmitQuestion: boolean;
+
+  @ViewChild('birthday') birthdayInput: NgModel;
+  user: User;
+  initUser: User;
+
+  isSubmit = false;
+
+  constructor(
+    private userService: UserService,
+    private popupService: PopupService,
+    private location: Location
+  ) { }
+
+  ngOnInit(): void {
+    this.getUser();
+  }
+
+  async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
+    if (this.compareUser()) {
+      return true;
+    }
+    if (this.isSubmit) {
+      return true;
+    }
+    return this.popupService.canDeactivate(next);
+  }
+
+  onBirthdayChange(date: string) {
+    if (Date.parse(date) > this.currentDate.valueOf()) {
+      this.user.birthday = this.currentDate;
+      const dateString = this.reformatDate(new Date().toDateString());
+      this.birthdayInput.reset(dateString);
+      return;
+    }
+    this.user.birthday = new Date (Date.parse(date));
+  }
+
+  reformatDate(dateStr: string): string {
+    const date = new Date(Date.parse(dateStr));
+    const dateString = date.getFullYear() + '-'
+    + ('0' + (date.getMonth() + 1)).slice(-2) + '-'
+    + ('0' + (date.getDate() )).slice(-2);
+    return dateString;
+  }
+
+  onRateChange(value: string): void {
+    const newValue = value.replace(/\s/g, '').replace(/\$/g, '');
+    this.user.rate = +newValue;
+  }
+
+  onEditUser() {
+    if (this.compareUser()) {
+      this.goBack();
+    } else {
+    this.isSubmitQuestion = true;
+    this.openPopupQuestion('Save changes!');
+    }
+  }
+
+  onCancelButtonClick(): void {
+    if (this.compareUser()) {
+      this.goBack();
+    } else {
+      this.isSubmitQuestion = false;
+      this.openPopupQuestion('Cancel changes!');
+    }
+  }
+
+  onCancel(): void {
+    this.isPopupQuestion = false;
+  }
+
+  onSubmit(): void {
+    if (this.isSubmitQuestion) {
+      this.userService.updateUser(this.user).subscribe(
+        user => {
+          this.isSubmit = true;
+          this.goBack();
+        }
+      );
+    } else {
+      this.isSubmit = true;
+      this.goBack();
+    }
+  }
+
+  private goBack(): void {
+    this.location.back();
+  }
+
+  private getUser(): void {
+    this.userService.getUser().subscribe(
+      user => {
+        this.user = new User(user);
+        this.initUser = {...this.user} as User;
+      }
+    );
+  }
+
+  private compareUser(): boolean {
+    console.log(this.user, this.initUser);
+    for (const prop in this.user) {
+      if ((this.initUser[prop] === undefined) || (this.initUser[prop] !== this.user[prop])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private openPopupQuestion(title: string): void {
+    this.title = title;
+    this.isPopupQuestion = true;
+  }
+}

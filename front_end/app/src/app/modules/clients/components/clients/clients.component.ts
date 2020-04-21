@@ -16,6 +16,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
   clients: Client[] = [];
   filteredClients: Client[] = [];
+  isDataReady = false;
 
   // observable and subscription for clientsUpdate
   private updateClientsListEvent: Observable<any>;
@@ -83,6 +84,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
   private getClientsHandler(clientsList: Client[]) {
     this.clients = clientsList;
+    this.isDataReady = true;
     this.filteredClients = this.filterClients(this.clients);
     this.filteredClients = this.sortClients(this.filteredClients);
   }

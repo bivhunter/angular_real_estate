@@ -7,7 +7,27 @@
     display: flex;
     flex-grow: 1;
     position: relative;
+    flex-direction: column;
+    height: 100%;
 }
+
+.content {
+    max-height: 70vh;
+    overflow: auto;
+    display: flex;
+    flex-grow: 1;
+    padding: 15px;
+    box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
+    background-color: #F5FAFF;
+}
+
+.head-wrapper {
+    display: flex;
+    padding: 0 15px 0 15px;
+    /* flex-direction: column; */
+    align-items: center;
+}
+
 
 /* start */
 
@@ -108,47 +128,42 @@ h3 {
 
 .table {
     flex-grow: 1;
-    font-size: 20px;
+    font-size: 14px;
     text-shadow: 1px 1px 2px rgba(192, 192, 192);
 }
 
 .head-row {
     border: none;
-    font-size: 25px;
+    font-size: 20px;
     text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
     box-shadow: none;
 }
 
-td {
-    padding: 10px;
-}
-
-.client-wrapper {
+tr {
     display: flex;
+    justify-content: center;
     align-items: center;
-    font-size: 15px;
+    border-collapse: collapse;
+    border: 3px grey groove;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
+    background-color: #F4F5F7;
+    margin-bottom: 10px;
 }
 
-.client-wrapper:hover {
-    cursor: pointer;
-    box-shadow: 4px 4px 6px rgba(0, 114, 188, 1);
+td:not(.details-cell) {
+    padding: 5px;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
 }
-
-
-.client-info-wrapper {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-}
-
-
 
 .head-row .city-cell:hover, .head-row .state-cell:hover, .head-row .street-cell:hover, .head-row .home-cell:hover, .head-row .price-cell:hover {
     cursor: pointer;
 }
 
 .city-cell, .state-cell, .street-cell {
-    flex: 4 4 200px;
+    flex: 4 1 200px;
 }
 
 .sort-up::before {
@@ -160,24 +175,26 @@ td {
 }
 
 .home-cell {
-    flex: 2 2 100px;
+    flex: 1 1 50px;
 }
 
 .price-cell {
-    flex: 2 2 100px;
+    flex: 2 1 100px;
     text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
 }
-
+/* 
 .details-cell:hover, .delete-cell:hover {
     cursor: pointer;
-}
+} */
 
+
+/* actions cell style */
 .details-cell {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     text-shadow: 1px 1px 2px rgba(0,114,188,1);
-    flex: 1 1 200px;
+    flex: 1 1 160px;
 }
 
 .details-cell button {
@@ -201,6 +218,17 @@ td {
 }
 
 
+
+/* delete cell styles */
+.delete-cell {
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    text-shadow: 1px 1px 2px rgba(165, 16, 16, 1);
+}
+
 .delete-button {
     display: flex;
     align-items: center;
@@ -209,33 +237,47 @@ td {
     width: 25px;
 }
 
-.delete-button:hover {
+.delete-button:hover:not(.hidden) {
     cursor: pointer;
     text-shadow: 1px 1px 2px rgba(165, 16, 16, 1);
     box-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
 }
 
-.img-cell {
-    position: relative;
-    flex-grow: 0;
-    flex-basis: 80px;
-
+.delete-cell {
+    flex: 0 0 25px;
 }
+
+
+/* logo cell styles */
+.img-cell {
+    flex: 0 0 70px;
+    margin-right: 10px;
+}
+
+.profile-img {
+    height: 60px;
+    background-image: url('../../../../../assets/images/foto-house.png');
+    background-size: cover;
+}
+
+.profile-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+    flex: 1 1 140px;
+}
+
+.profile-img:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+}
+
 
 .sold-img {
     position: absolute;
     left: 0;
     top: 0;
-}
-
-tr {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-collapse: collapse;
-    border: 3px grey groove;
-    border-radius: 5px;
-    box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
 }
 
 img {
@@ -245,3 +287,28 @@ img {
 /* end */
 
 /* styles for table */
+
+/* tooltip */
+
+.tooltip {
+    position: relative;
+  }
+  
+  .tooltip .tooltip-text {
+    visibility: hidden;
+    width: 70px;
+    text-align: center;
+    color: rgba(255,255,255,1);
+    position: absolute;
+    bottom: 7px;
+    left: 0px;
+    z-index: 1;
+  }
+
+  .tooltip:hover .profile-img {
+      background-image: url('../../../../../assets/images/foto-house_blue.png');
+  }
+  
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+  }

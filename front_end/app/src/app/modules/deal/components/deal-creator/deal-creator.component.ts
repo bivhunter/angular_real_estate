@@ -66,6 +66,7 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
    // dealsSelector events handlers
    onDealsSelectorBack(): void {
     this.currentFrame = 'homesSelector';
+    this.selectedHome = null;
   }
 
   onDealsSelectorCancel(): void {

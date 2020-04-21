@@ -1,7 +1,7 @@
 <div class="container">
     <div class="deal-container"
         (click)="onDeal(deal.id)">
-        <img class="deal-img" src="../../../../../assets/images/deal.png">
+        <div class="deal-img"></div>
         <h3>{{deal.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</h3>
         <h3>{{deal.date | date:'dd-MM-yyyy'}}</h3>
     </div>
@@ -10,7 +10,7 @@
         <div class="client-column"
         (click)="onClient(deal.clientId)"
         [class.disabled]="!deal?.client">
-        <img class="client-img" src="../../../../../assets/images/foto-card.png">
+        <div class="client-img"></div>
         <h4 *ngIf="!deal?.client">Client remove </h4>
         <div class="info-wrapper" *ngIf="deal?.client">
                 <p>{{deal.client.name}}</p>
@@ -21,7 +21,7 @@
         <div class="home-column"
             routerLink="/homes/details/{{deal.home.id}}"
         >
-            <img class="home-img" src="../../../../../assets/images/foto-house.png">
+            <div class="home-img"></div>
             <p>{{deal.home.home + ' ' + deal.home.street}}</p>
             <p>{{deal.home.city + ' ' + deal.home.state}}</p>
 

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 import { HomesService } from '../../../shared/services/homes.service';
 import { Home } from '../../model/home';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
 import { PopupService } from 'src/app/modules/shared/services/popup.service';
+import { Location } from '@angular/common';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-home-form',
@@ -15,13 +17,18 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   isAddingMode: boolean;
   home: Home;
   title: string;
+  currentDate = new Date();
 
   isFormDisabled = false;
-  isSubmit = false;
+  private isSubmit = false;
+  private initHome: Home;
+
+  @ViewChild('salesDate') dateInput: NgModel;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private location: Location,
     private homesService: HomesService,
     private popupService: PopupService
     ) { }
@@ -32,6 +39,12 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
+    if (this.isFormDisabled) {
+      return true;
+    }
+    if (this.compareHomes()) {
+      return true;
+    }
     if (this.isSubmit) {
       return true;
     }
@@ -65,6 +78,34 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     this.home.price = +newValue;
   }
 
+  onDateChange(date: string) {
+    if (Date.parse(date) > this.currentDate.valueOf()) {
+      this.home.start_date = this.currentDate;
+      const dateString = this.reformatDate(new Date().toDateString());
+      this.dateInput.reset(dateString);
+      return;
+    }
+    this.home.start_date = new Date (Date.parse(date));
+  }
+
+  reformatDate(dateStr: string): string {
+    const date = new Date(Date.parse(dateStr));
+    const dateString = date.getFullYear() + '-'
+    + ('0' + (date.getMonth() + 1)).slice(-2) + '-'
+    + ('0' + (date.getDate() )).slice(-2);
+    return dateString;
+  }
+
+  private compareHomes(): boolean {
+    console.log(this.home, this.initHome);
+    for (const prop in this.home) {
+      if ((this.initHome[prop] === undefined) || (this.initHome[prop] !== this.home[prop])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   private getHome(): void {
     if (this.isAddingMode) {
       this.onGetHome(new Home());
@@ -72,7 +113,6 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     } else {
       const id = this.getId();
       this.title = `Home's details`;
-      
       this.homesService.getHome(id).subscribe(
       (home) => this.onGetHome(home),
       (error) => console.log(error)
@@ -81,7 +121,7 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   private navigateBack(): void {
-    this.router.navigateByUrl('/homes');
+    this.location.back();
   }
 
   private checkAddingMode() {
@@ -90,11 +130,11 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   private onGetHome(home: Home): void {
-    console.log(home)
     if (home.clientOwner) {
       this.isFormDisabled = true;
     }
     this.home = home;
+    this.initHome = {...home};
   }
 
   private getId(): string | number {

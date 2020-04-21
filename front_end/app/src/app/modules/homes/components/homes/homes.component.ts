@@ -16,6 +16,7 @@ export class HomesComponent implements OnInit, OnDestroy {
 
   homes: Home[] = [];
   filteredHomes: Home[] = [];
+  isDataReady = false;
 
 
   // observable and subscription for homesUpdate
@@ -58,6 +59,7 @@ export class HomesComponent implements OnInit, OnDestroy {
 
   private getHomesHandler(homesList: Home[]) {
     this.homes = homesList;
+    this.isDataReady = true;
     this.filteredHomes = this.filterHomes(this.homes);
     this.filteredHomes = this.sortHomes(this.filteredHomes);
   }

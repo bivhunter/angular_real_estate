@@ -4,7 +4,15 @@
         <app-homes-control-panel></app-homes-control-panel>
     </div>
 
-    <div class="content-wrapper">
+    <div class="no-homes" *ngIf="isDataReady && !homes.length">
+        <h1>No Homes</h1>
+        <button 
+        class=add-button
+        routerLink="/homes/adding">+ Add first home
+        </button>
+    </div>
+
+    <div class="content-wrapper" *ngIf="isDataReady && homes.length">
         <app-homes-list
         [homes]="filteredHomes"
         ></app-homes-list>

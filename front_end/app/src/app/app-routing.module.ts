@@ -31,6 +31,12 @@ const routes: Routes = [
     .then(module => module.ClientsModule, (error) => console.log(error))
   },
   {
+    path: 'user',
+    canActivate: [ AuthGuard ],
+    loadChildren: () => import('./modules/user/user.module')
+    .then(module => module.UserModule, (error) => console.log(error))
+  },
+  {
     path: 'homes',
     canActivate: [ AuthGuard ],
     loadChildren: () => import('./modules/homes/homes.module')

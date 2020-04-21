@@ -15,6 +15,7 @@ export class DealsComponent implements OnInit, OnDestroy {
 
   deals: Deal[] = [];
   filteredDeals: Deal[] = [];
+  isDataReady = false;
 
 
   // observable and subscription for dealsUpdate
@@ -57,6 +58,7 @@ export class DealsComponent implements OnInit, OnDestroy {
 
   private getDealsHandler(dealsList: Deal[]) {
     this.deals = dealsList;
+    this.isDataReady = true;
     this.filteredDeals = this.filterDeals(this.deals);
     this.filteredDeals = this.sortDeals(this.filteredDeals);
   }

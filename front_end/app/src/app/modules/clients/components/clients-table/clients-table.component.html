@@ -32,7 +32,7 @@
                     <span class="tooltip-text">Profile</span>
                     <div class="profile-img" 
                         (click)="onProfileButton(client.id)"
-                        class="profile-img">     
+                        >     
                         </div>
                     </td>
                     <td class="surname-cell">{{client.surname}}</td>
@@ -81,6 +81,7 @@
     </app-homes-list-selector>
 </div>
 
+<!-- removing popup  -->
     <app-clients-popup-deleting
         class="popup-menu"
         *ngIf="isPopumMenu"

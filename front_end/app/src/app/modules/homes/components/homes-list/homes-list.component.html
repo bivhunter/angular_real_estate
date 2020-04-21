@@ -41,8 +41,7 @@
     <!-- table-view -->
     <div class=list-view *ngSwitchCase="'list'">
         <app-homes-table
-            [homes]="homes"
-            >
+            [homes]="homes">
         </app-homes-table>        
     </div>
 
@@ -51,8 +50,7 @@
         <h2 *ngIf="!homes?.length">No homes</h2>
         <app-home-card 
         *ngFor="let home of homes"
-        [home]="home"
-        >
+        [home]="home">
         </app-home-card>
     </div>
 </div>

@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   clientsTotal: number;
   homesTotal: number;
   dealsTotal: number;
+  isDataReady = false;
 
   clientsListChangingSubscription: Subscription;
 
@@ -48,6 +49,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private getClients(): void {
     this.clientsService.getClients().subscribe((clients) => {
+      this.isDataReady = true;
       this.clients = [...clients].sort( (clientA, clientB) => {
         return Date.parse(clientB.createdAt).valueOf() - Date.parse(clientA.createdAt).valueOf();
       });
