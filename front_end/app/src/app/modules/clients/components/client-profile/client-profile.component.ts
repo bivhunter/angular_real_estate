@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, ChildActivationEnd, RouterStateSnapshot } from '@angular/router';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from 'src/app/modules/shared/services/clients.service';
+import { ClientService } from 'src/app/modules/clients/model/clients.service';
 import { Location } from '@angular/common';
-import { ClientsFilteringService } from '../../../shared/services/clients-filtering.service';
+import { ClientsFilteringService } from '../../model/clients-filtering.service';
 import { NgModel } from '@angular/forms';
 import { PopupService } from './../../../shared/services/popup.service';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';

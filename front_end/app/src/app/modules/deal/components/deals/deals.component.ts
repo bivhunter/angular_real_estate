@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Deal } from '../../model/deal';
 import { Observable, Subscription } from 'rxjs';
 import { TDealsSortingMethod } from 'src/app/modules/shared/types/types';
-import { DealsFilteringService } from 'src/app/modules/shared/services/deals-filtering.service';
+import { DealsFilteringService } from 'src/app/modules/deal/services/deals-filtering.service';
 import { DealsSortingService } from '../../services/deals-sorting.service';
-import { DealsService } from 'src/app/modules/shared/services/deals.service';
+import { DealsService } from 'src/app/modules/deal/services/deals.service';
 
 @Component({
   selector: 'app-deals',

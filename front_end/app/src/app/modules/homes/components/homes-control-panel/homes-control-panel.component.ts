@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HomesViewService } from '../../services/homes-view.service';
-import { HomesFilterService } from '../../../shared/services/homes-filter.service';
+import { HomesFilterService } from '../../services/homes-filter.service';
 
 @Component({
   selector: 'app-homes-control-panel',

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject, BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
-import { Home } from '../../homes/model/home';
+import { Home } from '../model/home';
 import { tap, catchError, map, switchMap } from 'rxjs/operators';
-import { DealsService } from './deals.service';
+import { DealsService } from '../../deal/services/deals.service';
 import { Deal } from '../../deal/model/deal';
 import { Client } from '../../clients/model/client';
 

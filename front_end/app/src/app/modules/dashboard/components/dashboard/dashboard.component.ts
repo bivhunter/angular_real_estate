@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ClientService } from 'src/app/modules/shared/services/clients.service';
+import { ClientService } from 'src/app/modules/clients/model/clients.service';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router, RouterStateSnapshot } from '@angular/router';
-import { HomesService } from './../../../shared/services/homes.service';
-import { DealsService } from 'src/app/modules/shared/services/deals.service';
+import { HomesService } from '../../../homes/services/homes.service';
+import { DealsService } from 'src/app/modules/deal/services/deals.service';
 import { Subscription, Observable, of } from 'rxjs';
 
 @Component({

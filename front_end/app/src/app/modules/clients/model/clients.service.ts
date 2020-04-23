@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, switchMap, map } from 'rxjs/operators';
 import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
-import { Client } from '../../clients/model/client';
+import { Client } from './client';
 import { Deal } from '../../deal/model/deal';
-import { DealsService } from './deals.service';
-import { PopupService } from './popup.service';
+import { DealsService } from '../../deal/services/deals.service';
+import { PopupService } from '../../shared/services/popup.service';
 
 @Injectable({
   providedIn: 'root'

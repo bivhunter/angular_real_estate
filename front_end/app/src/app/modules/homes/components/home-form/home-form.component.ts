@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
-import { HomesService } from '../../../shared/services/homes.service';
+import { HomesService } from '../../services/homes.service';
 import { Home } from '../../model/home';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
 import { PopupService } from 'src/app/modules/shared/services/popup.service';

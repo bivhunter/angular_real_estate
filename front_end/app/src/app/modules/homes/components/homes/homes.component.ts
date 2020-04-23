@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Home } from '../../model/home';
-import { HomesService } from '../../../shared/services/homes.service';
+import { HomesService } from '../../services/homes.service';
 import { Observable, Subscription } from 'rxjs';
 import { THomesSortingMethod } from 'src/app/modules/shared/types/types';
 import { HomesSortService } from '../../services/homes-sort.service';
-import { HomesFilterService } from '../../../shared/services/homes-filter.service';
+import { HomesFilterService } from '../../services/homes-filter.service';
 
 @Component({
   selector: 'app-homes',

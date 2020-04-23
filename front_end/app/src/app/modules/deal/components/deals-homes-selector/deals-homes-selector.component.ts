@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Home } from 'src/app/modules/homes/model/home';
-import { HomesService } from 'src/app/modules/shared/services/homes.service';
-import { HomesFilterService } from 'src/app/modules/shared/services/homes-filter.service';
+import { HomesService } from 'src/app/modules/homes/services/homes.service';
+import { HomesFilterService } from 'src/app/modules/homes/services/homes-filter.service';
 import { Client } from 'src/app/modules/clients/model/client';
 
 @Component({

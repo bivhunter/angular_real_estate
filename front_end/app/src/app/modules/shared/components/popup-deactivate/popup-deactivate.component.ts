@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PopupService } from '../../modules/shared/services/popup.service';
+import { PopupService } from '../../services/popup.service';
 import { Subject } from 'rxjs';
 
 @Component({

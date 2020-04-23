@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router, RouterStateSnapshot } from '@angular/router';
 import { Home } from 'src/app/modules/homes/model/home';
-import { DealsService } from 'src/app/modules/shared/services/deals.service';
+import { DealsService } from 'src/app/modules/deal/services/deals.service';
 import { Deal } from '../../model/deal';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
 import { Subscription, of, Observable } from 'rxjs';

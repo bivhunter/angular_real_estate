@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Home } from 'src/app/modules/homes/model/home';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from '../../services/clients.service';
-import { ClientsFilteringService } from '../../services/clients-filtering.service';
+import { ClientService } from '../../../clients/model/clients.service';
+import { ClientsFilteringService } from '../../../clients/model/clients-filtering.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -84,7 +84,7 @@ export class ClientsListSelectorComponent implements OnInit {
   }
 
   private getTitle(): string {
-   return this.isAddingMode ? 'Select Client who viewed Home' : 'Client who viewed Home'
+   return this.isAddingMode ? 'Select Client who viewed Home' : 'Client who viewed Home';
   }
 
   private openPopupQuestion(client: Client, title: string): void {

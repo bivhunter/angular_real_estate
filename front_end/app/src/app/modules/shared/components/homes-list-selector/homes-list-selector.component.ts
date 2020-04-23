@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Home } from '../../../homes/model/home';
-import { HomesService } from '../../services/homes.service';
-import { HomesFilterService } from '../../services/homes-filter.service';
+import { HomesService } from '../../../homes/services/homes.service';
+import { HomesFilterService } from '../../../homes/services/homes-filter.service';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from './../../services/clients.service';
+import { ClientService } from '../../../clients/model/clients.service';
 import { Router } from '@angular/router';
 
 @Component({

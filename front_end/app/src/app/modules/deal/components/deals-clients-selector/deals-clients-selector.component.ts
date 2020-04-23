@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from 'src/app/modules/shared/services/clients.service';
-import { ClientsFilteringService } from './../../../shared/services/clients-filtering.service';
+import { ClientService } from 'src/app/modules/clients/model/clients.service';
+import { ClientsFilteringService } from '../../../clients/model/clients-filtering.service';
 
 @Component({
   selector: 'app-deals-clients-selector',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Home } from '../../model/home';
 import { Router } from '@angular/router';
-import { HomesService } from '../../../shared/services/homes.service';
+import { HomesService } from '../../services/homes.service';
 
 @Component({
   selector: 'app-home-card',

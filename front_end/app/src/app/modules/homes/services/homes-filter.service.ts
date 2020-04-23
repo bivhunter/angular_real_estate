@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Home } from '../../homes/model/home';
+import { Home } from '../model/home';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({

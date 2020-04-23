@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DealsViewService } from '../../services/deals-view.service';
-import { DealsFilteringService } from './../../../shared/services/deals-filtering.service';
+import { DealsFilteringService } from '../../services/deals-filtering.service';
 
 @Component({
   selector: 'app-deals-control-panel',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
-import { ClientService } from '../../../shared/services/clients.service';
+import { ClientService } from '../../model/clients.service';
 
 @Component({
   selector: 'app-client-card',

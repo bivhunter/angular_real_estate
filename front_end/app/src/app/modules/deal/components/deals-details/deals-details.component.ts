@@ -3,7 +3,7 @@ import { Deal } from '../../model/deal';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Home } from 'src/app/modules/homes/model/home';
 import { Router, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
-import { DealsService } from 'src/app/modules/shared/services/deals.service';
+import { DealsService } from 'src/app/modules/deal/services/deals.service';
 import { Route } from '@angular/compiler/src/core';
 import { Location } from '@angular/common';
 

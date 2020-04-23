@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { TClientsSortingMethod, TClientsSortingField } from 'src/app/modules/shared/types/types';
 import { ClientsSortingService } from './../../services/clients-sorting.service';
 import { Router } from '@angular/router';
-import { ClientService } from '../../../shared/services/clients.service';
+import { ClientService } from '../../model/clients.service';
 
 @Component({
   selector: 'app-clients-table',

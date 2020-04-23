@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable, throwError, Subscriber } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Deal } from '../../deal/model/deal';
+import { Deal } from '../model/deal';
 import { tap, catchError } from 'rxjs/operators';
 import { Resolve } from '@angular/router';
 import { UserService } from 'src/app/modules/authorization/user.service';
