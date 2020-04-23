@@ -5,6 +5,7 @@ import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
 import { Client } from '../../clients/model/client';
 import { Deal } from '../../deal/model/deal';
 import { DealsService } from './deals.service';
+import { PopupService } from './popup.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +27,14 @@ export class ClientService {
 
   constructor(
     private http: HttpClient,
-    private dealsService: DealsService
+    private dealsService: DealsService,
+    private pop: PopupService
   ) { }
 
+
+  getSub(next) {
+    return this.pop.canDeactivate(next);
+  }
 
   getClients(): Observable<Client[]> {
 

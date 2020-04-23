@@ -2,7 +2,7 @@
     <app-deals-clients-selector
         *ngSwitchCase="'clientsSelector'"
         [selectedClient]="selectedClient"
-        (cancelEvent)="onClientsSelectorCancel()"
+        (cancelEvent)="onSelectorCancel()"
         (submitEvent)="onClientsSelectorSubmit($event)"
     >
 
@@ -12,7 +12,7 @@
         *ngSwitchCase="'homesSelector'"
         [selectedHome]="selectedHome"
         [selectedClient]="selectedClient"
-        (cancelEvent)="onHomesSelectorCancel()"
+        (cancelEvent)="onSelectorCancel()"
         (submitEvent)="onHomesSelectorSubmit($event)"
         (backEvent)="onHomesSelectorBack()"
     >
@@ -23,7 +23,7 @@
         *ngSwitchCase="'dealsMaker'"
         [home]="selectedHome"
         [client]="selectedClient"
-        (cancelEvent)="onDealsSelectorCancel()"
+        (cancelEvent)="onSelectorCancel()"
         (submitEvent)="onDealsSelectorSubmit()"
         (backEvent)="onDealsSelectorBack()"
     >
@@ -31,4 +31,18 @@
 
   
 </div>
+
+<!-- popup question -->
+<app-popup-question
+    *ngIf = "isPopupQuestion"
+    [title] = "popupTitle"
+    [text] = "text"
+    (cancelEvent)="onCancel()"
+    (submitEvent)="onSubmit()"
+>
+</app-popup-question>
+
+<!-- deactivate popup -->
+<app-popup-deactivate *ngIf="isCanDeactivatePopup"></app-popup-deactivate>
+
 

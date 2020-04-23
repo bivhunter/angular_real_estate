@@ -5,9 +5,10 @@ import { Home } from 'src/app/modules/homes/model/home';
 import { DealsService } from 'src/app/modules/shared/services/deals.service';
 import { Deal } from '../../model/deal';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
-import { Subscription } from 'rxjs';
+import { Subscription, of, Observable } from 'rxjs';
 import { PopupService } from 'src/app/modules/shared/services/popup.service';
-import { tap } from 'rxjs/operators';
+import { tap, timeoutWith } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-deal-creator',
@@ -20,28 +21,43 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
   selectedClient: Client;
   selectedHome: Home;
 
+  // popup
+  isPopupQuestion = false;
+  popupTitle: string;
+  text: string;
+
+  // for canDiactivate
+  isCanDeactivatePopup = false;
   private isSubmit = false;
 
   constructor(
     private router: Router,
     private dealsService: DealsService,
     private popupService: PopupService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
 
   }
 
-  async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
+  canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
     if (this.isSubmit) {
-      return true;
+      return of(true);
     }
-    return this.popupService.canDeactivate(next);
+    this.isCanDeactivatePopup = true;
+
+    return this.popupService.canDeactivate(next).pipe(
+      tap((checking) => {
+          this.isCanDeactivatePopup = false;
+      })
+    );
   }
 
    // cliensSelector events handlers
-  onClientsSelectorCancel(): void {
-    this.router.navigateByUrl('deals');
+  onSelectorCancel(): void {
+    this.popupTitle = 'Cancel changes!';
+    this.openPopupQuestion();
   }
 
   onClientsSelectorSubmit(client: Client): void {
@@ -54,9 +70,9 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
     this.currentFrame = 'clientsSelector';
   }
 
-  onHomesSelectorCancel(): void {
-    this.router.navigateByUrl('deals');
-  }
+  // onHomesSelectorCancel(): void {
+  //   this.router.navigateByUrl('deals');
+  // }
 
   onHomesSelectorSubmit(home: Home): void {
     this.selectedHome = home;
@@ -69,12 +85,30 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
     this.selectedHome = null;
   }
 
-  onDealsSelectorCancel(): void {
-    this.router.navigateByUrl('deals');
-  }
+  // onDealsSelectorCancel(): void {
+  //   this.router.navigateByUrl('deals');
+  // }
 
   onDealsSelectorSubmit(): void {
-    this.isSubmit = true;
+    this.popupTitle = 'Add deal!';
+    this.openPopupQuestion();
+  }
+
+  // popup question events
+  onCancel(): void {
+    this.isPopupQuestion = false;
+  }
+
+  onSubmit(): void {
+    if (this.popupTitle === 'Cancel changes!') {
+      this.isSubmit = true;
+      this.navigateBack();
+    } else if (this.popupTitle === 'Add deal!') {
+      this.addDeal();
+    }
+  }
+
+  private addDeal(): void {
     const newDeal = {
       ... new Deal(),
       price: this.selectedHome.price,
@@ -84,8 +118,17 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
 
     this.dealsService.addDeal(newDeal).subscribe(
       () => {
-        this.router.navigateByUrl('deals');
+        this.isSubmit = true;
+        this.navigateBack();
       }
     );
+  }
+
+  private navigateBack(): void {
+    this.location.back();
+  }
+
+   private openPopupQuestion(): void {
+    this.isPopupQuestion = true;
   }
 }

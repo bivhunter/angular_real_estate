@@ -6,6 +6,7 @@ import { Observable, Subscriber, Subscription } from 'rxjs';
 import { TClientsSortingMethod } from 'src/app/modules/shared/types/types';
 import { ClientsFilteringService } from '../../../shared/services/clients-filtering.service';
 import { ClientsSortingService } from './../../services/clients-sorting.service';
+import { PopupService } from 'src/app/modules/shared/services/popup.service';
 
 @Component({
   selector: 'app-clients',

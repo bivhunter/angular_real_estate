@@ -7,6 +7,8 @@ import { ClientsFilteringService } from '../../../shared/services/clients-filter
 import { NgModel } from '@angular/forms';
 import { PopupService } from './../../../shared/services/popup.service';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-profile',
@@ -16,13 +18,23 @@ import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deacti
 export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
 
   client: Client;
-  initClient: Client;
-  currentDate: Date = new Date();
+  private initClient: Client;
   isDataReady = false;
+
+  currentDate: Date = new Date();
+
   title: string;
   isAddingMode: boolean;
 
+  // popup
+  isPopupQuestion = false;
+  popupTitle: string;
+  text: string;
+
+  // for canDiactivate
+  isCanDeactivatePopup = false;
   private isSubmit = false;
+
   @ViewChild('birthday') birthdayInput: NgModel;
 
   constructor(
@@ -39,39 +51,62 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     this.getClient();
   }
 
-  async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
-    if (this.compareClient()) {
-      return true;
+  canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
+    if (this.isSubmit || this.compareClient() ) {
+      return of(true);
     }
-    if (this.isSubmit) {
-      return true;
-    }
-    return this.popupService.canDeactivate(next);
-  }
+    this.isCanDeactivatePopup = true;
 
-  onEditClient(): void {
-    this.isSubmit = true;
-    this.clientService.updateClient(this.client).subscribe(
-      () => this.navigateBack(),
-      (error) => console.log(error)
+    return this.popupService.canDeactivate(next).pipe(
+      tap((checking) => {
+          this.isCanDeactivatePopup = false;
+      })
     );
   }
+
+  // buttons click handler
+  onEditClient(): void {
+    if (this.compareClient()) {
+      this.navigateBack();
+    } else {
+    this.popupTitle = 'Save changes!';
+    this.openPopupQuestion();
+  }
+}
 
   onAddClient(): void {
-    this.isSubmit = true;
-    this.clientService.addClient(this.client).subscribe(
-      () => this.navigateBack(),
-      (error) => console.log(error)
-    );
-  }
-
-  onPhoneChange(phone: string): void {
-    console.log(phone);
-    this.client.phone = this.clientsFilteringService.filterPhone(phone);
+    this.popupTitle = 'Add client!';
+    this.openPopupQuestion();
   }
 
   onCancelButtonClick() {
-    this.navigateBack();
+    if (this.compareClient()) {
+      this.isSubmit = true;
+      this.navigateBack();
+    } else {
+      this.popupTitle = 'Cancel changes!';
+      this.openPopupQuestion();
+    }
+  }
+
+  // popup question events
+  onCancel(): void {
+    this.isPopupQuestion = false;
+  }
+
+  onSubmit(): void {
+    if (this.popupTitle === 'Cancel changes!') {
+      this.isSubmit = true;
+      this.navigateBack();
+    } else if (this.popupTitle === 'Add client!') {
+      this.addClient();
+    } else if (this.popupTitle === 'Save changes!') {
+      this.updateClient();
+    }
+  }
+
+  onPhoneChange(phone: string): void {
+    this.client.phone = this.clientsFilteringService.filterPhone(phone);
   }
 
   onBirthdayChange(date: string) {
@@ -92,13 +127,35 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     return dateString;
   }
 
+  private updateClient(): void {
+    this.clientService.updateClient(this.client).subscribe(
+      () => {
+        this.isSubmit = true;
+        this.navigateBack();
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  private addClient(): void {
+    this.clientService.addClient(this.client).subscribe(
+      () => {
+        this.isSubmit = true;
+        this.navigateBack();
+      },
+      (error) => console.log(error)
+    );
+  }
+
   private navigateBack(): void {
     this.location.back();
-    // this.router.navigateByUrl('/clients');
+  }
+
+  private openPopupQuestion(): void {
+    this.isPopupQuestion = true;
   }
 
   private compareClient(): boolean {
-    console.log(this.client, this.initClient);
     for (const prop in this.client) {
       if ((this.initClient[prop] === undefined) || (this.initClient[prop] !== this.client[prop])) {
         return false;

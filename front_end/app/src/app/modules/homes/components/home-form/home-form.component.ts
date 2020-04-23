@@ -6,6 +6,8 @@ import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deacti
 import { PopupService } from 'src/app/modules/shared/services/popup.service';
 import { Location } from '@angular/common';
 import { NgModel } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home-form',
@@ -14,14 +16,24 @@ import { NgModel } from '@angular/forms';
 })
 export class HomeFormComponent implements OnInit, CanComponentDeactivate {
 
-  isAddingMode: boolean;
+  private initHome: Home;
   home: Home;
+
+  isAddingMode: boolean;
   title: string;
   currentDate = new Date();
 
   isFormDisabled = false;
+
+
+  // popup
+  isPopupQuestion = false;
+  popupTitle: string;
+  text: string;
+
+  // for canDiactivate
+  isCanDeactivatePopup = false;
   private isSubmit = false;
-  private initHome: Home;
 
   @ViewChild('salesDate') dateInput: NgModel;
 
@@ -38,39 +50,58 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     this.getHome();
   }
 
-  async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
-    if (this.isFormDisabled) {
-      return true;
+  canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
+    if (this.isSubmit || this.compareHomes() ) {
+      return of(true);
     }
-    if (this.compareHomes()) {
-      return true;
-    }
-    if (this.isSubmit) {
-      return true;
-    }
-    return this.popupService.canDeactivate(next);
-  }
+    this.isCanDeactivatePopup = true;
 
-  onEditHome(): void {
-    this.isSubmit = true;
-    this.homesService.updateHome(this.home).subscribe(
-      () => this.navigateBack(),
-      (error) => console.log(error)
+    return this.popupService.canDeactivate(next).pipe(
+      tap((checking) => {
+          this.isCanDeactivatePopup = false;
+      })
     );
   }
+
+  // buttons click handler
+  onEditHome(): void {
+    if (this.compareHomes()) {
+      this.navigateBack();
+    } else {
+    this.popupTitle = 'Save changes!';
+    this.openPopupQuestion();
+  }
+}
 
   onAddHome(): void {
-    this.isSubmit = true;
-    this.homesService.addHome(this.home).subscribe(
-      () => {
-        this.navigateBack();
-        },
-      (error) => console.log(error)
-    );
+    this.popupTitle = 'Add home!';
+    this.openPopupQuestion();
   }
 
   onCancelButtonClick() {
-    this.navigateBack();
+    if (this.compareHomes()) {
+      this.isSubmit = true;
+      this.navigateBack();
+    } else {
+      this.popupTitle = 'Cancel changes!';
+      this.openPopupQuestion();
+    }
+  }
+
+  // popup question events
+  onCancel(): void {
+    this.isPopupQuestion = false;
+  }
+
+  onSubmit(): void {
+    if (this.popupTitle === 'Cancel changes!') {
+      this.isSubmit = true;
+      this.navigateBack();
+    } else if (this.popupTitle === 'Add home!') {
+      this.addHome();
+    } else {
+      this.updateHome();
+    }
   }
 
   onPriceChange(value: string): void {
@@ -96,6 +127,10 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     return dateString;
   }
 
+  private openPopupQuestion(): void {
+    this.isPopupQuestion = true;
+  }
+
   private compareHomes(): boolean {
     console.log(this.home, this.initHome);
     for (const prop in this.home) {
@@ -104,6 +139,26 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
       }
     }
     return true;
+  }
+
+  private updateHome(): void {
+    this.homesService.updateHome(this.home).subscribe(
+      () => {
+        this.isSubmit = true;
+        this.navigateBack();
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  private addHome(): void {
+    this.homesService.addHome(this.home).subscribe(
+      () => {
+        this.isSubmit = true;
+        this.navigateBack();
+      },
+      (error) => console.log(error)
+    );
   }
 
   private getHome(): void {

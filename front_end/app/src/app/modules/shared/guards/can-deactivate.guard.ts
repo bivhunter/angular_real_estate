@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PopupService } from './../services/popup.service';
 
 
 export interface CanComponentDeactivate {
@@ -14,9 +13,7 @@ export interface CanComponentDeactivate {
 
 
 export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
-  constructor(
-    private popupService: PopupService
-  ) {}
+  constructor() {}
 
   canDeactivate(
     component: CanComponentDeactivate,
@@ -24,6 +21,7 @@ export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate>
     currentState: RouterStateSnapshot,
     nextState: RouterStateSnapshot
       ): Observable<boolean> | Promise<boolean> | boolean {
-        return component.canDeactivate ? component.canDeactivate(nextState) : true;
+        const res = component.canDeactivate ? component.canDeactivate(nextState) : true;
+        return res;
   }
 }

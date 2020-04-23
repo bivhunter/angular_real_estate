@@ -163,7 +163,16 @@
         </div>
 
         <div class="button-wrapper">
+        <!-- Cancel button -->
+        <button type="button" class="button-cancel"
+        (click)="onCancelButtonClick()"
+        >Cancel</button>
 
+        <!-- Back button -->
+        <button type="button" class="button-cancel"
+        (click)="onCancelButtonClick()"
+        >Back</button>
+        
         <!-- Submit button for editing mode -->
         <button type="submit" 
         class="button-submit"
@@ -171,10 +180,7 @@
         (click)="onEditUser()"
         >Save</button>
 
-         <!-- Back button -->
-         <button type="button" class="button-cancel"
-        (click)="onCancelButtonClick()"
-         >Cancel</button>
+        
         </div>
 
 
@@ -193,5 +199,7 @@
     (cancelEvent)="onCancel()"
     (submitEvent)="onSubmit()"
 >
-
 </app-popup-question>
+
+<!-- deactivate popup -->
+<app-popup-deactivate *ngIf="isCanDeactivatePopup"></app-popup-deactivate>

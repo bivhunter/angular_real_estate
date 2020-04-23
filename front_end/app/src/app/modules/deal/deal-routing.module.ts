@@ -4,7 +4,7 @@ import { DealCreatorComponent } from './components/deal-creator/deal-creator.com
 import { DealsComponent } from './components/deals/deals.component';
 import { DealsDetailsComponent } from './components/deals-details/deals-details.component';
 import { CanDeactivateGuard } from '../shared/guards/can-deactivate.guard';
-import { PopupDeactivateComponent } from '../shared/components/popup-deactivate/popup-deactivate.component';
+import { PopupDeactivateComponent } from '../../components/popup-deactivate/popup-deactivate.component';
 
 
 const routes: Routes = [

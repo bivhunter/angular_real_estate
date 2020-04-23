@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ClientService } from 'src/app/modules/shared/services/clients.service';
 import { Client } from 'src/app/modules/clients/model/client';
-import { Router } from '@angular/router';
+import { Router, RouterStateSnapshot } from '@angular/router';
 import { HomesService } from './../../../shared/services/homes.service';
 import { DealsService } from 'src/app/modules/shared/services/deals.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',

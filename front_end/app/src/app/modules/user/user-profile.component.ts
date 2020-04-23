@@ -6,6 +6,8 @@ import { CanComponentDeactivate } from '../shared/guards/can-deactivate.guard';
 import { RouterStateSnapshot } from '@angular/router';
 import { PopupService } from './../shared/services/popup.service';
 import { Location } from '@angular/common';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,17 +18,20 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
 
   currentDate: Date = new Date();
 
+  // popup question
   isPopupQuestion = false;
   title: string;
   text: string;
-
   private isSubmitQuestion: boolean;
+
 
   @ViewChild('birthday') birthdayInput: NgModel;
   user: User;
-  initUser: User;
+  private initUser: User;
 
-  isSubmit = false;
+  // for canDiactivate
+  private isSubmit = false;
+  isCanDeactivatePopup = false;
 
   constructor(
     private userService: UserService,
@@ -38,14 +43,17 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
     this.getUser();
   }
 
-  async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
-    if (this.compareUser()) {
-      return true;
+  canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
+    if (this.compareUser() || this.isSubmit) {
+      return of(true);
     }
-    if (this.isSubmit) {
-      return true;
-    }
-    return this.popupService.canDeactivate(next);
+    this.isCanDeactivatePopup = true;
+
+    return this.popupService.canDeactivate(next).pipe(
+      tap((checking) => {
+          this.isCanDeactivatePopup = false;
+      })
+    );
   }
 
   onBirthdayChange(date: string) {

@@ -78,9 +78,8 @@ label, .label {
 
 .button-submit, .button-cancel {
     align-self: center;
-    width: 120px;
-    height: 40px;
     margin: 10px;
+    padding: 5px;
     font-size: 20px;
     border-radius: 5px;
     text-shadow: 1px 1px 2px rgba(0,114,188,1);

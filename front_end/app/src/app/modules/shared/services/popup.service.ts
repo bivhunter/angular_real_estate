@@ -11,14 +11,9 @@ import { RouterStateSnapshot, Router } from '@angular/router';
 export class PopupService {
 
   private routeDeactivateSubject: Subject<boolean> = new Subject();
-  private isCanDeactivate = false;
-  constructor(
-    private router: Router
-  ) { }
 
-  getRouteDeactivateEvent(): Observable<boolean> {
-    console.log('getRouteDeactivateEvent')
-    return this.routeDeactivateSubject.asObservable();
+  constructor() {
+    console.log('service init')
   }
 
   submitRouteDeactivate(): void {
@@ -26,33 +21,14 @@ export class PopupService {
     this.routeDeactivateSubject.next(true);
   }
 
-  cancelRouteDiactivate(): void {
+  cancelRouteDeactivate(): void {
     this.routeDeactivateSubject.next(false);
   }
 
-  restartCanDeactivate(): void {
-    this.isCanDeactivate = false;
+  canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
+    return this.routeDeactivateSubject.asObservable().pipe(
+      tap(() => console.log('tap')),
+    );
   }
-
-  async canDeactivate(next: RouterStateSnapshot): Promise<boolean> {
-    if (this.isCanDeactivate) {
-      this.isCanDeactivate = false;
-      return true;
-    }
-
-    // open popup
-    await this.router.navigate([{ outlets: {popup: 'popup'}}]);
-
-    return this.routeDeactivateSubject.pipe(
-      switchMap(async (checking) => {
-        if (checking) {
-          this.isCanDeactivate = true;
-          return await this.router.navigateByUrl(next.url);
-        } else {
-         return this.router.navigate([{ outlets: {popup: null}}]);
-        }
-      })
-    ).toPromise();
-}
 
 }

@@ -194,3 +194,16 @@
     
 </div>
 
+<!-- popup question -->
+<app-popup-question
+    *ngIf = "isPopupQuestion"
+    [title] = "popupTitle"
+    [text] = "text"
+    (cancelEvent)="onCancel()"
+    (submitEvent)="onSubmit()"
+>
+</app-popup-question>
+
+<!-- deactivate popup -->
+<app-popup-deactivate *ngIf="isCanDeactivatePopup"></app-popup-deactivate>
+

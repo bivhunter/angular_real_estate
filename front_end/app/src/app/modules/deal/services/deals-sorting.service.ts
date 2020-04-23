@@ -56,7 +56,8 @@ function compareDeals(dealA: Deal, dealB: Deal, ...funcArray: ((a: any, b: any) 
 }
 
 function compareDate(dealA: Deal, dealB: Deal): number {
-  return dealB.date.valueOf() - dealA.date.valueOf();
+
+  return Date.parse(dealA.date.toString()).valueOf() - Date.parse(dealB.date.toString()).valueOf();
 }
 
 function comparePrice(dealA: Deal, dealB: Deal): number {
