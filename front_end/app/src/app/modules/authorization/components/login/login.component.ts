@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
-import { User } from '../model/user';
+import { UserService } from '../../user.service';
+import { User } from '../../model/user';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitError(message: string) {
-    console.log(message);
     if (message === 'Invalid login') {
       this.isCorrectLogin = false;
     }

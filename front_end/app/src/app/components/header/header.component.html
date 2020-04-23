@@ -5,24 +5,25 @@
     <div class="right-container">
         <span class="user-name" *ngIf="isAuthenticated">{{user?.fullName}}</span>
         
-            <div class="user-button-wrapper" *ngIf="isAuthenticated">
-                <img class="user-img" src="../../../assets/images/user-white.png"
-                routerLink="/user">
-            </div>
+        <div class="user-button-wrapper" *ngIf="isAuthenticated">
+            <img class="user-img" src="../../../assets/images/user-white.png"
+            routerLink="/user">
+        </div>
     
         <div class="auth-button-wrapper">
             <span class="auth-button" *ngIf="isAuthenticated"
-                (click)="logOut()">LogOut</span>    
+                (click)="logOut()">LogOut
+            </span>    
     
             <span class="auth-button" *ngIf="!isAuthenticated && isLogin"
-                routerLink="/authorization/registration">Sign Up</span>
+                routerLink="/authorization/registration">Sign Up
+            </span>
     
             <span 
                 class="auth-button"
                 routerLink="/authorization/login"    
-                *ngIf="!isAuthenticated && !isLogin">Sign In</span>
+                *ngIf="!isAuthenticated && !isLogin">Sign In
+            </span>
         </div>
-
     </div>
-
 </div>

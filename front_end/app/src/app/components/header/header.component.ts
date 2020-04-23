@@ -15,7 +15,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isAuthenticated: boolean;
   isLogin: boolean;
-  isUserProfile = false;
   user: User;
 
   private routeChangingSubscription: Subscription;

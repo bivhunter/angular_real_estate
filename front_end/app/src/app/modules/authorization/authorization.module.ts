@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
-import { RegistrationComponent } from './registration/registration.component';
-import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { LoginComponent } from './components/login/login.component';
 import { AuthorizationRoutingModule } from './authorization-routing.module';
 import { UserService } from './user.service';
 import { SharedModule } from '../shared/shared.module';

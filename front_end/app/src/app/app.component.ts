@@ -9,8 +9,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'app';
-  isNavigation: boolean;
+  isNavigationPanel: boolean;
 
   private authenticationSubscription: Subscription;
   private routeChangingSubscription: Subscription;
@@ -28,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribe();
   }
 
+  // implemented checkbox
   doRememberMe(): void {
     const isRememberMe = localStorage.getItem('rememberMe');
     if (isRememberMe === 'false') {
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
     ).subscribe(
       (event: NavigationEnd) => {
         const url = event.url;
-        this.isNavigation = !url.includes('authorization');
+        this.isNavigationPanel = !url.includes('authorization');
       }
     );
   }

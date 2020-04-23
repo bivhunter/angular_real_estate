@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, CanActivate } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './modules/shared/guards/auth.guard';
 import { QuicklinkStrategy, QuicklinkModule } from 'ngx-quicklink';
 import { PopupDeactivateComponent } from './modules/shared/components/popup-deactivate/popup-deactivate.component';
@@ -62,7 +62,7 @@ const routes: Routes = [
   imports: [
     QuicklinkModule,
     RouterModule.forRoot(routes, {
-    preloadingStrategy: QuicklinkStrategy
+    preloadingStrategy: QuicklinkStrategy 
   })
 ],
   exports: [RouterModule]
