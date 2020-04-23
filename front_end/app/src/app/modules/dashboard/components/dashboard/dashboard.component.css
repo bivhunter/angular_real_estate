@@ -29,7 +29,12 @@ h1 {
     background-color: #F5FAFF;
 }
 
+tbody {
+    flex-grow: 1;
+}
+
 .table {
+    display: flex;
     flex-grow: 1;
     font-size: 14px;
 }

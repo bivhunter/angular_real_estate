@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
-import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
 import { AuthGuard } from './modules/shared/guards/auth.guard';
 import { QuicklinkStrategy, QuicklinkModule } from 'ngx-quicklink';
-import { PopupQuestionComponent } from './modules/shared/components/popup-question/popup-question.component';
 import { PopupDeactivateComponent } from './modules/shared/components/popup-deactivate/popup-deactivate.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 const routes: Routes = [
@@ -53,7 +52,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/deal/deal.module')
     .then(module => module.DealModule, (error) => console.log(error))
   },
-
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({

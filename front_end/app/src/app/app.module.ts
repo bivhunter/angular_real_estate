@@ -8,6 +8,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 
@@ -17,6 +18,7 @@ import { FooterComponent } from './components/footer/footer.component';
     NavigationComponent,
     HeaderComponent,
     FooterComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

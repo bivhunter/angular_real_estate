@@ -13,7 +13,7 @@
 
 .content {
     max-height: 70vh;
-    overflow: auto;
+    overflow-y: scroll;
     display: flex;
     flex-grow: 1;
     padding: 15px;
@@ -26,6 +26,10 @@
     padding: 0 15px 0 15px;
     /* flex-direction: column; */
     align-items: center;
+}
+
+.scroll {
+    width: 17px;
 }
 
 
@@ -125,8 +129,12 @@ h3 {
 /* start */
 
 /* styles for table */
+tbody {
+    flex-grow: 1;
+}
 
 .table {
+    display: flex;
     flex-grow: 1;
     font-size: 14px;
     text-shadow: 1px 1px 2px rgba(192, 192, 192);

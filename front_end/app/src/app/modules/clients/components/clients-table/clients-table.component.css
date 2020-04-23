@@ -13,7 +13,7 @@
 
 .content-wrapper {
     box-sizing: content-box;
-    overflow: auto;
+    overflow-y: scroll;
     display: flex;
     flex: 0 0 auto;
     height: 90%;
@@ -28,9 +28,17 @@
     align-items: center;
 }
 
+.scroll {
+    width: 17px;
+}
+
 
 /* table's styles */
 .table {
+    display: flex;
+}
+
+.table, tbody {
     flex-grow: 1;
     font-size: 17px;
     text-shadow: 1px 1px 2px rgba(192,192,192);

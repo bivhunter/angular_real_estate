@@ -92,7 +92,7 @@
 
 table {
     flex: 1 1 auto;
-    align-self: stretch;
+    width: 100%;
 }
 
 td:not(.details-cell) {
