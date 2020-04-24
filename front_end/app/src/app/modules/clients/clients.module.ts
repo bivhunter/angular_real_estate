@@ -7,7 +7,6 @@ import { ClientProfileComponent } from './components/client-profile/client-profi
 import { ClientsComponent } from './components/clients/clients.component';
 import { ClientsListComponent } from './components/clients-list/clients-list.component';
 import { ClientsTableComponent } from './components/clients-table/clients-table.component';
-import { PhonePipe } from './pipes/phone.pipe';
 import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientsControlPanelComponent } from './components/clients-control-panel/clients-control-panel.component';
 import { ClientsViewService } from './services/clients-view.service';
@@ -24,7 +23,6 @@ import { ClientsPopupDeletingComponent } from './components/clients-popup-deleti
     ClientsComponent,
     ClientsListComponent,
     ClientsTableComponent,
-    PhonePipe,
     ClientsControlPanelComponent,
     ClientsPopupDeletingComponent,
   ],

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, switchMap, map } from 'rxjs/operators';
-import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
-import { Client } from './client';
+import { Observable, throwError, Subject } from 'rxjs';
+import { Client } from '../model/client';
 import { Deal } from '../../deal/model/deal';
 import { DealsService } from '../../deal/services/deals.service';
 import { PopupService } from '../../shared/services/popup.service';
@@ -12,10 +12,10 @@ import { PopupService } from '../../shared/services/popup.service';
 })
 export class ClientService {
 
-  baseUrl = 'http://localhost:3030/';
-  clientsUrl = `${this.baseUrl}client`; // add clients url
+  private baseUrl = 'http://localhost:3030/';
+  private clientsUrl = `${this.baseUrl}client`; // add clients url
 
-  clientsListChangesSubject: Subject<any> = new Subject();
+  private clientsListChangesSubject: Subject<any> = new Subject();
 
   set authToken(value: string) {
     localStorage.setItem('authToken', value);
@@ -30,11 +30,6 @@ export class ClientService {
     private dealsService: DealsService,
     private pop: PopupService
   ) { }
-
-
-  getSub(next) {
-    return this.pop.canDeactivate(next);
-  }
 
   getClients(): Observable<Client[]> {
 
@@ -61,7 +56,6 @@ export class ClientService {
         .get<Client[]>(this.clientsUrl, this.getHttpAuthOption())
         .pipe(map(clients => mapClients(clients, deals)))
         .pipe(
-          tap((clients) => console.log(clients)),
           catchError(this.handleGetClientsError)
         );
       }));
@@ -73,7 +67,6 @@ export class ClientService {
     return this.http
       .post<Client>(this.clientsUrl, client, this.getHttpAuthOption())
       .pipe(
-        tap((newClient) => console.log(newClient)),
         catchError(this.handlePostClientError)
       );
   }
@@ -124,7 +117,6 @@ export class ClientService {
     return this.http
       .patch<Client>(`${this.clientsUrl}/${client.id}`, client, this.getHttpAuthOption())
       .pipe(
-        tap((resp) => console.log(resp)),
         catchError(this.handlePatchClientError)
       );
   }
@@ -138,27 +130,22 @@ export class ClientService {
   }
 
   private handlePatchClientError(error: HttpErrorResponse): Observable<Client> {
-    console.log(error);
     return throwError(error.statusText);
   }
 
   private handleGetClientError(error: HttpErrorResponse): Observable<Client> {
-    console.log(error);
     return throwError(error.statusText);
   }
 
   private handleDeleteClientError(error: HttpErrorResponse): Observable<any> {
-    console.log(error);
     return throwError(error.statusText);
   }
 
   private handlePostClientError(error: HttpErrorResponse): Observable<Client> {
-    console.log(error);
     return throwError(error.statusText);
   }
 
   private handleGetClientsError(error: HttpErrorResponse): Observable<Client[]> {
-    console.log(error);
     return throwError(error.statusText);
   }
 

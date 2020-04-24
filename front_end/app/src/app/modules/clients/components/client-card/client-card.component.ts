@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
-import { ClientService } from '../../model/clients.service';
+import { ClientService } from '../../services/clients.service';
 
 @Component({
   selector: 'app-client-card',
@@ -10,11 +10,11 @@ import { ClientService } from '../../model/clients.service';
 })
 export class ClientCardComponent implements OnInit {
 
-  isPopupDeleting = false;
-  isPopupListHomes = false;
-  isAdding: boolean;
-  isViewedHomes: boolean;
+  isPopupDeleting = false; // for toggle delete popup menu
 
+  isPopupListHomes = false; // for toggle list of homes popup
+  isAddingHomesView: boolean; // adding or viewedHomes mode for list of homes popup
+  isBoughtHomesView: boolean; // bought mode for list of homes popup
 
   @Input() client: Client;
 
@@ -26,10 +26,6 @@ export class ClientCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onDeleteButton(): void {
-    this.isPopupDeleting = true;
-  }
-
   deleteClient(id: string | number): void {
     this.clientService.deleteClient(id).subscribe(
       () => this.isPopupDeleting = false
@@ -37,20 +33,20 @@ export class ClientCardComponent implements OnInit {
   }
 
   openBoughtHomes(): void {
-    this.isViewedHomes = true;
-    this.isAdding = false;
+    this.isBoughtHomesView = true;
+    this.isAddingHomesView = false;
     this.isPopupListHomes = true;
   }
 
   openHomes(): void {
-    this.isViewedHomes = false;
-    this.isAdding = false;
+    this.isBoughtHomesView = false;
+    this.isAddingHomesView = false;
     this.isPopupListHomes = true;
   }
 
   addHome(): void {
-    this.isViewedHomes = false;
-    this.isAdding = true;
+    this.isBoughtHomesView = false;
+    this.isAddingHomesView = true;
     this.isPopupListHomes = true;
   }
 

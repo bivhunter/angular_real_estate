@@ -17,8 +17,7 @@ export class ClientsViewService {
     return mode as TViewMode;
   }
 
-  viewModeBehaviorSubject: BehaviorSubject<TViewMode> = new BehaviorSubject(this.viewMode);
-
+  private viewModeBehaviorSubject: BehaviorSubject<TViewMode> = new BehaviorSubject(this.viewMode);
 
   constructor() { }
 

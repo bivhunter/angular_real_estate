@@ -1,3 +1,4 @@
+
 .container {
     height: 100%;
     overflow: visible;
@@ -14,7 +15,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     overflow: auto;
-    max-height: 90%;
+    max-height: calc(100% - 70px);
     box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
     background-color: #F5FAFF;
 }
@@ -23,8 +24,8 @@
 .sorting-menu {
     display: flex;
     justify-content: center;
-    align-items: baseline;
-    height: 6%;
+    align-items: center;
+    min-height: 70px;
 }
 
 .sorting-button.sort-up::before {

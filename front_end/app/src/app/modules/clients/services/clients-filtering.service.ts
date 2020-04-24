@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { Client } from './client';
+import { Client } from '../model/client';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +49,7 @@ export class ClientsFilteringService {
   }
 }
 
+// change phone format
 function filterPhone(value: string): string {
   if (!value) {
     return '';

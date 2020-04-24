@@ -16,13 +16,14 @@
     overflow-y: scroll;
     display: flex;
     flex: 0 0 auto;
-    height: 90%;
-    padding: 15px;
+    max-height: calc(100% - 40px);
+    padding-right: 15px;
     box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
     background-color: #F5FAFF;
 }
 
 .head-wrapper {
+    height: 40px;
     display: flex;
     padding: 0 15px 0 15px;
     align-items: center;
@@ -32,7 +33,6 @@
     width: 17px;
 }
 
-
 /* table's styles */
 .table {
     display: flex;
@@ -40,7 +40,7 @@
 
 .table, tbody {
     flex-grow: 1;
-    font-size: 17px;
+    font-size: 14px;
     text-shadow: 1px 1px 2px rgba(192,192,192);
 }
 
@@ -65,12 +65,11 @@ tr {
 }
 
 /* tooltip */
-
 .tooltip {
     position: relative;
   }
   
-  .tooltip .tooltip-text {
+.tooltip .tooltip-text {
     visibility: hidden;
     width: 70px;
     text-align: center;
@@ -79,16 +78,15 @@ tr {
     bottom: 7px;
     left: 0px;
     z-index: 1;
-  }
+}
 
-  .tooltip:hover .profile-img {
+.tooltip:hover .profile-img {
       background-image: url('../../../../../assets/images/foto-card-blue.png');
-  }
+}
   
-  .tooltip:hover .tooltip-text {
+.tooltip:hover .tooltip-text {
     visibility: visible;
-  }
-
+}
 
 /* cell-style */
 td:not(.profile-cell) {
@@ -102,13 +100,9 @@ td:not(.profile-cell) {
     cursor: pointer;
 }
 
-
-.sort-up::before {
-    content: '↑';
-}
-
-.sort-down::before {
-    content: '↓';
+.img-cell {
+    flex: 0 0 70px;
+    margin-right: 10px;
 }
 
 .surname-cell {
@@ -129,7 +123,6 @@ td:not(.profile-cell) {
     flex: 0 1 120px;
 }
 
-
 .profile-cell {
     display: flex;
     flex-direction: column;
@@ -138,14 +131,16 @@ td:not(.profile-cell) {
     flex: 1 1 140px;
 }
 
-.profile-img:hover {
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+
+/* sorting arrow */
+.sort-up::before {
+    content: '↑';
 }
 
-.delete-cell {
-    flex: 0 0 25px;
+.sort-down::before {
+    content: '↓';
 }
+
 
 /* buttons */
 .profile-cell button {
@@ -160,7 +155,9 @@ td:not(.profile-cell) {
     box-shadow: 2px 2px 4px rgba(0,114,188,1);
 }
 
+/* delete cell */
 .delete-cell {
+    flex: 0 0 25px;
     align-self: start;
     display: flex;
     flex-direction: column;
@@ -183,9 +180,11 @@ td:not(.profile-cell) {
     box-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
 }
 
-.img-cell {
-    flex: 0 0 70px;
-    margin-right: 10px;
+
+/* logo styles */
+.profile-img:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
 }
 
 .profile-img {
@@ -200,10 +199,8 @@ td:not(.profile-cell) {
 .popup-menu {
     align-items: center;
     justify-content: center;
-    
     top: 0;
     left: 0;
-   
     height: 100%;
     width: 100%;
     display: flex; 

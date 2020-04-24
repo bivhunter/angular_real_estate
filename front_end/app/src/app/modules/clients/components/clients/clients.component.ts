@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ClientService } from 'src/app/modules/clients/model/clients.service';
+import { ClientService } from 'src/app/modules/clients/services/clients.service';
 import { Client } from 'src/app/modules/clients/model/client';
-import { Router } from '@angular/router';
-import { Observable, Subscriber, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TClientsSortingMethod } from 'src/app/modules/shared/types/types';
-import { ClientsFilteringService } from '../../model/clients-filtering.service';
+import { ClientsFilteringService } from '../../services/clients-filtering.service';
 import { ClientsSortingService } from './../../services/clients-sorting.service';
-import { PopupService } from 'src/app/modules/shared/services/popup.service';
 
 @Component({
   selector: 'app-clients',
@@ -16,7 +14,7 @@ import { PopupService } from 'src/app/modules/shared/services/popup.service';
 export class ClientsComponent implements OnInit, OnDestroy {
 
   clients: Client[] = [];
-  filteredClients: Client[] = [];
+  filteredClients: Client[] = []; // after sorting and searching
   isDataReady = false;
 
   // observable and subscription for clientsUpdate
@@ -38,7 +36,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
     private clientService: ClientService,
     private clientsFilteringService: ClientsFilteringService,
     private clientsSortingService: ClientsSortingService,
-    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -97,6 +94,4 @@ export class ClientsComponent implements OnInit, OnDestroy {
   private filterClients(clients: Client[]): Client[] {
     return this.clientsFilteringService.filterClients(this.clients, this.filterString);
   }
-
-
 }

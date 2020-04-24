@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>{{title}}</h1>
+    <h1>{{mainTitle}}</h1>
     
     <!-- Profile form -->
     <form  #clientProfileForm="ngForm"> 
@@ -147,7 +147,7 @@
         </div>
 
           <!-- Adding Date -->
-          <div class="form-group" *ngIf="!isAddingMode">
+        <div class="form-group" *ngIf="!isAddingMode">
             <span class="label">Registration date</span>
             <span class="info">{{client?.createdAt | date:'dd-MM-yyyy'}}</span>
         </div>
@@ -184,14 +184,8 @@
             [disabled]="!clientProfileForm.form.valid"
             (click)="onEditClient()"
             >Save</button>
-       
         </div>
-
-
-       
-
     </form>
-    
 </div>
 
 <!-- popup question -->

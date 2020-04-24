@@ -1,6 +1,12 @@
 
-     
-     <!-- sorting panel -->
+<div class="container" [ngSwitch]="viewMode">
+    <div class=list-view *ngSwitchCase="'list'">
+        <app-clients-table
+            [clients]="clients">
+        </app-clients-table>        
+    </div>
+
+    <!-- sorting panel -->
     <div  class="sorting-menu" *ngIf="viewMode === 'cards'">
         <span class="main">Sort by:</span>
         
@@ -10,20 +16,13 @@
         [class.sort-down]="sortingMethod === 'SURNAME_DOWN'"
         (click)="changeSortingMethod('SURNAME')"
         >Surname</button>
-       
+    
         <button class="sorting-button" 
         type="button"
         [class.sort-up]="sortingMethod === 'NAME_UP'"
         [class.sort-down]="sortingMethod === 'NAME_DOWN'"
         (click)="changeSortingMethod('NAME')"
         >Name</button>
-    </div>
-
-<div class="container" [ngSwitch]="viewMode">
-    <div class=list-view *ngSwitchCase="'list'">
-        <app-clients-table
-            [clients]="clients">
-        </app-clients-table>        
     </div>
 
     <div class="card-view" *ngSwitchCase="'cards'">

@@ -3,7 +3,7 @@ import { Home } from '../../../homes/model/home';
 import { HomesService } from '../../../homes/services/homes.service';
 import { HomesFilterService } from '../../../homes/services/homes-filter.service';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from '../../../clients/model/clients.service';
+import { ClientService } from '../../../clients/services/clients.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,8 +18,8 @@ export class HomesListSelectorComponent implements OnInit {
   homes: Home[];
   filteredHomes: Home[];
 
-  @Input('adding') isAddingMode: boolean;
-  @Input() isViewedHomes: boolean;
+  @Input() isAddingHomesView: boolean;
+  @Input() isBoughtHomesView: boolean;
 
   isPopupQuestion = false;
   title: string;
@@ -50,7 +50,7 @@ export class HomesListSelectorComponent implements OnInit {
   }
 
   onClickHome(home: Home): void {
-    if (this.isAddingMode) {
+    if (this.isAddingHomesView) {
       this.openPopupQuestion(home, 'Add Home:');
     } else {
       this.router.navigateByUrl(`homes/details/${home.id}`);
@@ -62,7 +62,7 @@ export class HomesListSelectorComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.isAddingMode) {
+    if (this.isAddingHomesView) {
       this.addHomeToClient();
     }
   }
@@ -82,10 +82,10 @@ export class HomesListSelectorComponent implements OnInit {
   // }
 
   private getTitle(): string {
-    if (this.isAddingMode) {
+    if (this.isAddingHomesView) {
       return 'Select Viewed Home';
     }
-    if (this.isViewedHomes) {
+    if (this.isBoughtHomesView) {
       return `Bought Home's List`;
     }
     return `Viewed Home's List`;
@@ -101,12 +101,12 @@ export class HomesListSelectorComponent implements OnInit {
   private getHomes(): void {
     this.homesService.getHomes().subscribe(
       (homes) => {
-        if (this.isViewedHomes) {
+        if (this.isBoughtHomesView) {
           this.homes = this.client.homes.filter(home => {
           return home.clientOwner && (home.clientOwner.id === this.client.id);
           });
         } else {
-          this.homes = this.isAddingMode ? this.cutOwnHomes(homes) : this.client.homes;
+          this.homes = this.isAddingHomesView ? this.cutOwnHomes(homes) : this.client.homes;
         }
         this.filterHomes('');
       }

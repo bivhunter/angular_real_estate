@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TClientsSortingMethod } from 'src/app/modules/shared/types/types';
 import { ClientsViewService } from './../../services/clients-view.service';
-import { ClientsFilteringService } from '../../model/clients-filtering.service';
+import { ClientsFilteringService } from '../../services/clients-filtering.service';
 
 @Component({
   selector: 'app-clients-control-panel',

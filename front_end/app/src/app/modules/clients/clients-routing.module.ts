@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, CanActivate } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { ClientProfileComponent } from './components/client-profile/client-profile.component';
 import { ClientsComponent } from './components/clients/clients.component';
 import { CanDeactivateGuard } from '../shared/guards/can-deactivate.guard';

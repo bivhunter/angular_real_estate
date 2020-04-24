@@ -2,40 +2,34 @@
     <button 
         class=add-button
         (click)="onAddButtonClick()">+ Add client
-        </button>
+    </button>
+ 
+    <div class="search-wrapper">
+        <form>
+            <input type=text 
+            name="searching"
+            [ngModel]
+            (ngModelChange)="changeFilter($event)"
+            placeholder="🔍"> 
+        </form>
+    </div>
 
-        <div class="search-wrapper">
-            <form>
-                <input type=text 
-                name="searching"
-                [ngModel]
-                (ngModelChange)="changeFilter($event)"
-                placeholder="🔍"> 
-            </form>
-            
-            <!-- <button class="search-button" type="button" >Search</button> -->
-        </div>
-
-        <div class="views-control-wrapper" >
-             
-            <div class="views-control" (mouseleave)="isViewsMenu=false">
-                <button class="views-button"
-                [disabled]="isViewsMenu"
-                (click)="isViewsMenu=true"
-                >Views</button>
-               
-             <!-- Downing Menu fot views -->
-                <div  class="views-menu" *ngIf="isViewsMenu">
-                    <button 
-                    class="cards-views"
-                    (click)="onActivateCardView()">Cards</button>
-                    <button class="list-views"
-                    (click)="onActivateListView()"
-                    >List</button>
-                </div>
+    <div class="views-control-wrapper" >
+        <div class="views-control" (mouseleave)="isViewsMenu=false">
+            <button class="views-button"
+            [disabled]="isViewsMenu"
+            (click)="isViewsMenu=true"
+            >Views</button>
+           
+         <!-- Downing Menu fot views -->
+            <div  class="views-menu" *ngIf="isViewsMenu">
+                <button 
+                class="cards-views"
+                (click)="onActivateCardView()">Cards</button>
+                <button class="list-views"
+                (click)="onActivateListView()"
+                >List</button>
             </div>
-
-
         </div>
-
+    </div>
 </div>

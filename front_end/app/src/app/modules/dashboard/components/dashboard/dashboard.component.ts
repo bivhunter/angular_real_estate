@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ClientService } from 'src/app/modules/clients/model/clients.service';
+import { ClientService } from 'src/app/modules/clients/services/clients.service';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router, RouterStateSnapshot } from '@angular/router';
 import { HomesService } from '../../../homes/services/homes.service';

@@ -1,6 +1,5 @@
 <div class="container">
     <div class="head-wrapper">
-        
         <table class="table">
         <tbody>
             <tr class="head-row">
@@ -25,7 +24,6 @@
         </table>
         <div class="scroll"></div>
     </div>
-
         <div class="content-wrapper">
             <table class="table">
             <tbody>
@@ -36,50 +34,46 @@
                         (click)="onProfileButton(client.id)"
                         >     
                         </div>
-                    </td>
-                    <td class="surname-cell">{{client.surname}}</td>
-                    <td class="name-cell">{{client.name}}</td>
-                    <td class="email-cell">{{client.email}}</td>
-                    <td class="phone-cell">{{client.phone}}</td>
-                    <td class="profile-cell"
-                    >
+                </td>
+                <td class="surname-cell">{{client.surname}}</td>
+                <td class="name-cell">{{client.name}}</td>
+                <td class="email-cell">{{client.email}}</td>
+                <td class="phone-cell">{{client.phone}}</td>
+                <td class="profile-cell">
                     <button class="profile-button"
                     (click)="openBoughtHomes(client)">
                         Bought homes
                     </button>
-    
+
                     <button class="viewed-homes-button"
                     (click)="onViewedHome(client)">
                     Viewed Homes
                     </button>
-    
+
                     <button class="addhome-button"
                         (click)="onAddHome(client)">
                         Add viewed Home
                     </button>
-                   
                 </td>
                 <td class="delete-cell">
                     <div class="delete-button"
-                        (click)="onDeleteButton(client)">X</div>    
+                        (click)="onDeleteButton(client)">X
+                    </div>    
                 </td>
             </tr>
         </tbody>
         </table>
-
-        </div>
-
+    </div>
 </div>
 
- <!-- adding home list popup -->
+ <!-- home list popup -->
  <div class="popup-homes-list" *ngIf="isPopupListHomes">
     <app-homes-list-selector 
         [client]="currentClient"
         (closeEvent)="isPopupListHomes = false"
-        [adding]="isAdding"
-        [isViewedHomes]="isViewedHomes"
+        [isAddingHomesView]="isAddingHomesView"
+        [isBoughtHomesView]="isBoughtHomesView"
     >
-
     </app-homes-list-selector>
 </div>
 

@@ -12,8 +12,7 @@
     <p>{{client.phone}}</p>
 
     <div class="delete-button"
-    
-    (click)="onDeleteButton()"
+        (click)="isPopupDeleting=false"
     >X</div>
     
     <div class="buttons-wrapper">
@@ -33,10 +32,9 @@
         <app-homes-list-selector 
             [client]="client"
             (closeEvent)="isPopupListHomes = false"
-            [adding]="isAdding"
-            [isViewedHomes]="isViewedHomes"
+            [isAddingHomesView]="isAddingHomesView"
+            [isBoughtHomesView]="isBoughtHomesView"
         >
-
         </app-homes-list-selector>
     </div>
 

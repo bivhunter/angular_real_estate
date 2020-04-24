@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Home } from 'src/app/modules/homes/model/home';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from '../../../clients/model/clients.service';
-import { ClientsFilteringService } from '../../../clients/model/clients-filtering.service';
+import { ClientService } from '../../../clients/services/clients.service';
+import { ClientsFilteringService } from '../../../clients/services/clients-filtering.service';
 import { Router } from '@angular/router';
 
 @Component({

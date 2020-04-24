@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, ChildActivationEnd, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from 'src/app/modules/clients/model/clients.service';
+import { ClientService } from 'src/app/modules/clients/services/clients.service';
 import { Location } from '@angular/common';
-import { ClientsFilteringService } from '../../model/clients-filtering.service';
+import { ClientsFilteringService } from '../../services/clients-filtering.service';
 import { NgModel } from '@angular/forms';
 import { PopupService } from './../../../shared/services/popup.service';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
@@ -23,7 +23,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
 
   currentDate: Date = new Date();
 
-  title: string;
+  mainTitle: string;
   isAddingMode: boolean;
 
   // popup
@@ -39,7 +39,6 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private location: Location,
     private popupService: PopupService,
     private clientService: ClientService,
@@ -51,6 +50,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     this.getClient();
   }
 
+  // for can deactivate popup
   canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
     if (this.isSubmit || this.compareClient() ) {
       return of(true);
@@ -71,8 +71,8 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     } else {
     this.popupTitle = 'Save changes!';
     this.openPopupQuestion();
+    }
   }
-}
 
   onAddClient(): void {
     this.popupTitle = 'Add client!';
@@ -89,7 +89,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  // popup question events
+  // popup question events  handler
   onCancel(): void {
     this.isPopupQuestion = false;
   }
@@ -105,6 +105,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
+  // input changes handlers
   onPhoneChange(phone: string): void {
     this.client.phone = this.clientsFilteringService.filterPhone(phone);
   }
@@ -155,6 +156,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     this.isPopupQuestion = true;
   }
 
+  // compare for changes
   private compareClient(): boolean {
     for (const prop in this.client) {
       if ((this.initClient[prop] === undefined) || (this.initClient[prop] !== this.client[prop])) {
@@ -172,10 +174,10 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   private getClient(): void {
     if (this.isAddingMode) {
       this.onGetClient(new Client());
-      this.title = 'Add Client';
+      this.mainTitle = 'Add Client';
     } else {
       const id = this.getId();
-      this.title = `Client's profile`;
+      this.mainTitle = `Client's profile`;
       this.clientService.getClient(id).subscribe(
       (client) => this.onGetClient(client),
       (error) => console.log(error)
@@ -189,6 +191,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     this.isDataReady = true;
   }
 
+  // get client ID from route
   private getId(): string | number {
     return this.route.snapshot.paramMap.get('id');
   }

@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Observable, Subscription } from 'rxjs';
 import { TClientsSortingMethod, TClientsSortingField } from 'src/app/modules/shared/types/types';
 import { ClientsSortingService } from './../../services/clients-sorting.service';
 import { Router } from '@angular/router';
-import { ClientService } from '../../model/clients.service';
+import { ClientService } from '../../services/clients.service';
 
 @Component({
   selector: 'app-clients-table',
@@ -16,14 +16,15 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
   isPopumMenu = false;
 
   @Input() clients: Client[];
-
-  isPopupListHomes = false;
-  isAdding: boolean;
-  isViewedHomes: boolean;
   currentClient: Client;
 
+  // homesList popup
+  isPopupListHomes = false;
+  isAddingHomesView: boolean;
+  isBoughtHomesView: boolean;
 
   sortingMethod: TClientsSortingMethod;
+
   private changingSortingMethodEvent: Observable<TClientsSortingMethod>;
   private changingSortingMethodSubscription: Subscription;
 
@@ -55,22 +56,22 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
 
   openBoughtHomes(client: Client): void {
     this.currentClient = client;
-    this.isViewedHomes = true;
-    this.isAdding = false;
+    this.isBoughtHomesView = true;
+    this.isAddingHomesView = false;
     this.isPopupListHomes = true;
   }
 
   onAddHome(client: Client): void {
-    this.isViewedHomes = false;
+    this.isBoughtHomesView = false;
     this.currentClient = client;
-    this.isAdding = true;
+    this.isAddingHomesView = true;
     this.isPopupListHomes = true;
   }
 
   onViewedHome(client: Client): void {
-    this.isViewedHomes = false;
+    this.isBoughtHomesView = false;
     this.currentClient = client;
-    this.isAdding = false;
+    this.isAddingHomesView = false;
     this.isPopupListHomes = true;
   }
 
@@ -81,7 +82,9 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
   setSortingField(field: TClientsSortingField): void {
     this.clientsSortingService.selectClientsSortingMethod(field);
   }
+
   private initSubscribtions(): void {
+    // listen soting mode
     this.changingSortingMethodEvent = this.clientsSortingService.getChangingSortingMethodEvent();
     this.changingSortingMethodSubscription = this.changingSortingMethodEvent.subscribe(
       (sortMethod) => this.sortingMethod = sortMethod
