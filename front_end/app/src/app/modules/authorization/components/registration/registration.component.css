@@ -19,10 +19,16 @@
     background-color: #F5FAFF;
 }
 
+/* text style */
 h1 {
     text-shadow: 2px 2px 4px rgba(165,42,42,1);
 }
 
+.h-text {
+    margin: 20px;
+}
+
+/* form style */
 form {
     display: flex;
     flex-direction: column;
@@ -46,6 +52,25 @@ form {
     box-shadow: 1px 1px 2px rgba(192,192,192);
 }
 
+/* checkbox */
+.form-control-checkbox {
+    height: 30px;
+    width: 30px;
+    text-shadow: 1px 1px 2px rgba(0,114,188,1);
+    margin-right: 10px;
+}
+
+.form-group-checkbox {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+label {
+    font-size: 15px;
+}
+
+/* buttons */
 .button-submit {
     align-self: center;
     width: 300px;
@@ -66,10 +91,7 @@ form {
     cursor: no-drop;
 }
 
-.h-text {
-    margin: 20px;
-}
-
+/* danger alert */
 .alert-danger {
     padding: 5px;
     border-radius: 5px;
@@ -82,17 +104,13 @@ form {
     height: 1em;
 }
 
-
+/* invalid input data style */
 .ng-valid[required], .ng-valid.required  {
     border-left: 5px solid #42A948; 
   }
   
-  .ng-invalid:not(form)  {
-    border-left: 5px solid #a94442; 
-  }
-
-#email.error  {
-    border-left: 5px solid #a94442; 
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; 
 }
 
 .valid {
@@ -103,23 +121,8 @@ form {
     border-left: 5px solid #a94442; 
 }
 
-.form-control-checkbox {
-    height: 30px;
-    width: 30px;
-    text-shadow: 1px 1px 2px rgba(0,114,188,1);
-    margin-right: 10px;
-}
 
-.form-group-checkbox {
-    display: flex;
-    align-items: center;
-    margin: 10px;
-}
-
-label {
-    font-size: 15px;
-}
-
+/* link */
 .route-link {
     text-decoration: unset;
     color: black;

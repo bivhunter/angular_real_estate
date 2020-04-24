@@ -76,12 +76,11 @@
                 >
 
                 <!-- No valid alert -->
-                <div class="alert" 
-                >
+            <div class="alert">
                 <div class="alert-danger" 
                     *ngIf="password.invalid && (password.touched)">Password must be longer than 5 characters</div>
                 <div> </div>
-                </div>     
+            </div>     
         </div>
 
         <!-- Rate field -->
@@ -115,7 +114,7 @@
         </div>
 
         <!-- Submit button -->
-      <button type="submit" class="button-submit"
+        <button type="submit" class="button-submit"
         [disabled]="!registrationForm.form.valid"
         >Create Account</button>
 
@@ -128,6 +127,5 @@
             <a routerLink='/authorization/login' class="route-link">Sign in</a>
             please
         </p>
-        
     </div>
 </div>

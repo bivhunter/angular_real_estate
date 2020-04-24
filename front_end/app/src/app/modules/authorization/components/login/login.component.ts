@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.isCorrectLogin = true;
+    // implemented remember me checkbox
     if (this.isCheckedRememberMe) {
       localStorage.setItem('rememberMe', 'true');
     } else {

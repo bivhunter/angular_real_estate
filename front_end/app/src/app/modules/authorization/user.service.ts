@@ -1,12 +1,11 @@
-import { Injectable, Pipe } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { User } from './model/user';
-import { Observable, of, throwError, from } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { tap, catchError, map, switchMap } from 'rxjs/operators';
+import { Observable, throwError} from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { tap, catchError, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../shared/services/authorization.service';
-import * as jwt_decode from "jwt-decode";
-import { Client } from '../clients/model/client';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable(
   { providedIn: 'root'}
@@ -14,10 +13,10 @@ import { Client } from '../clients/model/client';
 
 export class UserService {
 
-  baseUrl = 'http://localhost:3030/';
+  private baseUrl = 'http://localhost:3030/';
 
-  userUrl = `${this.baseUrl}user`; // add user url
-  authenticationUrl = `${this.baseUrl}authentication`; // login
+  private userUrl = `${this.baseUrl}user`; // add user url
+  private authenticationUrl = `${this.baseUrl}authentication`; // login
 
   private set authToken(value: string) {
     localStorage.setItem('authToken', value);
@@ -25,14 +24,6 @@ export class UserService {
 
   private get authToken(): string {
     return localStorage.getItem('authToken');
-  }
-
-  set userEmail(value: string) {
-    localStorage.setItem('authUserEmail', value);
-  }
-
-  get userEmail(): string {
-    return localStorage.getItem('authUserEmail');
   }
 
   httpOptions = {
@@ -58,9 +49,8 @@ export class UserService {
     return this.http.post<any>(this.authenticationUrl, body, this.httpOptions).pipe(
       tap((resp) => {
         this.log(resp.accessToken);
-        this.userEmail = user.email;
         this.authToken = resp.accessToken;
-        const url = this.authService.getRedirectUrl();
+        const url = this.authService.getRedirectUrl(); 
         this.router.navigateByUrl(url);
       }),
       catchError(this.handleAuthorizationError)
@@ -108,8 +98,6 @@ export class UserService {
   }
 
   private handleAuthorizationError(error: HttpErrorResponse): Observable<string> {
-    // this.logError.call(this, error);
-    console.log(error);
     if (error.statusText === 'Bad Request') {      // using when invalid data in request
       if (error.error.errors instanceof Array) {   // respons has array of errors
         const errorMessage = error.error.errors.map((curentError: any) => curentError.message).join('; ');
@@ -126,7 +114,6 @@ export class UserService {
     }
 
   private log(user: User | string): void {
-    console.log(user);
   }
 
 }
