@@ -49,10 +49,10 @@
                 <td class="created-date-cell">Date</td>
             </tr>
             <tr class="table-item" *ngFor="let client of clients">
-                <td class="img-cell tooltip">
+                <td class="img-cell tooltip" (click)="onProfileButton(client.id)">
                     <span class="tooltip-text">Profile</span>
                     <div 
-                        (click)="onProfileButton(client.id)"
+                        
                         class="profile-img">
                     </div>
 

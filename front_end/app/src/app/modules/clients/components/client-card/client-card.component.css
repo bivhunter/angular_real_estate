@@ -18,10 +18,7 @@
 }
 
 /* logo image */
-.profile-img:hover {
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
-}
+
 
 .profile-img {
     background-image: url('../../../../../assets/images/foto-card.png');
@@ -50,6 +47,12 @@
 
 .tooltip:hover .profile-img {
     background-image: url('../../../../../assets/images/foto-card-blue.png');
+    
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
+}
+
+.tooltip:hover {
+    cursor: pointer;
 }
 
 .tooltip:hover .tooltip-text {

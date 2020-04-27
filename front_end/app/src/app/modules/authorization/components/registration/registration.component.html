@@ -43,6 +43,7 @@
                 placeholder="Enter your email"
                 pattern= "\w[[A-Za-z0-9_]*[@]\w\S+$"
                 [class.invalid]="!isUniqueEmail && email.pristine"  
+                autocomplete="email"
                 >
 
                 <!-- NoValid alert -->
@@ -91,9 +92,10 @@
                 type="text" 
                 class="form-control" 
                 id="rate"
-                [(ngModel)]="user.rate"
+                [ngModel]="user?.rate | currency:'CAD':'symbol-narrow':'1.0-0':'fr'"
+                (ngModelChange)="onRateChange($event)"
                 required
-                pattern="[1-9]\d*"
+                pattern="[0-9,\s]*[$]{1}"
                 name="rate"
                 placeholder="Enter rate">
 

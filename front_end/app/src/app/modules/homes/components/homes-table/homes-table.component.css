@@ -276,11 +276,6 @@ td:not(.details-cell) {
     flex: 1 1 140px;
 }
 
-.profile-img:hover {
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
-}
-
 
 .sold-img {
     position: absolute;
@@ -319,4 +314,9 @@ img {
   
   .tooltip:hover .tooltip-text {
     visibility: visible;
+  }
+
+  .tooltip:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0,114,188,1);
   }

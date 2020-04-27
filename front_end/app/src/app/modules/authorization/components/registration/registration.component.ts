@@ -35,6 +35,11 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
+  onRateChange(value: string): void {
+    const newValue = value.replace(/\s/g, '').replace(/\$/g, '');
+    this.user.rate = +newValue;
+  }
+
   onSubmitError(message: string) {
     if (message === 'email must be unique')  {
       this.isUniqueEmail = false;

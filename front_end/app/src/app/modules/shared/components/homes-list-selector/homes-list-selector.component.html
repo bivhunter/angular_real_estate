@@ -37,7 +37,7 @@
         <div class="content-wrapper" *ngIf="isDataReady" >
             <h3 class="no-homes" *ngIf="!homes.length && isAddingHomesView">No available homes</h3>
             <h3 class="no-homes" *ngIf="!homes.length && isBoughtHomesView">No bought homes</h3>
-            <h3 class="no-homes" *ngIf="!homes.length && !isBoughtHomesView">No viewed homes</h3>
+            <h3 class="no-homes" *ngIf="!homes.length && !isBoughtHomesView && !isAddingHomesView">No viewed homes</h3>
             <!-- homes list -->
             <table *ngIf="homes.length">
                     <tr *ngFor="let home of filteredHomes"

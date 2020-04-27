@@ -28,17 +28,20 @@ export class DealsFilteringService {
     }
 
     return deals.filter( (deal: Deal) => {
-      const allFields = [
-        deal.client.name,
-        deal.client.surname,
+      let allFieldsArr = [
         deal.home.home,
         deal.home.street,
         deal.home.city,
         deal.home.state,
         deal.home.price
-      ]
-        .map(word => word.toString())
-        .join(' ');
+      ];
+
+      if (deal.client) {
+        allFieldsArr = [...allFieldsArr, deal.client.name, deal.client.surname];
+      }
+
+      const allFields = allFieldsArr.map(word => word.toString()).join(' ');
+
       const searchWords =  searchString.trim().split(' ');
       for (const word of searchWords) {
         const match =  allFields.match(new RegExp(`\\b${word}`, 'i'));

@@ -28,10 +28,10 @@
             <table class="table">
             <tbody>
             <tr *ngFor="let client of clients">
-                <td class="img-cell tooltip">
+                <td class="img-cell tooltip"  (click)="onProfileButton(client.id)">
                     <span class="tooltip-text">Profile</span>
                     <div class="profile-img" 
-                        (click)="onProfileButton(client.id)"
+                       
                         >     
                         </div>
                 </td>

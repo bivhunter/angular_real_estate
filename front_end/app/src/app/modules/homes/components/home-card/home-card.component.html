@@ -1,9 +1,9 @@
 <div class="container">
-    <div class="tooltip">
+    <div class="tooltip" (click)="onDetailsButton(home.id)">
         <img class="sold-img" src="../../../../../assets/images/sold.png" *ngIf="home.clientOwner">
         <span class="tooltip-text">Details</span>
         <div class="profile-img"
-            (click)="onDetailsButton(home.id)" >
+             >
         </div>
     </div>
 

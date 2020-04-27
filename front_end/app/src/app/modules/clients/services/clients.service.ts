@@ -108,7 +108,6 @@ export class ClientService {
     return this.http
       .get<Client>(`${this.clientsUrl}/${id}`, this.getHttpAuthOption())
       .pipe(
-        tap((resp) => console.log(resp)),
         catchError(this.handleGetClientError)
       );
   }

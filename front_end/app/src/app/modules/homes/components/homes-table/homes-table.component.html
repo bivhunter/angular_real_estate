@@ -46,10 +46,10 @@
                 <tbody>
                 <!-- content rows -->
                 <tr *ngFor="let home of homes">
-                    <td class="img-cell tooltip">
-                        <span class="tooltip-text">Details</span>
+                    <td class="img-cell tooltip" (click)="onDetailsButton(home.id)">
+                        <span class="tooltip-text" >Details</span>
                         <div class="profile-img" 
-                            (click)="onDetailsButton(home.id)"
+                            
                             >     
                             <img class="sold-img" src="../../../../../assets/images/sold.png" *ngIf="home.clientOwner">
                             </div>
