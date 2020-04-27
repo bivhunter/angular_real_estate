@@ -3,6 +3,8 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { HomeFormComponent } from './components/home-form/home-form.component';
 import { HomesComponent } from './components/homes/homes.component';
 import { CanDeactivateGuard } from '../shared/guards/can-deactivate.guard';
+import { HomesResolverService } from './services/homes-resolver.service';
+import { HomeDetailsResolverService } from './services/home-details-resolver.service';
 
 const routes: Routes = [
     {
@@ -15,7 +17,10 @@ const routes: Routes = [
       },
       {
         path: '',
-        component: HomesComponent
+        component: HomesComponent,
+        resolve: {
+          homes: HomesResolverService
+        }
       },
       {
         path: 'details/:id',
@@ -24,6 +29,9 @@ const routes: Routes = [
         data: {
           mode: 'Editing'
         },
+        resolve: {
+          home: HomeDetailsResolverService
+        }
       }
 ];
 

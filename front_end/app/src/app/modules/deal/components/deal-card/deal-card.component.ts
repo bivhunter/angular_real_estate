@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Deal } from '../../model/deal';
 import { Router } from '@angular/router';
-import { DealsService } from 'src/app/modules/deal/services/deals.service';
 
 @Component({
   selector: 'app-deal-card',
@@ -11,10 +10,6 @@ import { DealsService } from 'src/app/modules/deal/services/deals.service';
 export class DealCardComponent implements OnInit {
 
   @Input() deal: Deal;
-
-  isPopup = false;
-  isAdding: boolean;
-  isPopupListClients = false;
 
   constructor(
     private router: Router,

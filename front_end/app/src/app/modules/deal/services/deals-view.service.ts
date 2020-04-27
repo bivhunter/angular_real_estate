@@ -5,11 +5,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable()
 
 export class DealsViewService {
-set viewMode(value: TViewMode) {
+  private set viewMode(value: TViewMode) {
     localStorage.setItem('viewDealsMode', value);
   }
 
-  get viewMode(): TViewMode {
+  private get viewMode(): TViewMode {
     const mode = localStorage.getItem('viewDealsMode');
     if (!mode)  {
       return 'cards';
@@ -17,7 +17,7 @@ set viewMode(value: TViewMode) {
     return mode as TViewMode;
   }
 
-  viewModeBehaviorSubject: BehaviorSubject<TViewMode> = new BehaviorSubject(this.viewMode);
+  private viewModeBehaviorSubject: BehaviorSubject<TViewMode> = new BehaviorSubject(this.viewMode);
 
 
   constructor() { }

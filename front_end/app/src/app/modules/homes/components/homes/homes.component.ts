@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { THomesSortingMethod } from 'src/app/modules/shared/types/types';
 import { HomesSortService } from '../../services/homes-sort.service';
 import { HomesFilterService } from '../../services/homes-filter.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-homes',
@@ -36,12 +37,15 @@ export class HomesComponent implements OnInit, OnDestroy {
   constructor(
     private homesService: HomesService,
     private homesSortService: HomesSortService,
-    private homesFilterService: HomesFilterService
+    private homesFilterService: HomesFilterService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.initSubscribtion();
-    this.getHomes();
+    this.route.data.subscribe(
+      data => this.getHomesHandler(data.homes)
+    )
   }
 
   ngOnDestroy(): void {

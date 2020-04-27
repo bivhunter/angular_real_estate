@@ -13,11 +13,9 @@ export class PopupService {
   private routeDeactivateSubject: Subject<boolean> = new Subject();
 
   constructor() {
-    console.log('service init')
   }
 
   submitRouteDeactivate(): void {
-    console.log('submitRouteDeactivate')
     this.routeDeactivateSubject.next(true);
   }
 
@@ -26,9 +24,7 @@ export class PopupService {
   }
 
   canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
-    return this.routeDeactivateSubject.asObservable().pipe(
-      tap(() => console.log('tap')),
-    );
+    return this.routeDeactivateSubject.asObservable();
   }
 
 }

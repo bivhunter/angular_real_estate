@@ -4,7 +4,8 @@ import { DealCreatorComponent } from './components/deal-creator/deal-creator.com
 import { DealsComponent } from './components/deals/deals.component';
 import { DealsDetailsComponent } from './components/deals-details/deals-details.component';
 import { CanDeactivateGuard } from '../shared/guards/can-deactivate.guard';
-import { PopupDeactivateComponent } from '../shared/components/popup-deactivate/popup-deactivate.component';
+import { DealsResolverService } from './services/deals-resolver.service';
+import { DealDetailsResolverService } from './services/deal-details-resolver.service';
 
 
 const routes: Routes = [
@@ -18,7 +19,10 @@ const routes: Routes = [
     },
     {
       path: '',
-      component: DealsComponent
+      component: DealsComponent,
+      resolve: {
+        deals: DealsResolverService
+      }
     },
     {
       path: 'details/:id',
@@ -26,6 +30,9 @@ const routes: Routes = [
       data: {
         mode: 'Editing'
       },
+      resolve: {
+        deal: DealDetailsResolverService
+      }
     }
 ];
 

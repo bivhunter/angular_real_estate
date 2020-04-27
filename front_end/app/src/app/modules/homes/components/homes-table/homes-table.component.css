@@ -12,11 +12,11 @@
 }
 
 .content {
-    max-height: 70vh;
+    max-height: calc(100% - 40px);
     overflow-y: scroll;
     display: flex;
     flex-grow: 1;
-    padding: 15px;
+    padding-right: 15px;
     box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
     background-color: #F5FAFF;
 }
@@ -24,7 +24,7 @@
 .head-wrapper {
     display: flex;
     padding: 0 15px 0 15px;
-    /* flex-direction: column; */
+    height: 40px;
     align-items: center;
 }
 
@@ -304,11 +304,11 @@ img {
   
   .tooltip .tooltip-text {
     visibility: hidden;
-    width: 70px;
+    width: 80px;
     text-align: center;
     color: rgba(255,255,255,1);
     position: absolute;
-    bottom: 7px;
+    bottom: 30%;
     left: 0px;
     z-index: 1;
   }

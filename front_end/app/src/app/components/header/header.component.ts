@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription} from 'rxjs';
-import { AuthorizationService } from 'src/app/modules/shared/services/authorization.service';
+import { AuthorizationService } from 'src/app/modules/authorization/services/authorization.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { User } from 'src/app/modules/authorization/model/user';
-import { UserService } from 'src/app/modules/authorization/user.service';
+import { User } from 'src/app/modules/user/model/user';
+import { UserService } from 'src/app/modules/user/services/user.service';
 
 @Component({
   selector: 'app-header',

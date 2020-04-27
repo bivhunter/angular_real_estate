@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
-import { Router, RouterStateSnapshot } from '@angular/router';
+import { RouterStateSnapshot } from '@angular/router';
 import { Home } from 'src/app/modules/homes/model/home';
 import { DealsService } from 'src/app/modules/deal/services/deals.service';
 import { Deal } from '../../model/deal';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
-import { Subscription, of, Observable } from 'rxjs';
 import { PopupService } from 'src/app/modules/shared/services/popup.service';
-import { tap, timeoutWith } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Location } from '@angular/common';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-deal-creator',
@@ -31,7 +31,6 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
   private isSubmit = false;
 
   constructor(
-    private router: Router,
     private dealsService: DealsService,
     private popupService: PopupService,
     private location: Location

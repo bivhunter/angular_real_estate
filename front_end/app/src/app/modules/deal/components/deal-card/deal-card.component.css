@@ -35,8 +35,8 @@
     align-items: center;
     padding: 10px;
 }
-/* client styles */
 
+/* client styles */
 .home-column, .client-column {
     font-size: 12px;
 }
@@ -54,7 +54,7 @@
     background-image: url('../../../../../assets/images/foto-house_blue.png');
 }
 
-.client-column:hover .client-img {
+.client-column:not(.disabled):hover .client-img {
     background-image: url('../../../../../assets/images/foto-card-blue.png');
 }
 
@@ -62,9 +62,7 @@
     background-image: url('../../../../../assets/images/deal_blue.png');
 }
 
-
-
-
+/* text */
 p {
     padding: 0;
     margin: 0;
@@ -77,6 +75,7 @@ h3 {
     text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
 }
 
+/* images */
 .deal-img {
     height: 80px;
     width: 80px;

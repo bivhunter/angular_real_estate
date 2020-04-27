@@ -1,5 +1,12 @@
 <div class="container">
-    <img src="../../../../../assets/images/foto-house.png">
+    <div class="tooltip">
+        <img class="sold-img" src="../../../../../assets/images/sold.png" *ngIf="home.clientOwner">
+        <span class="tooltip-text">Details</span>
+        <div class="profile-img"
+            (click)="onDetailsButton(home.id)" >
+        </div>
+    </div>
+
     <h3>{{home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</h3>
     <p>{{home.home + ' ' + home.street}}</p>
     <p>{{home.city + ' ' + home.state}}</p>
@@ -62,7 +69,6 @@
     <div *ngIf="isPopup" class="cover-div"></div>
     
     
-    <img class="sold-img" src="../../../../../assets/images/sold.png" *ngIf="home.clientOwner">
 
 </div>
 

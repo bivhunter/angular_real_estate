@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { User } from 'src/app/modules/authorization/model/user';
+import { User } from 'src/app/modules/user/model/user';
 import { NgModel } from '@angular/forms';
-import { UserService } from '../authorization/user.service';
+import { UserService } from './services/user.service';
 import { CanComponentDeactivate } from '../shared/guards/can-deactivate.guard';
-import { RouterStateSnapshot } from '@angular/router';
+import { RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 import { PopupService } from './../shared/services/popup.service';
 import { Location } from '@angular/common';
 import { Observable, of } from 'rxjs';
@@ -36,11 +36,14 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
   constructor(
     private userService: UserService,
     private popupService: PopupService,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.getUser();
+    this.route.data.subscribe(
+      data => this.getUser(data.user)
+    );
   }
 
   canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
@@ -119,17 +122,12 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
     this.location.back();
   }
 
-  private getUser(): void {
-    this.userService.getUser().subscribe(
-      user => {
-        this.user = new User(user);
-        this.initUser = {...this.user} as User;
-      }
-    );
+  private getUser(user: User): void {
+    this.user = new User(user);
+    this.initUser = {...this.user} as User;
   }
 
   private compareUser(): boolean {
-    console.log(this.user, this.initUser);
     for (const prop in this.user) {
       if ((this.initUser[prop] === undefined) || (this.initUser[prop] !== this.user[prop])) {
         return false;

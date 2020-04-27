@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { HomesService } from '../../services/homes.service';
 import { Home } from '../../model/home';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
@@ -39,7 +39,6 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private location: Location,
     private homesService: HomesService,
     private popupService: PopupService
@@ -47,7 +46,12 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
 
   ngOnInit(): void {
     this.isAddingMode = this.checkAddingMode();
-    this.getHome();
+    this.route.data.subscribe(
+      data => {
+        this.isAddingMode = data.mode === 'Adding';
+        this.getHome(data.home);
+      }
+    );
   }
 
   canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
@@ -132,7 +136,6 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   private compareHomes(): boolean {
-    console.log(this.home, this.initHome);
     for (const prop in this.home) {
       if ((this.initHome[prop] === undefined) || (this.initHome[prop] !== this.home[prop])) {
         return false;
@@ -161,17 +164,13 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     );
   }
 
-  private getHome(): void {
+  private getHome(home: Home): void {
     if (this.isAddingMode) {
       this.onGetHome(new Home());
       this.title = 'Add Home';
     } else {
-      const id = this.getId();
       this.title = `Home's details`;
-      this.homesService.getHome(id).subscribe(
-      (home) => this.onGetHome(home),
-      (error) => console.log(error)
-    );
+      this.onGetHome(home);
     }
   }
 
@@ -190,10 +189,6 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     }
     this.home = home;
     this.initHome = {...home};
-  }
-
-  private getId(): string | number {
-    return this.route.snapshot.paramMap.get('id');
   }
 
 }

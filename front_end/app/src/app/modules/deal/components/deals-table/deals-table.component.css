@@ -16,13 +16,14 @@
     overflow-y: scroll;
     display: flex;
     flex: 0 0 auto;
-    height: 90%;
-    padding: 15px;
+    max-height: calc(100% - 40px);
+    padding-right: 15px;
     box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
     background-color: #F5FAFF;
 }
 
 .head-wrapper {
+    height: 40px;
     display: flex;
     padding: 0 15px 0 15px;
     align-items: center;
@@ -46,6 +47,7 @@ tbody {
     text-shadow: 1px 1px 2px rgba(192, 192, 192);
 }
 
+/* row style */
 .head-row {
     border: none;
     font-size: 20px;
@@ -53,6 +55,19 @@ tbody {
     box-shadow: none;
 }
 
+tr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+    border: 3px grey groove;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
+    background-color: #F4F5F7;
+    margin-bottom: 10px;
+}
+
+/* cell-style */
 td {
     margin: 5px;
 }
@@ -125,22 +140,12 @@ td:not(.details-cell) {
     background-position: center;
     background-repeat: no-repeat;
 }
-/* .disabled {
-    cursor: initial;
-} */
 
 .date-cell {
     flex: 2 1 80px;
     text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
 }
 
-.sort-up::before {
-    content: '↑';
-}
-
-.sort-down::before {
-    content: '↓';
-}
 
 .price-cell {
     flex: 2 1 80px;
@@ -155,17 +160,16 @@ td:not(.details-cell) {
     flex-basis: 80px;
 }
 
-tr {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-collapse: collapse;
-    border: 3px grey groove;
-    border-radius: 5px;
-    box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
-    background-color: #F4F5F7;
-    margin-bottom: 10px;
+.sort-up::before {
+    content: '↑';
 }
+
+.sort-down::before {
+    content: '↓';
+}
+
+
+/* text */
 
 p {
     margin: 0;

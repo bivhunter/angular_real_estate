@@ -5,6 +5,7 @@ import { TDealsSortingMethod } from 'src/app/modules/shared/types/types';
 import { DealsFilteringService } from 'src/app/modules/deal/services/deals-filtering.service';
 import { DealsSortingService } from '../../services/deals-sorting.service';
 import { DealsService } from 'src/app/modules/deal/services/deals.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-deals',
@@ -15,7 +16,6 @@ export class DealsComponent implements OnInit, OnDestroy {
 
   deals: Deal[] = [];
   filteredDeals: Deal[] = [];
-  isDataReady = false;
 
 
   // observable and subscription for dealsUpdate
@@ -35,12 +35,15 @@ export class DealsComponent implements OnInit, OnDestroy {
   constructor(
     private dealsService: DealsService,
     private dealsSortingService: DealsSortingService,
-    private dealsFilteringService: DealsFilteringService
+    private dealsFilteringService: DealsFilteringService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.initSubscribtion();
-    this.getDeals();
+    this.route.data.subscribe(
+      data => this.getDealsHandler(data.deals)
+    );
   }
 
   ngOnDestroy(): void {
@@ -58,7 +61,6 @@ export class DealsComponent implements OnInit, OnDestroy {
 
   private getDealsHandler(dealsList: Deal[]) {
     this.deals = dealsList;
-    this.isDataReady = true;
     this.filteredDeals = this.filterDeals(this.deals);
     this.filteredDeals = this.sortDeals(this.filteredDeals);
   }

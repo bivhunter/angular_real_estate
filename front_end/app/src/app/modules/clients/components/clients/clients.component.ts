@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { TClientsSortingMethod } from 'src/app/modules/shared/types/types';
 import { ClientsFilteringService } from '../../services/clients-filtering.service';
 import { ClientsSortingService } from './../../services/clients-sorting.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-clients',
@@ -15,7 +16,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
   clients: Client[] = [];
   filteredClients: Client[] = []; // after sorting and searching
-  isDataReady = false;
 
   // observable and subscription for clientsUpdate
   private updateClientsListEvent: Observable<any>;
@@ -36,11 +36,14 @@ export class ClientsComponent implements OnInit, OnDestroy {
     private clientService: ClientService,
     private clientsFilteringService: ClientsFilteringService,
     private clientsSortingService: ClientsSortingService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.initSubscriptions();
-    this.getClients();
+    this.route.data.subscribe(
+      data => this.getClientsHandler(data.clients)
+    );
   }
 
   ngOnDestroy(): void {
@@ -82,7 +85,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
   private getClientsHandler(clientsList: Client[]) {
     this.clients = clientsList;
-    this.isDataReady = true;
     this.filteredClients = this.filterClients(this.clients);
     this.filteredClients = this.sortClients(this.filteredClients);
   }

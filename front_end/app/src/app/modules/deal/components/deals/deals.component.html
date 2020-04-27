@@ -4,7 +4,7 @@
         <app-deals-control-panel></app-deals-control-panel>
     </div>
 
-    <div class="no-deals" *ngIf="isDataReady && !deals.length">
+    <div class="no-deals" *ngIf="!deals.length">
         <h1>No Deals</h1>
         <button 
         class=add-button
@@ -12,7 +12,7 @@
         </button>
     </div>
 
-    <div class="content-wrapper" *ngIf="isDataReady && deals.length">
+    <div class="content-wrapper" *ngIf="deals.length">
         <app-deals-list
         [deals]="filteredDeals"
         ></app-deals-list>

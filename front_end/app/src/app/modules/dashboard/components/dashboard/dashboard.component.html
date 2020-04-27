@@ -2,7 +2,7 @@
     <h1>Statistic</h1>
     <div class="stat-wrapper">
         <div class="clients-wrapper"
-            routerLink="/clients">
+            >
             <div class="stat-text">
                 <h3 class="stat-header">Total clients</h3>
                 <h3 class="stat-header">{{clientsTotal}}</h3>
@@ -29,7 +29,7 @@
 
     <h1>Recent Clients</h1>
 
-    <div class="no-clients" *ngIf="isDataReady && !clients.length">
+    <div class="no-clients" *ngIf="!clients.length">
         <h1>No Clients</h1>
         <button 
         class=add-button
@@ -37,7 +37,7 @@
         </button>
     </div>
 
-    <div class=table-wrapper *ngIf="isDataReady && clients.length">
+    <div class=table-wrapper *ngIf="clients.length">
         <table class="table">
         <tbody>
             <tr class="head-row">

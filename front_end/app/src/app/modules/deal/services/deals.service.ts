@@ -1,26 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable, throwError, Subscriber } from 'rxjs';
+import { Subject, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Deal } from '../model/deal';
 import { tap, catchError } from 'rxjs/operators';
-import { Resolve } from '@angular/router';
-import { UserService } from 'src/app/modules/authorization/user.service';
+import { UserService } from 'src/app/modules/user/services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DealsService {
 
-  baseUrl = 'http://localhost:3030/';
-  dealsUrl = `${this.baseUrl}deal`; // add deals url
+  private baseUrl = 'http://localhost:3030/';
+  private dealsUrl = `${this.baseUrl}deal`; // add deals url
 
-  dealsListChangesSubject: Subject<any> = new Subject();
+  private dealsListChangesSubject: Subject<any> = new Subject();
 
-  set authToken(value: string) {
+  private set authToken(value: string) {
     localStorage.setItem('authToken', value);
   }
 
-  get authToken(): string {
+  private get authToken(): string {
     return localStorage.getItem('authToken');
   }
 
@@ -33,7 +32,6 @@ export class DealsService {
     return this.http
       .get<Deal[]>(this.dealsUrl, this.getHttpAuthOption())
       .pipe(
-        tap((dealsList) => console.log(dealsList)),
         catchError(this.handleGetDealsError));
   }
 
@@ -48,15 +46,10 @@ export class DealsService {
       );
   }
 
-  private increaseUserLevel() {
-     this.userService.increaseUserLevel().subscribe();
-  }
-
   getDeal(id: number | string): Observable<Deal> {
     return this.http
       .get<Deal>(`${this.dealsUrl}/${id}`, this.getHttpAuthOption())
       .pipe(
-        tap((resp) => console.log(resp)),
         catchError(this.handleGetDealError)
       );
   }
@@ -65,10 +58,9 @@ export class DealsService {
     return this.dealsListChangesSubject.asObservable();
   }
 
-  private updateDealsList(): void {
-    this.dealsListChangesSubject
-      .next('');
-  }
+  private increaseUserLevel() {
+    this.userService.increaseUserLevel().subscribe();
+ }
 
   private handleGetDealError(error: HttpErrorResponse): Observable<Deal> {
     console.log(error);

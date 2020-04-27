@@ -1,7 +1,7 @@
 :host {
     display: flex;
     justify-content: center;
-    height: 85vh;
+    height: calc(100vh - 100px);
 
 }
 
@@ -13,11 +13,11 @@
 }
 
 .control-panel {
-    height: 10%
+    height: 100px;
 }
 
 .content-wrapper {
-    height: 95%
+    height: calc(100% - 100px);
 }
 
 .no-homes {

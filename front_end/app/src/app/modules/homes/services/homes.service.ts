@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject, Observable, throwError, of } from 'rxjs';
+import { Subject, Observable, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
 import { Home } from '../model/home';
 import { tap, catchError, map, switchMap } from 'rxjs/operators';
@@ -12,16 +12,16 @@ import { Client } from '../../clients/model/client';
 })
 export class HomesService {
 
-  baseUrl = 'http://localhost:3030/';
-  homesUrl = `${this.baseUrl}home`; // add homes url
+  private baseUrl = 'http://localhost:3030/';
+  private homesUrl = `${this.baseUrl}home`; // add homes url
 
-  homesListChangesSubject: Subject<any> = new Subject();
+  private homesListChangesSubject: Subject<any> = new Subject();
 
-  set authToken(value: string) {
+  private set authToken(value: string) {
     localStorage.setItem('authToken', value);
   }
 
-  get authToken(): string {
+  private get authToken(): string {
     return localStorage.getItem('authToken');
   }
 
@@ -49,7 +49,6 @@ export class HomesService {
         .get<Home[]>(this.homesUrl, this.getHttpAuthOption())
         .pipe(map(homes => mapHomes(homes, deals)))
         .pipe(
-          tap((homes) => console.log(homes)),
           catchError(this.handleGetHomesError)
         );
       }));
@@ -61,7 +60,6 @@ export class HomesService {
     return this.http
       .post<Home>(this.homesUrl, home, this.getHttpAuthOption())
       .pipe(
-        tap((newHome) => console.log(newHome)),
         catchError(this.handlePostHomeError)
       );
   }
@@ -91,7 +89,6 @@ export class HomesService {
         }
       ))
       .pipe(
-        tap((resp) => console.log(resp)),
         catchError(this.handleGetHomeError)
       );
       })
@@ -102,7 +99,6 @@ export class HomesService {
     return this.http
       .patch<Home>(`${this.homesUrl}/${home.id}`, home, this.getHttpAuthOption())
       .pipe(
-        tap((resp) => console.log(resp)),
         catchError(this.handlePatchHomeError)
       );
   }

@@ -8,7 +8,7 @@ import { NgModel } from '@angular/forms';
 import { PopupService } from './../../../shared/services/popup.service';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-profile',
@@ -19,6 +19,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
 
   client: Client;
   private initClient: Client;
+
   isDataReady = false;
 
   currentDate: Date = new Date();
@@ -46,8 +47,18 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   ) { }
 
   ngOnInit(): void {
-    this.isAddingMode = this.checkAddingMode();
-    this.getClient();
+    this.route.data.subscribe(
+      data => {
+        this.isAddingMode = (data.mode === 'Adding');
+        if (this.isAddingMode) {
+          this.mainTitle = 'Add Client';
+          this.onGetClient(new Client());
+        } else {
+          this.mainTitle = `Client's profile`;
+          this.onGetClient(data.client);
+        }
+      }
+    );
   }
 
   // for can deactivate popup
@@ -166,34 +177,8 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     return true;
   }
 
-  private checkAddingMode() {
-    const mode = this.route.snapshot.data.mode;
-    return mode === 'Adding' ? true : false;
-  }
-
-  private getClient(): void {
-    if (this.isAddingMode) {
-      this.onGetClient(new Client());
-      this.mainTitle = 'Add Client';
-    } else {
-      const id = this.getId();
-      this.mainTitle = `Client's profile`;
-      this.clientService.getClient(id).subscribe(
-      (client) => this.onGetClient(client),
-      (error) => console.log(error)
-    );
-    }
-  }
-
   private onGetClient(client: Client): void {
     this.client = client;
     this.initClient = {...client};
-    this.isDataReady = true;
   }
-
-  // get client ID from route
-  private getId(): string | number {
-    return this.route.snapshot.paramMap.get('id');
-  }
-
 }

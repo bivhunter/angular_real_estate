@@ -14,7 +14,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     overflow: auto;
-    max-height: 90%;
+    max-height: calc(100% - 70px);
     box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
     background-color: #F5FAFF;
 }
@@ -23,8 +23,8 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    height: 6%;
-    /* margin-bottom: 10px; */
+    align-items: center;
+    min-height: 70px;
 }
 
 .sorting-button.sort-up::before {

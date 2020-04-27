@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { User } from './model/user';
+import { User } from '../model/user';
 import { Observable, throwError} from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { tap, catchError, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { AuthorizationService } from '../shared/services/authorization.service';
+import { AuthorizationService } from '../../authorization/services/authorization.service';
 import * as jwt_decode from 'jwt-decode';
 
 @Injectable(
@@ -50,7 +50,7 @@ export class UserService {
       tap((resp) => {
         this.log(resp.accessToken);
         this.authToken = resp.accessToken;
-        const url = this.authService.getRedirectUrl(); 
+        const url = this.authService.getRedirectUrl();
         this.router.navigateByUrl(url);
       }),
       catchError(this.handleAuthorizationError)
@@ -66,7 +66,6 @@ export class UserService {
   updateUser(user: User): Observable<User> {
     const id = this.getUserId();
     return this.http.patch<User>(`${this.userUrl}/${id}`, user, this.getHttpAuthOption()).pipe(
-      tap(newUser => console.log(newUser)),
       catchError(err => {
         console.log(err);
         return throwError('err');
