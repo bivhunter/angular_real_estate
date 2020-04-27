@@ -17,6 +17,7 @@ export class HomesListSelectorComponent implements OnInit {
 
   homes: Home[];
   filteredHomes: Home[];
+  isDataReady = false;
 
   @Input() isAddingHomesView: boolean;
   @Input() isBoughtHomesView: boolean;
@@ -25,6 +26,8 @@ export class HomesListSelectorComponent implements OnInit {
   title: string;
   text: string;
   homeId: string | number;
+
+
 
 
   @Output() closeEvent: EventEmitter<any> = new EventEmitter();
@@ -74,13 +77,6 @@ export class HomesListSelectorComponent implements OnInit {
       );
   }
 
-  // deleteHomeFromClient(): void {
-  //   this.clientService.deleteHomeFromClient(this.homeId, this.client.id)
-  //     .subscribe(
-  //       () => this.closeList()
-  //     );
-  // }
-
   private getTitle(): string {
     if (this.isAddingHomesView) {
       return 'Select Viewed Home';
@@ -101,6 +97,7 @@ export class HomesListSelectorComponent implements OnInit {
   private getHomes(): void {
     this.homesService.getHomes().subscribe(
       (homes) => {
+        this.isDataReady = true;
         if (this.isBoughtHomesView) {
           this.homes = this.client.homes.filter(home => {
           return home.clientOwner && (home.clientOwner.id === this.client.id);
@@ -129,7 +126,6 @@ export class HomesListSelectorComponent implements OnInit {
       return true;
     });
 
-    console.log('new Homes: ', newHomes);
     return newHomes;
   }
 

@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.userService.authorizeUser(this.user).subscribe(
-      () => { console.log('login is successfull'); },
+      () => { },
       (error) => this.onSubmitError(error)
     );
   }
