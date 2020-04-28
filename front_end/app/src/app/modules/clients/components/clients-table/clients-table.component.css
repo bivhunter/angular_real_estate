@@ -12,12 +12,12 @@
 }
 
 .content-wrapper {
-    box-sizing: content-box;
+    box-sizing: border-box;
     overflow-y: scroll;
     display: flex;
     flex: 1 0 auto;
     max-height: calc(100% - 40px);
-    padding-right: 15px;
+    padding: 15px;
     box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
     background-color: #F5FAFF;
 }

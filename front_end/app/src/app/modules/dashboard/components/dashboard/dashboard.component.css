@@ -1,8 +1,15 @@
 
+:host {
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - 100px);
+}
 .container {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    flex: 1 1 auto;
+    overflow: visible;
+    height: 100%;
 }
 
 .no-clients {
@@ -13,16 +20,20 @@
 
 /* header */
 h1 {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    height: 80px;
     align-self: center;
     text-shadow: 3px 3px 6px rgba(0,114,188,1);
 }
 
 /* table's styles */
 .table-wrapper {
+    box-sizing: border-box;
     display: flex;
-    overflow: auto;
-    max-height: 58vh;
-    flex-grow: 1;
+    overflow-y: scroll;
+    max-height: calc(100% - 240px);
     padding: 15px;
     text-shadow: 1px 1px 2px rgba(192,192,192);
     box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
@@ -140,6 +151,7 @@ td {
   .stat-wrapper {
       display: flex;
       justify-content: space-evenly;
+      height: 80px;
   }
 
   .homes-wrapper, .clients-wrapper, .deals-wrapper {

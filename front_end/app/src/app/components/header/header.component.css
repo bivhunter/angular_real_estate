@@ -12,6 +12,14 @@
     color: white;
 }
 
+.activated {
+    outline: none;
+}
+
+.user-img:active, .user-img:focus {
+    outline: none !important;
+}
+
 
 img {
     height: 40px;
@@ -24,7 +32,7 @@ h2 {
 }
 
 .user-name {
-    flex: 0 1 100px;
+    flex: 1 1 100px;
     display: flex;
     align-items: center;
     justify-content: flex-end;

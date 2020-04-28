@@ -10,16 +10,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-self: flex-start;
     border: 3px grey groove;
     border-radius: 5px;
     box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
 }
 
 /* logo image */
-/* .profile-img:hover {
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
-} */
 
 .profile-img {
     background-image: url('../../../../../assets/images/foto-house.png');

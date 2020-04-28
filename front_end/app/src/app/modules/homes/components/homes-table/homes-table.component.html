@@ -73,7 +73,7 @@
                             </button>
             
                             <button class="addclient-button"
-                                (click)="onAddClient(home)">
+                                (click)="onAddClient(home)" [disabled]="home.clientOwner">
                                 Add client who viewed
                             </button>
                         </div>

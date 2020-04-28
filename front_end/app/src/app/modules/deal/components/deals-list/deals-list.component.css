@@ -13,8 +13,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    overflow: auto;
-    max-height: calc(100% - 70px);
+    overflow-y: scroll;
+    height: calc(100% - 70px);
     box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
     background-color: #F5FAFF;
 }

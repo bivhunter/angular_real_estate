@@ -7,5 +7,6 @@ html, body {
 }
 
 body {
-    
+    overflow-x: auto;
+    min-width: 570px;
 }
