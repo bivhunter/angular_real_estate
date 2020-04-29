@@ -32,7 +32,8 @@ registerLocaleData(localeFr);
     HomesListSelectorComponent,
     ClientsListSelectorComponent,
     PopupQuestionComponent,
-    PopupDeactivateComponent
+    PopupDeactivateComponent,
+    
   ],
   providers: [
   ]

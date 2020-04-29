@@ -62,6 +62,9 @@
 .navigation-wrapper {
     flex: 1 0 165px;
     margin-right: 20px;
+}
+
+.displayed {
     background-color: #F5FAFF;
     box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
 }

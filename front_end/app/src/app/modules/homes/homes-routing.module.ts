@@ -11,7 +11,8 @@ const routes: Routes = [
         path: 'adding',
         canDeactivate: [ CanDeactivateGuard ],
         data: {
-          mode: 'Adding'
+          mode: 'Adding',
+          animation: 'Slide'
         },
         component: HomeFormComponent
       },
@@ -20,6 +21,9 @@ const routes: Routes = [
         component: HomesComponent,
         resolve: {
           homes: HomesResolverService
+        },
+        data: {
+          animation: 'Homes'
         }
       },
       {
@@ -27,7 +31,8 @@ const routes: Routes = [
         canDeactivate: [ CanDeactivateGuard ],
         component: HomeFormComponent,
         data: {
-          mode: 'Editing'
+          mode: 'Editing',
+          animation: 'Slide'
         },
         resolve: {
           home: HomeDetailsResolverService

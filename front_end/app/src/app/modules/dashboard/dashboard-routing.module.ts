@@ -13,6 +13,9 @@ const routes: Routes = [
           clients: ClientsResolverService,
           deals: DealsResolverService,
           homes: HomesResolverService
+        },
+        data: {
+          animation: 'Dashboard'
         }
     }
 ];

@@ -21,25 +21,34 @@ const routes: Routes = [
     path: 'dashboard',
     canActivate: [ AuthGuard ],
     loadChildren: () => import('./modules/dashboard/dashboard.module')
-    .then(module => module.DashboardModule, (error) => console.log(error))
+    .then(module => module.DashboardModule, (error) => console.log(error)),
+    data: {
+      animation: 'Opacity'
+    }
   },
   {
     path: 'clients',
     canActivate: [ AuthGuard ],
     loadChildren: () => import('./modules/clients/clients.module')
-    .then(module => module.ClientsModule, (error) => console.log(error))
+    .then(module => module.ClientsModule, (error) => console.log(error)),
+    data: {
+      animation: 'Clients'
+    }
   },
   {
     path: 'user',
     canActivate: [ AuthGuard ],
     loadChildren: () => import('./modules/user/user.module')
-    .then(module => module.UserModule, (error) => console.log(error))
+    .then(module => module.UserModule, (error) => console.log(error)),
+    data: {
+      animation: 'Slide'
+    }
   },
   {
     path: 'homes',
     canActivate: [ AuthGuard ],
     loadChildren: () => import('./modules/homes/homes.module')
-    .then(module => module.HomesModule, (error) => console.log(error))
+    .then(module => module.HomesModule, (error) => console.log(error)),
   },
   {
     path: 'popup',
@@ -50,7 +59,8 @@ const routes: Routes = [
     path: 'deals',
     canActivate: [ AuthGuard ],
     loadChildren: () => import('./modules/deal/deal.module')
-    .then(module => module.DealModule, (error) => console.log(error))
+    .then(module => module.DealModule, (error) => console.log(error)),
+   
   },
   {
     path: '**',

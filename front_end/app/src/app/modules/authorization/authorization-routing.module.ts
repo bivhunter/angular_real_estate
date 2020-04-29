@@ -11,11 +11,17 @@ const routes: Routes = [
     },
     {
       path: 'registration',
-      component: RegistrationComponent
+      component: RegistrationComponent,
+      data: {
+        animation: 'Registration'
+      }
     },
     {
       path: 'login',
-      component: LoginComponent
+      component: LoginComponent,
+      data: {
+        animation: 'Login'
+      }
     },
 ];
 

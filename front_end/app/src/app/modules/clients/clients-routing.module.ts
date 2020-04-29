@@ -11,15 +11,19 @@ const routes: Routes = [
         path: 'adding',
         canDeactivate: [ CanDeactivateGuard ],
         data: {
-          mode: 'Adding'
+          mode: 'Adding',
+          animation: 'Slide'
         },
-        component: ClientProfileComponent
+        component: ClientProfileComponent,
       },
       {
         path: '',
         component: ClientsComponent,
         resolve: {
           clients: ClientsResolverService
+        },
+        data: {
+          animation: 'Clients'
         }
       },
       {
@@ -27,7 +31,8 @@ const routes: Routes = [
         canDeactivate: [ CanDeactivateGuard ],
         component: ClientProfileComponent,
         data: {
-          mode: 'Editing'
+          mode: 'Editing',
+          animation: 'Slide'
         },
         resolve: {
           client: ClientProfileResolverService

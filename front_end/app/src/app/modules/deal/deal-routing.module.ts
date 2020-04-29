@@ -13,7 +13,8 @@ const routes: Routes = [
       path: 'adding',
       canDeactivate: [CanDeactivateGuard],
       data: {
-        mode: 'Adding'
+        mode: 'Adding',
+        animation: 'Slide'
       },
       component: DealCreatorComponent
     },
@@ -22,13 +23,17 @@ const routes: Routes = [
       component: DealsComponent,
       resolve: {
         deals: DealsResolverService
+      },
+      data: {
+        animation: 'Deals'
       }
     },
     {
       path: 'details/:id',
       component: DealsDetailsComponent,
       data: {
-        mode: 'Editing'
+        mode: 'Editing',
+        animation: 'Slide'
       },
       resolve: {
         deal: DealDetailsResolverService

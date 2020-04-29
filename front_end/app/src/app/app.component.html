@@ -7,13 +7,13 @@
 <div class="content-wrapper">
     <div class="container">
 
-        <div class="navigation-wrapper" *ngIf="isNavigationPanel">
-            <app-navigation></app-navigation>
+        <div class="navigation-wrapper" [class.displayed]="isNavigationPanel">
+            <app-navigation *ngIf="isNavigationPanel"></app-navigation>
         </div>
         
         
-        <div class="router-outlet">
-            <router-outlet></router-outlet>
+        <div class="router-outlet" [@routeAnimations]="prepareRoute(outlet)">
+            <router-outlet #outlet="outlet"></router-outlet>
         </div>
     </div>
 </div>
