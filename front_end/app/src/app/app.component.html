@@ -24,4 +24,9 @@
     </div>
 </div>
 
+<div class="message-wrapper">
+    <app-status-message 
+        *ngIf="isStatusMessage"
+        [message]="statusMessage"></app-status-message>    
+</div>
 

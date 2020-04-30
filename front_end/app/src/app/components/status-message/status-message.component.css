@@ -1,0 +1,37 @@
+/* :host {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    top: 5px;
+    z-index: 9999999;
+    transition-property: top;
+    transition-duration: 2s;
+} */
+
+.container {
+    margin: auto;
+    max-width: 300px;
+    background-color: #F0FFEB;
+    border-radius: 5px;
+    padding: 10px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: -55px;
+    z-index: 9999999;
+    transition-property: top;
+    transition-duration: 1s;
+    text-align: center;
+}
+
+p {
+    margin: 0;
+}
+
+.show {
+    top: 5px;
+}
+
+

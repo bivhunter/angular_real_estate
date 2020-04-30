@@ -53,31 +53,16 @@ export class ClientsListSelectorComponent implements OnInit {
     }
   }
 
-  onClickDelete(client: Client) {
-    this.openPopupQuestion(client, 'Remove Client:');
-  }
-
   onCancel(): void {
     this.isPopupQuestion = false;
   }
 
   onSubmit(): void {
-    if (this.isAddingMode) {
-      this.addHomeToClient();
-    } else {
-      this.deleteHomeFromClient();
-    }
+    this.addHomeToClient();
   }
 
   addHomeToClient(): void {
     this.clientService.addHomeToClient(this.home.id, this.clientId)
-      .subscribe(
-        () => this.closeList()
-      );
-  }
-
-  deleteHomeFromClient(): void {
-    this.clientService.deleteHomeFromClient(this.home.id, this.clientId)
       .subscribe(
         () => this.closeList()
       );

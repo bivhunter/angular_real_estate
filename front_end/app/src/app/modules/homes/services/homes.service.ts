@@ -6,6 +6,7 @@ import { tap, catchError, map, switchMap } from 'rxjs/operators';
 import { DealsService } from '../../deal/services/deals.service';
 import { Deal } from '../../deal/model/deal';
 import { Client } from '../../clients/model/client';
+import { StatusMessageService } from '../../shared/services/status-message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class HomesService {
 
   constructor(
     private http: HttpClient,
-    private dealsService: DealsService
+    private dealsService: DealsService,
+    private statusMessageService: StatusMessageService
   ) { }
 
   getHomes(): Observable<Home[]> {
@@ -60,6 +62,7 @@ export class HomesService {
     return this.http
       .post<Home>(this.homesUrl, home, this.getHttpAuthOption())
       .pipe(
+        tap(newHome => this.statusMessageService.showMessage(`Home's details was updated`)),
         catchError(this.handlePostHomeError)
       );
   }
@@ -68,7 +71,10 @@ export class HomesService {
     return this.http
       .delete<any>(`${this.homesUrl}/${id}`, this.getHttpAuthOption())
       .pipe(
-        tap(() => this.updateHomesList()),
+        tap(() => {
+          this.updateHomesList();
+          this.statusMessageService.showMessage(`The Home was removed`);
+        }),
         catchError(this.handleDeleteHomeError)
       );
   }
@@ -99,6 +105,7 @@ export class HomesService {
     return this.http
       .patch<Home>(`${this.homesUrl}/${home.id}`, home, this.getHttpAuthOption())
       .pipe(
+        tap(newHome => this.statusMessageService.showMessage(`New Home was added`)),
         catchError(this.handlePatchHomeError)
       );
   }

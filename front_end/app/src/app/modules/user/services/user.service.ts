@@ -6,6 +6,7 @@ import { tap, catchError, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../../authorization/services/authorization.service';
 import * as jwt_decode from 'jwt-decode';
+import { StatusMessageService } from '../../shared/services/status-message.service';
 
 @Injectable(
   { providedIn: 'root'}
@@ -36,10 +37,12 @@ export class UserService {
     private http: HttpClient,
     private router: Router,
     private authService: AuthorizationService,
+    private statusMessageService: StatusMessageService
   ) { }
 
   registerUser(user: User): Observable<User | string> {
     return this.http.post<User>(this.userUrl, user, this.httpOptions).pipe(
+      tap(newUser => this.statusMessageService.showMessage(`${newUser.name} ${newUser.surname} was registered`)),
       catchError(this.handleAuthorizationError)
     );
   }
@@ -53,6 +56,8 @@ export class UserService {
         const url = this.authService.getRedirectUrl();
         this.router.navigateByUrl(url);
       }),
+      switchMap(() => this.getUser()),
+      tap(newUser => this.statusMessageService.showMessage(`${newUser.name} ${newUser.surname} was logged in`)),
       catchError(this.handleAuthorizationError)
     );
   }
@@ -66,6 +71,9 @@ export class UserService {
   updateUser(user: User): Observable<User> {
     const id = this.getUserId();
     return this.http.patch<User>(`${this.userUrl}/${id}`, user, this.getHttpAuthOption()).pipe(
+      tap(
+        newUser => this.statusMessageService.showMessage(`${newUser.name} ${newUser.surname}'s profile was updated`)
+      ),
       catchError(err => {
         console.log(err);
         return throwError('err');

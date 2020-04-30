@@ -25,6 +25,7 @@
 
         <button class="add-button"
         (click)="addClient()"
+        [disabled]="home.clientOwner"
         >Add client who viewed Home</button>
     </div>
 

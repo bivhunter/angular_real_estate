@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { StatusMessageService } from '../../shared/services/status-message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,13 +25,15 @@ export class AuthorizationService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private statusMessageService: StatusMessageService
   ) { }
 
 
   logOut(): void {
     this.router.navigate(['authorization/login']).then(() => {
       localStorage.removeItem('authToken');
+      this.statusMessageService.showMessage(`User was logged out`);
     });
   }
 

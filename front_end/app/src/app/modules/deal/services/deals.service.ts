@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Deal } from '../model/deal';
 import { tap, catchError } from 'rxjs/operators';
 import { UserService } from 'src/app/modules/user/services/user.service';
+import { StatusMessageService } from '../../shared/services/status-message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class DealsService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService
+    private userService: UserService,
+    private statusMessageService: StatusMessageService
   ) { }
 
   getDeals(): Observable<Deal[]> {
@@ -59,7 +61,9 @@ export class DealsService {
   }
 
   private increaseUserLevel() {
-    this.userService.increaseUserLevel().subscribe();
+    this.userService.increaseUserLevel().subscribe(
+      () => this.statusMessageService.showMessage(`The Deal was made`)
+    );
  }
 
   private handleGetDealError(error: HttpErrorResponse): Observable<Deal> {

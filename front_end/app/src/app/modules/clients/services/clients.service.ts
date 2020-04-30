@@ -6,6 +6,7 @@ import { Client } from '../model/client';
 import { Deal } from '../../deal/model/deal';
 import { DealsService } from '../../deal/services/deals.service';
 import { PopupService } from '../../shared/services/popup.service';
+import { StatusMessageService } from '../../shared/services/status-message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class ClientService {
   constructor(
     private http: HttpClient,
     private dealsService: DealsService,
-    private pop: PopupService
+    private statusMessageService: StatusMessageService
   ) { }
 
   getClients(): Observable<Client[]> {
@@ -67,6 +68,7 @@ export class ClientService {
     return this.http
       .post<Client>(this.clientsUrl, client, this.getHttpAuthOption())
       .pipe(
+        tap(newClient => this.statusMessageService.showMessage(`New Client ${newClient.name} ${newClient.surname} was added`)),
         catchError(this.handlePostClientError)
       );
   }
@@ -78,19 +80,10 @@ export class ClientService {
     return this.http
     .patch<Client>(`${this.clientsUrl}/${clientId}`, body, this.getHttpAuthOption())
     .pipe(
-      tap(() => this.updateClientsList()),
-      catchError((error) => throwError(error.statusText))
-    );
-  }
-
-  deleteHomeFromClient(homeId: string | number, clientId: string | number): Observable<Client> {
-    const body = {
-      homeRemove: homeId
-    };
-    return this.http
-    .patch<Client>(`${this.clientsUrl}/${clientId}`, body, this.getHttpAuthOption())
-    .pipe(
-      tap(() => this.updateClientsList()),
+      tap(() => {
+        this.updateClientsList();
+        this.statusMessageService.showMessage(`Adding was successful`);
+      }),
       catchError((error) => throwError(error.statusText))
     );
   }
@@ -99,7 +92,10 @@ export class ClientService {
     return this.http
       .delete<any>(`${this.clientsUrl}/${id}`, this.getHttpAuthOption())
       .pipe(
-        tap(() => this.updateClientsList()),
+        tap((newClient) => {
+          this.updateClientsList();
+          this.statusMessageService.showMessage(`Client ${newClient.name} ${newClient.surname} was removed`);
+        }),
         catchError(this.handleDeleteClientError)
       );
   }
@@ -116,6 +112,7 @@ export class ClientService {
     return this.http
       .patch<Client>(`${this.clientsUrl}/${client.id}`, client, this.getHttpAuthOption())
       .pipe(
+        tap(newClient => this.statusMessageService.showMessage(`${newClient.name} ${newClient.surname}'s profile was updated`)),
         catchError(this.handlePatchClientError)
       );
   }

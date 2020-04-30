@@ -3,6 +3,7 @@ import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { slideInAnimation } from './modules/shared/animation/animation';
+import { StatusMessageService } from './modules/shared/services/status-message.service';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,17 @@ import { slideInAnimation } from './modules/shared/animation/animation';
 })
 export class AppComponent implements OnInit, OnDestroy {
   isNavigationPanel: boolean;
+  isStatusMessage = false;
+  statusMessage: string;
+
 
   private authenticationSubscription: Subscription;
   private routeChangingSubscription: Subscription;
+  private messageChangesSubscription: Subscription;
 
   constructor(
     private router: Router,
+    private statusMessageService: StatusMessageService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +57,20 @@ export class AppComponent implements OnInit, OnDestroy {
         this.isNavigationPanel = !url.includes('authorization');
       }
     );
+
+    // listen MessageService
+    this.messageChangesSubscription = this.statusMessageService.getStatusMessageEvent()
+      .subscribe(
+        message => this.showMessage(message)
+      );
+  }
+
+  private showMessage(message: string) {
+    this.statusMessage = message;
+    this.isStatusMessage = true;
+    setTimeout(() => {
+      this.isStatusMessage = false;
+    }, 4000);
   }
 
   private unsubscribe(): void {
