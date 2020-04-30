@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { HomesService } from '../../services/homes.service';
 import { Home } from '../../model/home';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
 import { PopupService } from 'src/app/modules/shared/services/popup.service';
 import { Location } from '@angular/common';
-import { NgModel } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -21,7 +20,6 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
 
   isAddingMode: boolean;
   title: string;
-  currentDate = new Date();
 
   isFormDisabled = false;
 
@@ -34,8 +32,6 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   // for canDiactivate
   isCanDeactivatePopup = false;
   private isSubmit = false;
-
-  @ViewChild('salesDate') dateInput: NgModel;
 
   constructor(
     private route: ActivatedRoute,
@@ -114,21 +110,11 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   onDateChange(date: string) {
-    if (Date.parse(date) > this.currentDate.valueOf()) {
-      this.home.start_date = this.currentDate;
-      const dateString = this.reformatDate(new Date().toDateString());
-      this.dateInput.reset(dateString);
+    const newDate = date.slice(-10);
+    if (!date) {
       return;
     }
-    this.home.start_date = new Date (Date.parse(date));
-  }
-
-  reformatDate(dateStr: string): string {
-    const date = new Date(Date.parse(dateStr));
-    const dateString = date.getFullYear() + '-'
-    + ('0' + (date.getMonth() + 1)).slice(-2) + '-'
-    + ('0' + (date.getDate() )).slice(-2);
-    return dateString;
+    this.home.start_date = new Date(Date.parse(newDate));
   }
 
   private openPopupQuestion(): void {
@@ -175,6 +161,7 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   private navigateBack(): void {
+    this.isPopupQuestion = false;
     this.location.back();
   }
 

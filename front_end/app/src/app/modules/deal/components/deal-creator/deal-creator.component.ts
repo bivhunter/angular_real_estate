@@ -124,6 +124,7 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
   }
 
   private navigateBack(): void {
+    this.isPopupQuestion = false;
     this.location.back();
   }
 

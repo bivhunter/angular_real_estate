@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/modules/user/model/user';
-import { NgModel } from '@angular/forms';
 import { UserService } from './services/user.service';
 import { CanComponentDeactivate } from '../shared/guards/can-deactivate.guard';
 import { RouterStateSnapshot, ActivatedRoute } from '@angular/router';
@@ -16,16 +15,12 @@ import { tap } from 'rxjs/operators';
 })
 export class UserProfileComponent implements OnInit, CanComponentDeactivate {
 
-  currentDate: Date = new Date();
-
   // popup question
   isPopupQuestion = false;
   title: string;
   text: string;
   private isSubmitQuestion: boolean;
 
-
-  @ViewChild('birthday') birthdayInput: NgModel;
   user: User;
   private initUser: User;
 
@@ -60,21 +55,11 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   onBirthdayChange(date: string) {
-    if (Date.parse(date) > this.currentDate.valueOf()) {
-      this.user.birthday = this.currentDate;
-      const dateString = this.reformatDate(new Date().toDateString());
-      this.birthdayInput.reset(dateString);
+    const newDate = date.slice(-10);
+    if (!date) {
       return;
     }
-    this.user.birthday = new Date (Date.parse(date));
-  }
-
-  reformatDate(dateStr: string): string {
-    const date = new Date(Date.parse(dateStr));
-    const dateString = date.getFullYear() + '-'
-    + ('0' + (date.getMonth() + 1)).slice(-2) + '-'
-    + ('0' + (date.getDate() )).slice(-2);
-    return dateString;
+    this.user.birthday = new Date (Date.parse(newDate));
   }
 
   onRateChange(value: string): void {
@@ -119,6 +104,7 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   private goBack(): void {
+    this.isPopupQuestion = false;
     this.location.back();
   }
 

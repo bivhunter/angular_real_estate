@@ -1,14 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { Client } from 'src/app/modules/clients/model/client';
 import { ClientService } from 'src/app/modules/clients/services/clients.service';
 import { Location } from '@angular/common';
 import { ClientsFilteringService } from '../../services/clients-filtering.service';
-import { NgModel } from '@angular/forms';
 import { PopupService } from './../../../shared/services/popup.service';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
 import { Observable, of } from 'rxjs';
-import { tap, delay } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-profile',
@@ -19,10 +18,6 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
 
   client: Client;
   private initClient: Client;
-
-  isDataReady = false;
-
-  currentDate: Date = new Date();
 
   mainTitle: string;
   isAddingMode: boolean;
@@ -35,8 +30,6 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   // for canDiactivate
   isCanDeactivatePopup = false;
   private isSubmit = false;
-
-  @ViewChild('birthday') birthdayInput: NgModel;
 
   constructor(
     private route: ActivatedRoute,
@@ -74,6 +67,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
       })
     );
   }
+
 
   // buttons click handler
   onEditClient(): void {
@@ -122,21 +116,11 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   onBirthdayChange(date: string) {
-    if (Date.parse(date) > this.currentDate.valueOf()) {
-      this.client.birthday = this.currentDate;
-      const dateString = this.reformatDate(new Date().toDateString());
-      this.birthdayInput.reset(dateString);
+    const newDate = date.slice(-10);
+    if (!date) {
       return;
     }
-    this.client.birthday = new Date (Date.parse(date));
-  }
-
-  reformatDate(dateStr: string): string {
-    const date = new Date(Date.parse(dateStr));
-    const dateString = date.getFullYear() + '-'
-    + ('0' + (date.getMonth() + 1)).slice(-2) + '-'
-    + ('0' + (date.getDate() )).slice(-2);
-    return dateString;
+    this.client.birthday = new Date (Date.parse(newDate));
   }
 
   private updateClient(): void {
@@ -160,6 +144,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   private navigateBack(): void {
+    this.isPopupQuestion = false;
     this.location.back();
   }
 

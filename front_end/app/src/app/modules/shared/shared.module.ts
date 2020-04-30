@@ -9,6 +9,7 @@ import { HomesListSelectorComponent } from './components/homes-list-selector/hom
 import { PopupQuestionComponent } from './components/popup-question/popup-question.component';
 import { ClientsListSelectorComponent } from './components/clients-list-selector/clients-list-selector.component';
 import { PopupDeactivateComponent } from 'src/app/modules/shared/components/popup-deactivate/popup-deactivate.component';
+import { MaxDateValidatorDirective } from './directives/max-date-validator.directive';
 
 registerLocaleData(localeFr);
 
@@ -17,7 +18,8 @@ registerLocaleData(localeFr);
     HomesListSelectorComponent,
     PopupQuestionComponent,
     ClientsListSelectorComponent,
-    PopupDeactivateComponent
+    PopupDeactivateComponent,
+    MaxDateValidatorDirective
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,7 @@ registerLocaleData(localeFr);
     ClientsListSelectorComponent,
     PopupQuestionComponent,
     PopupDeactivateComponent,
-    
+    MaxDateValidatorDirective
   ],
   providers: [
   ]
