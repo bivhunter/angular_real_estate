@@ -73,7 +73,7 @@ export class HomesService {
       .pipe(
         tap(() => {
           this.updateHomesList();
-          this.statusMessageService.showMessage(`The Home was removed`);
+          this.statusMessageService.showMessage(`Home was removed`);
         }),
         catchError(this.handleDeleteHomeError)
       );

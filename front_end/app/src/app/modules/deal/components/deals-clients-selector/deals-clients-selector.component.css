@@ -17,14 +17,14 @@
     border-radius: 5px;
     box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
     background-color: white;
-    max-height: 500px;
+    height: 50%;
     
 }
 
 .content-wrapper {
     display: flex;
     flex-grow: 1;
-    overflow: auto;
+    overflow-y: scroll;
 }
 
 .header-wrapper {
@@ -33,6 +33,11 @@
     align-items: center;
     top: 0;
     left: 0;
+}
+
+.scroll {
+    width: 17px;
+    height: 100%;
 }
 
 /* buttons styles */

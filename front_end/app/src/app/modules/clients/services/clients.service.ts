@@ -82,7 +82,7 @@ export class ClientService {
     .pipe(
       tap(() => {
         this.updateClientsList();
-        this.statusMessageService.showMessage(`Adding was successful`);
+        this.statusMessageService.showMessage(`Adding was successfull`);
       }),
       catchError((error) => throwError(error.statusText))
     );

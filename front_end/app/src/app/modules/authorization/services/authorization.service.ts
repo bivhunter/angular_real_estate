@@ -31,9 +31,15 @@ export class AuthorizationService {
 
 
   logOut(): void {
-    this.router.navigate(['authorization/login']).then(() => {
+    this.redirectToLogin().then(() => {
+      this.statusMessageService.showMessage(`User logged out`);
+    });
+  }
+
+  private async redirectToLogin(): Promise<boolean> {
+    return await this.router.navigate(['authorization/login']).then(() => {
       localStorage.removeItem('authToken');
-      this.statusMessageService.showMessage(`User was logged out`);
+      return true;
     });
   }
 
@@ -45,7 +51,7 @@ export class AuthorizationService {
       }),
 
       catchError(error => {
-        this.logOut();
+        this.redirectToLogin();
         return of(false);
       })
     );

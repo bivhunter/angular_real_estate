@@ -42,7 +42,7 @@ export class UserService {
 
   registerUser(user: User): Observable<User | string> {
     return this.http.post<User>(this.userUrl, user, this.httpOptions).pipe(
-      tap(newUser => this.statusMessageService.showMessage(`${newUser.name} ${newUser.surname} was registered`)),
+      tap(newUser => this.statusMessageService.showMessage(`${newUser.name} ${newUser.surname} successfull registered`)),
       catchError(this.handleAuthorizationError)
     );
   }
@@ -57,7 +57,7 @@ export class UserService {
         this.router.navigateByUrl(url);
       }),
       switchMap(() => this.getUser()),
-      tap(newUser => this.statusMessageService.showMessage(`${newUser.name} ${newUser.surname} was logged in`)),
+      tap(newUser => this.statusMessageService.showMessage(`${newUser.name} ${newUser.surname} logged in`)),
       catchError(this.handleAuthorizationError)
     );
   }

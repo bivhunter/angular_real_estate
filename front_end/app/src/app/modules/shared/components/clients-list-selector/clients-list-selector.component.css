@@ -1,3 +1,5 @@
+
+
 /* full screen opacity style */
 .cover-div {
     position: fixed;
@@ -37,14 +39,15 @@
     border-radius: 5px;
     box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
     background-color: white;
-    max-height: 500px;
+    height: 50%;
     
 }
 
 .content-wrapper {
     display: flex;
     flex-grow: 1;
-    overflow: auto;
+    justify-self: stretch;
+    overflow-y: scroll;
 }
 
 .header-wrapper {
@@ -55,6 +58,11 @@
     left: 0;
 }
 
+
+.scroll {
+    width: 17px;
+    height: 100%;
+}
 
 
 
