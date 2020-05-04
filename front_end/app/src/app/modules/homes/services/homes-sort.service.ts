@@ -80,8 +80,12 @@ function compareHomes(homeA: Home, homeB: Home, ...funcArray: ((a: any, b: any) 
   return compare;
 }
 
+type THomeSortFunction = {
+  [key in THomesSortingMethod]: (home: Home[]) => Home[];
+};
+
 // create object of functions with fields as methods of sorting
-function createSortFunc(): any {
+function createSortFunc(): THomeSortFunction {
   return {
     STREET_UP: (homes: Home[]) => {
       return [...homes].sort( (homeA, homeB) => {

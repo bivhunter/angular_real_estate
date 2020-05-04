@@ -63,8 +63,12 @@ function compareClients(clientA: Client, clientB: Client, ...funcArray: ((a: any
   return compare;
 }
 
+type TClientSortingFunction = {
+  [key in TClientsSortingMethod]: (client: Client[]) => Client[];
+};
+
 // create object of functions with fields as methods of sorting
-function createSortFunc(): any {
+function createSortFunc(): TClientSortingFunction {
   return {
     NAME_UP: (clients: Client[]) => {
       return [...clients].sort( (clientA, clientB) => {
