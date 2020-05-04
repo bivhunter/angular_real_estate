@@ -11,7 +11,7 @@
         (click)="onClient(deal.clientId)"
         [class.disabled]="!deal?.client">
         <div class="client-img"></div>
-        <h4 *ngIf="!deal?.client">Client remove </h4>
+        <h4 *ngIf="!deal?.client">Client was removed </h4>
         <div class="info-wrapper" *ngIf="deal?.client">
                 <p>{{deal.client.name}}</p>
                 <p>{{deal.client.surname}}</p>

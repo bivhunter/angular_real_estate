@@ -1,11 +1,13 @@
 :host {
-    display: inline-flex;
-    justify-content: center;
+    display: flex;
+    flex: 1 1 260px;
+    max-width: 260px;
     padding: 15px;
 }
 
 .container {
     position: relative;
+    flex: 1 1 auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -64,9 +66,7 @@
 .buttons-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: stretch;
     align-self: stretch;
-    width: 200px;
     margin: 20px 0 15px 0;
 }
 
