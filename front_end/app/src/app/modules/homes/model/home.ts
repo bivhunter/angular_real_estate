@@ -1,32 +1,26 @@
-import { HomeModel } from './home.model';
+import { IHomeModel } from './home.model';
 import { Client } from '../../clients/model/client';
 
-export class Home implements HomeModel {
+export class Home implements IHomeModel {
 
-    id: string | number;
-    home: string;
-    street: string;
-    city: string;
-    index: string;
-    state: string;
-    price: number;
-    start_date: Date;
+    id: string | number = null;
+    home = '';
+    street = '';
+    city = '';
+    index = '';
+    state = '';
+    price = 0;
+    // tslint:disable-next-line: variable-name
+    start_date: Date = new Date();
+    // tslint:disable-next-line: variable-name
     client_id?: string | number;
     clients?: any[];
-    user_id: string | number;
+    // tslint:disable-next-line: variable-name
+    user_id: string | number = '';
     clientOwner: Client;
     createdAt: Date;
 
     constructor() {
-        this.id = null;
-        this.home = '';
-        this.street = '';
-        this.city = '';
-        this.index = '';
-        this.state = '';
-        this.price = 0;
-        this.start_date = new Date();
-        this.user_id = '';
     }
 
 }

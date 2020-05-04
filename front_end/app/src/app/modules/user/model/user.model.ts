@@ -1,4 +1,4 @@
-export interface UserModel {
+export interface IUserModel {
     id: number | string; //  should not be set up manually
     email: string;
     password: string;

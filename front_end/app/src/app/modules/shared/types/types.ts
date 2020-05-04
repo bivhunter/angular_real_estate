@@ -11,6 +11,5 @@ export type TClientsSortingMethod = 'NAME_UP' | 'NAME_DOWN' | 'SURNAME_UP' | 'SU
 export type TClientsSortingField = 'NAME' | 'SURNAME';
 
 // for deal's list sorting
-export type TDealsSortingMethod = 'CLIENT_UP' | 'CLIENT_DOWN' | 'HOME_UP' | 'HOME_UP' |
-'PRICE_UP' | 'PRICE_DOWN' | 'DATE_UP' | 'DATE_DOWN';
-export type TDealsSortingField = 'CLIENT' | 'HOME' | 'DATE' | 'PRICE';
+export type TDealsSortingMethod = 'PRICE_UP' | 'PRICE_DOWN' | 'DATE_UP' | 'DATE_DOWN';
+export type TDealsSortingField = 'DATE' | 'PRICE';

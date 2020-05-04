@@ -1,6 +1,6 @@
 import { Client } from '../../clients/model/client';
 
-export interface HomeModel {
+export interface IHomeModel {
     id: number | string;
     home: string;
     street: string;

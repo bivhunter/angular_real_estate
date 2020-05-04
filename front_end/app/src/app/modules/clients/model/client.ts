@@ -1,29 +1,22 @@
-import { ClientModel } from './client.model';
+import { IClientModel } from './client.model';
+import { Home } from '../../homes/model/home';
 
-export class Client implements ClientModel {
-    id: string | number;
-    email: string;
-    name: string;
-    surname: string;
-    birthday: Date;
-    address: string;
-    phone: string;
-    level: number;
+export class Client implements IClientModel {
+    id: string | number = null;
+    email = '';
+    name = '';
+    surname = '';
+    birthday: Date = new Date('1980.01.01');
+    address = '';
+    phone = '';
+    level = 0;
     // tslint:disable-next-line: variable-name
-    userId: string | number;
+    userId: string | number = '';
+    // tslint:disable-next-line: variable-name
     home_id?: string | number;
-    homes?: import('../../homes/model/home').Home[];
+    homes?: Home[];
     createdAt?: string;
 
-    constructor(surname: string = '', name: string = '') {
-        this.id = null;
-        this.email = '';
-        this.name = '';
-        this.surname = '';
-        this.birthday = this.birthday = new Date('1980.01.01');
-        this.address = '';
-        this.phone = '';
-        this.level = 0;
-        this.userId = '';
+    constructor() {
     }
 }

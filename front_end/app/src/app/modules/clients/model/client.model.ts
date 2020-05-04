@@ -1,6 +1,6 @@
 import { Home } from '../../homes/model/home';
 
-export interface ClientModel {
+export interface IClientModel {
     id: number | string; //  should not be set up manually
     email: string;
     name: string;

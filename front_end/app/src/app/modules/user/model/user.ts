@@ -1,19 +1,18 @@
 
-import { UserModel } from './user.model';
+import { IUserModel } from './user.model';
 
-export class User implements UserModel {
+export class User implements IUserModel {
 
-    id: string | number;
-    email: string;
-    password: string;
-    name: string;
-    surname: string;
-    birthday: Date;
-    level: number;
-    company: string;
-    rate: number | string;
+    id: string | number = null;
+    email = '';
+    password = '';
+    name = '';
+    surname = '';
+    birthday: Date = new Date('1980.01.01');
+    level = 0;
+    company = '';
+    rate: number | string = '';
     createdAt?: Date;
-    // _fullName: string;
 
     constructor(user?: User) {
         if (user) {
@@ -26,16 +25,6 @@ export class User implements UserModel {
             this.company = user.company || '';
             this.rate = user.rate || '';
             this.createdAt = user.createdAt || new Date('1980.01.01');
-        } else {
-            this.id = null;
-            this.email = '';
-            this.password = '';
-            this.name = '';
-            this.surname = '';
-            this.birthday = new Date('1980.01.01');
-            this.level = 0;
-            this.company = '';
-            this.rate = '';
         }
     }
 
@@ -57,20 +46,4 @@ export class User implements UserModel {
     get fullName(): string {
         return (this.name + ' ' + this.surname).trim();
     }
-
-    // get name(): string {
-    //     const wordArray = this.fullName.trim().split(' ');
-    //     if (wordArray[0]) {
-    //         return wordArray[0];
-    //     }
-    //     return '';
-    // }
-
-    // get surname(): string {
-    //     const wordArray = this.fullName.trim().split(' ');
-    //     if (wordArray[1]) {
-    //        return wordArray[1];
-    //     }
-    //     return '';
-    // }
 }

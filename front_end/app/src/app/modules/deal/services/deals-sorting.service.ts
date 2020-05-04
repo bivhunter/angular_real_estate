@@ -64,8 +64,12 @@ function comparePrice(dealA: Deal, dealB: Deal): number {
   return dealB.price - dealA.price;
 }
 
+type TDealSortingFunction = {
+  [key in TDealsSortingMethod]: (deals: Deal[]) => Deal[];
+};
+
 // create object of functions with fields as methods of sorting
-function createSortFunc(): any {
+function createSortFunc(): TDealSortingFunction {
   return {
     DATE_UP: (deals: Deal[]) => {
       return [...deals].sort( (dealA, dealB) => {

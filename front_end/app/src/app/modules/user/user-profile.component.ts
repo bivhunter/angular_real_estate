@@ -63,6 +63,7 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   onRateChange(value: string): void {
+    console.log(value)
     const newValue = value.replace(/\s/g, '').replace(/\$/g, '');
     this.user.rate = +newValue;
   }
