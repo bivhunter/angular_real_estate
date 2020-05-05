@@ -34,4 +34,13 @@ p {
     top: 5px;
 }
 
+.info, .warn {
+    background-color: #F0FFEB;
+}
+
+
+.error {
+    background-color: #FFEEDD;
+}
+
 

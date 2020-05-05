@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Deal } from '../model/deal';
 import { tap, catchError } from 'rxjs/operators';
 import { UserService } from 'src/app/modules/user/services/user.service';
@@ -11,18 +11,9 @@ import { StatusMessageService } from '../../shared/services/status-message.servi
 })
 export class DealsService {
 
-  private baseUrl = 'http://localhost:3030/';
-  private dealsUrl = `${this.baseUrl}deal`; // add deals url
+  private dealsUrl = `deal`; // add deals url
 
   private dealsListChangesSubject: Subject<any> = new Subject();
-
-  private set authToken(value: string) {
-    localStorage.setItem('authToken', value);
-  }
-
-  private get authToken(): string {
-    return localStorage.getItem('authToken');
-  }
 
   constructor(
     private http: HttpClient,
@@ -32,14 +23,14 @@ export class DealsService {
 
   getDeals(): Observable<Deal[]> {
     return this.http
-      .get<Deal[]>(this.dealsUrl, this.getHttpAuthOption())
+      .get<Deal[]>(this.dealsUrl)
       .pipe(
         catchError(this.handleGetDealsError));
   }
 
   addDeal(deal: Deal): Observable<Deal> {
     return this.http
-      .post<Deal>(this.dealsUrl, deal, this.getHttpAuthOption())
+      .post<Deal>(this.dealsUrl, deal)
       .pipe(
         tap((newDeal) => {
           this.increaseUserLevel();
@@ -50,7 +41,7 @@ export class DealsService {
 
   getDeal(id: number | string): Observable<Deal> {
     return this.http
-      .get<Deal>(`${this.dealsUrl}/${id}`, this.getHttpAuthOption())
+      .get<Deal>(`${this.dealsUrl}/${id}`)
       .pipe(
         catchError(this.handleGetDealError)
       );
@@ -62,7 +53,10 @@ export class DealsService {
 
   private increaseUserLevel() {
     this.userService.increaseUserLevel().subscribe(
-      () => this.statusMessageService.showMessage(`The Deal was made`)
+      () => this.statusMessageService.showMessage({
+        status: 'info',
+        text: `The Deal was made`
+      })
     );
  }
 
@@ -82,12 +76,4 @@ export class DealsService {
     return throwError(error.statusText);
   }
 
-  private getHttpAuthOption() {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authToken}`
-      })
-    };
-  }
 }

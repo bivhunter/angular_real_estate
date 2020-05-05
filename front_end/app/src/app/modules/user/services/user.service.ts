@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user';
 import { Observable, throwError} from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { tap, catchError, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../../authorization/services/authorization.service';
@@ -14,10 +14,8 @@ import { StatusMessageService } from '../../shared/services/status-message.servi
 
 export class UserService {
 
-  private baseUrl = 'http://localhost:3030/';
-
-  private userUrl = `${this.baseUrl}user`; // add user url
-  private authenticationUrl = `${this.baseUrl}authentication`; // login
+  private userUrl = `user`; // add user url
+  private authenticationUrl = `authentication`; // login
 
   private set authToken(value: string) {
     localStorage.setItem('authToken', value);
@@ -27,12 +25,6 @@ export class UserService {
     return localStorage.getItem('authToken');
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
-
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -41,15 +33,18 @@ export class UserService {
   ) { }
 
   registerUser(user: User): Observable<User | string> {
-    return this.http.post<User>(this.userUrl, user, this.httpOptions).pipe(
-      tap(newUser => this.statusMessageService.showMessage(`${newUser.name} ${newUser.surname} successfull registered`)),
+    return this.http.post<User>(this.userUrl, user).pipe(
+      tap(newUser => this.statusMessageService.showMessage({
+        status: 'info',
+        text: `${newUser.name} ${newUser.surname} successfull registered`
+      })),
       catchError(this.handleAuthorizationError)
     );
   }
 
   authorizeUser(user: User): Observable<any> {
     const body = {...user, strategy: 'local'};
-    return this.http.post<any>(this.authenticationUrl, body, this.httpOptions).pipe(
+    return this.http.post<any>(this.authenticationUrl, body).pipe(
       tap((resp) => {
         this.log(resp.accessToken);
         this.authToken = resp.accessToken;
@@ -57,7 +52,10 @@ export class UserService {
         this.router.navigateByUrl(url);
       }),
       switchMap(() => this.getUser()),
-      tap(newUser => this.statusMessageService.showMessage(`${newUser.name} ${newUser.surname} logged in`)),
+      tap(newUser => this.statusMessageService.showMessage({
+        status: 'info',
+        text: `${newUser.name} ${newUser.surname} logged in`
+      })),
       catchError(this.handleAuthorizationError)
     );
   }
@@ -65,14 +63,17 @@ export class UserService {
   // return current user
   getUser(): Observable<User> {
     const id = this.getUserId();
-    return this.http.get<User>(`${this.userUrl}/${id}`, this.getHttpAuthOption());
+    return this.http.get<User>(`${this.userUrl}/${id}`);
   }
 
   updateUser(user: User): Observable<User> {
     const id = this.getUserId();
-    return this.http.patch<User>(`${this.userUrl}/${id}`, user, this.getHttpAuthOption()).pipe(
+    return this.http.patch<User>(`${this.userUrl}/${id}`, user).pipe(
       tap(
-        newUser => this.statusMessageService.showMessage(`${newUser.name} ${newUser.surname}'s profile was updated`)
+        newUser => this.statusMessageService.showMessage({
+          status: 'info',
+          text: `${newUser.name} ${newUser.surname}'s profile was updated`
+        })
       ),
       catchError(err => {
         console.log(err);
@@ -93,15 +94,6 @@ export class UserService {
   // get userId from token
   private getUserId(): number | string {
     return jwt_decode(this.authToken).userId;
-  }
-
-  private getHttpAuthOption() {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authToken}`
-      })
-    };
   }
 
   private handleAuthorizationError(error: HttpErrorResponse): Observable<string> {

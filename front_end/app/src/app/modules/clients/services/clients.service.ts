@@ -5,7 +5,6 @@ import { Observable, throwError, Subject } from 'rxjs';
 import { Client } from '../model/client';
 import { Deal } from '../../deal/model/deal';
 import { DealsService } from '../../deal/services/deals.service';
-import { PopupService } from '../../shared/services/popup.service';
 import { StatusMessageService } from '../../shared/services/status-message.service';
 
 @Injectable({
@@ -13,18 +12,9 @@ import { StatusMessageService } from '../../shared/services/status-message.servi
 })
 export class ClientService {
 
-  private baseUrl = 'http://localhost:3030/';
-  private clientsUrl = `${this.baseUrl}client`; // add clients url
+  private clientsUrl = `client`; // add clients url
 
   private clientsListChangesSubject: Subject<any> = new Subject();
-
-  set authToken(value: string) {
-    localStorage.setItem('authToken', value);
-  }
-
-  get authToken(): string {
-    return localStorage.getItem('authToken');
-  }
 
   constructor(
     private http: HttpClient,
@@ -54,7 +44,7 @@ export class ClientService {
     const clientsObservable = this.dealsService.getDeals()
       .pipe(switchMap(deals => {
         return this.http
-        .get<Client[]>(this.clientsUrl, this.getHttpAuthOption())
+        .get<Client[]>(this.clientsUrl)
         .pipe(map(clients => mapClients(clients, deals)))
         .pipe(
           catchError(this.handleGetClientsError)
@@ -66,9 +56,12 @@ export class ClientService {
 
   addClient(client: Client): Observable<Client> {
     return this.http
-      .post<Client>(this.clientsUrl, client, this.getHttpAuthOption())
+      .post<Client>(this.clientsUrl, client)
       .pipe(
-        tap(newClient => this.statusMessageService.showMessage(`New Client ${newClient.name} ${newClient.surname} was added`)),
+        tap(newClient => this.statusMessageService.showMessage({
+          status: 'info',
+          text: `New Client ${newClient.name} ${newClient.surname} was added`
+        })),
         catchError(this.handlePostClientError)
       );
   }
@@ -78,11 +71,14 @@ export class ClientService {
       homeAdd: homeId
     };
     return this.http
-    .patch<Client>(`${this.clientsUrl}/${clientId}`, body, this.getHttpAuthOption())
+    .patch<Client>(`${this.clientsUrl}/${clientId}`, body)
     .pipe(
       tap(() => {
         this.updateClientsList();
-        this.statusMessageService.showMessage(`Adding was successfull`);
+        this.statusMessageService.showMessage({
+          status: 'info',
+          text: `Adding was successfull`
+        });
       }),
       catchError((error) => throwError(error.statusText))
     );
@@ -90,11 +86,14 @@ export class ClientService {
 
   deleteClient(id: number | string): Observable<any> {
     return this.http
-      .delete<any>(`${this.clientsUrl}/${id}`, this.getHttpAuthOption())
+      .delete<any>(`${this.clientsUrl}/${id}`)
       .pipe(
         tap((newClient) => {
           this.updateClientsList();
-          this.statusMessageService.showMessage(`Client ${newClient.name} ${newClient.surname} was removed`);
+          this.statusMessageService.showMessage({
+            status: 'info',
+            text: `Client ${newClient.name} ${newClient.surname} was removed`
+          });
         }),
         catchError(this.handleDeleteClientError)
       );
@@ -102,7 +101,7 @@ export class ClientService {
 
   getClient(id: number | string): Observable<Client> {
     return this.http
-      .get<Client>(`${this.clientsUrl}/${id}`, this.getHttpAuthOption())
+      .get<Client>(`${this.clientsUrl}/${id}`)
       .pipe(
         catchError(this.handleGetClientError)
       );
@@ -110,9 +109,12 @@ export class ClientService {
 
   updateClient(client: Client): Observable<Client> {
     return this.http
-      .patch<Client>(`${this.clientsUrl}/${client.id}`, client, this.getHttpAuthOption())
+      .patch<Client>(`${this.clientsUrl}/${client.id}`, client)
       .pipe(
-        tap(newClient => this.statusMessageService.showMessage(`${newClient.name} ${newClient.surname}'s profile was updated`)),
+        tap(newClient => this.statusMessageService.showMessage({
+          status: 'info',
+          text: `${newClient.name} ${newClient.surname}'s profile was updated`
+        })),
         catchError(this.handlePatchClientError)
       );
   }
@@ -145,13 +147,5 @@ export class ClientService {
     return throwError(error.statusText);
   }
 
-  private getHttpAuthOption() {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authToken}`
-      })
-    };
-  }
 }
 

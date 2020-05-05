@@ -1,4 +1,6 @@
 <div class="container"
-    [class.show]="isShow">
-    <p>{{message}}</p>
+    [class.show]="isShow"
+    [class] = "message.status"
+    >
+    <p>{{message.text}}</p>
 </div>

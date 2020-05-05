@@ -39,7 +39,8 @@
                 (ngModelChange) = "home.street = $event"
                 name="street"
                 placeholder="Enter street"
-                pattern="[A-Za-zА-Яа-яЁё\s-\d]+"
+                pattern="[A-Za-z\d]+[A-Za-z\s\d]+[A-Za-z\d]+"
+                maxlength="30"
                 required
                 [disabled]="isFormDisabled"
                >
@@ -62,7 +63,8 @@
                 (ngModelChange) = "home.city = $event"
                 name="city"
                 placeholder="Enter city"
-                pattern="[A-Za-zА-Яа-яЁё-\s]+"
+                pattern="[A-Za-z\d]+[A-Za-z\s\d]+[A-Za-z\d]+"
+                maxlength="30"
                 required
                 [disabled]="isFormDisabled"
                >

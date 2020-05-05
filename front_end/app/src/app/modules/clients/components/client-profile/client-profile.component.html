@@ -86,7 +86,8 @@
                 (ngModelChange) = "client.address = $event"
                 name="addres"
                 placeholder="Enter client's addres"
-                pattern="[A-Za-z\s\d,]+"
+                pattern="[A-Za-z\d]+[A-Za-z\s\d]+[A-Za-z\d]+"
+                maxlength="50"
                 required
                >
                <!-- NoValid alert -->

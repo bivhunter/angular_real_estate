@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { slideInAnimation } from './modules/shared/animation/animation';
 import { StatusMessageService } from './modules/shared/services/status-message.service';
+import { TMessage } from './modules/shared/types/types';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ import { StatusMessageService } from './modules/shared/services/status-message.s
 export class AppComponent implements OnInit, OnDestroy {
   isNavigationPanel: boolean;
   isStatusMessage = false;
-  statusMessage: string;
+  statusMessage: TMessage;
 
 
   private authenticationSubscription: Subscription;
@@ -44,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   prepareRoute(outlet: RouterOutlet) {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 
   private initSubscribtion(): void {
@@ -65,7 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
       );
   }
 
-  private showMessage(message: string) {
+  private showMessage(message: TMessage) {
     this.statusMessage = message;
     this.isStatusMessage = true;
     setTimeout(() => {
@@ -76,6 +77,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private unsubscribe(): void {
     this.authenticationSubscription.unsubscribe();
     this.routeChangingSubscription.unsubscribe();
+    this.messageChangesSubscription.unsubscribe();
   }
 
 }

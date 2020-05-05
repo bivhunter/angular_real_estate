@@ -110,7 +110,7 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   private getUser(user: User): void {
-    this.user = new User(user);
+    this.user = user;
     this.initUser = {...this.user} as User;
   }
 

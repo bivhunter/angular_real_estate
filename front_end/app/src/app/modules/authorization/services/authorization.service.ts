@@ -10,18 +10,8 @@ import { StatusMessageService } from '../../shared/services/status-message.servi
 })
 export class AuthorizationService {
 
-  private baseUrl = 'http://localhost:3030/';
-
-  private clientUrl =  `${this.baseUrl}client`;
+  private clientUrl =  `client`;
   private redirectUrl = 'dashboard';
-
-  private set authToken(value: string) {
-    localStorage.setItem('authToken', value);
-  }
-
-  private get authToken(): string {
-    return localStorage.getItem('authToken');
-  }
 
   constructor(
     private http: HttpClient,
@@ -32,7 +22,10 @@ export class AuthorizationService {
 
   logOut(): void {
     this.redirectToLogin().then(() => {
-      this.statusMessageService.showMessage(`User logged out`);
+      this.statusMessageService.showMessage({
+        status: 'info',
+        text: `User logged out`
+      });
     });
   }
 
@@ -45,7 +38,7 @@ export class AuthorizationService {
 
   // for auth.guard
   checkAuthorization(): Observable<boolean> {
-    return this.http.get<any>(this.clientUrl, this.getHttpAuthOption()).pipe(
+    return this.http.get<any>(this.clientUrl).pipe(
       map(() => {
         return true;
       }),
@@ -63,14 +56,5 @@ export class AuthorizationService {
 
   getRedirectUrl(): string {
     return this.redirectUrl;
-  }
-
-  private getHttpAuthOption() {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authToken}`
-      })
-    };
   }
 }

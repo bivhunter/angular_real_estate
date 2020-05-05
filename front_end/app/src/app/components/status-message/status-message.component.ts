@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { TMessage } from 'src/app/modules/shared/types/types';
 
 @Component({
   selector: 'app-status-message',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class StatusMessageComponent implements OnInit {
 
-  @Input() message: string;
+  @Input() message: TMessage;
 
   isShow = false;
   constructor() { }

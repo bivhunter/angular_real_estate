@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable, throwError } from 'rxjs';
-import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Home } from '../model/home';
 import { tap, catchError, map, switchMap } from 'rxjs/operators';
 import { DealsService } from '../../deal/services/deals.service';
@@ -13,19 +13,11 @@ import { StatusMessageService } from '../../shared/services/status-message.servi
 })
 export class HomesService {
 
-  private baseUrl = 'http://localhost:3030/';
-  private homesUrl = `${this.baseUrl}home`; // add homes url
+  private homesUrl = `home`; // add homes url
 
   private homesListChangesSubject: Subject<any> = new Subject();
 
-  private set authToken(value: string) {
-    localStorage.setItem('authToken', value);
-  }
-
-  private get authToken(): string {
-    return localStorage.getItem('authToken');
-  }
-
+  
   constructor(
     private http: HttpClient,
     private dealsService: DealsService,
@@ -48,7 +40,7 @@ export class HomesService {
     const homesObservable = this.dealsService.getDeals()
       .pipe(switchMap(deals => {
         return this.http
-        .get<Home[]>(this.homesUrl, this.getHttpAuthOption())
+        .get<Home[]>(this.homesUrl)
         .pipe(map(homes => mapHomes(homes, deals)))
         .pipe(
           catchError(this.handleGetHomesError)
@@ -60,20 +52,26 @@ export class HomesService {
 
   addHome(home: Home): Observable<Home> {
     return this.http
-      .post<Home>(this.homesUrl, home, this.getHttpAuthOption())
+      .post<Home>(this.homesUrl, home)
       .pipe(
-        tap(newHome => this.statusMessageService.showMessage(`Home's details was updated`)),
+        tap(newHome => this.statusMessageService.showMessage({
+          status: 'info',
+          text: `Home's details was updated`
+        })),
         catchError(this.handlePostHomeError)
       );
   }
 
   deleteHome(id: number | string): Observable<any> {
     return this.http
-      .delete<any>(`${this.homesUrl}/${id}`, this.getHttpAuthOption())
+      .delete<any>(`${this.homesUrl}/${id}`)
       .pipe(
         tap(() => {
           this.updateHomesList();
-          this.statusMessageService.showMessage(`Home was removed`);
+          this.statusMessageService.showMessage({
+            status: 'info',
+            text: `Home was removed`
+          });
         }),
         catchError(this.handleDeleteHomeError)
       );
@@ -83,7 +81,7 @@ export class HomesService {
     return this.dealsService.getDeals().pipe(
       switchMap(deals => {
        return  this.http
-      .get<Home>(`${this.homesUrl}/${id}`, this.getHttpAuthOption())
+      .get<Home>(`${this.homesUrl}/${id}`)
       .pipe(map(
         home => {
           for (const deal of deals) {
@@ -103,9 +101,12 @@ export class HomesService {
 
   updateHome(home: Home): Observable<Home> {
     return this.http
-      .patch<Home>(`${this.homesUrl}/${home.id}`, home, this.getHttpAuthOption())
+      .patch<Home>(`${this.homesUrl}/${home.id}`, home)
       .pipe(
-        tap(newHome => this.statusMessageService.showMessage(`New Home was added`)),
+        tap(newHome => this.statusMessageService.showMessage({
+          status: 'info',
+          text: `New Home was added`
+        })),
         catchError(this.handlePatchHomeError)
       );
   }
@@ -142,15 +143,6 @@ export class HomesService {
   private handleGetHomesError(error: HttpErrorResponse): Observable<Home[]> {
     console.log(error);
     return throwError(error.statusText);
-  }
-
-  private getHttpAuthOption() {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authToken}`
-      })
-    };
   }
 
 }
