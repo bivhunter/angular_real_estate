@@ -34,7 +34,7 @@ import { DealsMakingDealComponent } from './components/deals-making-deal/deals-m
     SharedModule,
   ],
   providers: [
-    DealsViewService
+    DealsViewService,
   ],
   exports: [
   ]

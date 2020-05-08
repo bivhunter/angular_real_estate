@@ -1,102 +1,32 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Deal } from '../../model/deal';
-import { Observable, Subscription } from 'rxjs';
-import { TDealsSortingMethod } from 'src/app/modules/shared/types/types';
-import { DealsFilteringService } from 'src/app/modules/deal/services/deals-filtering.service';
-import { DealsSortingService } from '../../services/deals-sorting.service';
-import { DealsService } from 'src/app/modules/deal/services/deals.service';
-import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+
+import * as fromDeals from 'src/app/store/reducers/deals.reducer';
+import * as dealsSelector from 'src/app/store/selectors/deals.selector';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-deals',
   templateUrl: './deals.component.html',
   styleUrls: ['./deals.component.css']
 })
-export class DealsComponent implements OnInit, OnDestroy {
+export class DealsComponent implements OnInit {
 
-  deals: Deal[] = [];
-  filteredDeals: Deal[] = [];
-
-
-  // observable and subscription for dealsUpdate
-  private updateDealsListEvent: Observable<any>;
-  private updateDealsListEventSubscribtion: Subscription;
-
-  // observable and subscription for sorting
-  private changingSortingMethodEvent: Observable<TDealsSortingMethod>;
-  private changingStoringMethodSubscription: Subscription;
-  sortingMethod: TDealsSortingMethod;
-
-  // observable and subscription for filtering
-  private changingFilterEvent: Observable<string>;
-  private changingFilterSubscription: Subscription;
-  private filterString = '';
+  deals$: Observable<Deal[]>;
+  filteredDeals$: Observable<Deal[]>;
 
   constructor(
-    private dealsService: DealsService,
-    private dealsSortingService: DealsSortingService,
-    private dealsFilteringService: DealsFilteringService,
-    private route: ActivatedRoute
+    private store: Store<fromDeals.State>
   ) { }
 
   ngOnInit(): void {
     this.initSubscribtion();
-    this.route.data.subscribe(
-      data => this.getDealsHandler(data.deals)
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.updateDealsListEventSubscribtion.unsubscribe();
-    this.changingStoringMethodSubscription.unsubscribe();
-    this.changingFilterSubscription.unsubscribe();
-  }
-
-  private getDeals(): void {
-    this.dealsService.getDeals().subscribe(
-      (dealsList) => this.getDealsHandler(dealsList),
-      (error) => console.log(error)
-    );
-  }
-
-  private getDealsHandler(dealsList: Deal[]) {
-    this.deals = dealsList;
-    this.filteredDeals = this.filterDeals(this.deals);
-    this.filteredDeals = this.sortDeals(this.filteredDeals);
-  }
-
-  private sortDeals(deals: Deal[]): Deal[] {
-    return this.dealsSortingService.sortDeals(deals, this.sortingMethod);
-  }
-
-  private filterDeals(deals: Deal[]): Deal[] {
-    return this.dealsFilteringService.filterDeals(this.deals, this.filterString);
   }
 
   private initSubscribtion(): void {
-    // updateDeals subscribe
-    this.updateDealsListEvent = this.dealsService.getDealsListChangesEvent();
-    this.updateDealsListEventSubscribtion = this.updateDealsListEvent
-      .subscribe(() => this.getDeals());
-
-      // sorting subscrib
-    this.changingSortingMethodEvent = this.dealsSortingService
-      .getChangingDealsSortingMethodEvent();
-    this.changingStoringMethodSubscription =
-      this.changingSortingMethodEvent.subscribe(
-        (method) => {
-          this.sortingMethod = method;
-          this.filteredDeals = this.sortDeals(this.filteredDeals);
-        }
-      );
-    //  filtering subscribe
-    this.changingFilterEvent = this.dealsFilteringService.getChangingFilterEvent();
-    this.changingFilterSubscription = this.changingFilterEvent.subscribe(
-      filterString => {
-        this.filterString = filterString;
-        this.filteredDeals = this.filterDeals(this.deals);
-      }
-    );
+    this.filteredDeals$ = this.store.select(dealsSelector.getFilteredDeals);
+    this.deals$ = this.store.select(dealsSelector.getDeals);
   }
 }
 

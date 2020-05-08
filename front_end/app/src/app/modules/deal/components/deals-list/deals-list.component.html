@@ -1,6 +1,6 @@
 
 
-<div class="container" [ngSwitch]="viewMode">
+<div class="container" [ngSwitch]="viewMode$ | async">
     <!-- table-view -->
     <div class=list-view *ngSwitchCase="'list'">
         <app-deals-table
@@ -10,20 +10,20 @@
     </div>
 
     <!-- sorting menu -->
-    <div class="sorting-menu" *ngIf="viewMode === 'cards'">
+    <div class="sorting-menu" *ngSwitchCase="'cards'">
         <span class="main">Sort by:</span>
 
         <button class="sorting-button" 
         type="button"
-        [class.sort-up]="sortingMethod === 'DATE_UP'"
-        [class.sort-down]="sortingMethod === 'DATE_DOWN'"
+        [class.sort-up]="(sortingMethod$ | async)  === 'DATE_UP'"
+        [class.sort-down]="(sortingMethod$ | async) === 'DATE_DOWN'"
         (click)="changeSortingMethod('DATE')"
         >Date</button>
 
         <button class="sorting-button" 
         type="button"
-        [class.sort-up]="sortingMethod === 'PRICE_UP'"
-        [class.sort-down]="sortingMethod === 'PRICE_DOWN'"
+        [class.sort-up]="(sortingMethod$ | async) === 'PRICE_UP'"
+        [class.sort-down]="(sortingMethod$ | async) === 'PRICE_DOWN'"
         (click)="changeSortingMethod('PRICE')">Price</button>
     </div>
     <!-- cards-view -->

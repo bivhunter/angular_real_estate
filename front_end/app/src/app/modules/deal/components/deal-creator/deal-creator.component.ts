@@ -9,6 +9,9 @@ import { PopupService } from 'src/app/modules/shared/services/popup.service';
 import { tap } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as fromRoot from 'src/app/store/reducers/index';
+import * as dealsActions from 'src/app/store/actions/deals.action';
 
 @Component({
   selector: 'app-deal-creator',
@@ -33,7 +36,8 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
   constructor(
     private dealsService: DealsService,
     private popupService: PopupService,
-    private location: Location
+    private location: Location,
+    private store: Store<fromRoot.State>
   ) { }
 
   ngOnInit(): void {
@@ -108,19 +112,16 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
   }
 
   private addDeal(): void {
-    const newDeal = {
+    const deal = {
       ... new Deal(),
       price: this.selectedHome.price,
       homeId: this.selectedHome.id,
       clientId: this.selectedClient.id,
     };
 
-    this.dealsService.addDeal(newDeal).subscribe(
-      () => {
-        this.isSubmit = true;
-        this.navigateBack();
-      }
-    );
+    this.isSubmit = true;
+    this.store.dispatch(dealsActions.addDeal({deal}));
+    this.navigateBack();
   }
 
   private navigateBack(): void {

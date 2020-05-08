@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DealsViewService } from '../../services/deals-view.service';
-import { DealsFilteringService } from '../../services/deals-filtering.service';
+import { Store } from '@ngrx/store';
+
+import * as fromRoot from 'src/app/store/reducers/index';
+import * as dealsAction from 'src/app/store/actions/deals.action';
 
 @Component({
   selector: 'app-deals-control-panel',
@@ -14,25 +16,26 @@ export class DealsControlPanelComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private dealsViewService: DealsViewService,
-    private dealsFilteringService: DealsFilteringService
+    private store: Store<fromRoot.State>
   ) { }
 
   ngOnInit(): void {
   }
 
   onActivateCardView() {
-    this.dealsViewService.setViewMode('cards');
+    // this.dealsViewService.setViewMode('cards');
+    this.store.dispatch(dealsAction.setViewMode({viewMode: 'cards'}));
     this.isViewsMenu = false;
   }
 
   onActivateListView() {
-    this.dealsViewService.setViewMode('list');
+    // this.dealsViewService.setViewMode('list');
+    this.store.dispatch(dealsAction.setViewMode({viewMode: 'list'}));
     this.isViewsMenu = false;
   }
 
-  changeFilter(searchString: string): void {
-    this.dealsFilteringService.changeFilter(searchString);
+  changeFilter(searchingString: string): void {
+    this.store.dispatch(dealsAction.setSearchingString({searchingString}));
   }
 
   onAddButtonClick(): void {

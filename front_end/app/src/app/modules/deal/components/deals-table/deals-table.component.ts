@@ -1,39 +1,35 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Deal } from '../../model/deal';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TDealsSortingMethod, TDealsSortingField } from 'src/app/modules/shared/types/types';
 import { Router } from '@angular/router';
-import { DealsService } from 'src/app/modules/deal/services/deals.service';
-import { DealsSortingService } from '../../services/deals-sorting.service';
+
+import { Store } from '@ngrx/store';
+import * as fromDeals from 'src/app/store/reducers/deals.reducer';
+import * as dealsActions from 'src/app/store/actions/deals.action';
+import * as dealsSelectors from 'src/app/store/selectors/deals.selector';
 
 @Component({
   selector: 'app-deals-table',
   templateUrl: './deals-table.component.html',
   styleUrls: ['./deals-table.component.css']
 })
-export class DealsTableComponent implements OnInit, OnDestroy {
+export class DealsTableComponent implements OnInit {
 
   @Input() deals: Deal[];
 
-  private changingSortingMethodEvent: Observable<TDealsSortingMethod>;
-  private changingStoringMethodSubscription: Subscription;
-  sortingMethod: TDealsSortingMethod;
+  sortingMethod$: Observable<TDealsSortingMethod>;
 
   constructor(
     private router: Router,
-    private dealsService: DealsService,
-    private dealsSortingService: DealsSortingService
+    private store: Store<fromDeals.State>
   ) { }
 
   ngOnInit(): void {
     this.initSubscription();
   }
 
-  ngOnDestroy(): void {
-    this.changingStoringMethodSubscription.unsubscribe();
-  }
-
-  onHomeClick(id: string | number ): void {
+   onHomeClick(id: string | number ): void {
     this.router.navigateByUrl(`homes/details/${id}`);
   }
 
@@ -45,21 +41,16 @@ export class DealsTableComponent implements OnInit, OnDestroy {
   }
 
    // show deal details
-   onDealClick(id: string | number): void {
+  onDealClick(id: string | number): void {
     this.router.navigateByUrl(`deals/details/${id}`);
   }
 
   setSortingField(field: TDealsSortingField) {
-    this.dealsSortingService.selectDealsSortingMethod(field);
+    this.store.dispatch(dealsActions.setSortingField({sortingMethodField: field}));
   }
 
   private initSubscription(): void {
-    this.changingSortingMethodEvent = this.dealsSortingService
-      .getChangingDealsSortingMethodEvent();
-    this.changingStoringMethodSubscription =
-      this.changingSortingMethodEvent.subscribe(
-        (method) => this.sortingMethod = method
-      );
+    this.sortingMethod$ = this.store.select(dealsSelectors.getSortingMethod);
   }
 
 }

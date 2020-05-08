@@ -7,8 +7,8 @@
         <tr class="head-row">
             <td class="deal-cell">Deal</td>
             <td class="date-cell"
-                [class.sort-up]="sortingMethod === 'DATE_UP'"
-                [class.sort-down]="sortingMethod === 'DATE_DOWN'"
+                [class.sort-up]="(sortingMethod$ | async) === 'DATE_UP'"
+                [class.sort-down]="(sortingMethod$ | async) === 'DATE_DOWN'"
                 (click)="setSortingField('DATE')">Date
             </td>
             <td class="home-cell">Home
@@ -16,8 +16,8 @@
             </td>
             <td class="client-cell">Client</td>
             <td class="price-cell"
-                [class.sort-up]="sortingMethod === 'PRICE_UP'"
-                [class.sort-down]="sortingMethod === 'PRICE_DOWN'"
+                [class.sort-up]="(sortingMethod$ | async) === 'PRICE_UP'"
+                [class.sort-down]="(sortingMethod$ | async) === 'PRICE_DOWN'"
                 (click)="setSortingField('PRICE')">Price</td>
         </tr>
     </tbody>

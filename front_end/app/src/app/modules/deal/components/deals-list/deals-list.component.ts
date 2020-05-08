@@ -4,60 +4,41 @@ import { TViewMode, TDealsSortingMethod, TDealsSortingField } from 'src/app/modu
 import { Observable, Subscription } from 'rxjs';
 import { DealsViewService } from '../../services/deals-view.service';
 import { DealsSortingService } from '../../services/deals-sorting.service';
+import { Store, select } from '@ngrx/store';
+
+import * as fromRoot from 'src/app/store/reducers/index';
+import * as dealsSelectors from 'src/app/store/selectors/deals.selector';
+import * as dealsActions from 'src/app/store/actions/deals.action';
+
 
 @Component({
   selector: 'app-deals-list',
   templateUrl: './deals-list.component.html',
   styleUrls: ['./deals-list.component.css']
 })
-export class DealsListComponent implements OnInit, OnDestroy {
+export class DealsListComponent implements OnInit {
 
   @Input() deals: Deal[];
-  viewMode: TViewMode;
-  sortingMethod: TDealsSortingMethod;
 
-  private viewModeBehaviorSubject: Observable<TViewMode>;
-  private viewModeSubscribtion: Subscription;
-
-  private changingSortingMethodEvent: Observable<TDealsSortingMethod>;
-  private changingSortingMethodSubscription: Subscription;
+  viewMode$: Observable<TViewMode>;
+  sortingMethod$: Observable<TDealsSortingMethod>;
 
   constructor(
-    private dealsViewService: DealsViewService,
-    private dealsSortingService: DealsSortingService
+    private store: Store<fromRoot.State>
   ) { }
 
   ngOnInit(): void {
-    this.initSubscribtion();
-  }
-
-  ngOnDestroy() {
-    this.viewModeSubscribtion.unsubscribe();
-    this.changingSortingMethodSubscription.unsubscribe();
+    this.getFromStore();
   }
 
   // set new sorting method
   changeSortingMethod(field: TDealsSortingField): void {
-    this.dealsSortingService.selectDealsSortingMethod(field);
+    this.store.dispatch(dealsActions.setSortingField({sortingMethodField: field}));
   }
 
-  private initSubscribtion(): void {
-    // subscribe for changing view
-    this.viewModeSubscribtion = this.dealsViewService
-    .getViewModeBehaviorSubject()
-    .subscribe(
-      (viewMode) => {
-        this.viewMode = viewMode;
-      }
-    );
-
-    // subscribe for changing sorting method
-    this.changingSortingMethodSubscription = this.dealsSortingService
-      .getChangingDealsSortingMethodEvent()
-      .subscribe(
-        (method) => this.sortingMethod = method
-      );
-
+  private getFromStore(): void {
+    this.viewMode$ = this.store.select(dealsSelectors.getViewMode);
+    this.sortingMethod$ = this.store.select(dealsSelectors.getSortingMethod);
   }
 
 }

@@ -33,9 +33,9 @@ export class DealsDetailsComponent implements OnInit {
   }
 
   private getDeal(deal: Deal): void {
-        this.deal = deal;
-        this.client = deal.client;
-        this.home = deal.home;
+    this.deal = deal;
+    this.client = deal.client;
+    this.home = deal.home;
   }
 
 }

@@ -5,6 +5,8 @@ import { filter } from 'rxjs/operators';
 import { slideInAnimation } from './modules/shared/animation/animation';
 import { StatusMessageService } from './modules/shared/services/status-message.service';
 import { TMessage } from './modules/shared/types/types';
+import { InitDataService } from './modules/shared/services/init-data.service';
+
 
 @Component({
   selector: 'app-root',
@@ -24,10 +26,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private statusMessageService: StatusMessageService
+    private statusMessageService: StatusMessageService,
+    private initDataService: InitDataService
   ) {}
 
   ngOnInit(): void {
+    this.initData();
     this.doRememberMe();
     this.initSubscribtion();
   }
@@ -64,6 +68,10 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe(
         message => this.showMessage(message)
       );
+  }
+
+  private initData(): void {
+    this.initDataService.initData();
   }
 
   private showMessage(message: TMessage) {

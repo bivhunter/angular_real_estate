@@ -10,6 +10,8 @@ import { PopupQuestionComponent } from './components/popup-question/popup-questi
 import { ClientsListSelectorComponent } from './components/clients-list-selector/clients-list-selector.component';
 import { PopupDeactivateComponent } from 'src/app/modules/shared/components/popup-deactivate/popup-deactivate.component';
 import { MaxDateValidatorDirective } from './directives/max-date-validator.directive';
+import { EffectsModule } from '@ngrx/effects';
+import { DealsEffects } from 'src/app/store/effects/deals.effects';
 
 registerLocaleData(localeFr);
 
@@ -35,7 +37,7 @@ registerLocaleData(localeFr);
     ClientsListSelectorComponent,
     PopupQuestionComponent,
     PopupDeactivateComponent,
-    MaxDateValidatorDirective
+    MaxDateValidatorDirective,
   ],
   providers: [
   ]
