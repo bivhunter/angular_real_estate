@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
-import { ClientService } from '../../services/clients.service';
+import { Store } from '@ngrx/store';
+import * as clientsActions from 'src/app/store/actions/clients.action';
 
 @Component({
   selector: 'app-client-card',
@@ -20,16 +21,15 @@ export class ClientCardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private clientService: ClientService
+    private store: Store
   ) { }
 
   ngOnInit(): void {
   }
 
   deleteClient(id: string | number): void {
-    this.clientService.deleteClient(id).subscribe(
-      () => this.isPopupDeleting = false
-    );
+    this.store.dispatch(clientsActions.deleteClient({id}));
+    this.isPopupDeleting = false;
   }
 
   openBoughtHomes(): void {

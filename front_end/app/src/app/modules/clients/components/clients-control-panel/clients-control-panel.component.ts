@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ClientsViewService } from './../../services/clients-view.service';
-import { ClientsFilteringService } from '../../services/clients-filtering.service';
+import { Store } from '@ngrx/store';
+import * as clientsActions from 'src/app/store/actions/clients.action';
+
 
 @Component({
   selector: 'app-clients-control-panel',
@@ -14,25 +15,24 @@ export class ClientsControlPanelComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private clientsViewService: ClientsViewService,
-    private clientsFilteringService: ClientsFilteringService
+    private store: Store
   ) { }
 
   ngOnInit(): void {
   }
 
   onActivateCardView() {
-    this.clientsViewService.setViewMode('cards');
+    this.store.dispatch(clientsActions.setViewMode({viewMode: 'cards'}));
     this.isViewsMenu = false;
   }
 
   onActivateListView() {
-    this.clientsViewService.setViewMode('list');
+    this.store.dispatch(clientsActions.setViewMode({viewMode: 'list'}));
     this.isViewsMenu = false;
   }
 
-  changeFilter(searchString: string): void {
-    this.clientsFilteringService.changeFilter(searchString);
+  changeFilter(searchingString: string): void {
+    this.store.dispatch(clientsActions.setSearchingString({searchingString}));
   }
 
   onAddButtonClick(): void {

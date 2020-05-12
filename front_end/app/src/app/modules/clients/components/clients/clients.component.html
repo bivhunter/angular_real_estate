@@ -5,7 +5,7 @@
     </div>
 
     <!-- info and button when clients are missed-->
-    <div class="no-clients" *ngIf="!clients.length">
+    <div class="no-clients" *ngIf="(clients$ | async) && !(clients$ | async).length">
         <h1>No Clients</h1>
         <button 
         class=add-button
@@ -13,9 +13,9 @@
         </button>
     </div>
 
-    <div class="content-wrapper" *ngIf="clients.length">
+    <div class="content-wrapper" *ngIf="(clients$ | async) && (clients$ | async).length">
         <app-clients-list 
-        [clients]="filteredClients"
+        [clients]="filteredClients$ | async"
         ></app-clients-list>
     </div>
 </div>

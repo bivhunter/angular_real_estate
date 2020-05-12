@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logOut(): void {
-      this.authorizationService.logOut();
+    this.authorizationService.logOut();
   }
 
   private initSubscribtion(): void {

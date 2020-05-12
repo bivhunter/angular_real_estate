@@ -1,6 +1,7 @@
 import { Deal } from 'src/app/modules/deal/model/deal';
-import { TDealsSortingMethod, TDealsSortingField, THomesSortingField, THomesSortingMethod } from 'src/app/modules/shared/types/types';
+import { TDealsSortingMethod, TDealsSortingField, THomesSortingField, THomesSortingMethod, TClientsSortingField, TClientsSortingMethod } from 'src/app/modules/shared/types/types';
 import { Home } from 'src/app/modules/homes/model/home';
+import { Client } from 'src/app/modules/clients/model/client';
 
 export function sortDeals(deals: Deal[], method: TDealsSortingMethod): Deal[] {
     if (!deals.length) {
@@ -178,3 +179,71 @@ function createHomesSortFunc(): THomeSortFunction {
   };
 }
 
+
+// ======================================================
+// ================= clients sorting ======================
+
+export function selectClientsSortingMethod(sortingMethod: TClientsSortingMethod, field: TClientsSortingField): TClientsSortingMethod {
+  let newSortingMethod: TClientsSortingMethod;
+  if (sortingMethod === `${field}_UP`) {
+    newSortingMethod = `${field}_DOWN` as TClientsSortingMethod;
+  } else {
+    newSortingMethod = `${field}_UP` as TClientsSortingMethod;
+  }
+  return newSortingMethod;
+}
+
+export function sortClients(clients: Client[], method: TClientsSortingMethod): Client[] {
+  if (!clients.length) {
+    return [];
+  }
+  return createClientSortFunc()[method](clients);
+}
+
+// functions for compare one field of two clients
+function compareName(clientA: Client, clientB: Client): number {
+  return clientA.name.localeCompare(clientB.name);
+}
+
+function compareSurname(clientA: Client, clientB: Client): number {
+  return clientA.surname.localeCompare(clientB.surname);
+}
+
+// compare two clients using array of compare functions
+function compareClients(clientA: Client, clientB: Client, ...funcArray: ((a: any, b: any) => number)[]): number {
+  if (!funcArray.length) {
+    return;
+  }
+  let count = 0;
+  let compare = funcArray[count](clientA, clientB);
+  while (!compare && funcArray[count + 1] ) {
+    compare = funcArray[++ count](clientA, clientB);
+  }
+  return compare;
+}
+
+type TClientSortingFunction = {
+  [key in TClientsSortingMethod]: (client: Client[]) => Client[];
+};
+
+// create object of functions with fields as methods of sorting
+function createClientSortFunc(): TClientSortingFunction {
+  return {
+    NAME_UP: (clients: Client[]) => {
+      return [...clients].sort( (clientA, clientB) => {
+        return compareClients(clientA, clientB, compareName, compareSurname);
+      });
+    },
+    NAME_DOWN: (clients: Client[]) => {
+      return createClientSortFunc().NAME_UP(clients).reverse();
+    },
+    SURNAME_UP: (clients: Client[]) => {
+      return [...clients].sort( (clientA, clientB) => {
+        return compareClients(clientA, clientB, compareSurname, compareName);
+      });
+    },
+    SURNAME_DOWN: (clients: Client[]) => {
+      return createClientSortFunc().SURNAME_UP(clients).reverse();
+    }
+  };
+}

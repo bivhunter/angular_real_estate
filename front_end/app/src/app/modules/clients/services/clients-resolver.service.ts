@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Resolve } from '@angular/router';
 import { Client } from '../model/client';
 import { Observable } from 'rxjs';
-import { ClientService } from './clients.service';
-import { delay } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import * as clientsSelector from 'src/app/store/selectors/clients.selector';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,10 @@ import { delay } from 'rxjs/operators';
 export class ClientsResolverService implements Resolve<Client[]> {
 
   constructor(
-    private clientService: ClientService
+    private store: Store
   ) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Client[]> {
-    return this.clientService.getClients().pipe();
+  resolve(): Observable<Client[]> {
+    return this.store.select(clientsSelector.getClients).pipe(take(1));
   }
 }

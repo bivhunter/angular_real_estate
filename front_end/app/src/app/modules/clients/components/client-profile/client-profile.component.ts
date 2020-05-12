@@ -8,6 +8,8 @@ import { PopupService } from './../../../shared/services/popup.service';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import * as clientsActions from 'src/app/store/actions/clients.action';
 
 @Component({
   selector: 'app-client-profile',
@@ -37,6 +39,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     private popupService: PopupService,
     private clientService: ClientService,
     private clientsFilteringService: ClientsFilteringService,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
@@ -124,23 +127,15 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   private updateClient(): void {
-    this.clientService.updateClient(this.client).subscribe(
-      () => {
-        this.isSubmit = true;
-        this.navigateBack();
-      },
-      (error) => console.log(error)
-    );
+    this.store.dispatch(clientsActions.updateClient({client: this.client}));
+    this.isSubmit = true;
+    this.navigateBack();
   }
 
   private addClient(): void {
-    this.clientService.addClient(this.client).subscribe(
-      () => {
-        this.isSubmit = true;
-        this.navigateBack();
-      },
-      (error) => console.log(error)
-    );
+    this.store.dispatch(clientsActions.addClient({client: this.client}));
+    this.isSubmit = true;
+    this.navigateBack();
   }
 
   private navigateBack(): void {

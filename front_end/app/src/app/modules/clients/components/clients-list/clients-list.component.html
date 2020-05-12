@@ -1,5 +1,5 @@
 
-<div class="container" [ngSwitch]="viewMode">
+<div class="container" [ngSwitch]="viewMode$ | async">
     <div class=list-view *ngSwitchCase="'list'">
         <app-clients-table
             [clients]="clients">
@@ -7,20 +7,20 @@
     </div>
 
     <!-- sorting panel -->
-    <div  class="sorting-menu" *ngIf="viewMode === 'cards'">
+    <div  class="sorting-menu" *ngSwitchCase="'cards'">
         <span class="main">Sort by:</span>
         
         <button class="sorting-button" 
         type="button"
-        [class.sort-up]="sortingMethod === 'SURNAME_UP'"
-        [class.sort-down]="sortingMethod === 'SURNAME_DOWN'"
+        [class.sort-up]="(sortingMethod$ | async) === 'SURNAME_UP'"
+        [class.sort-down]="(sortingMethod$ | async) === 'SURNAME_DOWN'"
         (click)="changeSortingMethod('SURNAME')"
         >Surname</button>
     
         <button class="sorting-button" 
         type="button"
-        [class.sort-up]="sortingMethod === 'NAME_UP'"
-        [class.sort-down]="sortingMethod === 'NAME_DOWN'"
+        [class.sort-up]="(sortingMethod$ | async) === 'NAME_UP'"
+        [class.sort-down]="(sortingMethod$ | async) === 'NAME_DOWN'"
         (click)="changeSortingMethod('NAME')"
         >Name</button>
     </div>

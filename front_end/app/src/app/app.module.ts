@@ -19,6 +19,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { DealsEffects } from './store/effects/deals.effects';
 import { HomesEffects } from './store/effects/homes.effects';
+import { ClientsEffects } from './store/effects/clients.effects';
+import { UserEffects } from './store/effects/user.effects';
 
 
 
@@ -40,7 +42,7 @@ import { HomesEffects } from './store/effects/homes.effects';
       metaReducers
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([DealsEffects, HomesEffects]),
+    EffectsModule.forRoot([DealsEffects, HomesEffects, ClientsEffects, UserEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [

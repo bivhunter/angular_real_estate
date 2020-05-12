@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { StatusMessageService } from '../../shared/services/status-message.service';
+import { Store } from '@ngrx/store';
+import * as appActions from 'src/app/store/actions/app.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class AuthorizationService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private statusMessageService: StatusMessageService
+    private statusMessageService: StatusMessageService,
+    private store: Store
   ) { }
 
 
@@ -31,6 +34,7 @@ export class AuthorizationService {
 
   private async redirectToLogin(): Promise<boolean> {
     return await this.router.navigate(['authorization/login']).then(() => {
+      this.store.dispatch(appActions.clearStore());
       localStorage.removeItem('authToken');
       return true;
     });

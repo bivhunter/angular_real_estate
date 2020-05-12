@@ -1,17 +1,18 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TClientsSortingMethod, TClientsSortingField } from 'src/app/modules/shared/types/types';
-import { ClientsSortingService } from './../../services/clients-sorting.service';
 import { Router } from '@angular/router';
-import { ClientService } from '../../services/clients.service';
+import { Store } from '@ngrx/store';
+import * as clientsSelector from 'src/app/store/selectors/clients.selector';
+import * as clientsActions from 'src/app/store/actions/clients.action';
 
 @Component({
   selector: 'app-clients-table',
   templateUrl: './clients-table.component.html',
   styleUrls: ['./clients-table.component.css']
 })
-export class ClientsTableComponent implements OnInit, OnDestroy {
+export class ClientsTableComponent implements OnInit {
 
   isPopumMenu = false;
 
@@ -23,24 +24,15 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
   isAddingHomesView: boolean;
   isBoughtHomesView: boolean;
 
-  sortingMethod: TClientsSortingMethod;
-
-  private changingSortingMethodEvent: Observable<TClientsSortingMethod>;
-  private changingSortingMethodSubscription: Subscription;
-
+  sortingMethod$: Observable<TClientsSortingMethod>;
 
   constructor(
-    private clientsSortingService: ClientsSortingService,
-    private clientsService: ClientService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
-    this.initSubscribtions();
-  }
-
-  ngOnDestroy(): void {
-    this.changingSortingMethodSubscription.unsubscribe();
+    this.getFromStore();
   }
 
   onDeleteButton(client: Client): void {
@@ -49,9 +41,8 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
   }
 
   deleteClient(id: number | string): void {
-    this.clientsService.deleteClient(id).subscribe(
-      () => this.isPopumMenu = false
-    );
+    this.store.dispatch(clientsActions.deleteClient({id}));
+    this.isPopumMenu = false;
   }
 
   openBoughtHomes(client: Client): void {
@@ -79,16 +70,12 @@ export class ClientsTableComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`clients/profile/${id}`);
   }
 
-  setSortingField(field: TClientsSortingField): void {
-    this.clientsSortingService.selectClientsSortingMethod(field);
+  setSortingField(sortingMethodField: TClientsSortingField): void {
+    this.store.dispatch(clientsActions.setSortingField({sortingMethodField}));
   }
 
-  private initSubscribtions(): void {
-    // listen soting mode
-    this.changingSortingMethodEvent = this.clientsSortingService.getChangingSortingMethodEvent();
-    this.changingSortingMethodSubscription = this.changingSortingMethodEvent.subscribe(
-      (sortMethod) => this.sortingMethod = sortMethod
-    );
+  private getFromStore(): void {
+    this.sortingMethod$ = this.store.select(clientsSelector.getSortingMethod);
   }
 
 }

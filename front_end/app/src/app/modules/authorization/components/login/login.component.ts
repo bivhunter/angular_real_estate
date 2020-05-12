@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../user/services/user.service';
 import { User } from '../../../user/model/user';
+import { InitDataService } from './../../../shared/services/init-data.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   isCheckedRememberMe = true;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private initDataService: InitDataService
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +33,9 @@ export class LoginComponent implements OnInit {
     }
 
     this.userService.authorizeUser(this.user).subscribe(
-      () => { },
+      () => {
+        this.initDataService.initData();
+      },
       (error) => this.onSubmitError(error)
     );
   }

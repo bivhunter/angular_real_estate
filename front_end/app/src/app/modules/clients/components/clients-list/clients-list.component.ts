@@ -1,64 +1,46 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
 import { TViewMode, TClientsSortingMethod, TClientsSortingField } from 'src/app/modules/shared/types/types';
-import { Observable, Subscription } from 'rxjs';
-import { ClientsViewService } from '../../services/clients-view.service';
-import { ClientsSortingService } from './../../services/clients-sorting.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as clientsSelector from 'src/app/store/selectors/clients.selector';
+import * as clientsActions from 'src/app/store/actions/clients.action';
+
 
 @Component({
   selector: 'app-clients-list',
   templateUrl: './clients-list.component.html',
   styleUrls: ['./clients-list.component.css']
 })
-export class ClientsListComponent implements OnInit, OnDestroy {
+export class ClientsListComponent implements OnInit {
 
   @Input() clients: Client[];
 
-  viewMode: TViewMode;
-  private changingViewModeEvent: Observable<TViewMode>;
-  private changingViewSubscription: Subscription;
-
-  sortingMethod: TClientsSortingMethod;
-  private changingSortingMethodEvent: Observable<TClientsSortingMethod>;
-  private changingSortingMethodSubscription: Subscription;
+  viewMode$: Observable<TViewMode>;
+  sortingMethod$: Observable<TClientsSortingMethod>;
 
   constructor(
     private router: Router,
-    private clientsViewService: ClientsViewService,
-    private clientsSortingService: ClientsSortingService
+    private store: Store
   ) { }
 
   ngOnInit(): void {
-    this.initSubscribptions();
-  }
-
-  ngOnDestroy(): void {
-    this.changingViewSubscription.unsubscribe();
-    this.changingSortingMethodSubscription.unsubscribe();
+    this.getFromStore();
   }
 
   // set new sorting method
-  changeSortingMethod(field: TClientsSortingField): void {
-    this.clientsSortingService.selectClientsSortingMethod(field);
+  changeSortingMethod(sortingMethodField: TClientsSortingField): void {
+    this.store.dispatch(clientsActions.setSortingField({sortingMethodField}));
   }
 
   onClientProfileEvent(id: number | string): void {
     this.router.navigateByUrl('clients/profile/' + id);
   }
 
-  private initSubscribptions(): void {
-    // viewMode subscribe
-    this.changingViewModeEvent = this.clientsViewService.getViewModeBehaviorSubject();
-    this.changingViewSubscription = this.changingViewModeEvent.subscribe(
-      (viewMode) => this.viewMode = viewMode
-    );
-
-    // sortingMethod subscribe
-    this.changingSortingMethodEvent = this.clientsSortingService.getChangingSortingMethodEvent();
-    this.changingSortingMethodSubscription = this.changingSortingMethodEvent.subscribe(
-      (method) => this.sortingMethod = method
-    );
+  private getFromStore(): void {
+    this.viewMode$ = this.store.select(clientsSelector.getViewMode);
+    this.sortingMethod$ = this.store.select(clientsSelector.getSortingMethod);
   }
 
 }

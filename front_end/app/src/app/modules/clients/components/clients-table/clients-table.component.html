@@ -5,13 +5,13 @@
             <tr class="head-row">
                 <td class="img-cell">Client</td>
                 <td class="surname-cell"
-                    [class.sort-up]="sortingMethod === 'SURNAME_UP'"
-                    [class.sort-down]="sortingMethod === 'SURNAME_DOWN'"
+                    [class.sort-up]="(sortingMethod$ | async) === 'SURNAME_UP'"
+                    [class.sort-down]="(sortingMethod$ | async) === 'SURNAME_DOWN'"
                     (click)="setSortingField('SURNAME')">Surname
                 </td>
                 <td class="name-cell"
-                    [class.sort-up]="sortingMethod === 'NAME_UP'"
-                    [class.sort-down]="sortingMethod === 'NAME_DOWN'"
+                    [class.sort-up]="(sortingMethod$ | async) === 'NAME_UP'"
+                    [class.sort-down]="(sortingMethod$ | async) === 'NAME_DOWN'"
                     (click)="setSortingField('NAME')">Name
                     
                 </td>
