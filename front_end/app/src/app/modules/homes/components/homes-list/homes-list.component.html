@@ -1,7 +1,7 @@
 
 
 
-<div class="container" [ngSwitch]="viewMode">
+<div class="container" [ngSwitch]="viewMode$ | async">
     <!-- table-view -->
     <div class=list-view *ngSwitchCase="'list'">
         <app-homes-table
@@ -10,40 +10,40 @@
     </div>
 
     <!-- sorting menu -->
-    <div class="sorting-menu" *ngIf="viewMode === 'cards'">
+    <div class="sorting-menu" *ngSwitchCase="'cards'">
         <span class="main">Sort by:</span>
 
         <button class="sorting-button" 
         type="button"
-        [class.sort-up]="sortingMethod === 'HOME_UP'"
-        [class.sort-down]="sortingMethod === 'HOME_DOWN'"
+        [class.sort-up]="(sortingMethod$ | async) === 'HOME_UP'"
+        [class.sort-down]="(sortingMethod$ | async) === 'HOME_DOWN'"
         (click)="changeSortingMethod('HOME')"
         >Home</button>
 
         <button class="sorting-button" 
         type="button"
-        [class.sort-up]="sortingMethod === 'STREET_UP'"
-        [class.sort-down]="sortingMethod === 'STREET_DOWN'"
+        [class.sort-up]="(sortingMethod$ | async) === 'STREET_UP'"
+        [class.sort-down]="(sortingMethod$ | async) === 'STREET_DOWN'"
         (click)="changeSortingMethod('STREET')"
         >Street</button>
         
         <button class="sorting-button" 
         type="button"
-        [class.sort-up]="sortingMethod === 'CITY_UP'"
-        [class.sort-down]="sortingMethod === 'CITY_DOWN'"
+        [class.sort-up]="(sortingMethod$ | async) === 'CITY_UP'"
+        [class.sort-down]="(sortingMethod$ | async) === 'CITY_DOWN'"
         (click)="changeSortingMethod('CITY')">City</button>
 
         <button 
         class="sorting-button" 
         type="button"
-        [class.sort-up]="sortingMethod === 'STATE_UP'"
-        [class.sort-down]="sortingMethod === 'STATE_DOWN'"
+        [class.sort-up]="(sortingMethod$ | async) === 'STATE_UP'"
+        [class.sort-down]="(sortingMethod$ | async) === 'STATE_DOWN'"
         (click)="changeSortingMethod('STATE')">State</button>
 
         <button class="sorting-button" 
         type="button"
-        [class.sort-up]="sortingMethod === 'PRICE_UP'"
-        [class.sort-down]="sortingMethod === 'PRICE_DOWN'"
+        [class.sort-up]="(sortingMethod$ | async) === 'PRICE_UP'"
+        [class.sort-down]="(sortingMethod$ | async) === 'PRICE_DOWN'"
         (click)="changeSortingMethod('PRICE')">Price</button>
     </div>
 

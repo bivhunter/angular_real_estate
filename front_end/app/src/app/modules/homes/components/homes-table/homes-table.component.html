@@ -11,27 +11,27 @@
         <tr class="head-row">
             <td class="img-cell">Home</td>
             <td class="home-cell"
-                [class.sort-up]="sortingMethod === 'HOME_UP'"
-                [class.sort-down]="sortingMethod === 'HOME_DOWN'"
+                [class.sort-up]="(sortingMethod$ | async) === 'HOME_UP'"
+                [class.sort-down]="(sortingMethod$ | async) === 'HOME_DOWN'"
                 (click)="setSortingField('HOME')">№
             </td>
             <td class="street-cell"
-                [class.sort-up]="sortingMethod === 'STREET_UP'"
-                [class.sort-down]="sortingMethod === 'STREET_DOWN'"
+                [class.sort-up]="(sortingMethod$ | async) === 'STREET_UP'"
+                [class.sort-down]="(sortingMethod$ | async) === 'STREET_DOWN'"
                 (click)="setSortingField('STREET')">Street
                 
             </td>
             <td class="city-cell"
-                [class.sort-up]="sortingMethod === 'CITY_UP'"
-                [class.sort-down]="sortingMethod === 'CITY_DOWN'"
+                [class.sort-up]="(sortingMethod$ | async) === 'CITY_UP'"
+                [class.sort-down]="(sortingMethod$ | async) === 'CITY_DOWN'"
                 (click)="setSortingField('CITY')">City</td>
             <td class="state-cell"
-                [class.sort-up]="sortingMethod === 'STATE_UP'"
-                [class.sort-down]="sortingMethod === 'STATE_DOWN'"
+                [class.sort-up]="(sortingMethod$ | async) === 'STATE_UP'"
+                [class.sort-down]="(sortingMethod$ | async) === 'STATE_DOWN'"
                 (click)="setSortingField('STATE')">State</td>
             <td class="price-cell"
-                [class.sort-up]="sortingMethod === 'PRICE_UP'"
-                [class.sort-down]="sortingMethod === 'PRICE_DOWN'"
+                [class.sort-up]="(sortingMethod$ | async) === 'PRICE_UP'"
+                [class.sort-down]="(sortingMethod$ | async) === 'PRICE_DOWN'"
                 (click)="setSortingField('PRICE')">Price</td>
             <td class="details-cell">Actions</td>
             <td class="delete-cell"></td>

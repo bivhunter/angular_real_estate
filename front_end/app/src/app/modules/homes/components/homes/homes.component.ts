@@ -1,104 +1,34 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Home } from '../../model/home';
-import { HomesService } from '../../services/homes.service';
-import { Observable, Subscription } from 'rxjs';
-import { THomesSortingMethod } from 'src/app/modules/shared/types/types';
-import { HomesSortService } from '../../services/homes-sort.service';
-import { HomesFilterService } from '../../services/homes-filter.service';
+import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+
+import * as homesSelector from 'src/app/store/selectors/homes.selector';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-homes',
   templateUrl: './homes.component.html',
   styleUrls: ['./homes.component.css']
 })
-export class HomesComponent implements OnInit, OnDestroy {
+export class HomesComponent implements OnInit {
 
 
-  homes: Home[] = [];
-  filteredHomes: Home[] = [];
-  isDataReady = false;
-
-
-  // observable and subscription for homesUpdate
-  private updateHomesListEvent: Observable<any>;
-  private updateHomesListEventSubscribtion: Subscription;
-
-  // observable and subscription for sorting
-  private changingSortingMethodEvent: Observable<THomesSortingMethod>;
-  private changingStoringMethodSubscription: Subscription;
-  sortingMethod: THomesSortingMethod;
-
-  // observable and subscription for filtering
-  private changingFilterEvent: Observable<string>;
-  private changingFilterSubscription: Subscription;
-  private filterString = '';
+  homes$: Observable<Home[]>;
+  filteredHomes$: Observable<Home[]>;
 
   constructor(
-    private homesService: HomesService,
-    private homesSortService: HomesSortService,
-    private homesFilterService: HomesFilterService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
-    this.initSubscribtion();
-    this.route.data.subscribe(
-      data => this.getHomesHandler(data.homes)
-    )
+    this.getFromStore();
   }
 
-  ngOnDestroy(): void {
-    this.updateHomesListEventSubscribtion.unsubscribe();
-    this.changingStoringMethodSubscription.unsubscribe();
-    this.changingFilterSubscription.unsubscribe();
-  }
-
-  private getHomes(): void {
-    this.homesService.getHomes().subscribe(
-      (homesList) => this.getHomesHandler(homesList),
-      (error) => console.log(error)
-    );
-  }
-
-  private getHomesHandler(homesList: Home[]) {
-    this.homes = homesList;
-    this.isDataReady = true;
-    this.filteredHomes = this.filterHomes(this.homes);
-    this.filteredHomes = this.sortHomes(this.filteredHomes);
-  }
-
-  private sortHomes(homes: Home[]): Home[] {
-    return this.homesSortService.sortHomes(homes, this.sortingMethod);
-  }
-
-  private filterHomes(homes: Home[]): Home[] {
-    return this.homesFilterService.filterHomes(this.homes, this.filterString);
-  }
-
-  private initSubscribtion(): void {
-    // updateHomes subscribe
-    this.updateHomesListEvent = this.homesService.getHomesListChangesEvent();
-    this.updateHomesListEventSubscribtion = this.updateHomesListEvent
-      .subscribe(() => this.getHomes());
-
-      // sorting subscrib
-    this.changingSortingMethodEvent = this.homesSortService
-      .getChangingHomesSortingMethodEvent();
-    this.changingStoringMethodSubscription =
-      this.changingSortingMethodEvent.subscribe(
-        (method) => {
-          this.sortingMethod = method;
-          this.filteredHomes = this.sortHomes(this.filteredHomes);
-        }
-      );
-    //  filtering subscribe
-    this.changingFilterEvent = this.homesFilterService.getChangingFilterEvent();
-    this.changingFilterSubscription = this.changingFilterEvent.subscribe(
-      filterString => {
-        this.filterString = filterString;
-        this.filteredHomes = this.filterHomes(this.homes);
-      }
-    );
+  private getFromStore(): void {
+    this.homes$ = this.store.select(homesSelector.getHomes);
+    this.filteredHomes$ = this.store.select(homesSelector.getFilteredHomes);
   }
 }

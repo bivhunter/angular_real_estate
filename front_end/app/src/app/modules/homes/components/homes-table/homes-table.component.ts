@@ -1,17 +1,18 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Home } from '../../model/home';
 import { Router } from '@angular/router';
-import { HomesService } from '../../services/homes.service';
-import { HomesSortService } from '../../services/homes-sort.service';
 import { THomesSortingField, THomesSortingMethod } from 'src/app/modules/shared/types/types';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import * as homesSelector from 'src/app/store/selectors/homes.selector';
+import * as homesActions from 'src/app/store/actions/homes.action';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-homes-table',
   templateUrl: './homes-table.component.html',
   styleUrls: ['./homes-table.component.css']
 })
-export class HomesTableComponent implements OnInit, OnDestroy {
+export class HomesTableComponent implements OnInit {
 
   homeForDelete: Home;
   currentHome: Home;
@@ -22,31 +23,19 @@ export class HomesTableComponent implements OnInit, OnDestroy {
   @Input() homes: Home[];
 
   // for sorting
-  private changingSortingMethodEvent: Observable<THomesSortingMethod>;
-  private changingStoringMethodSubscription: Subscription;
-  sortingMethod: THomesSortingMethod;
+  sortingMethod$: Observable<THomesSortingMethod>;
 
   constructor(
     private router: Router,
-    private homesService: HomesService,
-    private homesSortService: HomesSortService
+    private store: Store
   ) { }
 
   ngOnInit(): void {
-    this.initSubscription();
+    this.getFromStore();
   }
 
-  ngOnDestroy(): void {
-    this.changingStoringMethodSubscription.unsubscribe();
-  }
-
-  setSortingField(field: THomesSortingField) {
-    this.homesSortService.selectHomesSortingMethod(field);
-  }
-
-
-  onClientClick(id: string | number ): void {
-    this.router.navigateByUrl(`clients/profile/${id}`);
+  setSortingField(sortingMethodField: THomesSortingField) {
+    this.store.dispatch(homesActions.setSortingField({sortingMethodField}));
   }
 
   // show home details
@@ -61,9 +50,8 @@ export class HomesTableComponent implements OnInit, OnDestroy {
   }
 
   deleteHome(id: string | number): void {
-    this.homesService.deleteHome(id).subscribe(
-      () => this.isPopup = false
-    );
+    this.store.dispatch(homesActions.deleteHome({id}));
+    this.isPopup = false;
   }
 
   onAddClient(home: Home): void {
@@ -78,13 +66,8 @@ export class HomesTableComponent implements OnInit, OnDestroy {
     this.isPopupListClients = true;
   }
 
-  private initSubscription(): void {
-    this.changingSortingMethodEvent = this.homesSortService
-      .getChangingHomesSortingMethodEvent();
-    this.changingStoringMethodSubscription =
-      this.changingSortingMethodEvent.subscribe(
-        (method) => this.sortingMethod = method
-      );
+  private getFromStore(): void {
+    this.sortingMethod$ = this.store.select(homesSelector.getSortingMethod);
   }
 
 }

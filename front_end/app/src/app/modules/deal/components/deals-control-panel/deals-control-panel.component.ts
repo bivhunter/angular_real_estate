@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import * as fromRoot from 'src/app/store/reducers/index';
 import * as dealsAction from 'src/app/store/actions/deals.action';
 
 @Component({
@@ -16,7 +15,7 @@ export class DealsControlPanelComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: Store<fromRoot.State>
+    private store: Store
   ) { }
 
   ngOnInit(): void {

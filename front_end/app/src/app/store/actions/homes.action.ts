@@ -7,11 +7,6 @@ export const loadHomes = createAction(
     '[Homes] Load Homes'
 );
 
-export const loadHome = createAction(
-    '[Homes] Load Home',
-    props<{id: string | number}>()
-);
-
 export const addHome = createAction(
     '[Homes] Add Home',
     props<{home: Home}>()

@@ -5,7 +5,7 @@ import { filterHomes } from '../functions/filtered-functions';
 import { Home } from 'src/app/modules/homes/model/home';
 
 
-export const getHomesState = createFeatureSelector<fromHomes.State>('homeState');
+export const getHomesState = createFeatureSelector<fromHomes.State>('homesState');
 
 
 export const getViewMode = createSelector(
@@ -27,8 +27,6 @@ export const getSearchingString = createSelector(
     getHomesState,
     fromHomes.getSearchingString
 );
-
-
 
 export const getSortedHomes = createSelector(
     getHomes,

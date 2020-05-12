@@ -5,7 +5,6 @@ import { TDealsSortingMethod, TDealsSortingField } from 'src/app/modules/shared/
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import * as fromDeals from 'src/app/store/reducers/deals.reducer';
 import * as dealsActions from 'src/app/store/actions/deals.action';
 import * as dealsSelectors from 'src/app/store/selectors/deals.selector';
 
@@ -22,7 +21,7 @@ export class DealsTableComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: Store<fromDeals.State>
+    private store: Store
   ) { }
 
   ngOnInit(): void {

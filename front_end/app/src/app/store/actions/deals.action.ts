@@ -7,11 +7,6 @@ export const loadDeals = createAction(
     '[Deals] Load Deals'
 );
 
-export const loadDeal = createAction(
-    '[Deals] Load Deal',
-    props<{id: string | number}>()
-);
-
 export const addDeal = createAction(
     '[Deals] Add Deal',
     props<{deal: Deal}>()

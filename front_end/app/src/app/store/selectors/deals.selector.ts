@@ -1,11 +1,12 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromDeals from 'src/app/store/reducers/deals.reducer';
+import * as fromRoot from 'src/app/store/reducers/index';
 import { Deal } from 'src/app/modules/deal/model/deal';
 import { sortDeals } from '../functions/sorting-functions';
 import { filterDeals } from './../functions/filtered-functions';
 
 
-export const getDealsState = createFeatureSelector<fromDeals.State>('dealState');
+export const getDealsState = createFeatureSelector<fromRoot.State, fromDeals.State>('dealsState');
 
 
 export const getViewMode = createSelector(
@@ -27,8 +28,6 @@ export const getSearchingString = createSelector(
     getDealsState,
     fromDeals.getSearchingString
 );
-
-
 
 export const getSortedDeals = createSelector(
     getDeals,

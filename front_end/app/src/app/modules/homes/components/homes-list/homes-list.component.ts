@@ -1,63 +1,38 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Home } from '../../model/home';
-import { HomesViewService } from '../../services/homes-view.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TViewMode, THomesSortingMethod, THomesSortingField } from 'src/app/modules/shared/types/types';
-import { HomesSortService } from '../../services/homes-sort.service';
+import * as homesSelector from 'src/app/store/selectors/homes.selector';
+import * as homesActions from 'src/app/store/actions/homes.action';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-homes-list',
   templateUrl: './homes-list.component.html',
   styleUrls: ['./homes-list.component.css']
 })
-export class HomesListComponent implements OnInit, OnDestroy {
+export class HomesListComponent implements OnInit {
 
   @Input() homes: Home[];
-  viewMode: TViewMode;
-  sortingMethod: THomesSortingMethod;
-
-  private viewModeBehaviorSubject: Observable<TViewMode>;
-  private viewModeSubscribtion: Subscription;
-
-  private changingSortingMethodEvent: Observable<THomesSortingMethod>;
-  private changingSortingMethodSubscription: Subscription;
+  viewMode$: Observable<TViewMode>;
+  sortingMethod$: Observable<THomesSortingMethod>;
 
   constructor(
-    private homesViewService: HomesViewService,
-    private homesSortService: HomesSortService
+    private store: Store
   ) { }
 
   ngOnInit(): void {
     this.initSubscribtion();
   }
 
-  ngOnDestroy() {
-    this.viewModeSubscribtion.unsubscribe();
-    this.changingSortingMethodSubscription.unsubscribe();
-  }
-
   // set new sorting method
-  changeSortingMethod(field: THomesSortingField): void {
-    this.homesSortService.selectHomesSortingMethod(field);
+  changeSortingMethod(sortingMethodField: THomesSortingField): void {
+    this.store.dispatch(homesActions.setSortingField({sortingMethodField}));
   }
 
   private initSubscribtion(): void {
-    // subscribe for changing view
-    this.viewModeSubscribtion = this.homesViewService
-    .getViewModeBehaviorSubject()
-    .subscribe(
-      (viewMode) => {
-        this.viewMode = viewMode;
-      }
-    );
-
-    // subscribe for changing sorting method
-    this.changingSortingMethodSubscription = this.homesSortService
-      .getChangingHomesSortingMethodEvent()
-      .subscribe(
-        (method) => this.sortingMethod = method
-      );
-
+    this.viewMode$ = this.store.select(homesSelector.getViewMode);
+    this.sortingMethod$ = this.store.select(homesSelector.getSortingMethod);
   }
 
 }

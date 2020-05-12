@@ -7,6 +7,8 @@ import { PopupService } from 'src/app/modules/shared/services/popup.service';
 import { Location } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import * as homesActions from 'src/app/store/actions/homes.action';
 
 @Component({
   selector: 'app-home-form',
@@ -37,13 +39,15 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     private route: ActivatedRoute,
     private location: Location,
     private homesService: HomesService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private store: Store
     ) { }
 
   ngOnInit(): void {
-    this.isAddingMode = this.checkAddingMode();
+    // this.isAddingMode = this.checkAddingMode();
     this.route.data.subscribe(
       data => {
+        console.log(data.home)
         this.isAddingMode = data.mode === 'Adding';
         this.getHome(data.home);
       }
@@ -131,23 +135,15 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   private updateHome(): void {
-    this.homesService.updateHome(this.home).subscribe(
-      () => {
-        this.isSubmit = true;
-        this.navigateBack();
-      },
-      (error) => console.log(error)
-    );
+    this.store.dispatch(homesActions.updateHome({home: this.home}));
+    this.isSubmit = true;
+    this.navigateBack();
   }
 
   private addHome(): void {
-    this.homesService.addHome(this.home).subscribe(
-      () => {
-        this.isSubmit = true;
-        this.navigateBack();
-      },
-      (error) => console.log(error)
-    );
+    this.store.dispatch(homesActions.addHome({home: this.home}));
+    this.isSubmit = true;
+    this.navigateBack();
   }
 
   private getHome(home: Home): void {
@@ -165,16 +161,16 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     this.location.back();
   }
 
-  private checkAddingMode() {
-    const mode = this.route.snapshot.data.mode;
-    return mode === 'Adding' ? true : false;
-  }
+  // private checkAddingMode() {
+  //   const mode = this.route.snapshot.data.mode;
+  //   return mode === 'Adding' ? true : false;
+  // }
 
   private onGetHome(home: Home): void {
     if (home.clientOwner) {
       this.isFormDisabled = true;
     }
-    this.home = home;
+    this.home = {...home};
     this.initHome = {...home};
   }
 

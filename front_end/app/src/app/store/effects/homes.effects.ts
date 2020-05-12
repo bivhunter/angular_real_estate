@@ -21,6 +21,18 @@ export class HomesEffects {
     );
   });
 
+  viewMode$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(homesAction.setViewMode),
+      map(
+        ({viewMode}) => {
+          localStorage.setItem('viewHomesMode', viewMode);
+          return homesApiAction.setViewModeSuccess({viewMode});
+        }
+      )
+    );
+  });
+
   addHome$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(homesAction.addHome),
@@ -35,15 +47,29 @@ export class HomesEffects {
     );
   });
 
-  viewMode$ = createEffect(() => {
+  updateHome$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(homesAction.setViewMode),
-      map(
-        ({viewMode}) => {
-          localStorage.setItem('viewHomesMode', viewMode);
-          return homesApiAction.setViewModeSuccess({viewMode});
-        }
-      )
+      ofType(homesAction.updateHome),
+      switchMap(({home}) => {
+        console.log(home);
+        return this.homesService.updateHome(home);
+      }),
+      map(home => {
+        console.log(home);
+        return homesApiAction.updateHomeSuccess({home});
+      })
+    );
+  });
+
+  deleteHome$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(homesAction.deleteHome),
+      switchMap(({id}) => {
+        return this.homesService.deleteHome(id);
+      }),
+      map(home => {
+        return homesApiAction.deleteHomeSuccess({id: home.id});
+      })
     );
   });
 

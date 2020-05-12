@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Home } from '../../model/home';
 import { Router } from '@angular/router';
 import { HomesService } from '../../services/homes.service';
+import { Store } from '@ngrx/store';
+import * as homesActions from 'src/app/store/actions/homes.action';
 
 @Component({
   selector: 'app-home-card',
@@ -18,7 +20,8 @@ export class HomeCardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private homesService: HomesService
+    private homesService: HomesService,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
@@ -30,14 +33,8 @@ export class HomeCardComponent implements OnInit {
   }
 
   deleteHome(id: string | number) {
-    this.homesService.deleteHome(id)
-    .subscribe(
-      () => this.isPopup = false
-    );
-  }
-
-  onClientOwnerClick(id: string | number) {
-    this.router.navigateByUrl(`clients/profile/${id}`);
+    this.store.dispatch(homesActions.deleteHome({id}));
+    this.isPopup = false;
   }
 
   openClients(): void {

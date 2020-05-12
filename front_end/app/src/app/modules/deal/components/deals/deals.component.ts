@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Deal } from '../../model/deal';
 import { Observable } from 'rxjs';
 
-import * as fromDeals from 'src/app/store/reducers/deals.reducer';
 import * as dealsSelector from 'src/app/store/selectors/deals.selector';
 import { Store } from '@ngrx/store';
 
@@ -17,7 +16,7 @@ export class DealsComponent implements OnInit {
   filteredDeals$: Observable<Deal[]>;
 
   constructor(
-    private store: Store<fromDeals.State>
+    private store: Store
   ) { }
 
   ngOnInit(): void {

@@ -10,17 +10,21 @@ import {
 import { environment } from '../../../environments/environment';
 
 import * as dealsReducer from '../reducers/deals.reducer';
+import * as homesReducer from '../reducers/homes.reducer';
 
 export interface State {
-  dealState: dealsReducer.State;
+  dealsState: dealsReducer.State;
+  homesState: homesReducer.State;
 }
 
 const initState: State = {
-  dealState: dealsReducer.initState
+  dealsState: dealsReducer.initState,
+  homesState: homesReducer.initState
 };
 
 export const reducers: ActionReducerMap<State> = {
-  dealState: dealsReducer.dealsReducer
+  dealsState: dealsReducer.dealsReducer,
+  homesState: homesReducer.homesReducer
 };
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
