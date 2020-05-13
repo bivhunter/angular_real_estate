@@ -15,7 +15,7 @@ export interface State {
 }
 
 export const initState: State = {
-    homes: [],
+    homes: null,
     viewMode: localStorage.getItem('viewHomesMode') as TViewMode || 'cards',
     sortingMethod: 'HOME_UP',
     searchingString: ''

@@ -14,7 +14,6 @@ export const getDealsSuccess = createAction(
 
 export const addDealSuccess = createAction(
   '[DealsApi] Add Deal Success',
-  props<{ deal: Deal }>()
 );
 
 

@@ -6,7 +6,7 @@ import { Deal } from '../model/deal';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from 'src/app/store/reducers/index';
 import * as dealsSelectors from 'src/app/store/selectors/deals.selector';
-import { take, tap } from 'rxjs/operators';
+import { take, tap, filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,8 @@ export class DealDetailsResolverService {
   resolve(route: ActivatedRouteSnapshot): Observable<Deal> {
     const id = route.paramMap.get('id');
     return this.store.select(dealsSelectors.getDeal, id).pipe(
+      filter(deal => !!deal),
       take(1),
-      tap((deal) => console.log(deal))
       );
   }
 }

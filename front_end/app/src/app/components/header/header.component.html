@@ -3,7 +3,7 @@
     <h2>Client Management Application</h2>
 
     <div class="right-container">
-        <span class="user-name" *ngIf="isAuthenticated">{{user.fullName}}</span>
+        <span class="user-name" *ngIf="isAuthenticated && (user$ | async)">{{(user$ | async).fullName}}</span>
         
         <div class="user-button-wrapper" *ngIf="isAuthenticated">
             <img class="user-img" src="../../../assets/images/user-white.png"

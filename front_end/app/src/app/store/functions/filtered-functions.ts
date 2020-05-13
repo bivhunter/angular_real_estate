@@ -3,6 +3,10 @@ import { Home } from 'src/app/modules/homes/model/home';
 import { Client } from 'src/app/modules/clients/model/client';
 
 export function filterDeals(deals: Deal[], searchString: string): Deal[] {
+    if (!deals)   {
+      return null;
+    }
+
     if (!deals.length) {
       return [];
     }
@@ -43,6 +47,10 @@ export function filterDeals(deals: Deal[], searchString: string): Deal[] {
 
 
 export function filterHomes(homes: Home[], searchString: string): Home[] {
+  if (!homes) {
+    return null;
+  }
+
   if (!homes.length) {
     return [];
   }
@@ -68,6 +76,10 @@ export function filterHomes(homes: Home[], searchString: string): Home[] {
 // ================= clients filtering ======================
 
 export function filterClients(clients: Client[], searchString: string): Client[] {
+  if (!clients) {
+    return null;
+  }
+
   if (!clients.length) {
     return [];
   }

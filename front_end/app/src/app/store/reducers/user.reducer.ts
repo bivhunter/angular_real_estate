@@ -9,7 +9,7 @@ export interface State {
 }
 
 export const initState: State = {
-    user: new User()
+    user: null
 };
 
 export const usersReducer = createReducer(

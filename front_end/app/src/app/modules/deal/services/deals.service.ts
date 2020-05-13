@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Deal } from '../model/deal';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, delay } from 'rxjs/operators';
 import { UserService } from 'src/app/modules/user/services/user.service';
 import { StatusMessageService } from '../../shared/services/status-message.service';
 

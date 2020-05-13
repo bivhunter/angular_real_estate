@@ -13,7 +13,7 @@ export interface State {
 }
 
 export const initState: State = {
-    deals: [],
+    deals: null,
     viewMode: localStorage.getItem('viewDealsMode') as TViewMode || 'cards',
     sortingMethod: 'DATE_UP',
     searchingString: ''
@@ -32,13 +32,6 @@ export const dealsReducer = createReducer(
         return {...state, deals};
     }),
     on(dealsAction.setSearchingString, (state, {searchingString}) => ({...state, searchingString})),
-    on(dealsApiAction.addDealSuccess, (state, {deal}) => {
-        console.log(state, deal);
-        return {
-            ...state,
-            deals: [...state.deals, deal]
-        };
-    })
 );
 
 

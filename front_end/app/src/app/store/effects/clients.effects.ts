@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as clientsAction from '../actions/clients.action';
 import * as clientsApiAction from '../actions/clients-api.actions';
+import * as dealsActions from '../actions/deals.action';
 import { switchMap, map } from 'rxjs/operators';
 import { ClientService } from 'src/app/modules/clients/services/clients.service';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class ClientsEffects {
@@ -14,7 +16,6 @@ export class ClientsEffects {
       switchMap(() => this.clientsService.getClients()),
       map(
         clients => {
-          console.log(clients);
           return clientsApiAction.getClientsSuccess({clients});
         }
       )
@@ -37,11 +38,12 @@ export class ClientsEffects {
     return this.actions$.pipe(
       ofType(clientsAction.addClient),
       switchMap(({client}) => {
-        console.log(client);
         return this.clientsService.addClient(client);
       }),
+      switchMap(client => {
+        return this.clientsService.getClient(client.id);
+      }),
       map(client => {
-        console.log(client);
         return clientsApiAction.addClientSuccess({client});
       })
     );
@@ -51,11 +53,12 @@ export class ClientsEffects {
     return this.actions$.pipe(
       ofType(clientsAction.updateClient),
       switchMap(({client}) => {
-        console.log(client);
         return this.clientsService.updateClient(client);
       }),
+      switchMap(client => {
+        return this.clientsService.getClient(client.id);
+      }),
       map(client => {
-        console.log(client);
         return clientsApiAction.updateClientSuccess({client});
       })
     );
@@ -68,13 +71,28 @@ export class ClientsEffects {
         return this.clientsService.deleteClient(id);
       }),
       map(client => {
+        this.store.dispatch(dealsActions.loadDeals());
         return clientsApiAction.deleteClientSuccess({id: client.id});
+      })
+    );
+  });
+
+  addHomeToClient$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(clientsAction.addHomeToClient),
+      switchMap(({homeId, clientId}) => {
+        return this.clientsService.addHomeToClient(homeId, clientId);
+      }),
+      switchMap(client => this.clientsService.getClient(client.id)),
+      map(client => {
+        return clientsApiAction.updateClientSuccess({client});
       })
     );
   });
 
   constructor(
     private actions$: Actions,
-    private clientsService: ClientService
+    private clientsService: ClientService,
+    private store: Store
   ) {}
 }

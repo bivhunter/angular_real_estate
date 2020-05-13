@@ -1,12 +1,8 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Deal } from '../../model/deal';
 import { TViewMode, TDealsSortingMethod, TDealsSortingField } from 'src/app/modules/shared/types/types';
-import { Observable, Subscription } from 'rxjs';
-import { DealsViewService } from '../../services/deals-view.service';
-import { DealsSortingService } from '../../services/deals-sorting.service';
-import { Store, select } from '@ngrx/store';
-
-import * as fromRoot from 'src/app/store/reducers/index';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import * as dealsSelectors from 'src/app/store/selectors/deals.selector';
 import * as dealsActions from 'src/app/store/actions/deals.action';
 
@@ -24,7 +20,7 @@ export class DealsListComponent implements OnInit {
   sortingMethod$: Observable<TDealsSortingMethod>;
 
   constructor(
-    private store: Store<fromRoot.State>
+    private store: Store
   ) { }
 
   ngOnInit(): void {

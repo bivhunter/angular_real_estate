@@ -1,14 +1,20 @@
 import { Deal } from 'src/app/modules/deal/model/deal';
-import { TDealsSortingMethod, TDealsSortingField, THomesSortingField, THomesSortingMethod, TClientsSortingField, TClientsSortingMethod } from 'src/app/modules/shared/types/types';
+import { TDealsSortingMethod, TDealsSortingField, THomesSortingField,
+  THomesSortingMethod, TClientsSortingField, TClientsSortingMethod } from 'src/app/modules/shared/types/types';
 import { Home } from 'src/app/modules/homes/model/home';
 import { Client } from 'src/app/modules/clients/model/client';
 
 export function sortDeals(deals: Deal[], method: TDealsSortingMethod): Deal[] {
-    if (!deals.length) {
-      return [];
-    }
-    return createSortFunc()[method](deals);
+  if (!deals) {
+    return null;
   }
+
+  if (!deals.length) {
+    return [];
+  }
+
+  return createSortFunc()[method](deals);
+}
 
 export function selectDealsSortingMethod(sortingMethod: TDealsSortingMethod, field: TDealsSortingField): TDealsSortingMethod {
     let newSortingMethod: TDealsSortingMethod;
@@ -83,9 +89,14 @@ export function selectHomesSortingMethod(sortingMethod: THomesSortingMethod, fie
 }
 
 export function sortHomes(homes: Home[], method: THomesSortingMethod): Home[] {
+  if (!homes) {
+    return null;
+  }
+
   if (!homes.length) {
     return [];
   }
+
   return createHomesSortFunc()[method](homes);
 }
 
@@ -194,6 +205,9 @@ export function selectClientsSortingMethod(sortingMethod: TClientsSortingMethod,
 }
 
 export function sortClients(clients: Client[], method: TClientsSortingMethod): Client[] {
+  if (!clients) {
+    return null;
+  }
   if (!clients.length) {
     return [];
   }

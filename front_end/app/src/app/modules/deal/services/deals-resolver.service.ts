@@ -5,7 +5,7 @@ import { DealsService } from './deals.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as dealsSelectors from 'src/app/store/selectors/deals.selector';
-import { take } from 'rxjs/operators';
+import { take, filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,13 @@ import { take } from 'rxjs/operators';
 export class DealsResolverService implements Resolve<Deal[]> {
 
   constructor(
-    private dealsService: DealsService,
     private store: Store
   ) { }
 
   resolve(): Observable<Deal[]> {
-    return this.store.select(dealsSelectors.getDeals).pipe(take(1));
+    return this.store.select(dealsSelectors.getDeals).pipe(
+      filter(deals => !!deals),
+      take(1)
+      );
   }
 }

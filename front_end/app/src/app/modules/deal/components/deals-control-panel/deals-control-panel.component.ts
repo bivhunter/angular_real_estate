@@ -19,6 +19,7 @@ export class DealsControlPanelComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.changeFilter('');
   }
 
   onActivateCardView() {

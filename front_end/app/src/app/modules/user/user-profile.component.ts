@@ -7,6 +7,9 @@ import { PopupService } from './../shared/services/popup.service';
 import { Location } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import * as userSelectors from 'src/app/store/selectors/user.selector';
+import * as userActions from 'src/app/store/actions/user.actions';
 
 @Component({
   selector: 'app-user-profile',
@@ -32,7 +35,8 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
     private userService: UserService,
     private popupService: PopupService,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
@@ -92,12 +96,9 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
 
   onSubmit(): void {
     if (this.isSubmitQuestion) {
-      this.userService.updateUser(this.user).subscribe(
-        user => {
-          this.isSubmit = true;
-          this.goBack();
-        }
-      );
+      this.store.dispatch(userActions.updateUser({user: this.user}));
+      this.isSubmit = true;
+      this.goBack();
     } else {
       this.isSubmit = true;
       this.goBack();
@@ -110,7 +111,7 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   private getUser(user: User): void {
-    this.user = user;
+    this.user = {...user} as User;
     this.initUser = {...this.user} as User;
   }
 

@@ -19,6 +19,7 @@ export class ClientsControlPanelComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.changeFilter('');
   }
 
   onActivateCardView() {

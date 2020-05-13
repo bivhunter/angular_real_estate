@@ -6,7 +6,7 @@ import { HomesService } from './homes.service';
 import { State } from 'src/app/store/reducers/index';
 import { Store } from '@ngrx/store';
 import * as homesSelector from 'src/app/store/selectors/homes.selector';
-import { take } from 'rxjs/operators';
+import { take, filter } from 'rxjs/operators';
 
 
 @Injectable({
@@ -20,6 +20,9 @@ export class HomesResolverService implements Resolve<Home[]> {
   ) { }
 
   resolve(): Observable<Home[]> {
-    return this.store.select(homesSelector.getHomes).pipe(take(1));
+    return this.store.select(homesSelector.getHomes).pipe(
+      filter(homes => !!homes),
+      take(1)
+      );
   }
 }

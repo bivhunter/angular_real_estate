@@ -16,7 +16,6 @@ export class UserEffects {
       map(
         newUser => {
           const user = new User(newUser);
-          console.log(user);
           return userApiAction.getUserSuccess({user});
         }
       )
@@ -27,7 +26,6 @@ export class UserEffects {
     return this.actions$.pipe(
       ofType(userAction.updateUser),
       switchMap(({user}) => {
-        console.log(user);
         return this.usersService.updateUser(user);
       }),
       map(newUser => {

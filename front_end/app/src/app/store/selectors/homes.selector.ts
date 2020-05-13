@@ -43,6 +43,9 @@ export const getFilteredHomes = createSelector(
 export const getHome = createSelector(
     getHomes,
     (homes: Home[], id: number | string) => {
+        if (!homes) {
+            return null;
+        }
         const homeArr = homes.filter(home => home.id === +id);
         return homeArr[0];
     }

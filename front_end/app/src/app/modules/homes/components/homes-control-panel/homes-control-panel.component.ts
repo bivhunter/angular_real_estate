@@ -11,7 +11,6 @@ import { Store } from '@ngrx/store';
 export class HomesControlPanelComponent implements OnInit {
 
   isViewsMenu = false;
-  searchString: string;
 
   constructor(
     private router: Router,
@@ -19,6 +18,7 @@ export class HomesControlPanelComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.changeFilter('');
   }
 
   onAddButtonClick(): void {

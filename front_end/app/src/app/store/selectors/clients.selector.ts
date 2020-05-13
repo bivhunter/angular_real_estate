@@ -43,6 +43,9 @@ export const getFilteredClients = createSelector(
 export const getClient = createSelector(
     getClients,
     (clients: Client[], id: number | string) => {
+        if (!clients) {
+            return null;
+        }
         const clientArr = clients.filter(client => client.id === +id);
         return clientArr[0];
     }

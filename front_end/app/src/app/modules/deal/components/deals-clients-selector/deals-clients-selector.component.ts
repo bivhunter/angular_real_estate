@@ -1,7 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from 'src/app/modules/clients/services/clients.service';
-import { ClientsFilteringService } from '../../../clients/services/clients-filtering.service';
+import { Store } from '@ngrx/store';
+import * as clientsSelector from 'src/app/store/selectors/clients.selector';
+import * as clientsActions from 'src/app/store/actions/clients.action';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-deals-clients-selector',
@@ -10,35 +13,22 @@ import { ClientsFilteringService } from '../../../clients/services/clients-filte
 })
 export class DealsClientsSelectorComponent implements OnInit {
 
-  clients: Client[] = [];
-  filteredClients: Client[] = [];
+  filteredClients$: Observable<Client[]>;
   @Input() selectedClient: Client;
 
   @Output() submitEvent: EventEmitter<Client> = new EventEmitter();
   @Output() cancelEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private clientsService: ClientService,
-    private clientFilteringService: ClientsFilteringService
+    private store: Store
   ) { }
 
   ngOnInit(): void {
-    this.getClients();
-  }
-
-  filterClients(searchString: string) {
-    this.filteredClients = this.clientFilteringService.filterClients(this.clients, searchString);
-  }
-
-  private getClients(): void {
-    this.clientsService.getClients().subscribe(
-      (clients) => this.getClientsHandler(clients)
-    );
-  }
-
-  private getClientsHandler(clients: Client[]): void {
-    this.clients = clients;
     this.filterClients('');
+    this.filteredClients$ = this.store.select(clientsSelector.getFilteredClients);
   }
 
+  filterClients(searchingString: string) {
+    this.store.dispatch(clientsActions.setSearchingString({searchingString}));
+  }
 }

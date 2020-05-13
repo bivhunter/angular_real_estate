@@ -8,8 +8,6 @@ import { HomesListComponent } from './components/homes-list/homes-list.component
 import { HomesTableComponent } from './components/homes-table/homes-table.component';
 import { HomesControlPanelComponent } from './components/homes-control-panel/homes-control-panel.component';
 import { HomesRoutingModule } from './homes-routing.module';
-import { HomesSortService } from './services/homes-sort.service';
-import { HomesViewService } from './services/homes-view.service';
 
 @NgModule({
   declarations: [
@@ -26,8 +24,6 @@ import { HomesViewService } from './services/homes-view.service';
     HomesRoutingModule,
   ],
   providers: [
-    HomesViewService,
-    HomesSortService,
   ],
 
   exports: [

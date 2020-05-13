@@ -5,6 +5,7 @@ import * as dealsApiAction from '../actions/deals-api.actions';
 import { switchMap, map } from 'rxjs/operators';
 import { DealsService } from 'src/app/modules/deal/services/deals.service';
 import { of } from 'rxjs';
+import { InitDataService } from './../../modules/shared/services/init-data.service';
 
 @Injectable()
 export class DealsEffects {
@@ -25,13 +26,11 @@ export class DealsEffects {
     return this.actions$.pipe(
       ofType(dealsAction.addDeal),
       switchMap(({deal}) => {
-        console.log(deal);
         return this.dealsService.addDeal(deal);
       }),
-      switchMap(newDeal => this.dealsService.getDeal(newDeal.id)),
       map(deal => {
-        console.log(deal);
-        return dealsApiAction.addDealSuccess({deal});
+        this.initDataService.initData();
+        return dealsApiAction.addDealSuccess();
       })
     );
   });
@@ -50,6 +49,7 @@ export class DealsEffects {
 
   constructor(
     private actions$: Actions,
-    private dealsService: DealsService
+    private dealsService: DealsService,
+    private initDataService: InitDataService
   ) {}
 }

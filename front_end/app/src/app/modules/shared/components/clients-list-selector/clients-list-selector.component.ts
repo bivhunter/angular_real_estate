@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Home } from 'src/app/modules/homes/model/home';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from '../../../clients/services/clients.service';
-import { ClientsFilteringService } from '../../../clients/services/clients-filtering.service';
 import { Router } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import * as clientsSelector from 'src/app/store/selectors/clients.selector';
+import * as clientsActions from 'src/app/store/actions/clients.action';
+import { filterClients } from 'src/app/store/functions/filtered-functions';
 
 @Component({
   selector: 'app-clients-list-selector',
@@ -27,9 +29,8 @@ export class ClientsListSelectorComponent implements OnInit {
   @Output() closeEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private clientsFilteringService: ClientsFilteringService,
-    private clientService: ClientService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
@@ -38,7 +39,7 @@ export class ClientsListSelectorComponent implements OnInit {
   }
 
   filterClients(searchString: string): void {
-    this.filteredClients = this.clientsFilteringService.filterClients(this.clients, searchString);
+    this.filteredClients = filterClients(this.clients, searchString);
   }
 
   closeList(): void {
@@ -62,10 +63,8 @@ export class ClientsListSelectorComponent implements OnInit {
   }
 
   addHomeToClient(): void {
-    this.clientService.addHomeToClient(this.home.id, this.clientId)
-      .subscribe(
-        () => this.closeList()
-      );
+    this.store.dispatch(clientsActions.addHomeToClient({homeId: this.home.id, clientId: this.clientId}));
+    this.closeList();
   }
 
   private getTitle(): string {
@@ -80,8 +79,12 @@ export class ClientsListSelectorComponent implements OnInit {
   }
 
   private getClients(): void {
-    this.clientService.getClients().subscribe(
+    this.store.select(clientsSelector.getClients).subscribe(
       (clients) => {
+        if (!clients) {
+          return;
+        }
+
         this.clients = this.isAddingMode ? this.cutOwnClients(clients) : this.getOwnClients(clients);
         this.filterClients('');
       }

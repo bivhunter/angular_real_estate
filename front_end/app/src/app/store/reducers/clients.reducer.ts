@@ -15,7 +15,7 @@ export interface State {
 }
 
 export const initState: State = {
-    clients: [],
+    clients: null,
     viewMode: localStorage.getItem('viewClientsMode') as TViewMode || 'cards',
     sortingMethod: 'SURNAME_UP',
     searchingString: ''

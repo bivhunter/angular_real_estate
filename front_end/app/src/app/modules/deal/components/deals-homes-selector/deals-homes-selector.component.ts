@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Home } from 'src/app/modules/homes/model/home';
-import { HomesService } from 'src/app/modules/homes/services/homes.service';
-import { HomesFilterService } from 'src/app/modules/homes/services/homes-filter.service';
 import { Client } from 'src/app/modules/clients/model/client';
+import { filterHomes } from 'src/app/store/functions/filtered-functions';
 
 @Component({
   selector: 'app-deals-homes-selector',
@@ -21,8 +20,6 @@ export class DealsHomesSelectorComponent implements OnInit {
   @Output() backEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private homesService: HomesService,
-    private homeFilteringService: HomesFilterService
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +27,7 @@ export class DealsHomesSelectorComponent implements OnInit {
   }
 
   filterHomes(searchString: string) {
-    this.filteredHomes = this.homeFilteringService.filterHomes(this.homes, searchString);
+    this.filteredHomes = filterHomes(this.homes, searchString);
   }
 
   private getHomes(): void {

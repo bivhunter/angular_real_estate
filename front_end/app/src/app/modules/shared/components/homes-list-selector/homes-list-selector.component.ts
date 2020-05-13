@@ -1,10 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Home } from '../../../homes/model/home';
-import { HomesService } from '../../../homes/services/homes.service';
-import { HomesFilterService } from '../../../homes/services/homes-filter.service';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from '../../../clients/services/clients.service';
 import { Router } from '@angular/router';
+import * as homesSelector from 'src/app/store/selectors/homes.selector';
+import * as homesActions from 'src/app/store/actions/homes.action';
+import { Store } from '@ngrx/store';
+import { filterHomes } from 'src/app/store/functions/filtered-functions';
 
 @Component({
   selector: 'app-homes-list-selector',
@@ -27,16 +28,11 @@ export class HomesListSelectorComponent implements OnInit {
   text: string;
   homeId: string | number;
 
-
-
-
   @Output() closeEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private homesService: HomesService,
-    private homesFilterService: HomesFilterService,
-    private clientService: ClientService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +41,7 @@ export class HomesListSelectorComponent implements OnInit {
   }
 
   filterHomes(searchString: string): void {
-    this.filteredHomes = this.homesFilterService.filterHomes(this.homes, searchString);
+    this.filteredHomes = filterHomes(this.homes, searchString);
   }
 
   closeList(): void {
@@ -71,10 +67,8 @@ export class HomesListSelectorComponent implements OnInit {
   }
 
   addHomeToClient(): void {
-    this.clientService.addHomeToClient(this.homeId, this.client.id)
-      .subscribe(
-        () => this.closeList()
-      );
+    this.store.dispatch(homesActions.addClientToHome({homeId: this.homeId, clientId: this.client.id}));
+    this.closeList();
   }
 
   private getTitle(): string {
@@ -95,8 +89,12 @@ export class HomesListSelectorComponent implements OnInit {
   }
 
   private getHomes(): void {
-    this.homesService.getHomes().subscribe(
+    this.store.select(homesSelector.getHomes).subscribe(
       (homes) => {
+        if (!homes) {
+          return;
+        }
+
         this.isDataReady = true;
         if (this.isBoughtHomesView) {
           this.homes = this.client.homes.filter(home => {

@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription} from 'rxjs';
+import { Subscription, Observable} from 'rxjs';
 import { AuthorizationService } from 'src/app/modules/authorization/services/authorization.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { User } from 'src/app/modules/user/model/user';
-import { UserService } from 'src/app/modules/user/services/user.service';
+import { Store } from '@ngrx/store';
+import * as userSelectors from 'src/app/store/selectors/user.selector';
 
 @Component({
   selector: 'app-header',
@@ -15,18 +16,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isAuthenticated: boolean;
   isLogin: boolean;
-  user: User;
+  user$: Observable<User>;
 
   private routeChangingSubscription: Subscription;
 
   constructor(
     private authorizationService: AuthorizationService,
     private router: Router,
-    private userService: UserService
+    private store: Store
   ) { }
 
   ngOnInit(): void {
     this.initSubscribtion();
+    this.getFromStore();
   }
 
   ngOnDestroy(): void {
@@ -46,37 +48,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
         const url = event.url;
         if (url.includes('login')) {
           this.isLogin = true;
-          this.clearUser();
+          this.isAuthenticated = false;
         } else if (url.includes('registration')) {
           this.isLogin = false;
-          this.clearUser();
+          this.isAuthenticated = false;
         } else {
-          this.getUser();
+          this.isAuthenticated = true;
+         // this.getUser();
         }
       }
     );
   }
 
+  private getFromStore(): void {
+    this.user$ = this.store.select(userSelectors.getUser);
+  }
+
   private unsubscribe(): void {
     this.routeChangingSubscription.unsubscribe();
   }
-
-  private getUser(): void {
-    this.userService.getUser().subscribe(
-      (user) => {
-        this.isAuthenticated = true;
-        const newUser = new User(user);
-        this.user = newUser;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
-  private clearUser(): void {
-    this.user = null;
-    this.isAuthenticated = false;
-  }
-
 }

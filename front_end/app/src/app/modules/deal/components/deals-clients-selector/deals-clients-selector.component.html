@@ -37,7 +37,7 @@
         <div class="content-wrapper">
             <!-- clients list -->
             <table>
-                    <tr *ngFor="let client of filteredClients"
+                    <tr *ngFor="let client of (filteredClients$ | async)"
                     
                         class="table-item">
     

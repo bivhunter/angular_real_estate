@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { Client } from 'src/app/modules/clients/model/client';
-import { ClientService } from 'src/app/modules/clients/services/clients.service';
 import { Location } from '@angular/common';
 import { ClientsFilteringService } from '../../services/clients-filtering.service';
 import { PopupService } from './../../../shared/services/popup.service';
@@ -37,7 +36,6 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     private route: ActivatedRoute,
     private location: Location,
     private popupService: PopupService,
-    private clientService: ClientService,
     private clientsFilteringService: ClientsFilteringService,
     private store: Store
   ) { }
@@ -158,7 +156,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   private onGetClient(client: Client): void {
-    this.client = client;
+    this.client = {...client};
     this.initClient = {...client};
   }
 }

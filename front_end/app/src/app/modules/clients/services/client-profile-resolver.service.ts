@@ -4,6 +4,7 @@ import { Client } from '../model/client';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as clientsSelector from 'src/app/store/selectors/clients.selector';
+import { take, filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,9 @@ export class ClientProfileResolverService implements Resolve<Client> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<Client> {
     const id = route.paramMap.get('id');
-    return this.store.select(clientsSelector.getClient, id);
+    return this.store.select(clientsSelector.getClient, id).pipe(
+      filter(client => !!client),
+      take(1)
+      );
   }
 }

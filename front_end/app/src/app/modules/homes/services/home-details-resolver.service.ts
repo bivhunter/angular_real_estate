@@ -6,7 +6,7 @@ import { HomesService } from './homes.service';
 
 import { Store } from '@ngrx/store';
 import * as homesSelector from 'src/app/store/selectors/homes.selector';
-import { take } from 'rxjs/operators';
+import { take, filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,9 @@ export class HomeDetailsResolverService implements Resolve<Home> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<Home> {
     const id = route.paramMap.get('id');
-    return this.store.select(homesSelector.getHome, id).pipe(take(1));
+    return this.store.select(homesSelector.getHome, id).pipe(
+      filter(home => !!home),
+      take(1)
+      );
   }
 }

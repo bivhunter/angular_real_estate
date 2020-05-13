@@ -44,6 +44,9 @@ export const getFilteredDeals = createSelector(
 export const getDeal = createSelector(
     getDeals,
     (deals: Deal[], id: number | string) => {
+        if (!deals) {
+            return null;
+        }
         const dealArr = deals.filter(deal => deal.id === +id);
         return dealArr[0];
     }

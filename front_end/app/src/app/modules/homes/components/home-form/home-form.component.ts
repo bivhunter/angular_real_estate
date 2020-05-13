@@ -47,7 +47,6 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     // this.isAddingMode = this.checkAddingMode();
     this.route.data.subscribe(
       data => {
-        console.log(data.home)
         this.isAddingMode = data.mode === 'Adding';
         this.getHome(data.home);
       }

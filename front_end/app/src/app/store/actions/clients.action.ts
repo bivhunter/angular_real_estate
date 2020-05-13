@@ -22,6 +22,11 @@ export const deleteClient = createAction(
     props<{id: string | number}>()
 );
 
+export const addHomeToClient = createAction(
+    '[Clients] Add Home To Client',
+    props<{homeId: string | number, clientId: string | number}>()
+);
+
 export const setSortingField = createAction(
     '[Clients] Set Sorting Field',
     props<{sortingMethodField: TClientsSortingField}>()
