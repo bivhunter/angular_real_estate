@@ -1,4 +1,4 @@
-:host {
+/* :host {
     display: flex;
     flex: 1 1 260px;
     max-width: 260px;
@@ -18,21 +18,21 @@
     background-color: #F4F5F7;
     box-shadow: 2px 2px 4px rgba(0,114,188,1);
     justify-content: flex-start;
-}
+} */
 
 /* logo image */
 
 
-.profile-img {
+/* .profile-img {
     background-image: url('../../../../../assets/images/foto-card.png');
     height: 80px;
     width: 80px;
     background-size:cover;
     background-repeat: no-repeat;
-}
+} */
 
 /* tooltip */
-
+/* 
 .tooltip {
     position: relative;
 }
@@ -60,47 +60,12 @@
 
 .tooltip:hover .tooltip-text {
   visibility: visible;
-}
+} */
 
-/* buttons */
-.buttons-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-self: stretch;
-    margin: 20px 0 15px 0;
-}
 
-button {
-    font-size: 15px;
-    border-radius: 5px;
-    margin: 2px;
-    text-shadow: 1px 1px 2px rgba(0,114,188,1);
-}
-
-button:hover{
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
-}
-
-.delete-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 25px;
-    width: 25px;
-    text-shadow: 1px 1px 2px rgba(165, 16, 16, 1);
-}
-
-.delete-button:hover {
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(165, 16, 16,1);
-}
 
 /* text style */
-p {
+/* p {
     padding: 0;
     margin: 0;
     text-shadow: 1px 1px 2px rgba(192,192,192);
@@ -110,16 +75,42 @@ h3 {
     font-size: 15px;
     margin: 0;
     text-shadow: 2px 2px 4px rgba(165,42,42,1);
-}
+} */
 
 /* popup style */
-.popup-deleting, .popup-homes-list {
+/* .popup-deleting, .popup-homes-list {
     position: absolute;
     z-index: 9900;
     top: 0;
     left: 0;
+} */
+
+.card {
+    margin: 5px;
+    width: 250px;
 }
 
+.title-group {
+    margin: 0 auto;
+}
 
+.title {
+    font-size: 16px;
+    text-align: center;
+}
 
+th.mat-sort-header-sorted {
+    color: blue;
+  }
 
+:host /deep/ .mat-card-header-text {
+    margin: 0;
+}
+
+.actions {
+    margin: 0 auto;
+}
+
+mat-icon {
+    margin: 0 10px;
+}

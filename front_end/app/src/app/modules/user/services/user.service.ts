@@ -97,6 +97,7 @@ export class UserService {
   }
 
   private handleAuthorizationError(error: HttpErrorResponse): Observable<string> {
+    console.log(error);
     if (error.statusText === 'Bad Request') {      // using when invalid data in request
       if (error.error.errors instanceof Array) {   // respons has array of errors
         const errorMessage = error.error.errors.map((curentError: any) => curentError.message).join('; ');

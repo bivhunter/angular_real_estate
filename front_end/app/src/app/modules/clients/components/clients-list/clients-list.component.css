@@ -1,27 +1,46 @@
 
-.container {
+/* :host {
     height: 100%;
-    overflow: visible;
-}
-
-.list-view {
-    display: flex;
-    height: 100%;
-}
+    width: 100%;
+} */
 
 .card-view  {
-    box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    overflow-y: scroll;
-    height: calc(100% - 70px);
-    box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
-    background-color: #F5FAFF;
+    height: calc(100% - 40px - 26px);
+    overflow-y: auto;
+    margin: 20px;
+} 
+.container {
+    height: 100%;
 }
 
+th.mat-sort-header-sorted {
+    color: blue;
+  }
+
+.sorting-panel {
+    margin: 0 auto;
+}
+
+th {
+    padding-left: 15px;
+}
+/* .cards-wrapper {
+    
+}
+
+ */
+/* .list-view {
+    display: flex;
+    height: 100%;
+}
+
+*/
+
 /* styles for sorting panel */
-.sorting-menu {
+/* .sorting-menu {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,6 +81,6 @@ button:hover{
     justify-self: right;
     margin-right: 0;
 
-}
+} */
 
 

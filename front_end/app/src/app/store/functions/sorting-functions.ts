@@ -1,6 +1,6 @@
 import { Deal } from 'src/app/modules/deal/model/deal';
 import { TDealsSortingMethod, TDealsSortingField, THomesSortingField,
-  THomesSortingMethod, TClientsSortingField, TClientsSortingMethod } from 'src/app/modules/shared/types/types';
+  THomesSortingMethod, TClientsSortingField, TClientsSortingMethod, ISortingConf } from 'src/app/modules/shared/types/types';
 import { Home } from 'src/app/modules/homes/model/home';
 import { Client } from 'src/app/modules/clients/model/client';
 
@@ -204,12 +204,16 @@ export function selectClientsSortingMethod(sortingMethod: TClientsSortingMethod,
   return newSortingMethod;
 }
 
-export function sortClients(clients: Client[], method: TClientsSortingMethod): Client[] {
+export function sortClients(clients: Client[], sortingConf: ISortingConf): Client[] {
   if (!clients) {
     return null;
   }
   if (!clients.length) {
     return [];
+  }
+  let method = `${sortingConf.active}_${sortingConf.direction}`;
+  if (!sortingConf.direction) {
+    method = 'surname_asc';
   }
   return createClientSortFunc()[method](clients);
 }
@@ -243,21 +247,21 @@ type TClientSortingFunction = {
 // create object of functions with fields as methods of sorting
 function createClientSortFunc(): TClientSortingFunction {
   return {
-    NAME_UP: (clients: Client[]) => {
+    name_asc: (clients: Client[]) => {
       return [...clients].sort( (clientA, clientB) => {
         return compareClients(clientA, clientB, compareName, compareSurname);
       });
     },
-    NAME_DOWN: (clients: Client[]) => {
-      return createClientSortFunc().NAME_UP(clients).reverse();
+    name_desc: (clients: Client[]) => {
+      return createClientSortFunc().name_asc(clients).reverse();
     },
-    SURNAME_UP: (clients: Client[]) => {
+    surname_asc: (clients: Client[]) => {
       return [...clients].sort( (clientA, clientB) => {
         return compareClients(clientA, clientB, compareSurname, compareName);
       });
     },
-    SURNAME_DOWN: (clients: Client[]) => {
-      return createClientSortFunc().SURNAME_UP(clients).reverse();
+    surname_desc: (clients: Client[]) => {
+      return createClientSortFunc().surname_asc(clients).reverse();
     }
   };
 }

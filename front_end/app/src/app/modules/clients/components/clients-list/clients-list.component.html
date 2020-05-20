@@ -7,7 +7,7 @@
     </div>
 
     <!-- sorting panel -->
-    <div  class="sorting-menu" *ngSwitchCase="'cards'">
+    <!-- <div  class="sorting-menu" *ngSwitchCase="'cards'">
         <span class="main">Sort by:</span>
         
         <button class="sorting-button" 
@@ -23,14 +23,33 @@
         [class.sort-down]="(sortingMethod$ | async) === 'NAME_DOWN'"
         (click)="changeSortingMethod('NAME')"
         >Name</button>
-    </div>
+    </div> -->
+    <!-- <div class="cards-wrapper ">
+        
+    </div> -->
 
-    <div class="card-view" *ngSwitchCase="'cards'">
-        <app-client-card 
-        *ngFor="let client of clients"
-        [client]="client"
-        >
-        </app-client-card>
-    </div>
+    <table matSort (matSortChange)="changeSortingMethod($event)"
+        [matSortActive]="(sortingConf$ | async).active"
+        [matSortDirection]="(sortingConf$ | async).direction"
+        *ngSwitchCase="'cards'"
+        class="sorting-panel">
+        
+        <tr>
+            <!-- <th>Sort: </th> -->
+            <th mat-sort-header="surname" disableClear>
+                Surname
+            </th>
+            <th mat-sort-header="name" disableClear>Name</th>
+        </tr>
+    </table>
+
+    <div class="card-view mat-elevation-z8" *ngSwitchCase="'cards'">
+            <app-client-card 
+            *ngFor="let client of clients"
+            [client]="client"
+            >
+            </app-client-card>
+        </div>
+    
 </div>
 

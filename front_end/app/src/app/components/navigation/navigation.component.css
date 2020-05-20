@@ -1,4 +1,4 @@
-.container {
+/* .container {
     display: flex;
     flex: 0 1 150px;
     flex-direction: column;
@@ -34,4 +34,17 @@
      box-shadow: 3px 3px 6px 4px rgb(128,128,128, 1);
  }
 
+ */
 
+.container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.link-text {
+    display: inline-block;
+    margin-left: 10px;
+}

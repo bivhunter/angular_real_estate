@@ -21,6 +21,13 @@ import { DealsEffects } from './store/effects/deals.effects';
 import { HomesEffects } from './store/effects/homes.effects';
 import { ClientsEffects } from './store/effects/clients.effects';
 import { UserEffects } from './store/effects/user.effects';
+import { ComponentTestComponent } from './component-test/component-test.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 
 
@@ -32,6 +39,7 @@ import { UserEffects } from './store/effects/user.effects';
     FooterComponent,
     NotFoundComponent,
     StatusMessageComponent,
+    ComponentTestComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +52,12 @@ import { UserEffects } from './store/effects/user.effects';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([DealsEffects, HomesEffects, ClientsEffects, UserEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
   ],
   providers: [
     httpInterceptorProviders

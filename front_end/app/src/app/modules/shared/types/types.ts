@@ -10,8 +10,13 @@ export type THomesSortingMethod = 'HOME_UP' | 'HOME_DOWN' | 'STREET_UP' | 'STREE
 export type THomesSortingField = 'HOME' | 'STREET' | 'CITY' | 'STATE' | 'PRICE';
 
 // for client's list sorting
-export type TClientsSortingMethod = 'NAME_UP' | 'NAME_DOWN' | 'SURNAME_UP' | 'SURNAME_DOWN';
+export type TClientsSortingMethod = 'name_asc' | 'name_desc' | 'surname_asc' | 'surname_desc';
 export type TClientsSortingField = 'NAME' | 'SURNAME';
+
+export interface ISortingConf {
+  active: string;
+  direction: string;
+}
 
 // for deal's list sorting
 export type TDealsSortingMethod = 'PRICE_UP' | 'PRICE_DOWN' | 'DATE_UP' | 'DATE_DOWN';

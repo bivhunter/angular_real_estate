@@ -1,18 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Observable } from 'rxjs';
-import { TClientsSortingMethod, TClientsSortingField } from 'src/app/modules/shared/types/types';
+import { TClientsSortingMethod, TClientsSortingField, ISortingConf } from 'src/app/modules/shared/types/types';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as clientsSelector from 'src/app/store/selectors/clients.selector';
 import * as clientsActions from 'src/app/store/actions/clients.action';
+import { MatSort } from '@angular/material/sort';
+import { getSortingConf } from './../../../../store/selectors/clients.selector';
 
 @Component({
   selector: 'app-clients-table',
   templateUrl: './clients-table.component.html',
   styleUrls: ['./clients-table.component.css']
 })
-export class ClientsTableComponent implements OnInit {
+export class ClientsTableComponent implements OnInit, AfterViewInit  {
 
   isPopumMenu = false;
 
@@ -24,7 +26,12 @@ export class ClientsTableComponent implements OnInit {
   isAddingHomesView: boolean;
   isBoughtHomesView: boolean;
 
+  displayedColumns: string[] = ['surname', 'name', 'email', 'phone', 'actions'];
+
   sortingMethod$: Observable<TClientsSortingMethod>;
+  sortingConf$: Observable<ISortingConf>;
+
+  @ViewChild(MatSort) matSort: MatSort;
 
   constructor(
     private router: Router,
@@ -33,6 +40,10 @@ export class ClientsTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFromStore();
+  }
+
+  ngAfterViewInit(): void {
+    this.initSortingSubscription();
   }
 
   onDeleteButton(client: Client): void {
@@ -70,12 +81,20 @@ export class ClientsTableComponent implements OnInit {
     this.router.navigateByUrl(`clients/profile/${id}`);
   }
 
-  setSortingField(sortingMethodField: TClientsSortingField): void {
-    this.store.dispatch(clientsActions.setSortingField({sortingMethodField}));
+  setSortingConf(sortingConf: ISortingConf): void {
+    this.store.dispatch(clientsActions.setSortingConf({sortingConf}));
+  }
+
+  private initSortingSubscription(): void {
+    this.matSort.sortChange.subscribe(
+      (event: ISortingConf) => {
+        this.setSortingConf(event);
+      }
+    );
   }
 
   private getFromStore(): void {
-    this.sortingMethod$ = this.store.select(clientsSelector.getSortingMethod);
+    this.sortingConf$ = this.store.select(clientsSelector.getSortingConf);
   }
 
 }

@@ -1,24 +1,24 @@
-<div class="container">
+<!-- <div class="container">
     <div class="head-wrapper">
         <table class="table">
         <tbody>
             <tr class="head-row">
-                <td class="img-cell">Client</td>
-                <td class="surname-cell"
+                <class="img-cell">Client</mat-cell>
+                <class="surname-cell"
                     [class.sort-up]="(sortingMethod$ | async) === 'SURNAME_UP'"
                     [class.sort-down]="(sortingMethod$ | async) === 'SURNAME_DOWN'"
                     (click)="setSortingField('SURNAME')">Surname
-                </td>
-                <td class="name-cell"
+                </mat-cell>
+                <class="name-cell"
                     [class.sort-up]="(sortingMethod$ | async) === 'NAME_UP'"
                     [class.sort-down]="(sortingMethod$ | async) === 'NAME_DOWN'"
                     (click)="setSortingField('NAME')">Name
                     
-                </td>
-                <td class="email-cell">Email</td>
-                <td class="phone-cell">Phone</td>
-                <td class="profile-cell">Actions</td>
-                <td class="delete-cell"></td>
+                </mat-cell>
+                <class="email-cell">Email</mat-cell>
+                <class="phone-cell">Phone</mat-cell>
+                <class="profile-cell">Actions</mat-cell>
+                <class="delete-cell"></mat-cell>
             </tr>
         </tbody>
         </table>
@@ -28,18 +28,18 @@
             <table class="table">
             <tbody>
             <tr *ngFor="let client of clients">
-                <td class="img-cell tooltip"  (click)="onProfileButton(client.id)">
+                <class="img-cell tooltip"  (click)="onProfileButton(client.id)">
                     <span class="tooltip-text">Profile</span>
                     <div class="profile-img" 
                        
                         >     
                         </div>
-                </td>
-                <td class="surname-cell">{{client.surname}}</td>
-                <td class="name-cell">{{client.name}}</td>
-                <td class="email-cell">{{client.email}}</td>
-                <td class="phone-cell">{{client.phone}}</td>
-                <td class="profile-cell">
+                </mat-cell>
+                <class="surname-cell">{{client.surname}}</mat-cell>
+                <class="name-cell">{{client.name}}</mat-cell>
+                <class="email-cell">{{client.email}}</mat-cell>
+                <class="phone-cell">{{client.phone}}</mat-cell>
+                <class="profile-cell">
                     <button class="profile-button"
                     (click)="openBoughtHomes(client)">
                         Bought homes
@@ -54,17 +54,17 @@
                         (click)="onAddHome(client)">
                         Add viewed Home
                     </button>
-                </td>
-                <td class="delete-cell">
+                </mat-cell>
+                <class="delete-cell">
                     <div class="delete-button"
                         (click)="onDeleteButton(client)">X
                     </div>    
-                </td>
+                </mat-cell>
             </tr>
         </tbody>
         </table>
     </div>
-</div>
+</div> -->
 
  <!-- home list popup -->
  <div class="popup-homes-list" *ngIf="isPopupListHomes">
@@ -85,4 +85,82 @@
         (submitEvent)="deleteClient($event)"
         (cancelEvent)="isPopumMenu=false"
     ></app-clients-popup-deleting>
+
+<div class="container">
+    <mat-table 
+        [dataSource]="clients" 
+        class="mat-elevation-z8 table" 
+        matSort
+        [matSortActive]="(sortingConf$ | async).active"
+        [matSortDirection]="(sortingConf$ | async).direction">
+    <!-- <ng-container matColumnDef="client">
+        <mat-header-cell *matHeaderCellDef class="profile-cell"> Client </mat-header-cell>
+        <mat-cell *matCellDef="let client" class="profile-cell"> 
+            <a mat-button color="primary" routerLink="/clients/profile/{{client.id}}">
+                <mat-icon>person</mat-icon> Profile
+            </a>
+        </mat-cell>
+    </ng-container> -->
+    
+    <!-- Surname Column -->
+    <ng-container matColumnDef="surname">
+      <mat-header-cell mat-sort-header *matHeaderCellDef disableClear> Surname </mat-header-cell>
+      <mat-cell *matCellDef="let client"> {{client.surname}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Name </mat-header-cell>
+      <mat-cell *matCellDef="let client"> {{client.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+      <mat-cell *matCellDef="let client"> {{client.email}} </mat-cell>
+    </ng-container>
+
+    <!-- Phone Column -->
+    <ng-container matColumnDef="phone">
+        <mat-header-cell class="phone-cell" *matHeaderCellDef> Phone </mat-header-cell>
+        <mat-cell class="phone-cell" *matCellDef="let client"> {{client.phone}} </mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions" stickyEnd>
+        <mat-header-cell class="actions-cell" *matHeaderCellDef> Home's actions </mat-header-cell>
+        <mat-cell class="actions-cell" *matCellDef="let client"> 
+            <button mat-raised-button [matMenuTriggerFor]="menu" color="basic">
+                <mat-icon>menu</mat-icon>
+                Choose action
+            </button>
+            <mat-menu  #menu="matMenu">
+                <button mat-menu-item (click)="openBoughtHomes(client)">
+                    <mat-icon>payment</mat-icon>
+                    Look bought homes
+                </button>
+                <button mat-menu-item (click)="onViewedHome(client)">
+                    <mat-icon>list</mat-icon>
+                    Look viewed homes
+                </button>
+                <button mat-menu-item (click)="onAddHome(client)">
+                    <mat-icon>add</mat-icon>
+                    Add viewed home
+                </button>
+            </mat-menu>
+            <button mat-icon-button color="primary" routerLink="/clients/profile/{{client.id}}">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDeleteButton(client)">
+                <mat-icon>delete_forever</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+</div>
+
 

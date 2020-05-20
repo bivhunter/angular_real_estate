@@ -1,21 +1,30 @@
 
 <div class="container">
-    <div class="control-panel">
-        <app-clients-control-panel></app-clients-control-panel>    
-    </div>
-
-    <!-- info and button when clients are missed-->
-    <div class="no-clients" *ngIf="(clients$ | async) && !(clients$ | async).length">
-        <h1>No Clients</h1>
-        <button 
-        class=add-button
-        routerLink="/clients/adding">+ Add first client
-        </button>
-    </div>
-
-    <div class="content-wrapper" *ngIf="(clients$ | async) && (clients$ | async).length">
-        <app-clients-list 
+    <app-clients-control-panel class="control-panel"></app-clients-control-panel>   
+    
+     <!-- <div class="no-clients" *ngIf="(clients$ | async) && !(clients$ | async).length">
+            <h1>No Clients</h1>
+            <button 
+            class=add-button
+            routerLink="/clients/adding">+ Add first client
+            </button>
+        </div> -->
+    <app-clients-list class="cliets-list"
+        *ngIf="(clients$ | async) && (clients$ | async).length"
         [clients]="filteredClients$ | async"
-        ></app-clients-list>
-    </div>
+        >
+    </app-clients-list>
 </div>
+<!-- <div class=container>Loh rttry egfh fghj hj h h j   ghj hgjgh hgj hg hg ji</div -->
+<!-- <mat-grid-list cols="1" [rowHeight]="'93px'" [gutterSize]="0" class="container">
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+        
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="8">
+       
+    
+            
+    </mat-grid-tile>
+
+</mat-grid-list> -->

@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <img src="../../../assets/images/logo_clear_white.png">
     <h2>Client Management Application</h2>
 
@@ -27,4 +27,39 @@
             </span>
         </div>
     </div>
-</div>
+</div> -->
+
+<mat-toolbar color="primary" class="mat-elevation-z8">
+    <mat-toolbar-row>
+        <img src="../../../assets/images/logo_clear_white.png">
+        <span>Client Management Application</span>
+        <div class="right-container">
+            <span class="user-name" *ngIf="isAuthenticated && (user$ | async)">{{(user$ | async).fullName}}</span>
+            
+            <div class="user-button-wrapper" *ngIf="isAuthenticated">
+                <button 
+                    mat-mini-fab color="primary" 
+                    routerLinkActive="activated"
+                    routerLink="/user">
+                    <mat-icon>account_circle</mat-icon>
+                  </button>
+            </div>
+        
+            <div class="auth-button-wrapper">
+                <span class="auth-button" *ngIf="isAuthenticated"
+                    (click)="logOut()">LogOut
+                </span>    
+        
+                <span class="auth-button" *ngIf="!isAuthenticated && isLogin"
+                    routerLink="/authorization/registration">Sign Up
+                </span>
+        
+                <span 
+                    class="auth-button"
+                    routerLink="/authorization/login"    
+                    *ngIf="!isAuthenticated && !isLogin">Sign In
+                </span>
+            </div>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

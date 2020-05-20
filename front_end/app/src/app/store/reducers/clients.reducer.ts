@@ -1,4 +1,4 @@
-import { TClientsSortingMethod, TViewMode } from 'src/app/modules/shared/types/types';
+import { TClientsSortingMethod, TViewMode, ISortingConf } from 'src/app/modules/shared/types/types';
 import { createReducer, on } from '@ngrx/store';
 import * as clientsAction from '../actions/clients.action';
 import * as clientsApiAction from '../actions/clients-api.actions';
@@ -10,23 +10,23 @@ import { Client } from 'src/app/modules/clients/model/client';
 export interface State {
     clients: Client[];
     viewMode: TViewMode;
-    sortingMethod: TClientsSortingMethod;
+    sortingConf: ISortingConf;
     searchingString: string;
 }
 
 export const initState: State = {
     clients: null,
     viewMode: localStorage.getItem('viewClientsMode') as TViewMode || 'cards',
-    sortingMethod: 'SURNAME_UP',
-    searchingString: ''
+    sortingConf: {active: 'surname', direction: 'asc'},
+    searchingString: '',
 };
 
 export const clientsReducer = createReducer(
     initState,
-    on(clientsAction.setSortingField, (state, {sortingMethodField}) => {
+    on(clientsAction.setSortingConf, (state, {sortingConf}) => {
         return {
             ...state,
-            sortingMethod: selectClientsSortingMethod(state.sortingMethod, sortingMethodField)
+            sortingConf
         };
     }),
     on(clientsApiAction.setViewModeSuccess, (state, {viewMode}) => ({...state, viewMode})),
@@ -63,7 +63,7 @@ export const clientsReducer = createReducer(
 
 // for selectors
 export const getViewMode = (state: State) => state.viewMode;
-export const getSortingMethod = (state: State) => state.sortingMethod;
+export const getSortingConf = (state: State) => state.sortingConf;
 export const getSearchingString = (state: State) => state.searchingString;
 export const getClients = (state: State) => state.clients;
 

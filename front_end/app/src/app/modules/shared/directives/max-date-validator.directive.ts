@@ -5,7 +5,7 @@ import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
   selector: '[appMaxDateValidator]',
   providers: [{provide: NG_VALIDATORS, useExisting: MaxDateValidatorDirective, multi: true}]
 })
-export class MaxDateValidatorDirective implements Validator{
+export class MaxDateValidatorDirective implements Validator {
 
   @Input('appMaxDateValidator') minAge: number;
   private currentDate = new Date();

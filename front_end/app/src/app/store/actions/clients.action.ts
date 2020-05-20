@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { TViewMode, TClientsSortingField } from 'src/app/modules/shared/types/types';
+import { TViewMode, TClientsSortingField, ISortingConf } from 'src/app/modules/shared/types/types';
 import { Client } from 'src/app/modules/clients/model/client';
 
 
@@ -27,10 +27,13 @@ export const addHomeToClient = createAction(
     props<{homeId: string | number, clientId: string | number}>()
 );
 
-export const setSortingField = createAction(
-    '[Clients] Set Sorting Field',
-    props<{sortingMethodField: TClientsSortingField}>()
+export const setSortingConf = createAction(
+    '[Clients] Set Sorting Conf',
+    props<{sortingConf: ISortingConf}>()
 );
+
+
+
 
 export const setViewMode = createAction(
     '[Clients] Set View Mode',

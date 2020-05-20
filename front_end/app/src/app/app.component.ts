@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { Router, NavigationEnd, RouterOutlet, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { slideInAnimation } from './modules/shared/animation/animation';
@@ -20,7 +20,6 @@ export class AppComponent implements OnInit, OnDestroy {
   statusMessage: TMessage;
 
 
-  private authenticationSubscription: Subscription;
   private routeChangingSubscription: Subscription;
   private messageChangesSubscription: Subscription;
 
@@ -31,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.initData();
+    // this.initData();
     this.doRememberMe();
     this.initSubscribtion();
   }
@@ -55,11 +54,15 @@ export class AppComponent implements OnInit, OnDestroy {
   private initSubscribtion(): void {
      // listen router navigation
     this.routeChangingSubscription = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
+      filter(event => event instanceof NavigationStart)
     ).subscribe(
-      (event: NavigationEnd) => {
+      (event: NavigationStart) => {
         const url = event.url;
+        console.log('navigation start', url)
         this.isNavigationPanel = !url.includes('authorization');
+        if (!url.includes('authorization')) {
+          this.initData();
+        }
       }
     );
 
@@ -83,7 +86,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private unsubscribe(): void {
-    this.authenticationSubscription.unsubscribe();
     this.routeChangingSubscription.unsubscribe();
     this.messageChangesSubscription.unsubscribe();
   }

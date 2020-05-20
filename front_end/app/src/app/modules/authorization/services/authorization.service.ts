@@ -43,7 +43,8 @@ export class AuthorizationService {
   // for auth.guard
   checkAuthorization(): Observable<boolean> {
     return this.http.get<any>(this.clientUrl).pipe(
-      map(() => {
+      map((resp) => {
+        console.log(resp)
         return true;
       }),
 

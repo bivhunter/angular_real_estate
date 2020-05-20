@@ -18,9 +18,9 @@ export const getClients = createSelector(
     fromClients.getClients
 );
 
-export const getSortingMethod = createSelector(
+export const getSortingConf = createSelector(
     getClientsState,
-    fromClients.getSortingMethod
+    fromClients.getSortingConf
 );
 
 export const getSearchingString = createSelector(
@@ -30,7 +30,7 @@ export const getSearchingString = createSelector(
 
 export const getSortedClients = createSelector(
     getClients,
-    getSortingMethod,
+    getSortingConf,
     sortClients
 );
 

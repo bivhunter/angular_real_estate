@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="tooltip" (click)="onProfileButton()">
+    <!-- <div class="tooltip" (click)="onProfileButton()">
         <span class="tooltip-text">Profile</span>
         <div class="profile-img"
              >
@@ -25,7 +25,59 @@
         <button class="add-button"
         (click)="addHome()"
         >Add viewed Home</button>
-    </div>
+    </div> -->
+
+    <mat-card class="card mat-elevation-z4">
+        <mat-card-header>
+            <!-- <mat-icon>person</mat-icon> -->
+            <mat-card-title-group class="title-group">
+                <mat-card-title class="title">{{client.surname}}</mat-card-title>
+                <!-- <mat-card-subtitle>{{client.surname}}</mat-card-subtitle> -->
+                <mat-card-title class="title">{{client.name}}</mat-card-title>
+            </mat-card-title-group>
+          
+        </mat-card-header>
+        <mat-card-content>
+            <mat-list>
+                <mat-list-item>
+                    <mat-icon>email</mat-icon>
+                    {{client.email}}
+                </mat-list-item>    
+                <mat-list-item>
+                    <mat-icon>phone</mat-icon>
+                    {{client.phone}}
+                </mat-list-item>
+            </mat-list>
+            
+            <p></p>
+        </mat-card-content>
+        <mat-card-actions class="actions">
+            <button mat-raised-button [matMenuTriggerFor]="menu" color="basic">
+                <mat-icon>menu</mat-icon>
+                Choose action
+            </button>
+            <mat-menu  #menu="matMenu">
+                <button mat-menu-item (click)="openBoughtHomes()">
+                    <mat-icon>payment</mat-icon>
+                    Look bought homes
+                </button>
+                <button mat-menu-item (click)="openHomes()">
+                    <mat-icon>list</mat-icon>
+                    Look viewed homes
+                </button>
+                <button mat-menu-item (click)="addHome()">
+                    <mat-icon>add</mat-icon>
+                    Add viewed home
+                </button>
+            </mat-menu>
+            <button mat-icon-button color="primary" routerLink="/clients/profile/{{client.id}}">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="isPopupDeleting=true">
+                <mat-icon>delete_forever</mat-icon>
+            </button>
+        </mat-card-actions>
+      </mat-card>
 
     <!-- adding home list popup -->
     <div class="popup-homes-list" *ngIf="isPopupListHomes">

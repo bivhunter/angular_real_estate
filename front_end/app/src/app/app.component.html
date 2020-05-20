@@ -1,4 +1,4 @@
-<div class="header">
+<!-- <div class="header">
     <div class="header-content-wrapper">
         <app-header></app-header>
     </div>
@@ -22,7 +22,28 @@
     <div class="header-content-wrapper">
         <app-footer></app-footer>
     </div>
-</div>
+</div> -->
+
+
+<!-- <mat-grid-list cols="10"  [rowHeight]="'64.6px'" [gutterSize]="0">
+    <mat-grid-tile colspan="10" [rowspan]="1">
+      
+    </mat-grid-tile>
+    
+    <mat-grid-tile colspan="1" [rowspan]="13">
+        <app-navigation *ngIf="isNavigationPanel"></app-navigation>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="9" [rowspan]="13">
+        <div class="router-outlet" [@routeAnimations]="prepareRoute(outlet)">
+            <router-outlet #outlet="outlet"></router-outlet>
+        </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="10" [rowspan]="1" >
+        <app-footer></app-footer>
+    </mat-grid-tile>
+</mat-grid-list> -->
 
 <div class="message-wrapper">
     <app-status-message 
@@ -30,3 +51,19 @@
         [message]="statusMessage"></app-status-message>    
 </div>
 
+<app-header></app-header>
+<div class="container">
+    <mat-grid-list cols="10" [rowHeight]="'100%'">
+    <mat-grid-tile colspan="1" >
+        <app-navigation *ngIf="isNavigationPanel"></app-navigation>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="9" >
+        <div class="router-outlet" [@routeAnimations]="prepareRoute(outlet)">
+            <router-outlet #outlet="outlet"></router-outlet>
+        </div>
+    </mat-grid-tile>
+ </mat-grid-list>
+</div>
+<app-footer></app-footer>
+ 

@@ -22,13 +22,8 @@
 
 
 img {
-    height: 40px;
-}
-
-h2 {
-    margin: 0 20px 0 20px;
-    flex: 1 1 200px;
-    font-size: large;
+    height: 80%;
+    margin-right: 10px;
 }
 
 .user-name {

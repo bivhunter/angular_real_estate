@@ -1,133 +1,109 @@
 <div class="container">
-    <h1>Registration</h1>
+    <mat-card elevation="20">
+        <mat-card-header *ngIf="!registration.status">
+          <mat-card-title color="primary">Registration</mat-card-title>
+          <mat-card-subtitle>Don't have an account? Create free account</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content *ngIf="!registration.status">
+            <form [formGroup]="registrationForm">
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Fullname</mat-label>
+                    <input 
+                        matInput 
+                        placeholder="Surname Name"
+                        type="text" 
+                        formControlName="fullname"
+                        maxlength="30"
+                        >
+                    <mat-icon matSuffix>face</mat-icon>
+                    <!-- <mat-hint>Type surname and name</mat-hint> -->
+                    <mat-error *ngIf="registrationForm.controls['fullname'].invalid && (registrationForm.controls['fullname'].touched)">
+                        Incorrect Fullname
+                    </mat-error>
+                </mat-form-field>
+                <br>
     
-    <!-- Registration form -->
-    <form #registrationForm="ngForm"
-        *ngIf = "!registration.status"
-        (ngSubmit)="email.reset(user.email); onSubmit();"> 
-        
-        <p class="h-text"> Don't have an account? Create free account</p>
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input 
+                        matInput 
+                        placeholder="your@email"
+                        type="text" 
+                        autocomplete="email"
+                        formControlName="email"
+                        >
+                    <mat-icon matSuffix>alternate_email</mat-icon>
 
-        <!-- FullName field -->
-        <div class="form-group">
-            <label for="fullName">Full Name</label>
-            <input 
-                #fullname="ngModel"
-                type="text" 
-                class="form-control" 
-                id="fullName"
-                [(ngModel)] = "user.fullName"
-                name="fullName"
-                placeholder="Enter your Name and Surname"
-                pattern="[A-Za-zА-Яа-яЁё]+\s[A-Za-zА-Яа-яЁё]+"
-                required
-               >
-               <!-- NoValid alert -->
-            <div class="alert">
-                <div class="alert-danger" *ngIf="fullname.invalid && (fullname.touched)">Incorrect Full Name</div>
-                <div> </div>
-            </div>       
-        </div>
-      
-        <!-- Email field -->
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input 
-                #email="ngModel"
-                type="email" 
-                class="form-control" 
-                id="email" 
-                required
-                [(ngModel)]="user.email"
-                name="email"
-                placeholder="Enter your email"
-                pattern= "\w[[A-Za-z0-9_]*[@]\w\S+$"
-                [class.invalid]="!isUniqueEmail && email.pristine"  
-                autocomplete="email"
-                >
+                    <mat-error *ngIf="( registrationForm.controls['email'].errors 
+                                && (registrationForm.controls['email'].errors.email || registrationForm.controls['email'].errors.required)) 
+                                && (registrationForm.controls['email'].touched)">
+                        Incorrect email
+                    </mat-error>
+                    <mat-error *ngIf=" registrationForm.controls['email'].errors && registrationForm.controls['email'].errors.toggleValidator">
+                        This email already exist
+                    </mat-error>
+                </mat-form-field>
+                <br>
+    
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input 
+                        matInput 
+                        placeholder="Password"
+                        [type]="isHidePassword ? 'password' : 'text'"
+                        autocomplete="new-password"
+                        formControlName="password"
+                        >
+                    <button mat-icon-button matSuffix 
+                        (click)="isHidePassword = !isHidePassword" 
+                        [attr.aria-label]="'Hide password'" 
+                        [attr.aria-pressed]="isHidePassword">
+                        <mat-icon>{{isHidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
 
-                <!-- NoValid alert -->
-            <div class="alert" 
-                >
-                <div class="alert-danger" 
-                *ngIf="email.invalid && (email.touched)">Incorrect email</div>
-                <!-- No unique email -->
-                <div class="alert-danger" 
-                *ngIf="!isUniqueEmail && email.pristine" >
-                    This email already exists
-                </div> 
-                <div> </div>
-            </div>   
-        </div>
+                    <mat-error *ngIf="registrationForm.controls['password'].invalid && (registrationForm.controls['password'].touched)">Password must be longer than 5 characters</mat-error>
+                </mat-form-field>
+    
+                <br>
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Rate</mat-label>
+                    <input 
+                        matInput
+                        placeholder="rate"
+                        type="text" 
+                        formControlName="rate"
+                        >
+                    <mat-icon matSuffix>attach_money</mat-icon>
 
-        <!-- Password field  -->
-        <div class="form-group">
-            <label for="paswword">Password</label>
-            <input 
-                #password="ngModel"
-                autocomplete="new-password"
-                type="password" 
-                class="form-control" 
-                id="paswword" 
-                required
-                minlength="6"
-                [(ngModel)]="user.password"
-                name="password"
-                placeholder="Enter your password"
-                >
-
-                <!-- No valid alert -->
-            <div class="alert">
-                <div class="alert-danger" 
-                    *ngIf="password.invalid && (password.touched)">Password must be longer than 5 characters</div>
-                <div> </div>
-            </div>     
-        </div>
-
-        <!-- Rate field -->
-        <div class="form-group">
-            <label for="rate">Rate</label>
-            <input 
-                #rate="ngModel"
-                type="text" 
-                class="form-control" 
-                id="rate"
-                [ngModel]="user?.rate | currency:'CAD':'symbol-narrow':'1.0-0':'fr'"
-                (ngModelChange)="onRateChange($event)"
-                required
-                pattern="[0-9,\s]*[$]{1}"
-                name="rate"
-                placeholder="Enter rate">
-
-                <!-- No valid alert -->
-                <div class="alert">
-                <div class="alert-danger" 
-                   *ngIf="rate.invalid && (rate.touched)">Incorrect number</div>
-                <div> </div>
-                </div>     
-        </div>
-
-        <!-- Terms checkbox -->
-        <div class="form-group-checkbox">
-            <input type="checkbox" class="form-control-checkbox" id="terms"
-                [(ngModel)]="isAcceptedTerms"
-                required
-                name="terms">I accept terms and Conditions
-        </div>
-
-        <!-- Submit button -->
-        <button type="submit" class="button-submit"
-        [disabled]="!registrationForm.form.valid"
-        >Create Account</button>
-
-    </form>
-
-
-    <!-- Successfull registration -->
-    <div>
-        <p class="h-text">{{registration.text}}
-            <a routerLink='/authorization/login' class="route-link">Sign in</a>
-            please
-        </p>
-    </div>
+                    <mat-error *ngIf="registrationForm.controls['rate'].invalid && (registrationForm.controls['rate'].touched)">
+                        Incorrect number
+                    </mat-error>
+                </mat-form-field>
+                <br>
+    
+                <mat-checkbox 
+                    formControlName="terms"
+                    color="primary"
+                    [value]="false"
+                    required>
+                    I accept terms and Conditions
+                </mat-checkbox>
+            </form>
+        </mat-card-content>
+        <mat-card-actions *ngIf="!registration.status">
+            <button mat-raised-button
+                class="button"
+                color="primary"
+                [disabled]="!registrationForm.valid"
+                (click)="onSubmit()"
+            >
+            Create Account
+            </button>
+        </mat-card-actions>
+    
+        <mat-card-footer >
+            <mat-card-subtitle>{{registration.text}}</mat-card-subtitle>
+            <a routerLink="/authorization/login" mat-flat-button >Sign in</a>
+        </mat-card-footer>
+    </mat-card>
 </div>
