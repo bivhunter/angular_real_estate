@@ -8,6 +8,8 @@ import * as clientsSelector from 'src/app/store/selectors/clients.selector';
 import * as clientsActions from 'src/app/store/actions/clients.action';
 import { MatSort } from '@angular/material/sort';
 import { getSortingConf } from './../../../../store/selectors/clients.selector';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupQuestionComponent } from 'src/app/modules/shared/components/popup-question/popup-question.component';
 
 @Component({
   selector: 'app-clients-table',
@@ -35,7 +37,8 @@ export class ClientsTableComponent implements OnInit, AfterViewInit  {
 
   constructor(
     private router: Router,
-    private store: Store
+    private store: Store,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -47,13 +50,23 @@ export class ClientsTableComponent implements OnInit, AfterViewInit  {
   }
 
   onDeleteButton(client: Client): void {
-    this.currentClient = {...client};
-    this.isPopumMenu = true;
+    const deleteDialog = this.dialog.open(PopupQuestionComponent, {
+      data: {
+        title: 'Delete Client!',
+        client
+      }
+    });
+    deleteDialog.afterClosed().subscribe(
+      answer => {
+        if (answer) {
+          this.deleteClient(client.id);
+        }
+      }
+    );
   }
 
   deleteClient(id: number | string): void {
     this.store.dispatch(clientsActions.deleteClient({id}));
-    this.isPopumMenu = false;
   }
 
   openBoughtHomes(client: Client): void {

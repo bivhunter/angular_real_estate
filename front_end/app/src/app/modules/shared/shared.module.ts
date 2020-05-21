@@ -30,6 +30,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MinDateValidatorDirective } from './directives/min-date-validator.directive';
+import {MatDialogModule} from '@angular/material/dialog';
 
 registerLocaleData(localeFr);
 const materialModules = [
@@ -50,7 +51,8 @@ const materialModules = [
   MatRadioModule,
   MatTableModule,
   MatSortModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatDialogModule
 ];
 
 

@@ -23,7 +23,8 @@ export class ClientsListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: Store
+    private store: Store,
+    
   ) { }
 
   ngOnInit(): void {

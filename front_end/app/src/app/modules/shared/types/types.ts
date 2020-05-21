@@ -1,3 +1,5 @@
+import { Client } from '../../clients/model/client';
+
 // views mod
 export type TViewMode = keyof {
     list: string,
@@ -28,3 +30,9 @@ export interface TMessage {
   }
 
 type TMessageStatus = 'error' | 'warn' | 'info';
+
+export interface IPopupQuestionConf {
+  title: string;
+  content: string;
+  client?: Client;
+}

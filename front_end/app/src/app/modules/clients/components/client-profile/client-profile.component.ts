@@ -11,6 +11,9 @@ import { Store } from '@ngrx/store';
 import * as clientsActions from 'src/app/store/actions/clients.action';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupDeactivateComponent } from './../../../shared/components/popup-deactivate/popup-deactivate.component';
+import { PopupQuestionComponent } from 'src/app/modules/shared/components/popup-question/popup-question.component';
 
 @Component({
   selector: 'app-client-profile',
@@ -29,11 +32,6 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   mainTitle: string;
   isAddingMode: boolean;
 
-  // popup
-  isPopupQuestion = false;
-  popupTitle: string;
-  text: string;
-
   // for canDiactivate
   isCanDeactivatePopup = false;
   private isSubmit = false;
@@ -41,10 +39,10 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private popupService: PopupService,
     private clientsFilteringService: ClientsFilteringService,
     private store: Store,
-    private adapter: DateAdapter<any>
+    private adapter: DateAdapter<any>,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -72,40 +70,21 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     if (this.isSubmit || this.compareClient() ) {
       return of(true);
     }
-    this.isCanDeactivatePopup = true;
 
-    return this.popupService.canDeactivate(next).pipe(
-      tap((checking) => {
-          this.isCanDeactivatePopup = false;
-      })
-    );
+    const dialogRef = this.dialog.open(PopupDeactivateComponent);
+    return dialogRef.afterClosed();
   }
 
 
   // buttons click handler
-  onEditClient(): void {
-    if (this.compareClient()) {
-      this.navigateBack();
-    } else {
-    this.popupTitle = 'Save changes!';
-    this.openPopupQuestion();
-    }
-  }
-
-  onAddClient(): void {
-    this.popupTitle = 'Add client!';
-    this.openPopupQuestion();
-  }
-
   onSave(): void {
     this.getFromForm();
     if (this.isAddingMode) {
-      this.onAddClient();
+      this.openAddQuestion();
     } else {
-      this.onEditClient();
+      this.openSaveQuestion();
     }
   }
-
 
   onCancelButtonClick() {
     this.getFromForm();
@@ -113,24 +92,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
       this.isSubmit = true;
       this.navigateBack();
     } else {
-      this.popupTitle = 'Cancel changes!';
-      this.openPopupQuestion();
-    }
-  }
-
-  // popup question events  handler
-  onCancel(): void {
-    this.isPopupQuestion = false;
-  }
-
-  onSubmit(): void {
-    if (this.popupTitle === 'Cancel changes!') {
-      this.isSubmit = true;
-      this.navigateBack();
-    } else if (this.popupTitle === 'Add client!') {
-      this.addClient();
-    } else if (this.popupTitle === 'Save changes!') {
-      this.updateClient();
+      this.openCancelQuestion();
     }
   }
 
@@ -152,6 +114,89 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
       ...this.client,
       ...fV
     };
+  }
+
+  private updateClient(): void {
+    this.store.dispatch(clientsActions.updateClient({client: this.client}));
+    this.navigateBack();
+  }
+
+  private addClient(): void {
+    this.store.dispatch(clientsActions.addClient({client: this.client}));
+    this.navigateBack();
+  }
+
+  private navigateBack(): void {
+    this.isSubmit = true;
+    this.location.back();
+  }
+
+  private openCancelQuestion(): void {
+    const cancelDialog = this.dialog.open(PopupQuestionComponent, {
+      data: {
+        title: `Cancel client's profile changes!`,
+        content: 'All changes will be lost'
+      }
+    });
+
+    cancelDialog.afterClosed().subscribe(
+      answer => {
+        if (answer) {
+          this.navigateBack();
+        }
+      }
+    );
+  }
+
+  private openSaveQuestion(): void {
+    const saveDialog = this.dialog.open(PopupQuestionComponent, {
+      data: {
+        title: `Save client's profile changes!`,
+        content: '',
+        client: this.client
+      }
+    });
+
+    saveDialog.afterClosed().subscribe(
+      answer => {
+        if (answer) {
+          this.updateClient();
+        }
+      }
+    );
+  }
+
+  private openAddQuestion(): void {
+    const saveDialog = this.dialog.open(PopupQuestionComponent, {
+      data: {
+        title: 'Add new client!',
+        content: '',
+        client: this.client
+      }
+    });
+
+    saveDialog.afterClosed().subscribe(
+      answer => {
+        if (answer) {
+          this.addClient();
+        }
+      }
+    );
+  }
+
+  // compare for changes
+  private compareClient(): boolean {
+    for (const prop in this.client) {
+      if ((this.initClient[prop] === undefined) || (this.initClient[prop] !== this.client[prop])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private onGetClient(client: Client): void {
+    this.client = {...client};
+    this.initClient = {...client};
   }
 
   private createForm(): void {
@@ -187,44 +232,6 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
       }
     );
   }
-
-  private updateClient(): void {
-    this.store.dispatch(clientsActions.updateClient({client: this.client}));
-    this.isSubmit = true;
-    this.navigateBack();
-  }
-
-  private addClient(): void {
-    this.store.dispatch(clientsActions.addClient({client: this.client}));
-    this.isSubmit = true;
-    this.navigateBack();
-  }
-
-  private navigateBack(): void {
-    this.isPopupQuestion = false;
-    this.location.back();
-  }
-
-  private openPopupQuestion(): void {
-    this.isPopupQuestion = true;
-  }
-
-  // compare for changes
-  private compareClient(): boolean {
-    for (const prop in this.client) {
-      if ((this.initClient[prop] === undefined) || (this.initClient[prop] !== this.client[prop])) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  private onGetClient(client: Client): void {
-    this.client = {...client};
-    this.initClient = {...client};
-  }
-
-
 }
 
 function dateValidator(): ValidatorFn {

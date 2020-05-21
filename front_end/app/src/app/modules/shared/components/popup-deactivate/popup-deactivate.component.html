@@ -1,15 +1,9 @@
-<div class="popup-wrapper">
-    <div class="popup">
-        <h2>Do you want to leave?</h2>
-        <h3>All data will be lost</h3>
-        <h3>Are you sure?</h3>
-
-        <div class="buttons-wrapper">
-            <button class="yes-button" (click)="onYes()">Yes</button>
-            <button class="no-button" (click)="onNo()">No</button>
-        </div>
-    </div>
+<h1 mat-dialog-title>Do you want to leave?</h1>
+<div mat-dialog-content>
+  <p>All data will be lost</p>
+  <p>Are you sure?</p>
 </div>
-
-<div class="cover-div"></div>
-
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>No</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">Yes</button>
+</div>

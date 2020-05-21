@@ -1,5 +1,5 @@
 /* full screen opacity style */
-.cover-div {
+/* .cover-div {
     position: fixed;
     top: 0;
     left: 0;
@@ -9,10 +9,10 @@
     background-color: gray;
     opacity: 0.3;
     overflow: hidden;
-}
+} */
 
 /* popup menu styles */
-.popup-wrapper {
+/* .popup-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -49,10 +49,10 @@ p {
 h3, h2 {
     margin-bottom: 5px;
     text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
-}
+} */
 
 /* buttons style */
-.yes-button {
+/* .yes-button {
     text-shadow: 1px 1px 2px rgba(165, 16, 16, 1);
 }
 
@@ -82,4 +82,4 @@ button {
     height: 30px;
     font-size: 15px;
     border-radius: 5px;
-}
+} */

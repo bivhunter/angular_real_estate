@@ -73,7 +73,7 @@
             <button mat-icon-button color="primary" routerLink="/clients/profile/{{client.id}}">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="isPopupDeleting=true">
+            <button mat-icon-button color="warn" (click)="onDeleteButton()">
                 <mat-icon>delete_forever</mat-icon>
             </button>
         </mat-card-actions>
@@ -91,7 +91,7 @@
     </div>
 
     <!-- remove client popup -->
-    <div class="popup-deleting" *ngIf="isPopupDeleting">
+    <!-- <div class="popup-deleting" *ngIf="isPopupDeleting">
         <app-clients-popup-deleting
             [client]="client"
             (cancelEvent)="isPopupDeleting=false"
@@ -99,7 +99,7 @@
         >
         </app-clients-popup-deleting>
 
-    </div>
+    </div> -->
 </div>
 
 

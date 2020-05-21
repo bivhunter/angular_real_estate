@@ -3,6 +3,8 @@ import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as clientsActions from 'src/app/store/actions/clients.action';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupQuestionComponent } from 'src/app/modules/shared/components/popup-question/popup-question.component';
 
 @Component({
   selector: 'app-client-card',
@@ -10,8 +12,6 @@ import * as clientsActions from 'src/app/store/actions/clients.action';
   styleUrls: ['./client-card.component.css']
 })
 export class ClientCardComponent implements OnInit {
-
-  isPopupDeleting = false; // for toggle delete popup menu
 
   isPopupListHomes = false; // for toggle list of homes popup
   isAddingHomesView: boolean; // adding or viewedHomes mode for list of homes popup
@@ -21,15 +21,31 @@ export class ClientCardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: Store
+    private store: Store,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
   }
 
+  onDeleteButton(): void {
+    const deleteDialog = this.dialog.open(PopupQuestionComponent, {
+      data: {
+        title: 'Delete Client!',
+        client: this.client
+      }
+    });
+    deleteDialog.afterClosed().subscribe(
+      answer => {
+        if (answer) {
+          this.deleteClient(this.client.id);
+        }
+      }
+    );
+  }
+
   deleteClient(id: string | number): void {
     this.store.dispatch(clientsActions.deleteClient({id}));
-    this.isPopupDeleting = false;
   }
 
   openBoughtHomes(): void {

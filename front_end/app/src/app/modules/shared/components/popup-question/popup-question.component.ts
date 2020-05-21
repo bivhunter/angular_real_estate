@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { IPopupQuestionConf } from '../../types/types';
 
 @Component({
   selector: 'app-popup-question',
@@ -12,7 +14,9 @@ export class PopupQuestionComponent implements OnInit {
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() cancelEvent: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: IPopupQuestionConf
+  ) { }
 
   ngOnInit(): void {
   }
