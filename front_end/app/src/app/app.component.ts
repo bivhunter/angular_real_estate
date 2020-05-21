@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, NavigationEnd, RouterOutlet, NavigationStart } from '@angular/router';
+import { Router, RouterOutlet, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { slideInAnimation } from './modules/shared/animation/animation';
@@ -58,7 +58,6 @@ export class AppComponent implements OnInit, OnDestroy {
     ).subscribe(
       (event: NavigationStart) => {
         const url = event.url;
-        console.log('navigation start', url)
         this.isNavigationPanel = !url.includes('authorization');
         if (!url.includes('authorization')) {
           this.initData();

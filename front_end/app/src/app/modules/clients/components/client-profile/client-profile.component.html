@@ -1,194 +1,157 @@
 <div class="container">
-    <h1>{{mainTitle}}</h1>
+    <mat-card class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title color="primary">Client's profile</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="profileForm">
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input 
+                        matInput 
+                        placeholder="Name"
+                        type="text" 
+                        formControlName="name"
+                        maxlength="20"
+                        >
+                    <mat-icon matSuffix>face</mat-icon>
+                    <mat-error *ngIf="profileForm.controls['name'].invalid && (profileForm.controls['name'].touched)">
+                        Incorrect Name
+                    </mat-error>
+                </mat-form-field>
+                <br>
     
-    <!-- Profile form -->
-    <form  #clientProfileForm="ngForm"> 
-        
-        <!-- Name field -->
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input 
-                #name="ngModel"
-                type="text" 
-                class="form-control" 
-                id="name"
-                [ngModel] = "client?.name"
-                (ngModelChange) = "client.name = $event"
-                name="name"
-                placeholder="Enter client's name"
-                maxlength="20"
-                pattern="[A-Za-z]+"
-                required
-               >
-               <!-- NoValid alert -->
-            <div class="alert" >
-                <div class="alert-danger" *ngIf="name.invalid && (name.touched)">Incorrect name</div>
-                <div> </div>
-            </div>       
-        </div>
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Surname</mat-label>
+                    <input 
+                        matInput 
+                        placeholder="Surname"
+                        type="text" 
+                        formControlName="surname"
+                        maxlength="30"
+                        >
+                    <mat-icon matSuffix>face</mat-icon>
+                    <mat-error *ngIf="profileForm.controls['surname'].invalid 
+                                    && (profileForm.controls['surname'].touched)">
+                        Incorrect Name
+                    </mat-error>
+                </mat-form-field>
+                <br>
 
-         <!-- Surname field -->
-         <div class="form-group">
-            <label for="surname">Surname</label>
-            <input 
-                #surname="ngModel"
-                type="text" 
-                class="form-control" 
-                id="surname"
-                [ngModel] = "client?.surname"
-                (ngModelChange) = "client.surname = $event"
-                name="surname"
-                placeholder="Enter client's surname"
-                maxlength="25"
-                pattern="[A-Za-z]+"
-                required
-               >
-               <!-- NoValid alert -->
-            <div class="alert">
-                <div class="alert-danger" *ngIf="surname.invalid && (surname.touched)">Incorrect surname</div>
-                <div> </div>
-            </div>       
-        </div>
-      
-         <!-- Email field -->
-         <div class="form-group">
-            <label for="email">Email</label>
-            <input 
-                #email="ngModel"
-                type="email" 
-                class="form-control" 
-                id="email" 
-                required
-                [ngModel] = "client?.email"
-                (ngModelChange) = "client.email = $event"
-                name="email"
-                placeholder="Enter client's email"
-                pattern= "\w[[A-Za-z0-9_]*[@]\w\S+$"
-                >
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input 
+                        matInput 
+                        placeholder="your@email"
+                        type="text" 
+                        autocomplete="email"
+                        formControlName="email"
+                        >
+                    <mat-icon matSuffix>alternate_email</mat-icon>
 
-                <!-- NoValid alert -->
-            <div class="alert" 
-                >
-                <div class="alert-danger" *ngIf="email.invalid && (email.touched)">Incorrect email</div>
-                <div> </div>
-            </div>   
-        </div>
+                    <mat-error *ngIf="( profileForm.controls['email'].errors 
+                                && (profileForm.controls['email'].errors.email || profileForm.controls['email'].errors.required)) 
+                                && (profileForm.controls['email'].touched)">
+                        Incorrect email
+                    </mat-error>
+                </mat-form-field>
+                <br>
 
-         <!-- addres field -->
-         <div class="form-group">
-            <label for="addres">Location</label>
-            <input 
-                #addres="ngModel"
-                type="text" 
-                class="form-control" 
-                id="addres"
-                [ngModel] = "client?.address"
-                (ngModelChange) = "client.address = $event"
-                name="addres"
-                placeholder="Enter client's addres"
-                pattern="[A-Za-z\d]+[A-Za-z\s\d]+[A-Za-z\d]+"
-                maxlength="50"
-                required
-               >
-               <!-- NoValid alert -->
-            <div class="alert" 
-                >
-                <div class="alert-danger" *ngIf="addres.invalid && (addres.touched)">Incorrect location</div>
-                <div> </div>
-            </div>       
-        </div>
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Location</mat-label>
+                    <input 
+                        matInput 
+                        placeholder="Location"
+                        type="text" 
+                        formControlName="address"
+                        maxlength="30"
+                        >
+                    <mat-icon matSuffix>location_city</mat-icon>
+                    <mat-error *ngIf="profileForm.controls['address'].invalid 
+                                    && (profileForm.controls['address'].touched)">
+                        Incorrect location
+                    </mat-error>
+                </mat-form-field>
+                <br>
+    
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Phone</mat-label>
+                    <input 
+                        matInput
+                        placeholder="+__ (___) ___ ____"
+                        type="text" 
+                        formControlName="phone"
+                        >
+                    <mat-icon matSuffix>phone_enabled</mat-icon>
 
-       
+                    <mat-error *ngIf="profileForm.controls['phone'].invalid 
+                                    && (profileForm.controls['phone'].touched)">
+                        Incorrect phone
+                    </mat-error>
+                </mat-form-field>
+                <br>
 
-        <!-- Phone field -->
-        <div class="form-group">
-            <label for="phone">Phone</label>
-            <input 
-                #phone="ngModel"
-                type="text" 
-                class="form-control" 
-                id="phone"
-                [ngModel]="client?.phone"
-                (ngModelChange)="onPhoneChange($event)"
-                required
-                pattern="[+]{1}[1-9]{1}[0-9]{1}\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}"
-                name="phone"
-                placeholder="Enter client's phone">
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Date of Birth</mat-label>
+                    <input 
+                        matInput
+                        placeholder="dd.mm.yyyy"
+                        [matDatepicker]="dp"
+                        formControlName="birthday"
+                        appMaxDateValidator="18"
+                        appMinDateValidator="100"
+                        >
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp></mat-datepicker>
 
-                <!-- No valid alert -->
-                <div class="alert" 
-                >
-                <div class="alert-danger" 
-                *ngIf="phone.invalid && (phone.touched)">Incorrect number</div>
-                <div> </div>
-                </div>     
-        </div>
+                    <mat-error *ngIf="profileForm.controls['birthday'].hasError('dateValidator') 
+                                    && (profileForm.controls['birthday'].touched)">
+                        Incorrect date
+                    </mat-error>
+                    <mat-error *ngIf="profileForm.controls['birthday'].hasError('maxDateValidator')">
+                        You are under 18 years old
+                    </mat-error>
+                    <mat-error *ngIf="profileForm.controls['birthday'].hasError('minDateValidator')">
+                        You are over 100 years old
+                    </mat-error>
+                </mat-form-field>
+                <br>
+            </form>
 
-        <!-- Birthday Date field -->
-        <div class="form-group">
-            <label for="birthday">Date of birth</label>
-            <input 
-                #birthday="ngModel"
-                type="date" 
-                class="form-control birthday" 
-                id="birthday"
-                [ngModel]="client?.birthday | date:'yyyy-MM-dd'"
-                (ngModelChange)="onBirthdayChange($event)"
-                [appMaxDateValidator]="18"
-                pattern="\d\d\d\d-\d\d-\d\d"
-                required
-                name="birthday"
-                placeholder="Enter client's Birthday Date">
 
-                <!-- No valid alert -->
-                <div class="alert" 
-                >
-                <div class="alert-danger" 
-                *ngIf="(birthday.invalid) && (birthday.touched) ">Incorrect Date</div>
-                <div> </div>
-                </div>     
-        </div>
+            <table *ngIf="!isAddingMode" class="table">
+                <tr>
+                    <td>Registration date</td>
+                    <td>{{client?.createdAt | date:'dd-MM-yyyy'}}</td>
+                </tr>
+                <tr>
+                    <td>Bought Homes</td>
+                    <td>{{client?.homes.length || 0}}</td>
+                </tr>
+            </table>
 
-          <!-- Adding Date -->
-        <div class="form-group" *ngIf="!isAddingMode">
-            <span class="label">Registration date</span>
-            <span class="info">{{client?.createdAt | date:'dd-MM-yyyy'}}</span>
-        </div>
+        </mat-card-content>
+        <mat-card-actions class="actions-wrapper">
+            <button mat-raised-button
+            (click)="onCancelButtonClick()">
+                Cancel
+            </button>
 
-         <!-- Level -->
-         <div class="form-group" *ngIf="!isAddingMode">
-            <span class="label">Bought Homes</span>
-            <span class="info">{{client?.homes.length || 0}}</span>
-        </div>
+            <button mat-raised-button
+            (click)="onCancelButtonClick()">
+                Back
+            </button>
 
-        <div class="button-wrapper">
-            <!-- Cancel button -->
-            <button type="button" class="button-cancel"
-            (click)="onCancelButtonClick()"
-            >Cancel</button>
-            
-            <!-- Back button -->
-            <button type="button" class="button-cancel"
-            (click)="onCancelButtonClick()"
-            >Back</button>
-            
-                    <!-- Submit button for adding mode -->
-            <button type="submit" 
-            *ngIf = "isAddingMode"
-            class="button-submit"
-            [disabled]="!clientProfileForm.form.valid"
-            (click)="onAddClient()"
-            >Submit</button>
-
-       <!-- Submit button for editing mode -->
-            <button type="submit" 
-            *ngIf = "!isAddingMode"
-            class="button-submit"
-            [disabled]="!clientProfileForm.form.valid"
-            (click)="onEditClient()"
-            >Save</button>
-        </div>
-    </form>
+            <button mat-raised-button
+                class="button"
+                color="primary"
+                [disabled]="!profileForm.valid"
+                (click)="onSave()"
+            >
+            Save
+            </button>
+        </mat-card-actions>
+    </mat-card>
 </div>
 
 <!-- popup question -->

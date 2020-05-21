@@ -42,7 +42,6 @@ export class ClientsListComponent implements OnInit {
   private getFromStore(): void {
     this.viewMode$ = this.store.select(clientsSelector.getViewMode);
     this.sortingConf$ = this.store.select(clientsSelector.getSortingConf).pipe(
-      tap(val => console.log(val))
     );
   }
 

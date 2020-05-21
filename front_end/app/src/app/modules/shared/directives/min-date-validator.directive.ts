@@ -2,12 +2,12 @@ import { Directive, Input } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 
 @Directive({
-  selector: '[appMaxDateValidator]',
-  providers: [{provide: NG_VALIDATORS, useExisting: MaxDateValidatorDirective, multi: true}]
+  selector: '[appMinDateValidator]',
+  providers: [{provide: NG_VALIDATORS, useExisting: MinDateValidatorDirective, multi: true}]
 })
-export class MaxDateValidatorDirective implements Validator {
+export class MinDateValidatorDirective implements Validator {
 
-  @Input('appMaxDateValidator') minAge: number;
+  @Input('appMinDateValidator') maxAge: number;
   private currentDate = new Date();
   private validDate: Date;
 
@@ -15,16 +15,16 @@ export class MaxDateValidatorDirective implements Validator {
 
   validate(control: AbstractControl): {[key: string]: any} | null {
     this.validDate = this.getValidDate();
-    if (this.validDate.valueOf() > Date.parse(control.value) || !control.value) {
+    if (this.validDate.valueOf() < Date.parse(control.value) || !control.value) {
       return null;
     }
-    return {maxDateValidator: true};
+    return {minDateValidator: true};
   }
 
   private getValidDate(): Date {
     const nowYear = this.currentDate.getFullYear();
     const newDate = new Date();
-    newDate.setFullYear(nowYear - this.minAge);
+    newDate.setFullYear(nowYear - this.maxAge);
     return newDate;
   }
 

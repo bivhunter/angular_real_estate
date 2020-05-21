@@ -41,7 +41,6 @@ export class ClientsControlPanelComponent implements OnInit {
   }
 
   changeFilter(searchingString: string): void {
-    console.log('change', searchingString)
     this.store.dispatch(clientsActions.setSearchingString({searchingString}));
   }
 

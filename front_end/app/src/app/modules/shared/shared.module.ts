@@ -28,6 +28,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MinDateValidatorDirective } from './directives/min-date-validator.directive';
 
 registerLocaleData(localeFr);
 const materialModules = [
@@ -47,7 +49,8 @@ const materialModules = [
   MatMenuModule,
   MatRadioModule,
   MatTableModule,
-  MatSortModule
+  MatSortModule,
+  MatDatepickerModule
 ];
 
 
@@ -58,6 +61,7 @@ const materialModules = [
     ClientsListSelectorComponent,
     PopupDeactivateComponent,
     MaxDateValidatorDirective,
+    MinDateValidatorDirective,
     ToogleValidatoreDirective,
   ],
   imports: [
@@ -76,6 +80,7 @@ const materialModules = [
     PopupQuestionComponent,
     PopupDeactivateComponent,
     MaxDateValidatorDirective,
+    MinDateValidatorDirective,
     ToogleValidatoreDirective,
     materialModules
   ],

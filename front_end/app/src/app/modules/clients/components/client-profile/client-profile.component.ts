@@ -9,16 +9,22 @@ import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as clientsActions from 'src/app/store/actions/clients.action';
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-client-profile',
   templateUrl: './client-profile.component.html',
-  styleUrls: ['./client-profile.component.css']
+  styleUrls: ['./client-profile.component.css'],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'uk-UA'},
+  ]
 })
 export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
 
   client: Client;
   private initClient: Client;
+  profileForm: FormGroup;
 
   mainTitle: string;
   isAddingMode: boolean;
@@ -37,10 +43,13 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     private location: Location,
     private popupService: PopupService,
     private clientsFilteringService: ClientsFilteringService,
-    private store: Store
+    private store: Store,
+    private adapter: DateAdapter<any>
   ) { }
 
   ngOnInit(): void {
+    this.adapter.setLocale('uk-UA');
+
     this.route.data.subscribe(
       data => {
         this.isAddingMode = (data.mode === 'Adding');
@@ -51,12 +60,15 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
           this.mainTitle = `Client's profile`;
           this.onGetClient(data.client);
         }
+        this.createForm();
+        this.initFormSubscriptions();
       }
     );
   }
 
   // for can deactivate popup
   canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
+    this.getFromForm();
     if (this.isSubmit || this.compareClient() ) {
       return of(true);
     }
@@ -85,7 +97,18 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     this.openPopupQuestion();
   }
 
+  onSave(): void {
+    this.getFromForm();
+    if (this.isAddingMode) {
+      this.onAddClient();
+    } else {
+      this.onEditClient();
+    }
+  }
+
+
   onCancelButtonClick() {
+    this.getFromForm();
     if (this.compareClient()) {
       this.isSubmit = true;
       this.navigateBack();
@@ -111,17 +134,58 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  // input changes handlers
-  onPhoneChange(phone: string): void {
-    this.client.phone = this.clientsFilteringService.filterPhone(phone);
+  private initFormSubscriptions(): void {
+    this.profileForm.controls.phone.valueChanges.subscribe(
+      phone => this.profileForm.controls.phone.setValue(
+        this.clientsFilteringService.filterPhone(phone),
+        {
+          onlySelf: true,
+          emitEvent: false
+        }
+      )
+    );
   }
 
-  onBirthdayChange(date: string) {
-    const newDate = date.slice(-10);
-    if (!date) {
-      return;
-    }
-    this.client.birthday = new Date (Date.parse(newDate));
+  private getFromForm(): void {
+    const fV = this.profileForm.value as Client;
+    this.client = {
+      ...this.client,
+      ...fV
+    };
+  }
+
+  private createForm(): void {
+    this.adapter.setLocale('uk-UA');
+    this.profileForm = new FormGroup(
+      {
+        name: new FormControl(this.client.name, [
+          Validators.required,
+          Validators.pattern(/^[A-Za-z]+$/),
+          Validators.maxLength(20),
+        ]),
+        surname: new FormControl(this.client.surname, [
+          Validators.required,
+          Validators.pattern(/^[A-Za-z]+$/),
+          Validators.maxLength(30),
+        ]),
+        email: new FormControl(this.client.email, [
+          Validators.required,
+          Validators.email,
+        ]),
+        address: new FormControl(this.client.address, [
+          Validators.required,
+          Validators.pattern(/^[A-Za-z\d]+[A-Za-z\s\d]+[A-Za-z\d]+$/),
+        ]),
+        phone: new FormControl(this.client.phone, [
+          Validators.required,
+          Validators.pattern(/^[+]{1}[1-9]{1}[0-9]{1}\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}$/)
+        ]),
+        birthday: new FormControl(this.client.birthday, [
+          Validators.required,
+          dateValidator()
+        ]),
+      }
+    );
   }
 
   private updateClient(): void {
@@ -159,4 +223,12 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
     this.client = {...client};
     this.initClient = {...client};
   }
+
+
+}
+
+function dateValidator(): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} | null => {
+    return Date.parse(control.value) ? null : {dateValidator: true};
+  };
 }
