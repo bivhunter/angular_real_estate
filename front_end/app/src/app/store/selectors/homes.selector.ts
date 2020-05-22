@@ -18,9 +18,9 @@ export const getHomes = createSelector(
     fromHomes.getHomes
 );
 
-export const getSortingMethod = createSelector(
+export const getSortingConf = createSelector(
     getHomesState,
-    fromHomes.getSortingMethod
+    fromHomes.getSortingConf
 );
 
 export const getSearchingString = createSelector(
@@ -30,7 +30,7 @@ export const getSearchingString = createSelector(
 
 export const getSortedHomes = createSelector(
     getHomes,
-    getSortingMethod,
+    getSortingConf,
     sortHomes
 );
 

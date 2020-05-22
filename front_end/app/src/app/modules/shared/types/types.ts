@@ -1,4 +1,5 @@
 import { Client } from '../../clients/model/client';
+import { Home } from '../../homes/model/home';
 
 // views mod
 export type TViewMode = keyof {
@@ -7,22 +8,22 @@ export type TViewMode = keyof {
 };
 
 // for home's list sorting
-export type THomesSortingMethod = 'HOME_UP' | 'HOME_DOWN' | 'STREET_UP' | 'STREET_DOWN' |
-'CITY_UP' | 'CITY_DOWN' | 'STATE_UP' | 'STATE_DOWN' | 'PRICE_UP' | 'PRICE_DOWN';
-export type THomesSortingField = 'HOME' | 'STREET' | 'CITY' | 'STATE' | 'PRICE';
+export type THomesSortingMethod = 'home_asc' | 'home_desc' | 'street_asc' | 'street_desc' |
+'city_asc' | 'city_desc' | 'state_asc' | 'state_desc' | 'price_asc' | 'price_desc';
+export type THomesSortingField = 'home' | 'street' | 'city' | 'state' | 'price';
 
 // for client's list sorting
 export type TClientsSortingMethod = 'name_asc' | 'name_desc' | 'surname_asc' | 'surname_desc';
-export type TClientsSortingField = 'NAME' | 'SURNAME';
+export type TClientsSortingField = 'name' | 'surname';
 
 export interface ISortingConf {
-  active: string;
-  direction: string;
+  active: THomesSortingField | TClientsSortingField | TDealsSortingField;
+  direction: 'asc' | 'desc';
 }
 
 // for deal's list sorting
-export type TDealsSortingMethod = 'PRICE_UP' | 'PRICE_DOWN' | 'DATE_UP' | 'DATE_DOWN';
-export type TDealsSortingField = 'DATE' | 'PRICE';
+export type TDealsSortingMethod = 'price_asc' | 'price_desc' | 'date_asc' | 'date_desc';
+export type TDealsSortingField = 'date' | 'price';
 
 export interface TMessage {
     text: string;
@@ -35,4 +36,5 @@ export interface IPopupQuestionConf {
   title: string;
   content: string;
   client?: Client;
+  home?: Home;
 }

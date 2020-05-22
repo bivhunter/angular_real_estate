@@ -10,7 +10,7 @@
     </div>
 
     <!-- sorting menu -->
-    <div class="sorting-menu" *ngSwitchCase="'cards'">
+    <!-- <div class="sorting-menu" *ngSwitchCase="'cards'">
         <span class="main">Sort by:</span>
 
         <button class="sorting-button" 
@@ -25,7 +25,7 @@
         [class.sort-up]="(sortingMethod$ | async) === 'PRICE_UP'"
         [class.sort-down]="(sortingMethod$ | async) === 'PRICE_DOWN'"
         (click)="changeSortingMethod('PRICE')">Price</button>
-    </div>
+    </div> -->
     <!-- cards-view -->
     <div class="card-view" *ngSwitchCase="'cards'">
         <h2 *ngIf="!deals?.length">No deals</h2>

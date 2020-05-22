@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Home } from '../../model/home';
 import { Observable } from 'rxjs';
-import { TViewMode, THomesSortingMethod, THomesSortingField } from 'src/app/modules/shared/types/types';
+import { TViewMode, ISortingConf } from 'src/app/modules/shared/types/types';
 import * as homesSelector from 'src/app/store/selectors/homes.selector';
 import * as homesActions from 'src/app/store/actions/homes.action';
 import { Store } from '@ngrx/store';
@@ -15,24 +15,24 @@ export class HomesListComponent implements OnInit {
 
   @Input() homes: Home[];
   viewMode$: Observable<TViewMode>;
-  sortingMethod$: Observable<THomesSortingMethod>;
+  sortingConf$: Observable<ISortingConf>;
 
   constructor(
     private store: Store
   ) { }
 
   ngOnInit(): void {
-    this.initSubscribtion();
+    this.getFromStore();
   }
 
   // set new sorting method
-  changeSortingMethod(sortingMethodField: THomesSortingField): void {
-    this.store.dispatch(homesActions.setSortingField({sortingMethodField}));
+  changeSortingMethod(sortingConf: ISortingConf): void {
+    this.store.dispatch(homesActions.setSortingConf({sortingConf}));
   }
 
-  private initSubscribtion(): void {
+  private getFromStore(): void {
     this.viewMode$ = this.store.select(homesSelector.getViewMode);
-    this.sortingMethod$ = this.store.select(homesSelector.getSortingMethod);
+    this.sortingConf$ = this.store.select(homesSelector.getSortingConf)
   }
 
 }

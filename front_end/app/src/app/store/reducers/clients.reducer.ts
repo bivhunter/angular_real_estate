@@ -1,8 +1,7 @@
-import { TClientsSortingMethod, TViewMode, ISortingConf } from 'src/app/modules/shared/types/types';
+import { TViewMode, ISortingConf } from 'src/app/modules/shared/types/types';
 import { createReducer, on } from '@ngrx/store';
 import * as clientsAction from '../actions/clients.action';
 import * as clientsApiAction from '../actions/clients-api.actions';
-import { selectClientsSortingMethod } from '../functions/sorting-functions';
 import { Client } from 'src/app/modules/clients/model/client';
 
 

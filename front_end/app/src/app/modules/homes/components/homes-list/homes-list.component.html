@@ -1,60 +1,36 @@
 
 
-
 <div class="container" [ngSwitch]="viewMode$ | async">
-    <!-- table-view -->
     <div class=list-view *ngSwitchCase="'list'">
         <app-homes-table
             [homes]="homes">
         </app-homes-table>        
     </div>
 
-    <!-- sorting menu -->
-    <div class="sorting-menu" *ngSwitchCase="'cards'">
-        <span class="main">Sort by:</span>
-
-        <button class="sorting-button" 
-        type="button"
-        [class.sort-up]="(sortingMethod$ | async) === 'HOME_UP'"
-        [class.sort-down]="(sortingMethod$ | async) === 'HOME_DOWN'"
-        (click)="changeSortingMethod('HOME')"
-        >Home</button>
-
-        <button class="sorting-button" 
-        type="button"
-        [class.sort-up]="(sortingMethod$ | async) === 'STREET_UP'"
-        [class.sort-down]="(sortingMethod$ | async) === 'STREET_DOWN'"
-        (click)="changeSortingMethod('STREET')"
-        >Street</button>
+    <table matSort (matSortChange)="changeSortingMethod($event)"
+        [matSortActive]="(sortingConf$ | async).active"
+        [matSortDirection]="(sortingConf$ | async).direction"
+        *ngSwitchCase="'cards'"
+        class="sorting-panel">
         
-        <button class="sorting-button" 
-        type="button"
-        [class.sort-up]="(sortingMethod$ | async) === 'CITY_UP'"
-        [class.sort-down]="(sortingMethod$ | async) === 'CITY_DOWN'"
-        (click)="changeSortingMethod('CITY')">City</button>
+        <tr>
+            <th mat-sort-header="home" disableClear>Home</th>
+            <th mat-sort-header="street" disableClear>Street</th>
+            <th mat-sort-header="city" disableClear>City</th>
+            <th mat-sort-header="state" disableClear>State</th>
+            <th mat-sort-header="price" disableClear>Price</th>
+        </tr>
+    </table>
 
-        <button 
-        class="sorting-button" 
-        type="button"
-        [class.sort-up]="(sortingMethod$ | async) === 'STATE_UP'"
-        [class.sort-down]="(sortingMethod$ | async) === 'STATE_DOWN'"
-        (click)="changeSortingMethod('STATE')">State</button>
-
-        <button class="sorting-button" 
-        type="button"
-        [class.sort-up]="(sortingMethod$ | async) === 'PRICE_UP'"
-        [class.sort-down]="(sortingMethod$ | async) === 'PRICE_DOWN'"
-        (click)="changeSortingMethod('PRICE')">Price</button>
-    </div>
-
-    <!-- cards-view -->
-    <div class="card-view" *ngSwitchCase="'cards'">
-        <h2 *ngIf="!homes?.length">No homes</h2>
-        <app-home-card 
-        *ngFor="let home of homes"
-        [home]="home">
-        </app-home-card>
-    </div>
+    <div class="card-view mat-elevation-z8" *ngSwitchCase="'cards'">
+            <app-home-card 
+            *ngFor="let home of homes"
+            [home]="home"
+            >
+            </app-home-card>
+        </div>
+    
 </div>
+
 
 

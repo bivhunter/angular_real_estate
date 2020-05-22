@@ -18,8 +18,6 @@ import { PopupQuestionComponent } from 'src/app/modules/shared/components/popup-
 })
 export class ClientsTableComponent implements OnInit, AfterViewInit  {
 
-  isPopumMenu = false;
-
   @Input() clients: Client[];
   currentClient: Client;
 

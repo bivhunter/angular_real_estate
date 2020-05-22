@@ -93,14 +93,6 @@
         matSort
         [matSortActive]="(sortingConf$ | async).active"
         [matSortDirection]="(sortingConf$ | async).direction">
-    <!-- <ng-container matColumnDef="client">
-        <mat-header-cell *matHeaderCellDef class="profile-cell"> Client </mat-header-cell>
-        <mat-cell *matCellDef="let client" class="profile-cell"> 
-            <a mat-button color="primary" routerLink="/clients/profile/{{client.id}}">
-                <mat-icon>person</mat-icon> Profile
-            </a>
-        </mat-cell>
-    </ng-container> -->
     
     <!-- Surname Column -->
     <ng-container matColumnDef="surname">

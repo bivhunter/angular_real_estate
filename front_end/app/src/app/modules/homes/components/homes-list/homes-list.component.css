@@ -1,65 +1,23 @@
-.container {
-    height: 100%;
-    overflow: visible;
-}
-
-.list-view {
-    display: flex;
-    height: 100%;
-}
-.card-view {
-    box-sizing: border-box;
+.card-view  {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    overflow-y: scroll;
-    height: calc(100% - 70px);
-    box-shadow: 4px -4px 4px 4px rgba(192, 192, 192, 1);
-    background-color: #F5FAFF;
+    height: calc(100% - 40px - 26px);
+    overflow-y: auto;
+    margin: 20px;
+} 
+.container {
+    height: 100%;
 }
 
-/* styles for sorting panel */
-.sorting-menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 70px;
+th.mat-sort-header-sorted {
+    color: blue;
+  }
+
+.sorting-panel {
+    margin: 0 auto;
 }
 
-.sorting-button.sort-up::before {
-    content: '↑';
+th {
+    padding-left: 15px;
 }
-
-.sorting-button.sort-down::before {
-    content: '↓';
-}
-
-.sort-down, .sort-up {
-    background-color: #D8D8D8;
-}
-
-button, .main {
-    outline: none;
-    width: 60px;
-    font-size: 15px;
-    border-radius: 5px;
-    text-shadow: 1px 1px 2px rgba(0,114,188,1);
-    margin: 5px;
-    padding: 5px;
-}
-
-button:hover{
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
-}
-
-.main {
-    width: auto;
-    font-size: 18px;
-    align-self: center;
-    justify-self: right;
-    margin-right: 0;
-
-}
-
-

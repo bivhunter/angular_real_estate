@@ -4,7 +4,7 @@ import { TDealsSortingMethod, TDealsSortingField, THomesSortingField,
 import { Home } from 'src/app/modules/homes/model/home';
 import { Client } from 'src/app/modules/clients/model/client';
 
-export function sortDeals(deals: Deal[], method: TDealsSortingMethod): Deal[] {
+export function sortDeals(deals: Deal[], sortingConf: ISortingConf): Deal[] {
   if (!deals) {
     return null;
   }
@@ -13,17 +13,12 @@ export function sortDeals(deals: Deal[], method: TDealsSortingMethod): Deal[] {
     return [];
   }
 
-  return createSortFunc()[method](deals);
-}
+  let method = `${sortingConf.active}_${sortingConf.direction}`;
+  if (!sortingConf.direction) {
+    method = 'date_asc';
+  }
 
-export function selectDealsSortingMethod(sortingMethod: TDealsSortingMethod, field: TDealsSortingField): TDealsSortingMethod {
-    let newSortingMethod: TDealsSortingMethod;
-    if (sortingMethod === `${field}_UP`) {
-      newSortingMethod = `${field}_DOWN` as TDealsSortingMethod;
-    } else {
-      newSortingMethod = `${field}_UP` as TDealsSortingMethod;
-    }
-    return newSortingMethod;
+  return createSortFunc()[method](deals);
 }
 
 // compare two deals using array of compare functions
@@ -55,21 +50,21 @@ type TDealSortingFunction = {
 // create object of functions with fields as methods of sorting
 function createSortFunc(): TDealSortingFunction {
   return {
-    DATE_UP: (deals: Deal[]) => {
+    date_asc: (deals: Deal[]) => {
       return [...deals].sort( (dealA, dealB) => {
         return compareDeals(dealA, dealB, compareDate, comparePrice);
       });
     },
-    DATE_DOWN: (deals: Deal[]) => {
-      return createSortFunc().DATE_UP(deals).reverse();
+    date_desc: (deals: Deal[]) => {
+      return createSortFunc().date_asc(deals).reverse();
     },
-    PRICE_UP: (deals: Deal[]) => {
+    price_asc: (deals: Deal[]) => {
       return [...deals].sort( (dealA, dealB) => {
         return compareDeals(dealA, dealB, comparePrice, compareDate);
       });
     },
-    PRICE_DOWN: (deals: Deal[]) => {
-      return createSortFunc().PRICE_UP(deals).reverse();
+    price_desc: (deals: Deal[]) => {
+      return createSortFunc().price_asc(deals).reverse();
     }
   };
 }
@@ -78,23 +73,18 @@ function createSortFunc(): TDealSortingFunction {
 // ======================================================
 // ================= homes sorting ======================
 
-export function selectHomesSortingMethod(sortingMethod: THomesSortingMethod, field: THomesSortingField): THomesSortingMethod {
-  let newSortingMethod: THomesSortingMethod;
-  if (sortingMethod === `${field}_UP`) {
-    newSortingMethod = `${field}_DOWN` as THomesSortingMethod;
-  } else {
-    newSortingMethod = `${field}_UP` as THomesSortingMethod;
-  }
-  return newSortingMethod;
-}
-
-export function sortHomes(homes: Home[], method: THomesSortingMethod): Home[] {
+export function sortHomes(homes: Home[], sortingConf: ISortingConf): Home[] {
   if (!homes) {
     return null;
   }
 
   if (!homes.length) {
     return [];
+  }
+
+  let method = `${sortingConf.active}_${sortingConf.direction}`;
+  if (!sortingConf.direction) {
+    method = 'home_asc';
   }
 
   return createHomesSortFunc()[method](homes);
@@ -146,46 +136,46 @@ type THomeSortFunction = {
 // create object of functions with fields as methods of sorting
 function createHomesSortFunc(): THomeSortFunction {
   return {
-    STREET_UP: (homes: Home[]) => {
+    street_asc: (homes: Home[]) => {
       return [...homes].sort( (homeA, homeB) => {
         return compareHomes(homeA, homeB, compareStreet, compareCity, compareState, compareHome);
       });
     },
-    STREET_DOWN: (homes: Home[]) => {
-      return createHomesSortFunc().STREET_UP(homes).reverse();
+    street_desc: (homes: Home[]) => {
+      return createHomesSortFunc().street_asc(homes).reverse();
     },
-    HOME_UP: (homes: Home[]) => {
+    home_asc: (homes: Home[]) => {
       return [...homes].sort( (homeA, homeB) => {
         return compareHomes(homeA, homeB, compareHome, compareStreet, compareCity, compareState);
       });
     },
-    HOME_DOWN: (homes: Home[]) => {
-      return createHomesSortFunc().HOME_UP(homes).reverse();
+    home_desc: (homes: Home[]) => {
+      return createHomesSortFunc().home_asc(homes).reverse();
     },
-    CITY_UP: (homes: Home[]) => {
+    city_asc: (homes: Home[]) => {
       return [...homes]
         .sort( (homeA, homeB) => {
           return compareHomes(homeA, homeB, compareCity, compareState, compareStreet, compareHome);
         });
     },
-    CITY_DOWN: (homes: Home[]) => {
-      return createHomesSortFunc().CITY_UP(homes).reverse();
+    city_desc: (homes: Home[]) => {
+      return createHomesSortFunc().city_asc(homes).reverse();
     },
-    STATE_UP: (homes: Home[]) => {
+    state_asc: (homes: Home[]) => {
       return [...homes].sort( (homeA, homeB) => {
         return compareHomes(homeA, homeB, compareState, compareCity,  compareStreet, compareHome);
       });
     },
-    STATE_DOWN: (homes: Home[]) => {
-      return createHomesSortFunc().STATE_UP(homes).reverse();
+    state_desc: (homes: Home[]) => {
+      return createHomesSortFunc().state_asc(homes).reverse();
     },
-    PRICE_UP: (homes: Home[]) => {
+    price_asc: (homes: Home[]) => {
       return [...homes].sort( (homeA, homeB) => {
         return compareHomes(homeA, homeB, compareHomePrice, compareState, compareCity,  compareStreet, compareHome);
       });
     },
-    PRICE_DOWN: (homes: Home[]) => {
-      return createHomesSortFunc().PRICE_UP(homes).reverse();
+    price_desc: (homes: Home[]) => {
+      return createHomesSortFunc().price_asc(homes).reverse();
     }
   };
 }
@@ -193,16 +183,6 @@ function createHomesSortFunc(): THomeSortFunction {
 
 // ======================================================
 // ================= clients sorting ======================
-
-export function selectClientsSortingMethod(sortingMethod: TClientsSortingMethod, field: TClientsSortingField): TClientsSortingMethod {
-  let newSortingMethod: TClientsSortingMethod;
-  if (sortingMethod === `${field}_UP`) {
-    newSortingMethod = `${field}_DOWN` as TClientsSortingMethod;
-  } else {
-    newSortingMethod = `${field}_UP` as TClientsSortingMethod;
-  }
-  return newSortingMethod;
-}
 
 export function sortClients(clients: Client[], sortingConf: ISortingConf): Client[] {
   if (!clients) {

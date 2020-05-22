@@ -1,13 +1,11 @@
-<div class="container">
+<!-- <div class="container">
 
   
 
 
     <div class="head-wrapper">
-          <!-- table -->
     <table class="table">
     <tbody>
-        <!-- head row -->
         <tr class="head-row">
             <td class="img-cell">Home</td>
             <td class="home-cell"
@@ -44,14 +42,13 @@
         <div class="content">
             <table class="table">
                 <tbody>
-                <!-- content rows -->
                 <tr *ngFor="let home of homes">
                     <td class="img-cell tooltip" (click)="onDetailsButton(home.id)">
                         <span class="tooltip-text" >Details</span>
                         <div class="profile-img" 
                             
                             >     
-                            <img class="sold-img" src="../../../../../assets/images/sold.png" *ngIf="home.clientOwner">
+                            <img class="sold-img" src="../../../../../assets/images/sold.png" *ngIf="home.homeOwner">
                             </div>
                         </td>
                     
@@ -67,25 +64,25 @@
                                 Details
                             </button>
             
-                            <button class="viewed-clients-button"
+                            <button class="viewed-homes-button"
                             (click)="onViewedClient(home)">
                             Clients who viewed
                             </button>
             
-                            <button class="addclient-button"
-                                (click)="onAddClient(home)" [disabled]="home.clientOwner">
-                                Add client who viewed
+                            <button class="addhome-button"
+                                (click)="onAddClient(home)" [disabled]="home.homeOwner">
+                                Add home who viewed
                             </button>
                         </div>
         
                     </td> 
                     <td class="delete-cell">
                         <div class="delete-button"
-                            *ngIf="!home.clientOwner"
+                            *ngIf="!home.homeOwner"
                             (click)="onDeleteButton(home)">X
                         </div>  
                         <div class="delete-button hidden"
-                            *ngIf="home.clientOwner"
+                            *ngIf="home.homeOwner"
                            > 
                         </div>  
                      </td>
@@ -94,50 +91,106 @@
             </table>
         </div>
 
-        
-
-     <!-- adding clients list popup -->
-    <div class="popup-client-list" *ngIf="isPopupListClients">
-        <app-clients-list-selector
-            [home]="currentHome"
-            (closeEvent)="isPopupListClients = false"
-            [adding]="isAdding"
-        >
-
-        </app-clients-list-selector>
     </div>
+         -->
 
+ <div class="container">
+    <mat-table 
+        [dataSource]="homes" 
+        class="mat-elevation-z8 table" 
+        matSort
+        [matSortActive]="(sortingConf$ | async).active"
+        [matSortDirection]="(sortingConf$ | async).direction">
+    
+    <!-- № Column -->
+    <ng-container matColumnDef="home">
+      <mat-header-cell  class="home-cell" mat-sort-header *matHeaderCellDef disableClear>
+           № </mat-header-cell>
+      <mat-cell *matCellDef="let home" class="home-cell"> {{home.home}} </mat-cell>
+    </ng-container>
 
+    <!-- Street Column -->
+    <ng-container matColumnDef="street">
+      <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Street </mat-header-cell>
+      <mat-cell *matCellDef="let home"> {{home.street}} </mat-cell>
+    </ng-container>
 
+    <!-- City Column -->
+    <ng-container matColumnDef="city">
+      <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> City </mat-header-cell>
+      <mat-cell *matCellDef="let home"> {{home.city}} </mat-cell>
+    </ng-container>
 
-        <!-- deleting popup menu -->
-    <div class="popup-wrapper" *ngIf="isPopup">
-        <div class="popup"  >
-            <h3 class=popup-header>Delete home!</h3>
-            <h3>{{homeForDelete.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</h3>
-            <p>{{homeForDelete.home + ' ' + homeForDelete.street}}</p>
-            <p>{{homeForDelete.city + ' ' + homeForDelete.state}}</p>
-            <h3 class=popup-header>Are you sure?</h3>
-            <div class="buttons-wrapper">
-                <button 
-                    type=button 
-                    (click)="deleteHome(homeForDelete.id)"
-                    class="yes-button">
-                    Yes
+    <!-- State Column -->
+    <ng-container matColumnDef="state" >
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> State </mat-header-cell>
+        <mat-cell *matCellDef="let home"> {{home.state}} </mat-cell>
+    </ng-container>
+
+     <!-- Price Column -->
+     <ng-container matColumnDef="price">
+        <mat-header-cell class="price-cell" 
+            *matHeaderCellDef 
+            mat-sort-header 
+            disableClear> 
+            Price 
+        </mat-header-cell>
+        <mat-cell class="price-cell" *matCellDef="let home"> 
+            {{home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}} 
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell class="status-cell" 
+            *matHeaderCellDef 
+            mat-sort-header 
+            disableClear> 
+            Status 
+        </mat-header-cell>
+        <mat-cell class="status-cell" *matCellDef="let home"> 
+            <span *ngIf="!home.clientOwner">on sale</span>
+            <span *ngIf="home.clientOwner">sold</span>
+
+        </mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions" stickyEnd>
+        <mat-header-cell class="actions-cell" *matHeaderCellDef> Home's actions </mat-header-cell>
+        <mat-cell class="actions-cell" *matCellDef="let home"> 
+            <button mat-raised-button [matMenuTriggerFor]="menu" color="basic">
+                <mat-icon>menu</mat-icon>
+                Choose action
+            </button>
+            <mat-menu  #menu="matMenu">
+                <button mat-menu-item (click)="onViewedClient(home)">
+                    <mat-icon>list</mat-icon>
+                    Look clients who viewed home
                 </button>
-        
-                <button 
-                    (click)="isPopup=false"
-                    type=button 
-                    class="no-button">
-                    No
+                <button mat-menu-item 
+                    (click)="onAddClient(home)"
+                    [disabled]="home.clientOwner">
+                    <mat-icon>add</mat-icon>
+                    Add clients who viewed home
                 </button>
-            </div>
-        </div>
-    </div>
+            </mat-menu>
+            <button mat-icon-button color="primary" routerLink="/homes/details/{{home.id}}">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" 
+                (click)="onDeleteButton(home)"
+                [disabled]="home.clientOwner">
+                <mat-icon>delete_forever</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" 
+        [class.sale]="row.clientOwner"></mat-row>
+
+    </mat-table>
 </div>
 
-<!-- cover div -->
-<div *ngIf="isPopup" class="cover-div">
-</div>
+
 

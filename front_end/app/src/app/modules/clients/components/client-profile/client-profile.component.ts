@@ -3,10 +3,8 @@ import { ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Location } from '@angular/common';
 import { ClientsFilteringService } from '../../services/clients-filtering.service';
-import { PopupService } from './../../../shared/services/popup.service';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as clientsActions from 'src/app/store/actions/clients.action';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
@@ -46,8 +44,6 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   ) { }
 
   ngOnInit(): void {
-    this.adapter.setLocale('uk-UA');
-
     this.route.data.subscribe(
       data => {
         this.isAddingMode = (data.mode === 'Adding');
@@ -79,6 +75,11 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   // buttons click handler
   onSave(): void {
     this.getFromForm();
+    if (this.compareClient()) {
+      this.navigateBack();
+      return;
+    }
+
     if (this.isAddingMode) {
       this.openAddQuestion();
     } else {
@@ -89,7 +90,6 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   onCancelButtonClick() {
     this.getFromForm();
     if (this.compareClient()) {
-      this.isSubmit = true;
       this.navigateBack();
     } else {
       this.openCancelQuestion();

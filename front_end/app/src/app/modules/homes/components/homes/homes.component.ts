@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Home } from '../../model/home';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
 
 import * as homesSelector from 'src/app/store/selectors/homes.selector';
 import { Store } from '@ngrx/store';
@@ -19,7 +17,6 @@ export class HomesComponent implements OnInit {
   filteredHomes$: Observable<Home[]>;
 
   constructor(
-    private route: ActivatedRoute,
     private store: Store
   ) { }
 

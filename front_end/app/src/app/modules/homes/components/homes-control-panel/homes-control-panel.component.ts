@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as homesActions from 'src/app/store/actions/homes.action';
+import * as homesSelectors from 'src/app/store/selectors/homes.selector';
 import { Store } from '@ngrx/store';
+import { TViewMode } from 'src/app/modules/shared/types/types';
 
 @Component({
   selector: 'app-homes-control-panel',
@@ -10,7 +12,7 @@ import { Store } from '@ngrx/store';
 })
 export class HomesControlPanelComponent implements OnInit {
 
-  isViewsMenu = false;
+  viewMode: TViewMode;
 
   constructor(
     private router: Router,
@@ -19,6 +21,9 @@ export class HomesControlPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeFilter('');
+    this.store.select(homesSelectors.getViewMode).subscribe(
+      viewMode => this.viewMode = viewMode
+    );
   }
 
   onAddButtonClick(): void {
@@ -26,13 +31,13 @@ export class HomesControlPanelComponent implements OnInit {
   }
 
   onActivateCardView() {
+    this.viewMode = 'cards';
     this.store.dispatch(homesActions.setViewMode({viewMode: 'cards'}));
-    this.isViewsMenu = false;
   }
 
   onActivateListView() {
+    this.viewMode = 'list';
     this.store.dispatch(homesActions.setViewMode({viewMode: 'list'}));
-    this.isViewsMenu = false;
   }
 
   changeFilter(searchingString: string): void {

@@ -1,8 +1,6 @@
 
 <div class="container">
-    <div class="control-panel">
-        <app-homes-control-panel></app-homes-control-panel>
-    </div>
+    <app-homes-control-panel class="control-panel"></app-homes-control-panel>
 
     <div class="no-homes" *ngIf="(this.homes$ | async) && !(this.homes$ | async).length">
         <h1>No Homes</h1>
@@ -12,9 +10,9 @@
         </button>
     </div>
 
-    <div class="content-wrapper" *ngIf="(this.homes$ | async) && (this.homes$ | async).length">
-        <app-homes-list
+    <app-homes-list class="homes-list"
+        *ngIf="(homes$ | async) && (homes$ | async).length"
         [homes]="filteredHomes$ | async"
-        ></app-homes-list>
-    </div>
+        >
+    </app-homes-list>
 </div>

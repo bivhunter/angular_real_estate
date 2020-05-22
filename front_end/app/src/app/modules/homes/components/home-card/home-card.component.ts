@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Home } from '../../model/home';
-import { Router } from '@angular/router';
-import { HomesService } from '../../services/homes.service';
 import { Store } from '@ngrx/store';
 import * as homesActions from 'src/app/store/actions/homes.action';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupQuestionComponent } from 'src/app/modules/shared/components/popup-question/popup-question.component';
 
 @Component({
   selector: 'app-home-card',
@@ -14,14 +14,12 @@ export class HomeCardComponent implements OnInit {
 
   @Input() home: Home;
 
-  isPopup = false;
   isAdding: boolean;
   isPopupListClients = false;
 
   constructor(
-    private router: Router,
-    private homesService: HomesService,
-    private store: Store
+    private store: Store,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -29,25 +27,32 @@ export class HomeCardComponent implements OnInit {
   }
 
   onDeleteButton(): void {
-    this.isPopup = true;
+    const deleteDialog = this.dialog.open(PopupQuestionComponent, {
+      data: {
+        title: 'Delete Home!',
+        home: this.home
+      }
+    });
+    deleteDialog.afterClosed().subscribe(
+      answer => {
+        if (answer) {
+          this.deleteHome(this.home.id);
+        }
+      }
+    );
   }
 
   deleteHome(id: string | number) {
     this.store.dispatch(homesActions.deleteHome({id}));
-    this.isPopup = false;
   }
 
-  openClients(): void {
+  onViewedClient(): void {
     this.isAdding = false;
     this.isPopupListClients = true;
   }
 
-  addClient(): void {
+  onAddClient(): void {
     this.isAdding = true;
     this.isPopupListClients = true;
-  }
-
-  onDetailsButton(id: string | number) {
-    this.router.navigateByUrl(`homes/details/${id}`);
   }
 }

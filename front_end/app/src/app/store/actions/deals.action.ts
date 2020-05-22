@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Deal } from 'src/app/modules/deal/model/deal';
-import { TViewMode, TDealsSortingField } from 'src/app/modules/shared/types/types';
+import { TViewMode, ISortingConf } from 'src/app/modules/shared/types/types';
 
 
 export const loadDeals = createAction(
@@ -12,9 +12,9 @@ export const addDeal = createAction(
     props<{deal: Deal}>()
 );
 
-export const setSortingField = createAction(
+export const setSortingConf = createAction(
     '[Deals] Select Sorting Field',
-    props<{sortingMethodField: TDealsSortingField}>()
+    props<{sortingConf: ISortingConf}>()
 );
 
 export const setViewMode = createAction(

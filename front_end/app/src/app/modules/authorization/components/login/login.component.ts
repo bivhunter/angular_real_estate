@@ -61,9 +61,6 @@ export class LoginComponent implements OnInit {
   private initFormSubscription(): void {
     this.loginForm.statusChanges.subscribe(
       (status) => {
-        console.log(status);
-        console.log(this.loginForm.controls.email.errors, 'email')
-        console.log(this.loginForm.controls.password.errors, 'password')
       }
     )
 

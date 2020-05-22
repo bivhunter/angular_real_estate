@@ -6,28 +6,6 @@
         </app-clients-table>        
     </div>
 
-    <!-- sorting panel -->
-    <!-- <div  class="sorting-menu" *ngSwitchCase="'cards'">
-        <span class="main">Sort by:</span>
-        
-        <button class="sorting-button" 
-        type="button"
-        [class.sort-up]="(sortingMethod$ | async) === 'SURNAME_UP'"
-        [class.sort-down]="(sortingMethod$ | async) === 'SURNAME_DOWN'"
-        (click)="changeSortingMethod('SURNAME')"
-        >Surname</button>
-    
-        <button class="sorting-button" 
-        type="button"
-        [class.sort-up]="(sortingMethod$ | async) === 'NAME_UP'"
-        [class.sort-down]="(sortingMethod$ | async) === 'NAME_DOWN'"
-        (click)="changeSortingMethod('NAME')"
-        >Name</button>
-    </div> -->
-    <!-- <div class="cards-wrapper ">
-        
-    </div> -->
-
     <table matSort (matSortChange)="changeSortingMethod($event)"
         [matSortActive]="(sortingConf$ | async).active"
         [matSortDirection]="(sortingConf$ | async).direction"

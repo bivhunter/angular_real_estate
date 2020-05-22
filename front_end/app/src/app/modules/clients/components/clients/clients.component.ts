@@ -3,7 +3,6 @@ import { Client } from 'src/app/modules/clients/model/client';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as clientsSelector from 'src/app/store/selectors/clients.selector';
-import * as clientsActions from 'src/app/store/actions/clients.action';
 
 @Component({
   selector: 'app-clients',

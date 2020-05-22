@@ -13,7 +13,6 @@ import { TViewMode } from 'src/app/modules/shared/types/types';
 })
 export class ClientsControlPanelComponent implements OnInit {
 
-  isViewsMenu = false;
   viewMode: TViewMode;
 
   constructor(
@@ -31,21 +30,14 @@ export class ClientsControlPanelComponent implements OnInit {
   onActivateCardView() {
     this.viewMode = 'cards';
     this.store.dispatch(clientsActions.setViewMode({viewMode: 'cards'}));
-    this.isViewsMenu = false;
   }
 
   onActivateListView() {
     this.viewMode = 'list';
     this.store.dispatch(clientsActions.setViewMode({viewMode: 'list'}));
-    this.isViewsMenu = false;
   }
 
   changeFilter(searchingString: string): void {
     this.store.dispatch(clientsActions.setSearchingString({searchingString}));
   }
-
-  onAddButtonClick(): void {
-    this.router.navigateByUrl('clients/adding');
-  }
-
 }

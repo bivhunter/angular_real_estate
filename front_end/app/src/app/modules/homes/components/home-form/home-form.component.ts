@@ -1,19 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterStateSnapshot } from '@angular/router';
-import { HomesService } from '../../services/homes.service';
 import { Home } from '../../model/home';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
-import { PopupService } from 'src/app/modules/shared/services/popup.service';
-import { Location } from '@angular/common';
+import { Location, CurrencyPipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as homesActions from 'src/app/store/actions/homes.action';
+import { MAT_DATE_LOCALE, DateAdapter } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
+import { FormGroup, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
+import { PopupDeactivateComponent } from 'src/app/modules/shared/components/popup-deactivate/popup-deactivate.component';
+import { PopupQuestionComponent } from 'src/app/modules/shared/components/popup-question/popup-question.component';
 
 @Component({
   selector: 'app-home-form',
   templateUrl: './home-form.component.html',
-  styleUrls: ['./home-form.component.css']
+  styleUrls: ['./home-form.component.css'],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'uk-UA'},
+  ]
 })
 export class HomeFormComponent implements OnInit, CanComponentDeactivate {
 
@@ -25,6 +31,7 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
 
   isFormDisabled = false;
 
+  homeForm: FormGroup;
 
   // popup
   isPopupQuestion = false;
@@ -35,65 +42,60 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   isCanDeactivatePopup = false;
   private isSubmit = false;
 
+  private currencyPipe: CurrencyPipe = new CurrencyPipe('fr');
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private homesService: HomesService,
-    private popupService: PopupService,
-    private store: Store
+    private store: Store,
+    private adapter: DateAdapter<any>,
+    public dialog: MatDialog
     ) { }
 
   ngOnInit(): void {
-    // this.isAddingMode = this.checkAddingMode();
     this.route.data.subscribe(
       data => {
         this.isAddingMode = data.mode === 'Adding';
         this.getHome(data.home);
+        this.createForm();
+        this.initFormSubscriptions();
       }
     );
   }
 
   canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
+    this.getFromForm();
     if (this.isSubmit || this.compareHomes() ) {
       return of(true);
     }
-    this.isCanDeactivatePopup = true;
 
-    return this.popupService.canDeactivate(next).pipe(
-      tap((checking) => {
-          this.isCanDeactivatePopup = false;
-      })
-    );
+    const dialogRef = this.dialog.open(PopupDeactivateComponent);
+    return dialogRef.afterClosed();
   }
 
   // buttons click handler
-  onEditHome(): void {
+
+  onSave(): void {
+    this.getFromForm();
     if (this.compareHomes()) {
       this.navigateBack();
-    } else {
-    this.popupTitle = 'Save changes!';
-    this.openPopupQuestion();
-  }
-}
+      return;
+    }
 
-  onAddHome(): void {
-    this.popupTitle = 'Add home!';
-    this.openPopupQuestion();
-  }
-
-  onCancelButtonClick() {
-    if (this.compareHomes()) {
-      this.isSubmit = true;
-      this.navigateBack();
+    if (this.isAddingMode) {
+      this.openAddQuestion();
     } else {
-      this.popupTitle = 'Cancel changes!';
-      this.openPopupQuestion();
+      this.openSaveQuestion();
     }
   }
 
-  // popup question events
-  onCancel(): void {
-    this.isPopupQuestion = false;
+  onCancelButtonClick() {
+    this.getFromForm();
+    if (this.compareHomes()) {
+      this.navigateBack();
+    } else {
+      this.openCancelQuestion();
+    }
   }
 
   onSubmit(): void {
@@ -107,9 +109,9 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  onPriceChange(value: string): void {
-    const newValue = value.replace(/\s/g, '').replace(/\$/g, '');
-    this.home.price = +newValue;
+  onPriceChange(value: string | number): number {
+    const newValue = value.toString().replace(/\s/g, '').replace(/\$/g, '');
+    return +newValue;
   }
 
   onDateChange(date: string) {
@@ -120,10 +122,67 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     this.home.start_date = new Date(Date.parse(newDate));
   }
 
-  private openPopupQuestion(): void {
-    this.isPopupQuestion = true;
+  private getFromForm(): void {
+    const fV = this.homeForm.value as Home;
+    fV.price = this.onPriceChange(fV.price);
+    this.home = {
+      ...this.home,
+      ...fV
+    };
   }
 
+  private openCancelQuestion(): void {
+    const cancelDialog = this.dialog.open(PopupQuestionComponent, {
+      data: {
+        title: `Cancel home's details changes!`,
+        content: 'All changes will be lost'
+      }
+    });
+
+    cancelDialog.afterClosed().subscribe(
+      answer => {
+        if (answer) {
+          this.navigateBack();
+        }
+      }
+    );
+  }
+
+  private openSaveQuestion(): void {
+    const saveDialog = this.dialog.open(PopupQuestionComponent, {
+      data: {
+        title: `Save home's details changes!`,
+        content: '',
+        home: this.home
+      }
+    });
+
+    saveDialog.afterClosed().subscribe(
+      answer => {
+        if (answer) {
+          this.updateHome();
+        }
+      }
+    );
+  }
+
+  private openAddQuestion(): void {
+    const saveDialog = this.dialog.open(PopupQuestionComponent, {
+      data: {
+        title: 'Add new home!',
+        content: '',
+        home: this.home
+      }
+    });
+
+    saveDialog.afterClosed().subscribe(
+      answer => {
+        if (answer) {
+          this.addHome();
+        }
+      }
+    );
+  }
   private compareHomes(): boolean {
     for (const prop in this.home) {
       if ((this.initHome[prop] === undefined) || (this.initHome[prop] !== this.home[prop])) {
@@ -156,7 +215,7 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   private navigateBack(): void {
-    this.isPopupQuestion = false;
+    this.isSubmit = true;
     this.location.back();
   }
 
@@ -173,5 +232,64 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     this.initHome = {...home};
   }
 
+  private createForm(): void {
+    this.adapter.setLocale('uk-UA');
+    this.homeForm = new FormGroup(
+      {
+        home: new FormControl(this.home.home, [
+          Validators.required,
+          Validators.pattern(/^[1-9]+\w*$/),
+          Validators.maxLength(20),
+        ]),
+        street: new FormControl(this.home.street, [
+          Validators.required,
+          Validators.pattern(/^[A-Za-z\d]+[A-Za-z\s\d]+[A-Za-z\d]+$/),
+          Validators.maxLength(30),
+        ]),
+        city: new FormControl(this.home.city, [
+          Validators.required,
+          Validators.pattern(/^[A-Za-z\d]+[A-Za-z\s\d]+[A-Za-z\d]+$/),
+        ]),
+        state: new FormControl(this.home.state, [
+          Validators.required,
+          Validators.pattern(/^[A-Za-z\d]+[A-Za-z\s\d]+[A-Za-z\d]+$/),
+        ]),
+        index: new FormControl(this.home.index, [
+          Validators.required,
+          Validators.pattern(/^[0-9]+$/)
+        ]),
+        price: new FormControl(this.currencyPipe
+          .transform(this.home.price, 'CAD', 'symbol-narrow', '1.0-0'), [
+          Validators.required,
+          Validators.pattern(/[0-9,\s]*[$]{1}/g)
+        ]),
+        start_date: new FormControl(this.home.start_date, [
+          Validators.required,
+          dateValidator()
+        ]),
+      }
+    );
+  }
+
+  private initFormSubscriptions(): void {
+    this.homeForm.controls.price.valueChanges
+      .pipe(
+        map(price => this.onPriceChange(price))
+      )
+      .subscribe(
+
+      value => {
+        this.homeForm.controls.price
+          .setValue(this.currencyPipe.transform(value, 'CAD', 'symbol-narrow', '1.0-0'), {emitEvent: false});
+      }
+    );
+  }
 }
+
+function dateValidator(): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} | null => {
+    return Date.parse(control.value) ? null : {dateValidator: true};
+  };
+}
+
 

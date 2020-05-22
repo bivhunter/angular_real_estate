@@ -20,13 +20,4 @@ export class PopupQuestionComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  onYes(): void {
-    this.submitEvent.emit();
-  }
-
-  onNo(): void {
-    this.cancelEvent.emit();
-  }
-
 }

@@ -1,42 +1,12 @@
 <div class="container">
-    <!-- <div class="tooltip" (click)="onProfileButton()">
-        <span class="tooltip-text">Profile</span>
-        <div class="profile-img"
-             >
-        </div>
-    </div>
-    
-    <h3>{{client.surname}}</h3>
-    <h3>{{client.name}}</h3>
-    <p>{{client.email}}</p>
-    <p>{{client.phone}}</p>
-
-    <div class="delete-button"
-        (click)="isPopupDeleting=true"
-    >X</div>
-    
-    <div class="buttons-wrapper">
-        <button class="profile-button"
-        (click)="openBoughtHomes()">Bought homes</button>
-
-        <button class="view-button"
-        (click)="openHomes()">Viewed Homes</button>
-
-        <button class="add-button"
-        (click)="addHome()"
-        >Add viewed Home</button>
-    </div> -->
-
     <mat-card class="card mat-elevation-z4">
         <mat-card-header>
-            <!-- <mat-icon>person</mat-icon> -->
             <mat-card-title-group class="title-group">
                 <mat-card-title class="title">{{client.surname}}</mat-card-title>
-                <!-- <mat-card-subtitle>{{client.surname}}</mat-card-subtitle> -->
                 <mat-card-title class="title">{{client.name}}</mat-card-title>
             </mat-card-title-group>
-          
         </mat-card-header>
+
         <mat-card-content>
             <mat-list>
                 <mat-list-item>
@@ -51,6 +21,7 @@
             
             <p></p>
         </mat-card-content>
+        
         <mat-card-actions class="actions">
             <button mat-raised-button [matMenuTriggerFor]="menu" color="basic">
                 <mat-icon>menu</mat-icon>
@@ -77,7 +48,7 @@
                 <mat-icon>delete_forever</mat-icon>
             </button>
         </mat-card-actions>
-      </mat-card>
+    </mat-card>
 
     <!-- adding home list popup -->
     <div class="popup-homes-list" *ngIf="isPopupListHomes">
@@ -89,17 +60,6 @@
         >
         </app-homes-list-selector>
     </div>
-
-    <!-- remove client popup -->
-    <!-- <div class="popup-deleting" *ngIf="isPopupDeleting">
-        <app-clients-popup-deleting
-            [client]="client"
-            (cancelEvent)="isPopupDeleting=false"
-            (submitEvent)="deleteClient($event)"
-        >
-        </app-clients-popup-deleting>
-
-    </div> -->
 </div>
 
 

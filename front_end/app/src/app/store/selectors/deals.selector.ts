@@ -19,9 +19,9 @@ export const getDeals = createSelector(
     fromDeals.getDeals
 );
 
-export const getSortingMethod = createSelector(
+export const getSortingConf = createSelector(
     getDealsState,
-    fromDeals.getSortingMethod
+    fromDeals.getSortingConf
 );
 
 export const getSearchingString = createSelector(
@@ -31,7 +31,7 @@ export const getSearchingString = createSelector(
 
 export const getSortedDeals = createSelector(
     getDeals,
-    getSortingMethod,
+    getSortingConf,
     sortDeals
 );
 

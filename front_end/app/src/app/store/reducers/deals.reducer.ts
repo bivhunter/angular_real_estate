@@ -1,30 +1,32 @@
 import { Deal } from 'src/app/modules/deal/model/deal';
-import { TDealsSortingMethod, TViewMode } from 'src/app/modules/shared/types/types';
+import { TViewMode, ISortingConf } from 'src/app/modules/shared/types/types';
 import { createReducer, on } from '@ngrx/store';
 import * as dealsAction from '../actions/deals.action';
 import * as dealsApiAction from '../actions/deals-api.actions';
-import { selectDealsSortingMethod } from '../functions/sorting-functions';
 
 export interface State {
     deals: Deal[];
     viewMode: TViewMode;
-    sortingMethod: TDealsSortingMethod;
+    sortingConf: ISortingConf;
     searchingString: string;
 }
 
 export const initState: State = {
     deals: null,
     viewMode: localStorage.getItem('viewDealsMode') as TViewMode || 'cards',
-    sortingMethod: 'DATE_UP',
+    sortingConf: {
+        active: 'date',
+        direction: 'asc'
+    },
     searchingString: ''
 };
 
 export const dealsReducer = createReducer(
     initState,
-    on(dealsAction.setSortingField, (state, {sortingMethodField}) => {
+    on(dealsAction.setSortingConf, (state, {sortingConf}) => {
         return {
             ...state,
-            sortingMethod: selectDealsSortingMethod(state.sortingMethod, sortingMethodField)
+            sortingConf
         };
     }),
     on(dealsApiAction.setViewModeSuccess, (state, {viewMode}) => ({...state, viewMode})),
@@ -37,7 +39,7 @@ export const dealsReducer = createReducer(
 
 // for selectors
 export const getViewMode = (state: State) => state.viewMode;
-export const getSortingMethod = (state: State) => state.sortingMethod;
+export const getSortingConf = (state: State) => state.sortingConf;
 export const getSearchingString = (state: State) => state.searchingString;
 export const getDeals = (state: State) => state.deals;
 

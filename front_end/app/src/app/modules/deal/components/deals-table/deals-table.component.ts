@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Deal } from '../../model/deal';
 import { Observable } from 'rxjs';
-import { TDealsSortingMethod, TDealsSortingField } from 'src/app/modules/shared/types/types';
+import { ISortingConf } from 'src/app/modules/shared/types/types';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
@@ -17,7 +17,7 @@ export class DealsTableComponent implements OnInit {
 
   @Input() deals: Deal[];
 
-  sortingMethod$: Observable<TDealsSortingMethod>;
+  sortingConf$: Observable<ISortingConf>;
 
   constructor(
     private router: Router,
@@ -44,12 +44,12 @@ export class DealsTableComponent implements OnInit {
     this.router.navigateByUrl(`deals/details/${id}`);
   }
 
-  setSortingField(field: TDealsSortingField) {
-    this.store.dispatch(dealsActions.setSortingField({sortingMethodField: field}));
+  setSortingField(sortingConf: ISortingConf) {
+    this.store.dispatch(dealsActions.setSortingConf({sortingConf}));
   }
 
   private initSubscription(): void {
-    this.sortingMethod$ = this.store.select(dealsSelectors.getSortingMethod);
+    this.sortingConf$ = this.store.select(dealsSelectors.getSortingConf);
   }
 
 }
