@@ -20,10 +20,10 @@ export class DealsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initSubscribtion();
+    this.getFromStore();
   }
 
-  private initSubscribtion(): void {
+  private getFromStore(): void {
     this.filteredDeals$ = this.store.select(dealsSelector.getFilteredDeals);
     this.deals$ = this.store.select(dealsSelector.getDeals);
   }

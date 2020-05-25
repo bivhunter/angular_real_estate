@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as dealsAction from 'src/app/store/actions/deals.action';
+import * as dealsSelectors from 'src/app/store/selectors/deals.selector';
+import { TViewMode } from 'src/app/modules/shared/types/types';
 
 @Component({
   selector: 'app-deals-control-panel',
@@ -11,35 +13,30 @@ import * as dealsAction from 'src/app/store/actions/deals.action';
 })
 export class DealsControlPanelComponent implements OnInit {
 
-  isViewsMenu = false;
+  viewMode: TViewMode;
 
   constructor(
-    private router: Router,
     private store: Store
   ) { }
 
   ngOnInit(): void {
     this.changeFilter('');
+    this.store.select(dealsSelectors.getViewMode).subscribe(
+      viewMode => this.viewMode = viewMode
+    );
   }
 
   onActivateCardView() {
-    // this.dealsViewService.setViewMode('cards');
+    this.viewMode = 'cards';
     this.store.dispatch(dealsAction.setViewMode({viewMode: 'cards'}));
-    this.isViewsMenu = false;
   }
 
   onActivateListView() {
-    // this.dealsViewService.setViewMode('list');
+    this.viewMode = 'list';
     this.store.dispatch(dealsAction.setViewMode({viewMode: 'list'}));
-    this.isViewsMenu = false;
   }
 
   changeFilter(searchingString: string): void {
     this.store.dispatch(dealsAction.setSearchingString({searchingString}));
   }
-
-  onAddButtonClick(): void {
-    this.router.navigateByUrl('deals/adding');
-  }
-
 }

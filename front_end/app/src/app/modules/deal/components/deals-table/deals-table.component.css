@@ -1,4 +1,4 @@
-:host {
+/* :host {
     display: flex;
     flex-grow: 1;
 }
@@ -35,7 +35,6 @@
 
 
 
-/* styles for table */
 tbody {
     flex-grow: 1;
 }
@@ -47,7 +46,6 @@ tbody {
     text-shadow: 1px 1px 2px rgba(192, 192, 192);
 }
 
-/* row style */
 .head-row {
     border: none;
     font-size: 20px;
@@ -67,13 +65,11 @@ tr {
     margin-bottom: 10px;
 }
 
-/* cell-style */
 td {
     margin: 5px;
 }
 
 td:not(.details-cell) {
-    /* padding: 5px; */
     word-wrap: break-word;
     word-break: break-all;
     white-space: normal;
@@ -169,7 +165,6 @@ td:not(.details-cell) {
 }
 
 
-/* text */
 
 p {
     margin: 0;
@@ -180,4 +175,40 @@ h3 {
     margin: 0;
     padding: 0;
     font-size: 14px;
+} */
+
+a {
+    padding: 0;
 }
+
+.date-cell {
+    max-width: 100px;
+    flex-shrink: 0;
+}
+
+.price-cell {
+    max-width: 120px;
+    flex-shrink: 0;
+}
+
+.container {
+    height: 100%;
+    max-width: 100%;
+    
+    overflow: auto;
+}
+
+.table {
+    height: calc(100vh - 93px - 128px - 50px);
+    min-width: 800px;
+    margin: 15px 15px 15px 15px;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+  }
+
+  h4.info {
+    margin: 0;
+    text-align: start;
+ }

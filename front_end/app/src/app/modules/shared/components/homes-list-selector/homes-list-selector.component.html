@@ -1,5 +1,4 @@
-<div class="popup-wrapper">
-    <!-- main elem -->
+<!-- <div class="popup-wrapper">
     <div class="popup">
         <div class="header-wrapper">
             <h3>{{title}}</h3> 
@@ -8,7 +7,6 @@
             (click)="closeList()"
             >X</div>
     
-            <!-- input for search -->
             <form>
                 <input
                     type="text"
@@ -39,13 +37,11 @@
             <h3 class="no-homes" *ngIf="!homes.length && isAddingHomesView">No available homes</h3>
             <h3 class="no-homes" *ngIf="!homes.length && isBoughtHomesView">No bought homes</h3>
             <h3 class="no-homes" *ngIf="!homes.length && !isBoughtHomesView && !isAddingHomesView">No viewed homes</h3>
-            <!-- homes list -->
             <table *ngIf="homes.length">
                     <tr *ngFor="let home of filteredHomes"
                     
                         class="table-item">
     
-                        <!-- wrapper for selected -->
                         <div class="wrapper" 
                         (click)="onClickHome(home)">
                             <td class="img-cell">
@@ -69,13 +65,75 @@
     
 </div>
 
-<!-- popup question -->
-<app-popup-question
-    *ngIf = "isPopupQuestion"
-    [title] = "title"
-    [text] = "text"
-    (cancelEvent)="onCancel()"
-    (submitEvent)="onSubmit()"
->
+ -->
 
-</app-popup-question>
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+    <mat-form-field  appearance="outline">
+        <mat-label>Search</mat-label>
+        <input type="text" matInput placeholder="search" 
+        name="searching"
+        [ngModel]
+        (ngModelChange)="filterHomes($event)">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    
+    <mat-table 
+    [dataSource]="filteredHomes" 
+    class="mat-elevation-z8 table" 
+    >
+
+<ng-container matColumnDef="home">
+  <mat-header-cell  class="home-cell"*matHeaderCellDef>
+       № </mat-header-cell>
+  <mat-cell *matCellDef="let home" class="home-cell"> {{home.home}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="street">
+  <mat-header-cell *matHeaderCellDef> Street </mat-header-cell>
+  <mat-cell *matCellDef="let home"> {{home.street}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="city">
+  <mat-header-cell *matHeaderCellDef> City </mat-header-cell>
+  <mat-cell *matCellDef="let home"> {{home.city}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="state" >
+    <mat-header-cell *matHeaderCellDef> State </mat-header-cell>
+    <mat-cell *matCellDef="let home"> {{home.state}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="status">
+    <mat-header-cell class="status-cell" 
+        *matHeaderCellDef 
+        > 
+        Status 
+    </mat-header-cell>
+    <mat-cell class="status-cell" *matCellDef="let home"> 
+        <span *ngIf="!home.clientOwner">on sale</span>
+        <span *ngIf="home.clientOwner">sold</span>
+
+    </mat-cell>
+</ng-container>
+
+
+<mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+<mat-row *matRowDef="let row; columns: displayedColumns;" 
+    (click)="onClickHome(row)"
+    [class.selected]="isAdding && row.id === selectedHomeId"
+    [class.sale]="row.clientOwner"></mat-row>
+
+</mat-table>
+
+  
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>Cnacel</button>
+    <button mat-raised-button 
+        *ngIf="isAdding"
+        color="primary" 
+        [mat-dialog-close]="selectedHomeId"
+        [disabled]="!selectedHomeId">
+        Submit</button>
+  </div>

@@ -1,11 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { Home } from '../../../homes/model/home';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
 import * as homesSelector from 'src/app/store/selectors/homes.selector';
-import * as homesActions from 'src/app/store/actions/homes.action';
 import { Store } from '@ngrx/store';
 import { filterHomes } from 'src/app/store/functions/filtered-functions';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { IPopupHomesSelectorConf } from '../../types/types';
 
 @Component({
   selector: 'app-homes-list-selector',
@@ -14,29 +15,30 @@ import { filterHomes } from 'src/app/store/functions/filtered-functions';
 })
 export class HomesListSelectorComponent implements OnInit {
 
-  @Input() client: Client;
+  displayedColumns: string[] = ['home', 'street', 'city', 'state', 'status'];
+
+  client: Client = this.data.client;
 
   homes: Home[];
   filteredHomes: Home[];
-  isDataReady = false;
+  selectedHomeId: string | number;
 
-  @Input() isAddingHomesView: boolean;
-  @Input() isBoughtHomesView: boolean;
+  // for adding home
+  isAdding = false;
 
-  isPopupQuestion = false;
   title: string;
-  text: string;
-  homeId: string | number;
 
   @Output() closeEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(
+    public dialogRef: MatDialogRef<HomesListSelectorComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: IPopupHomesSelectorConf,
     private router: Router,
-    private store: Store
+    private store: Store,
   ) { }
 
   ngOnInit(): void {
-    this.title = this.getTitle();
+    this.title = this.data.title;
     this.getHomes();
   }
 
@@ -44,71 +46,53 @@ export class HomesListSelectorComponent implements OnInit {
     this.filteredHomes = filterHomes(this.homes, searchString);
   }
 
-  closeList(): void {
-    this.closeEvent.emit('');
-  }
-
   onClickHome(home: Home): void {
-    if (this.isAddingHomesView) {
-      this.openPopupQuestion(home, 'Add Home:');
+    if (this.isAdding) {
+      this.selectedHomeId = home.id;
     } else {
+      this.dialogRef.close();
       this.router.navigateByUrl(`homes/details/${home.id}`);
     }
-  }
-
-  onCancel(): void {
-    this.isPopupQuestion = false;
-  }
-
-  onSubmit(): void {
-    if (this.isAddingHomesView) {
-      this.addHomeToClient();
-    }
-  }
-
-  addHomeToClient(): void {
-    this.store.dispatch(homesActions.addClientToHome({homeId: this.homeId, clientId: this.client.id}));
-    this.closeList();
-  }
-
-  private getTitle(): string {
-    if (this.isAddingHomesView) {
-      return 'Select Viewed Home';
-    }
-    if (this.isBoughtHomesView) {
-      return `Bought Home's List`;
-    }
-    return `Viewed Home's List`;
-  }
-
-  private openPopupQuestion(home: Home, title: string): void {
-    this.homeId = home.id;
-    this.title = title;
-    this.text = `${home.home}, ${home.street}, ${home.city}, ${home.state}`;
-    this.isPopupQuestion = true;
   }
 
   private getHomes(): void {
     this.store.select(homesSelector.getHomes).subscribe(
       (homes) => {
         if (!homes) {
+          this.homes = [];
           return;
         }
 
-        this.isDataReady = true;
-        if (this.isBoughtHomesView) {
-          this.homes = this.client.homes.filter(home => {
-          return home.clientOwner && (home.clientOwner.id === this.client.id);
-          });
-        } else {
-          this.homes = this.isAddingHomesView ? this.cutOwnHomes(homes) : this.client.homes;
+        switch (this.title) {
+          case 'Add Viewed home': {
+            this.isAdding = true;
+            this.homes = this.getExistHomes(homes);
+            break;
+          }
+
+          case 'Look Viewed home': {
+            this.homes = this.client.homes || [];
+            break;
+          }
+
+          case 'Look Bought homes': {
+            this.homes = this.getBoughtHomes(homes);
+            break;
+          }
         }
+
         this.filterHomes('');
       }
     );
   }
 
-  private cutOwnHomes(homes: Home[]): Home[] {
+  private getBoughtHomes(homes: Home[]): Home[] {
+    return this.client.homes.filter(home => {
+      return home.clientOwner && (home.clientOwner.id === this.client.id);
+    });
+  }
+
+  private getExistHomes(homes: Home[]): Home[] {
     const newHomes =  homes.filter(home => {
       // cut sold out home
       if (home.clientOwner) {

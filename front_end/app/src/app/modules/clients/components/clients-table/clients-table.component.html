@@ -67,24 +67,6 @@
 </div> -->
 
  <!-- home list popup -->
- <div class="popup-homes-list" *ngIf="isPopupListHomes">
-    <app-homes-list-selector 
-        [client]="currentClient"
-        (closeEvent)="isPopupListHomes = false"
-        [isAddingHomesView]="isAddingHomesView"
-        [isBoughtHomesView]="isBoughtHomesView"
-    >
-    </app-homes-list-selector>
-</div>
-
-<!-- removing popup  -->
-    <!-- <app-clients-popup-deleting
-        class="popup-menu"
-        *ngIf="isPopumMenu"
-        [client]="currentClient"
-        (submitEvent)="deleteClient($event)"
-        (cancelEvent)="isPopumMenu=false"
-    ></app-clients-popup-deleting> -->
 
 <div class="container">
     <mat-table 
@@ -131,7 +113,7 @@
                     <mat-icon>payment</mat-icon>
                     Look bought homes
                 </button>
-                <button mat-menu-item (click)="onViewedHome(client)">
+                <button mat-menu-item (click)="openViewedHome(client)">
                     <mat-icon>list</mat-icon>
                     Look viewed homes
                 </button>

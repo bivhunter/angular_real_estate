@@ -1,5 +1,4 @@
-<div class="popup-wrapper">
-    <!-- main elem -->
+<!-- <div class="popup-wrapper">
     <div class="popup">
         <div class="header-wrapper">
             <h3>{{title}}</h3> 
@@ -8,7 +7,6 @@
             (click)="closeList()"
             >X</div>
     
-            <!-- input for search -->
             <form>
                 <input
                     type="text"
@@ -34,12 +32,10 @@
         </div>
 
         <div class="content-wrapper">
-            <!-- clients list -->
             <table>
                     <tr *ngFor="let client of filteredClients"
                         class="table-item">
     
-                        <!-- wrapper for selected -->
                         <div class="wrapper" 
                         (click)="onClickClient(client)">
                             <td class="img-cell"><img src="../../../../../assets/images/foto-card.png"></td>
@@ -58,7 +54,6 @@
     
 </div>
 
-<!-- popup question -->
 <app-popup-question
     *ngIf = "isPopupQuestion"
     [title] = "title"
@@ -67,4 +62,4 @@
     (submitEvent)="onSubmit()"
 >
 
-</app-popup-question>
+</app-popup-question> -->

@@ -9,7 +9,6 @@ import { ClientsListComponent } from './components/clients-list/clients-list.com
 import { ClientsTableComponent } from './components/clients-table/clients-table.component';
 import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientsControlPanelComponent } from './components/clients-control-panel/clients-control-panel.component';
-import { ClientsPopupDeletingComponent } from './components/clients-popup-deleting/clients-popup-deleting.component';
 
 
 
@@ -22,7 +21,6 @@ import { ClientsPopupDeletingComponent } from './components/clients-popup-deleti
     ClientsListComponent,
     ClientsTableComponent,
     ClientsControlPanelComponent,
-    ClientsPopupDeletingComponent,
   ],
   imports: [
     CommonModule,

@@ -1,146 +1,34 @@
-:host {
-    /* display: inline-flex;
-    justify-content: center; */
-    display: flex;
-    padding: 15px;
-    flex: 1 1 300px;
-    max-width: 280px;
-    height: 340px;
+.card {
+    margin: 5px;
+    width: 300px;
 }
 
-.container {
-    position: relative;
-    flex: 1 1 350px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    border: 3px grey groove;
-    border-radius: 5px;
-    box-shadow: 2px 2px 4px rgba(0, 114, 188, 1);
+.title-group {
+    margin: 0 auto;
 }
 
-.content-wrapper {
-    display: flex;
-    justify-content: baseline;
-}
-
-.info-wrapper p{
-    word-wrap: break-word;
-    word-break: break-all;
-    white-space: normal;
+.title {
+    font-size: 16px;
     text-align: center;
 }
 
-.home-column, .client-column {
-    flex: 1 1 auto;
-    min-width: 100px;
-    
-}
+th.mat-sort-header-sorted {
+    color: blue;
+  }
 
-.deal-container {
-    min-width: 100px;
-}
-
-.home-column, .client-column, .deal-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-}
-
-/* client styles */
-.home-column, .client-column {
-    font-size: 12px;
-}
-
-.home-column:hover, .client-column:hover:not(.disabled), .deal-container:hover {
-    cursor: pointer;
-    box-shadow: 4px 4px 6px rgba(0, 114, 188, 1);
-}
-
-.home-column:hover p, .client-column:hover p {
-    text-shadow: 1px 1px 2px rgba(0,114,188,1);
-}
-
-.home-column:hover .home-img {
-    background-image: url('../../../../../assets/images/foto-house_blue.png');
-}
-
-.client-column:not(.disabled):hover .client-img {
-    background-image: url('../../../../../assets/images/foto-card-blue.png');
-}
-
-.deal-container:hover .deal-img {
-    background-image: url('../../../../../assets/images/deal_blue.png');
-}
-
-/* text */
-p, h4 {
-    padding: 0;
+:host /deep/ .mat-card-header-text {
     margin: 0;
-    text-shadow: 1px 1px 2px rgba(192, 192, 192);
 }
 
-
-h3 {
-    margin-bottom: 5px;
-    text-shadow: 2px 2px 4px rgba(165, 42, 42, 1);
+.actions {
+    margin: 0 auto;
 }
 
-/* images */
-.deal-img {
-    height: 80px;
-    width: 80px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+mat-icon {
+    margin: 0 10px;
 }
 
-.home-img, .client-img {
-    height: 40px;
-    width: 40px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.home-img {
-   background-image: url('../../../../../assets/images/foto-house.png');
-}
-
-.client-img {
-    background-image: url('../../../../../assets/images/foto-card.png');
+h4.info {
+    margin: 0;
+    text-align: start;
  }
-
- .deal-img {
-    background-image: url('../../../../../assets/images/deal.png');
- }
-
-
-
-/* buttons styles */
-.main-buttons-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: stretch;
-    align-self: stretch;
-    /* width: 200px; */
-    margin: 20px 0 15px 0;
-}
-
-button {
-    font-size: 15px;
-    border-radius: 5px;
-    margin: 2px;
-    text-shadow: 1px 1px 2px rgba(0,114,188,1);
-}
-
-button:hover{
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
-}
-
-
-
-
-

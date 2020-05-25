@@ -38,3 +38,8 @@ export interface IPopupQuestionConf {
   client?: Client;
   home?: Home;
 }
+
+export interface IPopupHomesSelectorConf {
+  title: string;
+  client: Client;
+}

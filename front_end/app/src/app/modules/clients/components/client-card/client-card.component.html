@@ -49,17 +49,6 @@
             </button>
         </mat-card-actions>
     </mat-card>
-
-    <!-- adding home list popup -->
-    <div class="popup-homes-list" *ngIf="isPopupListHomes">
-        <app-homes-list-selector 
-            [client]="client"
-            (closeEvent)="isPopupListHomes = false"
-            [isAddingHomesView]="isAddingHomesView"
-            [isBoughtHomesView]="isBoughtHomesView"
-        >
-        </app-homes-list-selector>
-    </div>
 </div>
 
 

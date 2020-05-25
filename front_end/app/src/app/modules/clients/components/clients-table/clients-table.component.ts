@@ -1,15 +1,12 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Observable } from 'rxjs';
-import { TClientsSortingMethod, TClientsSortingField, ISortingConf } from 'src/app/modules/shared/types/types';
-import { Router } from '@angular/router';
+import { ISortingConf } from 'src/app/modules/shared/types/types';
 import { Store } from '@ngrx/store';
 import * as clientsSelector from 'src/app/store/selectors/clients.selector';
 import * as clientsActions from 'src/app/store/actions/clients.action';
 import { MatSort } from '@angular/material/sort';
-import { getSortingConf } from './../../../../store/selectors/clients.selector';
-import { MatDialog } from '@angular/material/dialog';
-import { PopupQuestionComponent } from 'src/app/modules/shared/components/popup-question/popup-question.component';
+import { ClientsPopupService } from '../../services/clients-popup.service';
 
 @Component({
   selector: 'app-clients-table',
@@ -19,24 +16,16 @@ import { PopupQuestionComponent } from 'src/app/modules/shared/components/popup-
 export class ClientsTableComponent implements OnInit, AfterViewInit  {
 
   @Input() clients: Client[];
-  currentClient: Client;
-
-  // homesList popup
-  isPopupListHomes = false;
-  isAddingHomesView: boolean;
-  isBoughtHomesView: boolean;
 
   displayedColumns: string[] = ['surname', 'name', 'email', 'phone', 'actions'];
 
-  sortingMethod$: Observable<TClientsSortingMethod>;
   sortingConf$: Observable<ISortingConf>;
 
   @ViewChild(MatSort) matSort: MatSort;
 
   constructor(
-    private router: Router,
     private store: Store,
-    public dialog: MatDialog
+    public popup: ClientsPopupService
   ) { }
 
   ngOnInit(): void {
@@ -48,48 +37,19 @@ export class ClientsTableComponent implements OnInit, AfterViewInit  {
   }
 
   onDeleteButton(client: Client): void {
-    const deleteDialog = this.dialog.open(PopupQuestionComponent, {
-      data: {
-        title: 'Delete Client!',
-        client
-      }
-    });
-    deleteDialog.afterClosed().subscribe(
-      answer => {
-        if (answer) {
-          this.deleteClient(client.id);
-        }
-      }
-    );
-  }
-
-  deleteClient(id: number | string): void {
-    this.store.dispatch(clientsActions.deleteClient({id}));
+    this.popup.openDeleteClient(client);
   }
 
   openBoughtHomes(client: Client): void {
-    this.currentClient = client;
-    this.isBoughtHomesView = true;
-    this.isAddingHomesView = false;
-    this.isPopupListHomes = true;
+    this.popup.openBoughtHomesList(client);
   }
 
   onAddHome(client: Client): void {
-    this.isBoughtHomesView = false;
-    this.currentClient = client;
-    this.isAddingHomesView = true;
-    this.isPopupListHomes = true;
+    this.popup.openAddingHomeList(client);
   }
 
-  onViewedHome(client: Client): void {
-    this.isBoughtHomesView = false;
-    this.currentClient = client;
-    this.isAddingHomesView = false;
-    this.isPopupListHomes = true;
-  }
-
-  onProfileButton(id: number | string): void {
-    this.router.navigateByUrl(`clients/profile/${id}`);
+  openViewedHome(client: Client): void {
+    this.popup.openViewedHomeList(client);
   }
 
   setSortingConf(sortingConf: ISortingConf): void {

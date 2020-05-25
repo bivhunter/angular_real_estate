@@ -241,3 +241,7 @@ a {
 th.mat-sort-header-sorted {
     color: black;
   }
+
+h4.info {
+   margin: 0;
+}

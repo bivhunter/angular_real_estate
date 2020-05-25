@@ -16,7 +16,6 @@ export class ClientsControlPanelComponent implements OnInit {
   viewMode: TViewMode;
 
   constructor(
-    private router: Router,
     private store: Store
   ) { }
 

@@ -1,13 +1,12 @@
 
 
-<div class="container" [ngSwitch]="viewMode$ | async">
-    <!-- table-view -->
+<!-- <div class="container" [ngSwitch]="viewMode$ | async">
     <div class=list-view *ngSwitchCase="'list'">
         <app-deals-table
         [deals]="deals"
         >
         </app-deals-table>        
-    </div>
+    </div> -->
 
     <!-- sorting menu -->
     <!-- <div class="sorting-menu" *ngSwitchCase="'cards'">
@@ -27,7 +26,7 @@
         (click)="changeSortingMethod('PRICE')">Price</button>
     </div> -->
     <!-- cards-view -->
-    <div class="card-view" *ngSwitchCase="'cards'">
+    <!-- <div class="card-view" *ngSwitchCase="'cards'">
         <h2 *ngIf="!deals?.length">No deals</h2>
         <app-deal-card 
         *ngFor="let deal of deals"
@@ -35,6 +34,37 @@
         >
         </app-deal-card>
     </div>
+</div> -->
+
+
+<div class="container" [ngSwitch]="viewMode$ | async">
+    <div class=list-view *ngSwitchCase="'list'">
+        <app-deals-table
+            [deals]="deals">
+        </app-deals-table>        
+    </div>
+
+    <table matSort (matSortChange)="changeSortingMethod($event)"
+        [matSortActive]="(sortingConf$ | async).active"
+        [matSortDirection]="(sortingConf$ | async).direction"
+        *ngSwitchCase="'cards'"
+        class="sorting-panel">
+        
+        <tr>
+            <!-- <th>Sort: </th> -->
+            <th mat-sort-header="date" disableClear>
+                Date
+            </th>
+            <th mat-sort-header="price" disableClear>Price</th>
+        </tr>
+    </table>
+
+    <div class="card-view mat-elevation-z8" *ngSwitchCase="'cards'">
+            <app-deal-card 
+            *ngFor="let deal of deals"
+            [deal]="deal"
+            >
+            </app-deal-card>
+        </div>
+    
 </div>
-
-

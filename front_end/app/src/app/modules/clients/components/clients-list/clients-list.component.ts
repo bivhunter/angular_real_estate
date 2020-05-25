@@ -21,7 +21,6 @@ export class ClientsListComponent implements OnInit {
   sortingConf$: Observable<ISortingConf>;
 
   constructor(
-    private router: Router,
     private store: Store,
   ) { }
 

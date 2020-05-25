@@ -1,38 +1,36 @@
-<div class="control-panel">
-    <button 
-        class=add-button
-        (click)="onAddButtonClick()">+ Add deal
+<mat-grid-list cols="3" rowHeight="100%"> 
+    <mat-grid-tile >
+        <button mat-raised-button color="primary" routerLink="/deals/adding">
+            <mat-icon>add</mat-icon>
+            Add Deal
         </button>
+    </mat-grid-tile>
+        
+    <mat-grid-tile class="input-wrapper">
+        <mat-form-field  appearance="outline">
+            <mat-label>Search</mat-label>
+            <input type="text" matInput placeholder="search" 
+            name="searching"
+            [ngModel]
+            (ngModelChange)="changeFilter($event)">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </mat-grid-tile>
 
-        <div class="search-wrapper">
-            <form>
-                <input type=text 
-                name="searching"
-                [ngModel]
-                (ngModelChange)="changeFilter($event)"
-                placeholder="🔍"> 
-            </form>
-            
-            <!-- <button class="search-button" type="button" >Search</button> -->
-        </div>
-
-        <div class="views-control-wrapper" >
-             
-            <div class="views-control" (mouseleave)="isViewsMenu=false">
-                <button class="views-button"
-                [disabled]="isViewsMenu"
-                (click)="isViewsMenu=true"
-                >Views</button>
-               
-             <!-- Downing Menu fot views -->
-                <div  class="views-menu" *ngIf="isViewsMenu">
-                    <button 
-                    class="cards-views"
-                    (click)="onActivateCardView()">Cards</button>
-                    <button class="list-views"
-                    (click)="onActivateListView()"
-                    >List</button>
-                </div>
-            </div>
-        </div>
-</div>
+    <mat-grid-tile>
+        <button mat-raised-button [matMenuTriggerFor]="menu" color="basic">
+            <mat-icon>menu</mat-icon>
+            View mode
+        </button>
+        <mat-menu  #menu="matMenu" color="primary">
+            <button mat-menu-item (click)="onActivateCardView()">
+                <mat-icon>grid_on</mat-icon>
+                Cards
+                <mat-icon *ngIf="viewMode==='cards'" color="primary">check</mat-icon></button>
+            <button mat-menu-item (click)="onActivateListView()">
+                <mat-icon >list</mat-icon>
+                List
+                <mat-icon *ngIf="viewMode==='list'" color="primary">check</mat-icon></button>
+        </mat-menu>
+    </mat-grid-tile>
+</mat-grid-list>
