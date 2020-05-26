@@ -33,13 +33,7 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
 
   homeForm: FormGroup;
 
-  // popup
-  isPopupQuestion = false;
-  popupTitle: string;
-  text: string;
-
   // for canDiactivate
-  isCanDeactivatePopup = false;
   private isSubmit = false;
 
   private currencyPipe: CurrencyPipe = new CurrencyPipe('fr');
@@ -98,28 +92,9 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  onSubmit(): void {
-    if (this.popupTitle === 'Cancel changes!') {
-      this.isSubmit = true;
-      this.navigateBack();
-    } else if (this.popupTitle === 'Add home!') {
-      this.addHome();
-    } else {
-      this.updateHome();
-    }
-  }
-
   onPriceChange(value: string | number): number {
     const newValue = value.toString().replace(/\s/g, '').replace(/\$/g, '');
     return +newValue;
-  }
-
-  onDateChange(date: string) {
-    const newDate = date.slice(-10);
-    if (!date) {
-      return;
-    }
-    this.home.start_date = new Date(Date.parse(newDate));
   }
 
   private getFromForm(): void {
@@ -194,13 +169,11 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
 
   private updateHome(): void {
     this.store.dispatch(homesActions.updateHome({home: this.home}));
-    this.isSubmit = true;
     this.navigateBack();
   }
 
   private addHome(): void {
     this.store.dispatch(homesActions.addHome({home: this.home}));
-    this.isSubmit = true;
     this.navigateBack();
   }
 
@@ -219,17 +192,20 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     this.location.back();
   }
 
-  // private checkAddingMode() {
-  //   const mode = this.route.snapshot.data.mode;
-  //   return mode === 'Adding' ? true : false;
-  // }
-
   private onGetHome(home: Home): void {
     if (home.clientOwner) {
       this.isFormDisabled = true;
     }
     this.home = {...home};
     this.initHome = {...home};
+  }
+
+  private disableFormField() {
+    for (const formControl in this.homeForm.controls) {
+      if (this.homeForm.controls.hasOwnProperty(formControl)) {
+        this.homeForm.controls[formControl].disable();
+      }
+    }
   }
 
   private createForm(): void {
@@ -269,6 +245,10 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
         ]),
       }
     );
+
+    if (this.isFormDisabled) {
+      this.disableFormField();
+    }
   }
 
   private initFormSubscriptions(): void {

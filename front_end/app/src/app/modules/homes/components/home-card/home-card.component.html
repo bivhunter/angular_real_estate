@@ -1,45 +1,4 @@
 <div class="container">
-    <!-- <div class="tooltip" (click)="onDetailsButton(home.id)">
-        <img class="sold-img" src="../../../../../assets/images/sold.png" *ngIf="home.clientOwner">
-        <span class="tooltip-text">Details</span>
-        <div class="profile-img"
-             >
-        </div>
-    </div>
-
-    <h3>{{home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</h3>
-    <p>{{home.home + ' ' + home.street}}</p>
-    <p>{{home.city + ' ' + home.state}}</p>
-
-    <div class="delete-button"
-    (click)="onDeleteButton()"
-    *ngIf="!home.clientOwner"
-    >X</div>
-    
-    <div class="main-buttons-wrapper">
-        <button class="details-button"
-        (click)="onDetailsButton(home.id)">Details</button>
-
-        <button class="view-button"
-        (click)="openClients()">Clients who viewed Homes</button>
-
-        <button class="add-button"
-        (click)="addClient()"
-        [disabled]="home.clientOwner"
-        >Add client who viewed Home</button>
-    </div> -->
-
-      <!-- adding home list popup -->
-      <div class="popup-clients-list" *ngIf="isPopupListClients">
-        <app-clients-list-selector 
-            [home]="home"
-            (closeEvent)="isPopupListClients = false"
-            [adding]="isAdding"
-        >
-
-        </app-clients-list-selector>
-    </div>
-
     <mat-card class="card mat-elevation-z4">
         <mat-card-header>
             <mat-card-title-group class="title-group">
@@ -91,7 +50,5 @@
             </button>
         </mat-card-actions>
     </mat-card>
-    
-
 </div>
 

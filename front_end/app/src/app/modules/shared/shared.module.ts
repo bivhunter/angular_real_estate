@@ -31,6 +31,8 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MinDateValidatorDirective } from './directives/min-date-validator.directive';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatStepperModule} from '@angular/material/stepper';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 registerLocaleData(localeFr);
 const materialModules = [
@@ -52,7 +54,8 @@ const materialModules = [
   MatTableModule,
   MatSortModule,
   MatDatepickerModule,
-  MatDialogModule
+  MatDialogModule,
+  MatStepperModule
 ];
 
 

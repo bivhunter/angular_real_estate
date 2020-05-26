@@ -1,38 +1,3 @@
-<!-- <div class="control-panel">
-    <button 
-        class=add-button
-        (click)="onAddButtonClick()">+ Add client
-    </button>
- 
-    <div class="search-wrapper">
-        <form>
-            <input type=text 
-            name="searching"
-            [ngModel]
-            (ngModelChange)="changeFilter($event)"
-            placeholder="🔍"> 
-        </form>
-    </div>
-
-    <div class="views-control-wrapper" >
-        <div class="views-control" (mouseleave)="isViewsMenu=false">
-            <button class="views-button"
-            [disabled]="isViewsMenu"
-            (click)="isViewsMenu=true"
-            >Views</button>
-           
-            <div  class="views-menu" *ngIf="isViewsMenu">
-                <button 
-                class="cards-views"
-                (click)="onActivateCardView()">Cards</button>
-                <button class="list-views"
-                (click)="onActivateListView()"
-                >List</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 <mat-grid-list cols="3" rowHeight="100%"> 
     <mat-grid-tile >
         <button mat-raised-button color="primary" routerLink="/clients/adding">

@@ -1,4 +1,4 @@
-<div class="container" [ngSwitch]="currentFrame">
+<!-- <div class="container" [ngSwitch]="currentFrame">
     <app-deals-clients-selector
         *ngSwitchCase="'clientsSelector'"
         [selectedClient]="selectedClient"
@@ -32,7 +32,6 @@
   
 </div>
 
-<!-- popup question -->
 <app-popup-question
     *ngIf = "isPopupQuestion"
     [title] = "popupTitle"
@@ -42,7 +41,179 @@
 >
 </app-popup-question>
 
-<!-- deactivate popup -->
-<app-popup-deactivate *ngIf="isCanDeactivatePopup"></app-popup-deactivate>
 
+
+ -->
+
+<div class="container">
+    <mat-horizontal-stepper linear #stepper (selectionChange)="stepChangeEvent($event)">
+        <ng-template matStepperIcon="client">
+            <mat-icon>person</mat-icon>
+        </ng-template>
+
+        <ng-template matStepperIcon="house">
+            <mat-icon>house</mat-icon>
+        </ng-template>
+
+        <ng-template matStepperIcon="deal">
+            <mat-icon>thumbs_up_down</mat-icon>
+        </ng-template>
+
+        <mat-step 
+            class="mat-step" 
+            label="Select client" 
+            state="client"
+            [completed]="!!selectedClient"
+            >
+
+            
+
+            <div class="content-wrapper">
+            <mat-form-field  appearance="outline">
+                <mat-label>Search</mat-label>
+                <input type="text" matInput placeholder="search" 
+                name="searching"
+                [ngModel]
+                (ngModelChange)="filterClients($event)">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <mat-table 
+                [dataSource]="filteredClients$ | async" 
+                 class="mat-elevation-z8 table" 
+                >
+                <ng-container matColumnDef="surname">
+                <mat-header-cell  class="surname-cell"*matHeaderCellDef>
+                    Surname </mat-header-cell>
+                <mat-cell *matCellDef="let client" class="surname-cell"> {{client.surname}} </mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                <mat-cell *matCellDef="let client"> {{client.name}} </mat-cell>
+                </ng-container>
+    
+                <mat-header-row *matHeaderRowDef="displayedClientColumns; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedClientColumns;" 
+                    (click)="selectedClient = row"
+                    [class.selected]="selectedClient && row.id === selectedClient.id">
+                </mat-row>
+        </mat-table>
+         </div>
+
+            <div>
+              <button mat-button (click)="onCancel()">Cancel</button>
+              <button 
+                mat-raised-button 
+                color="primary" 
+                matStepperNext
+                [disabled]="!selectedClient"
+                (click)="getHomes()">Next</button>
+            </div>
+        </mat-step>
+    
+        <mat-step class="mat-step" 
+            [completed]="!!selectedHome"
+            label="Select Home" 
+            state="house">
+            
+            <div class="content-wrapper">
+                <mat-form-field  appearance="outline">
+                    <mat-label>Search</mat-label>
+                    <input type="text" matInput placeholder="search" 
+                    name="searching"
+                    [ngModel]
+                    (ngModelChange)="filterHomes($event)">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+                
+                <mat-table 
+                [dataSource]="filteredHomes" 
+                class="mat-elevation-z8 table" 
+                >
+            
+                <ng-container matColumnDef="home">
+                <mat-header-cell  class="home-cell"*matHeaderCellDef>
+                    № </mat-header-cell>
+                <mat-cell *matCellDef="let home" class="home-cell"> {{home.home}} </mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef="street">
+                <mat-header-cell *matHeaderCellDef> Street </mat-header-cell>
+                <mat-cell *matCellDef="let home"> {{home.street}} </mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef="city">
+                <mat-header-cell *matHeaderCellDef> City </mat-header-cell>
+                <mat-cell *matCellDef="let home"> {{home.city}} </mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef="state" >
+                    <mat-header-cell *matHeaderCellDef> State </mat-header-cell>
+                    <mat-cell *matCellDef="let home"> {{home.state}} </mat-cell>
+                </ng-container>
+            
+            <mat-header-row *matHeaderRowDef="displayedHomeColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedHomeColumns;" 
+                (click)="selectedHome = row"
+                [class.selected]="selectedHome && row.id === selectedHome.id"
+                ></mat-row>
+            </mat-table>
+             </div>
+        
+                <div>
+                  <button mat-button (click)="onCancel()">Cancel</button>
+                  <button 
+                        mat-button 
+                        matStepperPrevious 
+                        (click)="selectedHome=null">
+                        Back
+                    </button>
+                    <button 
+                        mat-raised-button 
+                        matStepperNext 
+                        color="primary" 
+                        [disabled]="!selectedHome">
+                        Next
+                    </button>
+                </div>
+            
+        </mat-step>
+
+        <mat-step class="mat-step" 
+            label="Make deal" 
+            state="deal"
+            >
+
+          <div class="content-wrapper"> 
+            <mat-list>
+                <mat-list-item>
+                    <mat-icon>person</mat-icon>
+                    {{selectedClient?.surname}}, {{selectedClient?.name}}
+                </mat-list-item>    
+                <mat-list-item>
+                    <mat-icon>house</mat-icon>
+                    {{selectedHome?.home}}, {{selectedHome?.street}}, 
+                        {{selectedHome?.city}}, {{selectedHome?.state}}
+                    
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon>monetization_on</mat-icon>
+                    {{selectedHome?.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}
+                </mat-list-item>
+            </mat-list>
+            </div>
+          <div>
+            <button mat-button (click)="onCancel()">Cancel</button>
+            <button mat-button matStepperPrevious>Back</button>
+            <button  
+                mat-raised-button 
+                color="primary"  
+                (click)="addDeal()">Submit</button>
+          </div>
+        
+        </mat-step>
+
+       
+      </mat-horizontal-stepper>
+</div>
 

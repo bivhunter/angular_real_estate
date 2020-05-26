@@ -1,65 +1,44 @@
-<!-- <div class="popup-wrapper">
-    <div class="popup">
-        <div class="header-wrapper">
-            <h3>{{title}}</h3> 
-            <div 
-            class="close-button"
-            (click)="closeList()"
-            >X</div>
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+    <mat-form-field  appearance="outline">
+        <mat-label>Search</mat-label>
+        <input type="text" matInput placeholder="search" 
+        name="searching"
+        [ngModel]
+        (ngModelChange)="filterClients($event)">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
     
-            <form>
-                <input
-                    type="text"
-                    name="search"
-                    placeholder="🔍"
-                    [ngModel]
-                    (ngModelChange)="filterClients($event)"
-                >
-            </form>
+    <mat-table 
+    [dataSource]="filteredClients" 
+    class="mat-elevation-z8 table" 
+    >
+        <ng-container matColumnDef="surname">
+        <mat-header-cell  class="surname-cell"*matHeaderCellDef>
+            Surname </mat-header-cell>
+        <mat-cell *matCellDef="let client" class="surname-cell"> {{client.surname}} </mat-cell>
+        </ng-container>
 
-            <table>
-                <tr class="head-row">
-                    <div class="head-wrapper" >
-                        <td class="img-cell"></td>
-                        <td class="surname-cell">Surname</td>
-                        <td class="name-cell">Name</td>
-                        <td class="email-cell">Email</td>
-                        <div class="scroll"></div>
-                    </div>
-                </tr>
-                
-            </table>
-        </div>
+        <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let client"> {{client.name}} </mat-cell>
+        </ng-container>
 
-        <div class="content-wrapper">
-            <table>
-                    <tr *ngFor="let client of filteredClients"
-                        class="table-item">
-    
-                        <div class="wrapper" 
-                        (click)="onClickClient(client)">
-                            <td class="img-cell"><img src="../../../../../assets/images/foto-card.png"></td>
-                            <td class="surname-cell">{{client.surname}}</td>
-                            <td class="name-cell">{{client.name}}</td>
-                            <td class="email-cell">{{client.email}}</td>
-                        </div>
-                    </tr>
-            </table>
-        </div>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" 
+            (click)="onClickClient(row)"
+            [class.selected]="isAddingMode && row.id === selectedClientId"
+            [class.sale]="row.clientOwner"></mat-row>
+    </mat-table>
 
-    </div>
+  
 </div>
-
-<div class="cover-div">
-    
-</div>
-
-<app-popup-question
-    *ngIf = "isPopupQuestion"
-    [title] = "title"
-    [text] = "text"
-    (cancelEvent)="onCancel()"
-    (submitEvent)="onSubmit()"
->
-
-</app-popup-question> -->
+<div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>Cnacel</button>
+    <button mat-raised-button 
+        *ngIf="isAddingMode"
+        color="primary" 
+        [mat-dialog-close]="selectedClientId"
+        [disabled]="!selectedClientId">
+        Submit</button>
+  </div>

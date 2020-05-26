@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
-import { Router } from '@angular/router';
 import { TViewMode, ISortingConf } from 'src/app/modules/shared/types/types';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';

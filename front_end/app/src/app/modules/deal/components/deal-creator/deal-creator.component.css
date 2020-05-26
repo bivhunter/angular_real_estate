@@ -1,4 +1,36 @@
 .container {
     height: 100%;
-    width: 100%;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.table {
+    margin: 15px 15px 15px 15px;
+    max-width: 800px;
+    height: 400px;
+    overflow: auto;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}
+
+.sale {
+    background-color: cornsilk;
+}
+
+.selected {
+    background-color: gray;
+}
+
+mat-row:hover {
+    cursor: pointer;
+}
+
+.content-wrapper mat-icon {
+    margin: 0 20px;
+}
+
+.content-wrapper {
+    height: 550px;
 }

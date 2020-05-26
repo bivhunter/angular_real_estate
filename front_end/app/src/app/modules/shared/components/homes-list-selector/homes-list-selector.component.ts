@@ -28,8 +28,6 @@ export class HomesListSelectorComponent implements OnInit {
 
   title: string;
 
-  @Output() closeEvent: EventEmitter<any> = new EventEmitter();
-
   constructor(
     public dialogRef: MatDialogRef<HomesListSelectorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IPopupHomesSelectorConf,

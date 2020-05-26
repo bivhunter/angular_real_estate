@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Home } from 'src/app/modules/homes/model/home';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as clientsSelector from 'src/app/store/selectors/clients.selector';
-import * as clientsActions from 'src/app/store/actions/clients.action';
 import { filterClients } from 'src/app/store/functions/filtered-functions';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { IPopupClientsSelectorConf } from '../../types/types';
 
 @Component({
   selector: 'app-clients-list-selector',
@@ -14,27 +15,26 @@ import { filterClients } from 'src/app/store/functions/filtered-functions';
 })
 export class ClientsListSelectorComponent implements OnInit {
 
-  @Input() home: Home;
+  home: Home = this.data.home;
+  selectedClientId: number | string;
+
+  displayedColumns: string[] = ['surname', 'name'];
 
   clients: Client[];
   filteredClients: Client[];
 
-  @Input('adding') isAddingMode: boolean;
-  isPopupQuestion = false;
   title: string;
-  text: string;
-  clientId: string | number;
-
-
-  @Output() closeEvent: EventEmitter<any> = new EventEmitter();
+  isAddingMode = false;
 
   constructor(
+    public dialogRef: MatDialogRef<ClientsListSelectorComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: IPopupClientsSelectorConf,
     private router: Router,
     private store: Store
   ) { }
 
   ngOnInit(): void {
-    this.title = this.getTitle();
+    this.title = this.data.title;
     this.getClients();
   }
 
@@ -42,50 +42,35 @@ export class ClientsListSelectorComponent implements OnInit {
     this.filteredClients = filterClients(this.clients, searchString);
   }
 
-  closeList(): void {
-    this.closeEvent.emit('');
-  }
-
   onClickClient(client: Client): void {
     if (this.isAddingMode) {
-      this.openPopupQuestion(client, 'Add client:');
+      this.selectedClientId = client.id;
     } else {
+      this.dialogRef.close();
       this.router.navigateByUrl(`clients/profile/${client.id}`);
     }
-  }
-
-  onCancel(): void {
-    this.isPopupQuestion = false;
-  }
-
-  onSubmit(): void {
-    this.addHomeToClient();
-  }
-
-  addHomeToClient(): void {
-    this.store.dispatch(clientsActions.addHomeToClient({homeId: this.home.id, clientId: this.clientId}));
-    this.closeList();
-  }
-
-  private getTitle(): string {
-   return this.isAddingMode ? 'Select Client who viewed Home' : 'Client who viewed Home';
-  }
-
-  private openPopupQuestion(client: Client, title: string): void {
-    this.clientId = client.id;
-    this.title = title;
-    this.text = `${client.surname}, ${client.name}, ${client.email}`;
-    this.isPopupQuestion = true;
   }
 
   private getClients(): void {
     this.store.select(clientsSelector.getClients).subscribe(
       (clients) => {
         if (!clients) {
+          this.clients = [];
           return;
         }
 
-        this.clients = this.isAddingMode ? this.cutOwnClients(clients) : this.getOwnClients(clients);
+        switch (this.title) {
+          case 'Add client who viewed home': {
+            this.isAddingMode = true;
+            this.clients = this.cutOwnClients(clients);
+            break;
+          }
+
+          case 'Look Clients who viewed home': {
+            this.clients = this.getOwnClients(clients);
+            break;
+          }
+        }
         this.filterClients('');
       }
     );
