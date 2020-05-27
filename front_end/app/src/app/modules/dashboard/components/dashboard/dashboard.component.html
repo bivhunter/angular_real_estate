@@ -1,71 +1,98 @@
 <div class="container">
-    <h1>Statistic</h1>
-    <div class="stat-wrapper">
-        <div class="clients-wrapper"
-            >
-            <div class="stat-text">
-                <h3 class="stat-header">Total clients</h3>
-                <h3 class="stat-header">{{clientsTotal}}</h3>
-            </div>
-            <img class="stat-img" src="../../../../../assets/images/foto-card.png">
-        </div>
+    <mat-card class="mat-elevation-z4 stat-wrapper">
+        <mat-card-header>
+            <mat-icon>assessment</mat-icon>
+            <mat-card-title>Statistic</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-grid-list cols="3" rowHeight="100px">
+                <mat-grid-tile colspan="1">
+                    <mat-card class="stat-card mat-elevation-z4">
+                        <mat-card-header>
+                            <mat-icon>people</mat-icon>
+                            <mat-card-title>Total Clients</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <h4> {{clientsTotal}} </h4>                
+                        </mat-card-content>
+                    </mat-card>
+                </mat-grid-tile>
+                    
+                <mat-grid-tile colspan="1">
+                    <mat-card class="stat-card mat-elevation-z4">
+                        <mat-card-header>
+                            <mat-icon>house</mat-icon>
+                            <mat-card-title>Total Homes</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <h4> {{homesTotal}} </h4>                
+                        </mat-card-content>
+                    </mat-card>
+                </mat-grid-tile>
         
-        <div class="homes-wrapper">
-            <div class="stat-text">
-                <h3 class="stat-header">Total Homes</h3>
-                <h3 class="stat-header">{{homesTotal}}</h3>
-            </div>
-            <img class="stat-img" src="../../../../../assets/images/foto-house.png">
-        </div>
+                <mat-grid-tile colspan="1">
+                    <mat-card class="stat-card mat-elevation-z4">
+                        <mat-card-header>
+                            <mat-icon>thumbs_up_down</mat-icon>
+                            <mat-card-title>Total Deals</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <h4> {{dealsTotal}} </h4>                
+                        </mat-card-content>
+                    </mat-card>
+                </mat-grid-tile>
+            </mat-grid-list>
         
-        <div class="deals-wrapper">
-            <div class="stat-text">
-                <h3 class="stat-header">Total Deals</h3>
-                <h3 class="stat-header">{{dealsTotal}}</h3>
-            </div>
-            <img class="stat-img" src="../../../../../assets/images/deal.png">
-        </div>
-    </div>
+        </mat-card-content>
+    </mat-card>
 
-    <h1>Recent Clients</h1>
-
-    <div class="no-clients" *ngIf="!clients.length">
-        <h1>No Clients</h1>
-        <button 
-        class=add-button
-        routerLink="/clients/adding">+ Add first client
-        </button>
-    </div>
-
-    <div class=table-wrapper *ngIf="clients.length">
-        <table class="table">
-        <tbody>
-            <tr class="head-row">
-                <td class="img-cell">Client</td>
-                <td class="surname-cell">Surname</td>
-                <td class="name-cell">Name</td>
-                <td class="email-cell">Email</td>
-                <td class="phone-cell">Phone</td>
-                <td class="created-date-cell">Date</td>
-            </tr>
-            <tr class="table-item" *ngFor="let client of clients">
-                <td class="img-cell tooltip" (click)="onProfileButton(client.id)">
-                    <span class="tooltip-text">Profile</span>
-                    <div 
-                        
-                        class="profile-img">
-                    </div>
-
-                </td>
-                <td class="surname-cell">{{client.surname}}</td>
-                <td class="name-cell">{{client.name}}</td>
-                <td class="email-cell">{{client.email}}</td>
-                <td class="phone-cell">{{client.phone}}</td>
-                <td class="created-date-cell">{{client.createdAt | date: 'yyyy-MM-dd'}}</td>
-            </tr>
-        </tbody>
-        </table>
-    </div>
-   
+    <mat-card class="mat-elevation-z4 stat-wrapper">
+        <mat-card-header>
+            <mat-icon>people</mat-icon>
+            <mat-card-title>Recent Clients</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-table 
+            [dataSource]="clients" 
+            class="mat-elevation-z8 table" 
+           >
+        
+        <!-- Surname Column -->
+        <ng-container matColumnDef="surname">
+          <mat-header-cell *matHeaderCellDef> Surname </mat-header-cell>
+          <mat-cell *matCellDef="let client"> {{client.surname}} </mat-cell>
+        </ng-container>
     
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let client"> {{client.name}} </mat-cell>
+        </ng-container>
+    
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+          <mat-cell *matCellDef="let client"> {{client.email}} </mat-cell>
+        </ng-container>
+    
+        <!-- Phone Column -->
+        <ng-container matColumnDef="phone">
+            <mat-header-cell class="phone-cell" *matHeaderCellDef> Phone </mat-header-cell>
+            <mat-cell class="phone-cell" *matCellDef="let client"> {{client.phone}} </mat-cell>
+        </ng-container>
+    
+        <!-- Actions Column -->
+        <ng-container matColumnDef="date" stickyEnd>
+            <mat-header-cell class="date-cell" *matHeaderCellDef> Date </mat-header-cell>
+            <mat-cell class="date-cell" *matCellDef="let client"> 
+                {{client.createdAt | date: 'yyyy-MM-dd'}}
+            </mat-cell>
+        </ng-container>
+    
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    
+        </mat-table>
+        </mat-card-content>
+    </mat-card>
 </div>

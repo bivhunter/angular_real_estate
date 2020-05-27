@@ -1,86 +1,35 @@
-<!-- <div class="container">
-    <div class="dashboard-wrapper"
-        routerLink='/dashboard'
-        routerLinkActive="activated" >
-        <img class="nav-img" src="../../../../../assets/images/statistic.png">
-        <div class="nav-text-wrapper">
-            <h3 class="nav-text">Dashboard</h3>
-        </div>
-    </div>
-    
-    <div class="clients-wrapper"
-        routerLink="/clients"
-        routerLinkActive="activated">
+<mat-sidenav-container class="container" >
+    <mat-sidenav-content
+        color="primary"
+        mode="side" 
+        opened
         
-        <img class="nav-img" src="../../../../../assets/images/foto-card.png">
-        <div class="nav-text-wrapper">
-            <h3 class="nav-text">Clients</h3>
-        </div>
-    </div>
-    
-    <div class="homes-wrapper"
-        routerLink="/homes"
-        routerLinkActive="activated">
-        <img class="nav-img" src="../../../../../assets/images/foto-house.png">
-        <div class="nav-text-wrapper">
-            <h3 class="nav-text">Homes</h3>
-        </div>
-        
-    </div>
-    
-    <div class="deals-wrapper"
-        routerLink="/deals"
-        routerLinkActive="activated">
-        <img class="nav-img" src="../../../../../assets/images/deal.png">
-        <div class="nav-text-wrapper">
-            <h3 class="nav-text">Deals</h3>
-        </div>
-        
-    </div>
-
-    <div class="deals-wrapper"
-        routerLink="/material"
-        routerLinkActive="activated">
-        <img class="nav-img" src="../../../../../assets/images/deal.png">
-        <div class="nav-text-wrapper">
-            <h3 class="nav-text">Material</h3>
-        </div>
-    </div>
-</div> -->
-
-    <mat-sidenav-container class="container" >
-        <mat-sidenav-content
-            color="primary"
-            mode="side" 
-            opened
-            
-            >
-
-            <mat-nav-list>
-                <a routerLink="/dashboard"
-                    routerLinkActive="activated"
-                    mat-list-item>
-                    <mat-icon>dashboard</mat-icon>
-                    <span class="link-text">Dashboard</span>
-                </a>
-                <a routerLink="/clients"
-                    routerLinkActive="activated"
-                    mat-list-item>
-                    <mat-icon>people</mat-icon>
-                    <span class="link-text">Clients</span>
-                </a>
-                <a routerLink="/homes"
-                    routerLinkActive="activated"
-                    mat-list-item>
-                    <mat-icon>house</mat-icon>
-                    <span class="link-text">Homes</span>
-                </a>
-                <a routerLink="/deals"
-                    routerLinkActive="activated"
-                    mat-list-item>
-                    <mat-icon>thumbs_up_down</mat-icon>
-                    <span class="link-text">Deals</span>
-                </a>
-            </mat-nav-list>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+        >
+        <mat-nav-list>
+            <a routerLink="/dashboard"
+                routerLinkActive="activated"
+                mat-list-item>
+                <mat-icon>dashboard</mat-icon>
+                <span class="link-text">Dashboard</span>
+            </a>
+            <a routerLink="/clients"
+                routerLinkActive="activated"
+                mat-list-item>
+                <mat-icon>people</mat-icon>
+                <span class="link-text">Clients</span>
+            </a>
+            <a routerLink="/homes"
+                routerLinkActive="activated"
+                mat-list-item>
+                <mat-icon>house</mat-icon>
+                <span class="link-text">Homes</span>
+            </a>
+            <a routerLink="/deals"
+                routerLinkActive="activated"
+                mat-list-item>
+                <mat-icon>thumbs_up_down</mat-icon>
+                <span class="link-text">Deals</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav-content>
+</mat-sidenav-container>

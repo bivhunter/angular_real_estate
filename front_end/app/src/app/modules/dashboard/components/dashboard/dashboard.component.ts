@@ -17,6 +17,8 @@ export class DashboardComponent implements OnInit {
   homesTotal: number;
   dealsTotal: number;
 
+  displayedColumns: string[] = ['surname', 'name', 'email', 'phone', 'date'];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute

@@ -18,7 +18,7 @@ import { filterClients, filterHomes } from 'src/app/store/functions/filtered-fun
 import { MatDialog } from '@angular/material/dialog';
 import { PopupQuestionComponent } from 'src/app/modules/shared/components/popup-question/popup-question.component';
 import { PopupDeactivateComponent } from 'src/app/modules/shared/components/popup-deactivate/popup-deactivate.component';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-deal-creator',
@@ -77,6 +77,7 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
   }
 
   filterClients(searchString: string): void {
+    this.selectedClient = null;
     this.filteredClients$ = this.clients$.pipe(
       map(
         clients => filterClients(clients, searchString)
@@ -108,8 +109,10 @@ export class DealCreatorComponent implements OnInit, CanComponentDeactivate {
   }
 
 
-  stepChangeEvent(event: any): void {
-    console.log(event);
+  stepChangeEvent(stepEvent: StepperSelectionEvent): void {
+    if (stepEvent.selectedStep.state === 'client') {
+      this.selectedHome = null;
+    }
   }
 
   private getClients(): void {
