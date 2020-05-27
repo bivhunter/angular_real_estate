@@ -62,7 +62,6 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
 
   // for can deactivate popup
   canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
-    this.getFromForm();
     if (this.isSubmit || this.compareClient() ) {
       return of(true);
     }
@@ -74,7 +73,6 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
 
   // buttons click handler
   onSave(): void {
-    this.getFromForm();
     if (this.compareClient()) {
       this.navigateBack();
       return;
@@ -88,7 +86,6 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   onCancelButtonClick() {
-    this.getFromForm();
     if (this.compareClient()) {
       this.navigateBack();
     } else {
@@ -186,6 +183,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
 
   // compare for changes
   private compareClient(): boolean {
+    this.getFromForm();
     for (const prop in this.client) {
       if ((this.initClient[prop] === undefined) || (this.initClient[prop] !== this.client[prop])) {
         return false;

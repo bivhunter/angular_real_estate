@@ -1,11 +1,8 @@
+<!-- 
 
-
-    <!-- main elem -->
     <div class="container">
-        <!-- Profile form -->
     <form  #userProfileForm="ngForm"> 
         
-        <!-- Name field -->
         <div class="form-group">
             <label for="name">Name</label>
             <input 
@@ -21,14 +18,12 @@
                 pattern="[A-Za-zА-Яа-яЁё]+"
                 required
                >
-               <!-- NoValid alert -->
             <div class="alert" >
                 <div class="alert-danger" *ngIf="name.invalid && (name.touched)">Incorrect name</div>
                 <div> </div>
             </div>       
         </div>
 
-         <!-- Surname field -->
          <div class="form-group">
             <label for="surname">Surname</label>
             <input 
@@ -44,7 +39,6 @@
                 pattern="[A-Za-zА-Яа-яЁё]+"
                 required
                >
-               <!-- NoValid alert -->
             <div class="alert">
                 <div class="alert-danger" *ngIf="surname.invalid && (surname.touched)">Incorrect surname</div>
                 <div> </div>
@@ -53,7 +47,6 @@
       
         
 
-        <!-- Email field -->
         <div class="form-group">
             <label for="email">Email</label>
             <input 
@@ -70,7 +63,6 @@
                 pattern= "\w[[A-Za-z0-9_]*[@]\w\S+$"
                 >
 
-                <!-- NoValid alert -->
             <div class="alert" 
                 >
                 <div class="alert-danger" *ngIf="email.invalid && (email.touched)">Incorrect email</div>
@@ -78,7 +70,6 @@
             </div>   
         </div>
 
-        <!-- Birthday Date field -->
         <div class="form-group">
             <label for="birthday">Birthday Date</label>
             <input 
@@ -95,7 +86,6 @@
                 [appMaxDateValidator]="18"
                 >
 
-                <!-- No valid alert -->
                 <div class="alert" 
                 >
                 <div class="alert-danger" 
@@ -104,7 +94,6 @@
                 </div>     
         </div>
 
-         <!-- Rate field -->
          <div class="form-group">
             <label for="price">Rate</label>
             <input 
@@ -120,7 +109,6 @@
                 placeholder="Enter rate"
                 >
 
-                <!-- No valid alert -->
                 <div class="alert" 
                 >
                 <div class="alert-danger" 
@@ -129,7 +117,6 @@
                 </div>     
         </div>
 
-         <!-- company field -->
          <div class="form-group">
             <label for="company">Company</label>
             <input 
@@ -144,7 +131,6 @@
                 maxlength="25"
                 pattern="[A-Za-zА-Яа-яЁё/\s\d]*"
                >
-               <!-- NoValid alert -->
             <div class="alert" 
                 >
                 <div class="alert-danger" *ngIf="company.invalid">Incorrect company</div>
@@ -152,30 +138,25 @@
             </div>       
         </div>
 
-         <!-- Adding Date -->
          <div class="form-group">
             <span class="label">Registration date</span>
             <span class="info">{{user?.createdAt | date:'dd-MM-yyyy'}}</span>
         </div>
 
-         <!-- Level -->
          <div class="form-group">
             <span class="label">Completed deals</span>
             <span class="info">{{user?.level}}</span>
         </div>
 
         <div class="button-wrapper">
-        <!-- Cancel button -->
         <button type="button" class="button-cancel"
         (click)="onCancelButtonClick()"
         >Cancel</button>
 
-        <!-- Back button -->
         <button type="button" class="button-cancel"
         (click)="onCancelButtonClick()"
         >Back</button>
         
-        <!-- Submit button for editing mode -->
         <button type="submit" 
         class="button-submit"
         [disabled]="!userProfileForm.form.valid"
@@ -191,17 +172,132 @@
     </form>
     
     </div>
+ -->
 
+ <div class="container">
+    <mat-card elevation="20">
+        <mat-card-header>
+          <mat-card-title color="primary">User's profile</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="userForm">
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Fullname</mat-label>
+                    <input 
+                        matInput 
+                        placeholder="Surname Name"
+                        type="text" 
+                        formControlName="fullname"
+                        maxlength="30"
+                        >
+                    <mat-icon matSuffix>face</mat-icon>
+                    <!-- <mat-hint>Type surname and name</mat-hint> -->
+                    <mat-error *ngIf="userForm.controls['fullname'].invalid && (userForm.controls['fullname'].touched)">
+                        Incorrect Fullname
+                    </mat-error>
+                </mat-form-field>
+                <br>
+    
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input 
+                        matInput 
+                        formControlName="email"
+                        >
+                    <mat-icon matSuffix>alternate_email</mat-icon>
+                </mat-form-field>
+                <br>
 
-<!-- popup question -->
-<app-popup-question
-    *ngIf = "isPopupQuestion"
-    [title] = "title"
-    [text] = "text"
-    (cancelEvent)="onCancel()"
-    (submitEvent)="onSubmit()"
->
-</app-popup-question>
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Date of Birth</mat-label>
+                    <input 
+                        matInput
+                        placeholder="dd.mm.yyyy"
+                        [matDatepicker]="dp"
+                        formControlName="birthday"
+                        appMaxDateValidator="18"
+                        appMinDateValidator="100"
+                        >
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp></mat-datepicker>
 
-<!-- deactivate popup -->
-<app-popup-deactivate *ngIf="isCanDeactivatePopup"></app-popup-deactivate>
+                    <mat-error *ngIf="userForm.controls['birthday'].hasError('dateValidator') 
+                                    && (userForm.controls['birthday'].touched)">
+                        Incorrect date
+                    </mat-error>
+                    <mat-error *ngIf="userForm.controls['birthday'].hasError('maxDateValidator')">
+                        You are under 18 years old
+                    </mat-error>
+                    <mat-error *ngIf="userForm.controls['birthday'].hasError('minDateValidator')">
+                        You are over 100 years old
+                    </mat-error>
+                </mat-form-field>
+                <br>
+    
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Rate</mat-label>
+                    <input 
+                        matInput
+                        placeholder="rate"
+                        type="text" 
+                        formControlName="rate"
+                        >
+                    <mat-icon matSuffix>attach_money</mat-icon>
+
+                    <mat-error *ngIf="userForm.controls['rate'].invalid && (userForm.controls['rate'].touched)">
+                        Incorrect number
+                    </mat-error>
+                </mat-form-field>
+                <br>
+
+                <mat-form-field class="form-control" appearance="outline">
+                    <mat-label>Company</mat-label>
+                    <input 
+                        matInput 
+                        placeholder="Company"
+                        type="text" 
+                        formControlName="company"
+                        maxlength="30"
+                        >
+                    <mat-icon matSuffix>location_city</mat-icon>
+                    <mat-error *ngIf="userForm.controls['company'].invalid 
+                                    && (userForm.controls['company'].touched)">
+                        Incorrect location
+                    </mat-error>
+                </mat-form-field>
+                <br>
+            </form>
+            <table class="table">
+                <tr>
+                    <td>Registration date</td>
+                    <td>{{user?.createdAt | date:'dd.MM.yyyy'}}</td>
+                </tr>
+                <tr>
+                    <td>Completed deals</td>
+                    <td>{{user?.level}}</td>
+                </tr>
+            </table>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button
+            (click)="onCancelButtonClick()">
+                Cancel
+            </button>
+
+            <button mat-raised-button
+            (click)="onCancelButtonClick()">
+                Back
+            </button>
+
+            <button mat-raised-button
+                class="button"
+                color="primary"
+                [disabled]="!userForm.valid"
+                (click)="onSave()"
+            >
+            Save
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+

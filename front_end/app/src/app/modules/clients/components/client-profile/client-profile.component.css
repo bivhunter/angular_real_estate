@@ -15,11 +15,6 @@ mat-card {
     margin: 30px auto;
 }
 
-.info {
-    flex: 1 1 60%;
-    height: 30px;
-}
-
 .form-control {
     margin-bottom: 15px;
     width: 100%;

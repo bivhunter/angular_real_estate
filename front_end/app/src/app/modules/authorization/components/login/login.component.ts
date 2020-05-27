@@ -3,8 +3,8 @@ import { UserService } from '../../../user/services/user.service';
 import { User } from '../../../user/model/user';
 import { InitDataService } from './../../../shared/services/init-data.service';
 import { FormGroup, FormControl, AbstractControl, Validators, AsyncValidatorFn } from '@angular/forms';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { take, map, tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { take, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',

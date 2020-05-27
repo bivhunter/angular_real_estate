@@ -5,7 +5,7 @@ export class User implements IUserModel {
 
     id: string | number = null;
     email = '';
-    password = '';
+    password: string;
     name = '';
     surname = '';
     birthday: Date = new Date('1980.01.01');
@@ -14,22 +14,7 @@ export class User implements IUserModel {
     rate: number | string = '';
     createdAt?: Date;
 
-    constructor(user?: User) {
-        if (user) {
-            this.id = user.id || null;
-            this.email = user.email || '';
-            this.name = user.name || '';
-            this.surname = user.surname || '';
-            this.birthday = user.birthday || new Date('1980.01.01');
-            this.level = user.level || 0;
-            this.company = user.company || '';
-            this.rate = user.rate || '';
-            this.createdAt = user.createdAt || new Date('1980.01.01');
-        }
-    }
-
-    set fullName(value: string) {
-        // this._fullName = value;
+    set fullname(value: string) {
         const wordArray = value.trim().split(' ');
         if (wordArray[0]) {
             this.name = wordArray[0];
@@ -43,7 +28,21 @@ export class User implements IUserModel {
         }
     }
 
-    get fullName(): string {
+    get fullname(): string {
         return (this.name + ' ' + this.surname).trim();
+    }
+
+    constructor(user?: User) {
+        if (user) {
+            this.id = user.id || null;
+            this.email = user.email || '';
+            this.name = user.name || '';
+            this.surname = user.surname || '';
+            this.birthday = user.birthday || new Date('1980.01.01');
+            this.level = user.level || 0;
+            this.company = user.company || '';
+            this.rate = user.rate || '';
+            this.createdAt = user.createdAt || new Date('1980.01.01');
+        }
     }
 }

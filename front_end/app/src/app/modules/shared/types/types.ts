@@ -1,5 +1,6 @@
 import { Client } from '../../clients/model/client';
 import { Home } from '../../homes/model/home';
+import { User } from '../../user/model/user';
 
 // views mod
 export type TViewMode = keyof {
@@ -37,6 +38,7 @@ export interface IPopupQuestionConf {
   content: string;
   client?: Client;
   home?: Home;
+  user?: User;
 }
 
 export interface IPopupHomesSelectorConf {

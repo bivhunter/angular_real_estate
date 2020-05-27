@@ -41,11 +41,9 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit(): void {
     // this.isUniqueEmail$.next(true);
-    const formValue = this.registrationForm.value;
-    this.user.fullName = formValue.fullname;
-    this.user.rate = +this.onRateChange(formValue.rate);
-    this.user.email = formValue.email;
-    this.user.password = formValue.password;
+    const fV = this.registrationForm.value;
+    this.user = Object.assign(this.user, fV);
+    this.user.rate = this.onRateChange(fV.rate);
 
     this.userService.registerUser(this.user).subscribe(
       (newUser) => {
@@ -69,10 +67,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   private initFormSubscription(): void {
-    // this.registrationForm.statusChanges.subscribe(
-    //   status => console.log(this.registrationForm.controls.email.errors)
-    // );
-
     this.registrationForm.controls.email.valueChanges.subscribe(
       () => this.isUniqueEmail$.next(true)
     );
@@ -92,7 +86,7 @@ export class RegistrationComponent implements OnInit {
   private createForm(): void {
     this.registrationForm = new FormGroup(
       {
-        fullname: new FormControl(this.user.fullName, [
+        fullname: new FormControl(this.user.fullname, [
           Validators.required,
           Validators.pattern(/^[A-Za-z]+\s[A-Za-z]+$/),
           Validators.maxLength(30),

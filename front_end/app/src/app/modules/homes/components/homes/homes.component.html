@@ -2,13 +2,13 @@
 <div class="container">
     <app-homes-control-panel class="control-panel"></app-homes-control-panel>
 
-    <div class="no-homes" *ngIf="(this.homes$ | async) && !(this.homes$ | async).length">
+    <!-- <div class="no-homes" *ngIf="(this.homes$ | async) && !(this.homes$ | async).length">
         <h1>No Homes</h1>
         <button 
         class=add-button
         routerLink="/homes/adding">+ Add first home
         </button>
-    </div>
+    </div> -->
 
     <app-homes-list class="homes-list"
         *ngIf="(homes$ | async) && (homes$ | async).length"

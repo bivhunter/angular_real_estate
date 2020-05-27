@@ -6,7 +6,7 @@ export const getUserState = createFeatureSelector<fromUser.State>('userState');
 
 export const getUser = createSelector(
     getUserState,
-    fromUser.getUser
+    fromUser.getUser,
 );
 
 
