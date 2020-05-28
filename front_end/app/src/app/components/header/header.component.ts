@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Observable} from 'rxjs';
 import { AuthorizationService } from 'src/app/modules/authorization/services/authorization.service';
 import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { User } from 'src/app/modules/user/model/user';
 import { Store } from '@ngrx/store';
 import * as userSelectors from 'src/app/store/selectors/user.selector';
@@ -61,7 +61,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private getFromStore(): void {
-    this.user$ = this.store.select(userSelectors.getUser);
+    this.user$ = this.store.select(userSelectors.getUser).pipe(
+     
+    );
   }
 
   private unsubscribe(): void {

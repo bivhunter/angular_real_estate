@@ -40,6 +40,7 @@ export const reducers: ActionReducerMap<State> = {
 export function clearState(reducer: ActionReducer<any>): ActionReducer<any> {
   return (state, action) => {
     if (action.type === '[App] Logout') {
+      console.log("clear store")
       state = undefined;
     }
     return reducer(state, action);

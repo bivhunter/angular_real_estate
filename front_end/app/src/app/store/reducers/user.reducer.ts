@@ -6,10 +6,12 @@ import { User } from 'src/app/modules/user/model/user';
 
 export interface State {
     user: User;
+    isStoreInit: boolean;
 }
 
 export const initState: State = {
-    user: null
+    user: null,
+    isStoreInit: false
 };
 
 export const usersReducer = createReducer(
@@ -26,11 +28,18 @@ export const usersReducer = createReducer(
            user
         };
     }),
+    on(userApiAction.initStoreSuccess, (state) => {
+        return {
+            ...state,
+            isStoreInit: true
+        };
+    })
 );
 
 
 // for selectors
 export const getUser = (state: State) => state.user;
+export const getStoreStatus = (state: State) => state.isStoreInit;
 
 // additional function
 

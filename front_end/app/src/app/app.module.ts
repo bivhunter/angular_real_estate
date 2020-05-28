@@ -29,6 +29,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AppEffects } from './store/effects/app.effects';
 
 
 
@@ -51,7 +52,7 @@ import { MatNativeDateModule } from '@angular/material/core';
       metaReducers
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([DealsEffects, HomesEffects, ClientsEffects, UserEffects]),
+    EffectsModule.forRoot([DealsEffects, HomesEffects, ClientsEffects, UserEffects, AppEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     LayoutModule,
     MatToolbarModule,

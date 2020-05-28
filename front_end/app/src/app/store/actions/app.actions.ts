@@ -5,6 +5,9 @@ export const clearStore = createAction(
     '[App] Logout',
 );
 
+export const initStore = createAction(
+    '[App] Init Store',
+);
 
 
 

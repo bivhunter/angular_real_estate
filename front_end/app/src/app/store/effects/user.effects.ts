@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as userAction from '../actions/user.actions';
 import * as userApiAction from '../actions/user-api.actions';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 import { UserService } from 'src/app/modules/user/services/user.service';
 import { User } from 'src/app/modules/user/model/user';
 
@@ -18,7 +18,8 @@ export class UserEffects {
           const user = new User(newUser);
           return userApiAction.getUserSuccess({user});
         }
-      )
+      ),
+      tap(res => console.log(res, 'user effectsd'))
     );
   });
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, RouterOutlet, NavigationStart } from '@angular/router';
+import { Router, RouterOutlet, NavigationStart, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { slideInAnimation } from './modules/shared/animation/animation';
@@ -54,13 +54,13 @@ export class AppComponent implements OnInit, OnDestroy {
   private initSubscribtion(): void {
      // listen router navigation
     this.routeChangingSubscription = this.router.events.pipe(
-      filter(event => event instanceof NavigationStart)
+      filter(event => event instanceof NavigationEnd)
     ).subscribe(
-      (event: NavigationStart) => {
+      (event: NavigationEnd) => {
         const url = event.url;
         this.isNavigationPanel = !url.includes('authorization');
         if (!url.includes('authorization')) {
-          this.initData();
+          // this.initData();
         }
       }
     );
@@ -72,9 +72,12 @@ export class AppComponent implements OnInit, OnDestroy {
       );
   }
 
-  private initData(): void {
-    this.initDataService.initData();
-  }
+  // private initData(): void {
+  //   if (this.isDataInit) {
+  //     return;
+  //   }
+  //   this.initDataService.initData();
+  // }
 
   private showMessage(message: TMessage) {
     this.statusMessage = message;

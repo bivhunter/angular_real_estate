@@ -11,4 +11,8 @@ export const updateUserSuccess = createAction(
   props<{ user: User }>()
 );
 
+export const initStoreSuccess = createAction(
+  '[App] Init Store Success',
+);
+
 

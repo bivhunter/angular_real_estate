@@ -44,6 +44,8 @@ export class UserService {
 
   authorizeUser(user: User): Observable<any> {
     const body = {...user, strategy: 'local'};
+    console.log('authorizeUser');
+    
     return this.http.post<any>(this.authenticationUrl, body).pipe(
       tap((resp) => {
         this.log(resp.accessToken);
@@ -93,11 +95,13 @@ export class UserService {
 
   // get userId from token
   private getUserId(): number | string {
+    if (!this.authToken) {
+      return 2;
+    }
     return jwt_decode(this.authToken).userId;
   }
 
   private handleAuthorizationError(error: HttpErrorResponse): Observable<string> {
-    console.log(error);
     if (error.statusText === 'Bad Request') {      // using when invalid data in request
       if (error.error.errors instanceof Array) {   // respons has array of errors
         const errorMessage = error.error.errors.map((curentError: any) => curentError.message).join('; ');
