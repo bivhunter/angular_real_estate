@@ -1,4 +1,4 @@
-:host {
+/* :host {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -7,6 +7,17 @@
 
 .container {
     flex: 0 1 350px;
+} */
+
+
+.container {
+    height: 100%;
+    overflow-y: auto;
+}
+
+mat-card {
+    width: 350px;
+    margin: 30px auto;
 }
 
 .form-control {

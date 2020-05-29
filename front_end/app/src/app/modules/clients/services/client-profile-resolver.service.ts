@@ -20,6 +20,6 @@ export class ClientProfileResolverService implements Resolve<Client> {
     return this.store.select(clientsSelector.getClient, id).pipe(
       filter(client => !!client),
       take(1)
-      );
+    );
   }
 }

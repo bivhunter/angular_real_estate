@@ -40,7 +40,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // this.isUniqueEmail$.next(true);
     const fV = this.registrationForm.value;
     this.user = Object.assign(this.user, fV);
     this.user.rate = this.onRateChange(fV.rate);

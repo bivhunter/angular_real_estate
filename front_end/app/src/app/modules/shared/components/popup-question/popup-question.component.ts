@@ -9,11 +9,6 @@ import { IPopupQuestionConf } from '../../types/types';
 })
 export class PopupQuestionComponent implements OnInit {
 
-  @Input() title: string;
-  @Input() text: string;
-  @Output() submitEvent: EventEmitter<any> = new EventEmitter();
-  @Output() cancelEvent: EventEmitter<any> = new EventEmitter();
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: IPopupQuestionConf
   ) { }

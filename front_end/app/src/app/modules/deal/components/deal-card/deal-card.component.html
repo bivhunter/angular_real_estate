@@ -12,10 +12,12 @@
                     <mat-icon>calendar_today</mat-icon>
                     {{deal.date | date:'dd.MM.yyyy'}}
                 </mat-list-item>    
+
                 <mat-list-item>
                     <mat-icon>monetization_on</mat-icon>
                     {{deal.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}
                 </mat-list-item>
+
                 <mat-list-item>
                     <mat-icon>person</mat-icon>
                     <span *ngIf="!deal.client">Client is removed</span>
@@ -27,7 +29,8 @@
                       <h4 class="info">{{deal.client.surname}}</h4>
                       <h4 class="info">{{deal.client.name}}</h4>
                    </a>
-                </mat-list-item>    
+                </mat-list-item>   
+
                 <mat-list-item>
                     <mat-icon>house</mat-icon>
                     <a mat-button 
@@ -39,11 +42,8 @@
                      </a>
                 </mat-list-item>
             </mat-list>
-            
-            <p></p>
         </mat-card-content>
     </mat-card>
-
 </div>
 
 

@@ -19,6 +19,6 @@ export class ClientsResolverService implements Resolve<Client[]> {
     return this.store.select(clientsSelector.getClients).pipe(
       filter(clients => !!clients),
       take(1)
-      );
+    );
   }
 }

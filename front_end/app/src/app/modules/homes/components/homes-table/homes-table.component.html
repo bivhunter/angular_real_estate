@@ -6,104 +6,131 @@
         [matSortActive]="(sortingConf$ | async).active"
         [matSortDirection]="(sortingConf$ | async).direction">
     
-    <!-- № Column -->
-    <ng-container matColumnDef="home">
-      <mat-header-cell  class="home-cell" mat-sort-header *matHeaderCellDef disableClear
-        matTooltip = "Sort homes by №">
-           № </mat-header-cell>
-      <mat-cell *matCellDef="let home" class="home-cell"> {{home.home}} </mat-cell>
-    </ng-container>
+        <!-- № Column -->
+        <ng-container matColumnDef="home">
+            <mat-header-cell  class="home-cell" 
+                mat-sort-header 
+                *matHeaderCellDef 
+                disableClear
+                matTooltip = "Sort homes by №">
+                № 
+            </mat-header-cell>
+            <mat-cell *matCellDef="let home" class="home-cell"> {{home.home}} </mat-cell>
+        </ng-container>
 
-    <!-- Street Column -->
-    <ng-container matColumnDef="street">
-      <mat-header-cell *matHeaderCellDef mat-sort-header disableClear
-      matTooltip = "Sort homes by street"> Street </mat-header-cell>
-      <mat-cell *matCellDef="let home"> {{home.street}} </mat-cell>
-    </ng-container>
+        <!-- Street Column -->
+        <ng-container matColumnDef="street">
+            <mat-header-cell 
+                *matHeaderCellDef 
+                mat-sort-header 
+                disableClear
+                matTooltip = "Sort homes by street"> 
+                Street 
+            </mat-header-cell>
+            <mat-cell *matCellDef="let home"> {{home.street}} </mat-cell>
+        </ng-container>
 
-    <!-- City Column -->
-    <ng-container matColumnDef="city">
-      <mat-header-cell *matHeaderCellDef mat-sort-header disableClear
-      matTooltip = "Sort homes by city"> City </mat-header-cell>
-      <mat-cell *matCellDef="let home"> {{home.city}} </mat-cell>
-    </ng-container>
+        <!-- City Column -->
+        <ng-container matColumnDef="city">
+            <mat-header-cell 
+                *matHeaderCellDef 
+                mat-sort-header 
+                disableClear
+                matTooltip = "Sort homes by city">
+                City 
+            </mat-header-cell>
+            <mat-cell *matCellDef="let home"> {{home.city}} </mat-cell>
+        </ng-container>
 
-    <!-- State Column -->
-    <ng-container matColumnDef="state" >
-        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear
-        matTooltip = "Sort homes by state"> State </mat-header-cell>
-        <mat-cell *matCellDef="let home"> {{home.state}} </mat-cell>
-    </ng-container>
+        <!-- State Column -->
+        <ng-container matColumnDef="state" >
+            <mat-header-cell *matHeaderCellDef 
+                mat-sort-header 
+                disableClear
+                matTooltip = "Sort homes by state">
+                State 
+            </mat-header-cell>
+            <mat-cell *matCellDef="let home"> {{home.state}} </mat-cell>
+        </ng-container>
 
-     <!-- Price Column -->
-     <ng-container matColumnDef="price">
-        <mat-header-cell class="price-cell" 
-            matTooltip = "Sort homes by price"
-            *matHeaderCellDef 
-            mat-sort-header 
-            disableClear> 
-            Price 
-        </mat-header-cell>
-        <mat-cell class="price-cell" *matCellDef="let home"> 
-            {{home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}} 
-        </mat-cell>
-    </ng-container>
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+            <mat-header-cell class="price-cell" 
+                matTooltip = "Sort homes by price"
+                *matHeaderCellDef 
+                mat-sort-header 
+                disableClear> 
+                Price 
+            </mat-header-cell>
+            <mat-cell class="price-cell" *matCellDef="let home"> 
+                {{home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}} 
+            </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="status">
-        <mat-header-cell class="status-cell" 
-            *matHeaderCellDef 
-            mat-sort-header 
-            disableClear> 
-            Status 
-        </mat-header-cell>
-        <mat-cell class="status-cell" *matCellDef="let home"> 
-            <span *ngIf="!home.clientOwner">on sale</span>
-            <span *ngIf="home.clientOwner">sold</span>
+        <ng-container matColumnDef="status">
+            <mat-header-cell class="status-cell" 
+                *matHeaderCellDef 
+                mat-sort-header 
+                disableClear> 
+                Status 
+            </mat-header-cell>
 
-        </mat-cell>
-    </ng-container>
+            <mat-cell class="status-cell" *matCellDef="let home"> 
+                <span *ngIf="!home.clientOwner">on sale</span>
+                <span *ngIf="home.clientOwner">sold</span>
+            </mat-cell>
+        </ng-container>
 
-    <!-- Actions Column -->
-    <ng-container matColumnDef="actions" stickyEnd>
-        <mat-header-cell class="actions-cell" *matHeaderCellDef> Home's actions </mat-header-cell>
-        <mat-cell class="actions-cell" *matCellDef="let home"> 
-            <button mat-raised-button [matMenuTriggerFor]="menu" 
-            matTooltip = "Open actions menu"
-            color="basic">
-                <mat-icon>menu</mat-icon>
-                Choose action
-            </button>
-            <mat-menu  #menu="matMenu">
-                <button mat-menu-item (click)="onViewedClient(home)">
-                    <mat-icon>list</mat-icon>
-                    Look clients who viewed home
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions" stickyEnd>
+            <mat-header-cell class="actions-cell" *matHeaderCellDef> Home's actions </mat-header-cell>
+
+            <mat-cell class="actions-cell" *matCellDef="let home"> 
+                <button mat-raised-button 
+                    [matMenuTriggerFor]="menu" 
+                    matTooltip = "Open actions menu"
+                    color="basic">
+
+                    <mat-icon>menu</mat-icon>
+                    Choose action
                 </button>
-                <button mat-menu-item 
-                    (click)="onAddClient(home)"
+
+                <mat-menu  #menu="matMenu">
+                    <button mat-menu-item (click)="onViewedClient(home)">
+                        <mat-icon>list</mat-icon>
+                        Look clients who viewed home
+                    </button>
+
+                    <button mat-menu-item 
+                        (click)="onAddClient(home)"
+                        [disabled]="home.clientOwner">
+                        <mat-icon>add</mat-icon>
+                        Add clients who viewed home
+                    </button>
+                </mat-menu>
+
+                <button mat-icon-button 
+                    color="primary"
+                    matTooltip = "Open home's details"
+                    routerLink="/homes/details/{{home.id}}">
+                    <mat-icon>edit</mat-icon>
+                </button>
+
+                <button mat-icon-button 
+                    color="warn" 
+                    matTooltip = "Delete current home"
+                    [matTooltipDisabled] = "home.clientOwner"
+                    (click)="onDeleteButton(home)"
                     [disabled]="home.clientOwner">
-                    <mat-icon>add</mat-icon>
-                    Add clients who viewed home
+                    <mat-icon>delete_forever</mat-icon>
                 </button>
-            </mat-menu>
-            <button mat-icon-button color="primary"
-            matTooltip = "Open home's details"
-            routerLink="/homes/details/{{home.id}}">
-                <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" 
-                matTooltip = "Delete current home"
-                [matTooltipDisabled] = "home.clientOwner"
-                (click)="onDeleteButton(home)"
-                [disabled]="home.clientOwner">
-                <mat-icon>delete_forever</mat-icon>
-            </button>
-        </mat-cell>
-    </ng-container>
+            </mat-cell>
+        </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" 
-        [class.sale]="row.clientOwner"></mat-row>
-
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" 
+            [class.sale]="row.clientOwner">
+        </mat-row>
     </mat-table>
 </div>
 

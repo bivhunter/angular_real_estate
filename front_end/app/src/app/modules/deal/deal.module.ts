@@ -9,11 +9,6 @@ import { DealCreatorComponent } from './components/deal-creator/deal-creator.com
 import { DealsControlPanelComponent } from './components/deals-control-panel/deals-control-panel.component';
 import { DealsListComponent } from './components/deals-list/deals-list.component';
 import { DealsTableComponent } from './components/deals-table/deals-table.component';
-import { DealsDetailsComponent } from './components/deals-details/deals-details.component';
-import { DealsClientsSelectorComponent } from './components/deals-clients-selector/deals-clients-selector.component';
-import { DealsHomesSelectorComponent } from './components/deals-homes-selector/deals-homes-selector.component';
-import { DealsMakingDealComponent } from './components/deals-making-deal/deals-making-deal.component';
-
 
 @NgModule({
   declarations: [
@@ -23,10 +18,7 @@ import { DealsMakingDealComponent } from './components/deals-making-deal/deals-m
     DealsControlPanelComponent,
     DealsListComponent,
     DealsTableComponent,
-    DealsDetailsComponent,
-    DealsClientsSelectorComponent,
-    DealsHomesSelectorComponent,
-    DealsMakingDealComponent],
+  ],
   imports: [
     CommonModule,
     DealRoutingModule,

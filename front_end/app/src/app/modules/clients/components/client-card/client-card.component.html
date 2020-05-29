@@ -13,21 +13,22 @@
                     <mat-icon>email</mat-icon>
                     {{client.email}}
                 </mat-list-item>    
+
                 <mat-list-item>
                     <mat-icon>phone</mat-icon>
                     {{client.phone}}
                 </mat-list-item>
             </mat-list>
-            
-            <p></p>
         </mat-card-content>
         
         <mat-card-actions class="actions">
             <button mat-raised-button [matMenuTriggerFor]="menu" color="basic" 
                 matTooltip = "Open actions menu">
+
                 <mat-icon>menu</mat-icon>
                 Choose action
             </button>
+
             <mat-menu  #menu="matMenu">
                 <button mat-menu-item (click)="openBoughtHomes()">
                     <mat-icon>payment</mat-icon>
@@ -42,11 +43,13 @@
                     Add viewed home
                 </button>
             </mat-menu>
+
             <button mat-icon-button color="primary" 
                 routerLink="/clients/profile/{{client.id}}"
                 matTooltip = "View client's profile">
                 <mat-icon>edit</mat-icon>
             </button>
+            
             <button mat-icon-button color="warn" (click)="onDeleteButton()"
                 matTooltip = "Delete current client">
                 <mat-icon>delete_forever</mat-icon>

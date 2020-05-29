@@ -3,62 +3,61 @@
     <mat-form-field  appearance="outline">
         <mat-label>Search</mat-label>
         <input type="text" matInput placeholder="search" 
-        name="searching"
-        [ngModel]
-        (ngModelChange)="filterHomes($event)">
+            name="searching"
+            [ngModel]
+            (ngModelChange)="filterHomes($event)">
         <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     
     <mat-table 
-    [dataSource]="filteredHomes" 
-    class="mat-elevation-z8 table" 
-    >
+        [dataSource]="filteredHomes" 
+        class="mat-elevation-z8 table" 
+        >
 
-    <ng-container matColumnDef="home">
-    <mat-header-cell  class="home-cell"*matHeaderCellDef>
-        № </mat-header-cell>
-    <mat-cell *matCellDef="let home" class="home-cell"> {{home.home}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="home">
+            <mat-header-cell  class="home-cell"*matHeaderCellDef>
+                № 
+            </mat-header-cell>
+            <mat-cell *matCellDef="let home" class="home-cell"> {{home.home}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="street">
-    <mat-header-cell *matHeaderCellDef> Street </mat-header-cell>
-    <mat-cell *matCellDef="let home"> {{home.street}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="street">
+            <mat-header-cell *matHeaderCellDef> Street </mat-header-cell>
+            <mat-cell *matCellDef="let home"> {{home.street}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="city">
-    <mat-header-cell *matHeaderCellDef> City </mat-header-cell>
-    <mat-cell *matCellDef="let home"> {{home.city}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="city">
+            <mat-header-cell *matHeaderCellDef> City </mat-header-cell>
+            <mat-cell *matCellDef="let home"> {{home.city}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="state" >
-        <mat-header-cell *matHeaderCellDef> State </mat-header-cell>
-        <mat-cell *matCellDef="let home"> {{home.state}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="state" >
+            <mat-header-cell *matHeaderCellDef> State </mat-header-cell>
+            <mat-cell *matCellDef="let home"> {{home.state}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="status">
-    <mat-header-cell class="status-cell" 
-        *matHeaderCellDef 
-        > 
-        Status 
-    </mat-header-cell>
-    <mat-cell class="status-cell" *matCellDef="let home"> 
-        <span *ngIf="!home.clientOwner">on sale</span>
-        <span *ngIf="home.clientOwner">sold</span>
+        <ng-container matColumnDef="status">
+            <mat-header-cell class="status-cell" 
+                *matHeaderCellDef 
+                > 
+                Status 
+            </mat-header-cell>
+            <mat-cell class="status-cell" *matCellDef="let home"> 
+                <span *ngIf="!home.clientOwner">on sale</span>
+                <span *ngIf="home.clientOwner">sold</span>
 
-    </mat-cell>
-</ng-container>
+            </mat-cell>
+        </ng-container>
 
-
-<mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-<mat-row *matRowDef="let row; columns: displayedColumns;" 
-    (click)="onClickHome(row)"
-    [class.selected]="isAdding && row.id === selectedHomeId"
-    [class.sale]="row.clientOwner"></mat-row>
-
-</mat-table>
-
-  
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" 
+            (click)="onClickHome(row)"
+            [class.selected]="isAdding && row.id === selectedHomeId"
+            [class.sale]="row.clientOwner">
+        </mat-row>
+    </mat-table>
 </div>
+
 <div mat-dialog-actions>
     <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>Cnacel</button>
     <button mat-raised-button 
@@ -66,5 +65,6 @@
         color="primary" 
         [mat-dialog-close]="selectedHomeId"
         [disabled]="!selectedHomeId">
-        Submit</button>
-  </div>
+        Submit
+    </button>
+</div>

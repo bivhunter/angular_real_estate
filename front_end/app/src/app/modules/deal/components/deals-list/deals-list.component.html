@@ -12,22 +12,23 @@
         class="sorting-panel">
         
         <tr>
-            <!-- <th>Sort: </th> -->
             <th mat-sort-header="date" disableClear
                 matTooltip = "Sort deals by date">
                 Date
             </th>
+
             <th mat-sort-header="price" 
-            matTooltip = "Sort deals by price"
-            disableClear>Price</th>
+                matTooltip = "Sort deals by price"
+                disableClear>
+                Price
+            </th>
         </tr>
     </table>
 
     <div class="card-view mat-elevation-z8" *ngSwitchCase="'cards'">
             <app-deal-card 
-            *ngFor="let deal of deals"
-            [deal]="deal"
-            >
+                *ngFor="let deal of deals"
+                [deal]="deal">
             </app-deal-card>
         </div>
     

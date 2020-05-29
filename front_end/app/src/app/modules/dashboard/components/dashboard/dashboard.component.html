@@ -4,6 +4,7 @@
             <mat-icon>assessment</mat-icon>
             <mat-card-title>Statistic</mat-card-title>
         </mat-card-header>
+
         <mat-card-content>
             <mat-grid-list cols="3" rowHeight="100px">
                 <mat-grid-tile colspan="1">
@@ -42,7 +43,6 @@
                     </mat-card>
                 </mat-grid-tile>
             </mat-grid-list>
-        
         </mat-card-content>
     </mat-card>
 
@@ -53,46 +53,44 @@
         </mat-card-header>
         <mat-card-content>
             <mat-table 
-            [dataSource]="clients" 
-            class="mat-elevation-z8 table" 
-           >
+                [dataSource]="clients" 
+                class="mat-elevation-z8 table">
         
-        <!-- Surname Column -->
-        <ng-container matColumnDef="surname">
-          <mat-header-cell *matHeaderCellDef> Surname </mat-header-cell>
-          <mat-cell *matCellDef="let client"> {{client.surname}} </mat-cell>
-        </ng-container>
-    
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-          <mat-cell *matCellDef="let client"> {{client.name}} </mat-cell>
-        </ng-container>
-    
-        <!-- Email Column -->
-        <ng-container matColumnDef="email">
-          <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-          <mat-cell *matCellDef="let client"> {{client.email}} </mat-cell>
-        </ng-container>
-    
-        <!-- Phone Column -->
-        <ng-container matColumnDef="phone">
-            <mat-header-cell class="phone-cell" *matHeaderCellDef> Phone </mat-header-cell>
-            <mat-cell class="phone-cell" *matCellDef="let client"> {{client.phone}} </mat-cell>
-        </ng-container>
-    
-        <!-- Actions Column -->
-        <ng-container matColumnDef="date" stickyEnd>
-            <mat-header-cell class="date-cell" *matHeaderCellDef> Date </mat-header-cell>
-            <mat-cell class="date-cell" *matCellDef="let client"> 
-                {{client.createdAt | date: 'yyyy-MM-dd'}}
-            </mat-cell>
-        </ng-container>
-    
-        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    
-        </mat-table>
+                <!-- Surname Column -->
+                <ng-container matColumnDef="surname">
+                    <mat-header-cell *matHeaderCellDef> Surname </mat-header-cell>
+                    <mat-cell *matCellDef="let client"> {{client.surname}} </mat-cell>
+                </ng-container>
+            
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                    <mat-cell *matCellDef="let client"> {{client.name}} </mat-cell>
+                </ng-container>
+            
+                <!-- Email Column -->
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+                    <mat-cell *matCellDef="let client"> {{client.email}} </mat-cell>
+                </ng-container>
+            
+                <!-- Phone Column -->
+                <ng-container matColumnDef="phone">
+                    <mat-header-cell class="phone-cell" *matHeaderCellDef> Phone </mat-header-cell>
+                    <mat-cell class="phone-cell" *matCellDef="let client"> {{client.phone}} </mat-cell>
+                </ng-container>
+            
+                <!-- Actions Column -->
+                <ng-container matColumnDef="date" stickyEnd>
+                    <mat-header-cell class="date-cell" *matHeaderCellDef> Date </mat-header-cell>
+                    <mat-cell class="date-cell" *matCellDef="let client"> 
+                        {{client.createdAt | date: 'yyyy-MM-dd'}}
+                    </mat-cell>
+                </ng-container>
+            
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
         </mat-card-content>
     </mat-card>
 </div>

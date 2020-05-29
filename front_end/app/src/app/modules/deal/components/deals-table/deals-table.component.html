@@ -1,66 +1,3 @@
-<!-- <div class="container">
-    <div class="head-wrapper">
-    <table class="table">
-    <tbody>
-        <tr class="head-row">
-            <td class="deal-cell">Deal</td>
-            <td class="date-cell"
-                [class.sort-up]="(sortingMethod$ | async) === 'DATE_UP'"
-                [class.sort-down]="(sortingMethod$ | async) === 'DATE_DOWN'"
-                (click)="setSortingField('DATE')">Date
-            </td>
-            <td class="home-cell">Home
-                
-            </td>
-            <td class="client-cell">Client</td>
-            <td class="price-cell"
-                [class.sort-up]="(sortingMethod$ | async) === 'PRICE_UP'"
-                [class.sort-down]="(sortingMethod$ | async) === 'PRICE_DOWN'"
-                (click)="setSortingField('PRICE')">Price</td>
-        </tr>
-    </tbody>
-    </table>
-    <div class="scroll"></div>
-    </div>
-        
-    <div class="content-wrapper">
-        <table class="table">
-    <tbody>
-        <tr *ngFor="let deal of deals" class="table-item">
-            <td class="deal-cell" 
-                (click)="onDealClick(deal.id)">
-                <div class="deal-img"></div>
-            </td>
-            <td class="date-cell">{{deal.date | date:'dd-MM-yyyy'}}</td>
-            <td class="home-cell"
-                (click)="onHomeClick(deal.home.id)">
-                <div class="home-img"></div>
-                <div class="home-wrapper">
-                    <h3>{{deal.home.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</h3>
-                    <p>{{deal.home.home + ' ' + deal.home.street}}</p>
-                    <p>{{deal.home.city + ' ' + deal.home.state}}</p>
-                </div>
-            </td>
-            <td class="client-cell"
-                [class.disabled]="!deal.client"
-                (click)="onClientClick(deal.clientId)">
-                <div class="client-img"></div>
-                <h4 *ngIf="!deal.client">Client remove </h4>
-                <div class="client-wrapper" *ngIf="deal.client">
-                    <h3>{{deal.client.surname}}</h3>
-                    <h3>{{deal.client.name}}</h3>
-                </div>
-            </td>
-            <td class="price-cell">{{deal.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}}</td>
-         </tr>
-    </tbody>
-    </table>
-    </div>    
-
-    
-
-</div> -->
-
 <div class="container">
     <mat-table 
         [dataSource]="deals" 
@@ -69,54 +6,67 @@
         [matSortActive]="(sortingConf$ | async).active"
         [matSortDirection]="(sortingConf$ | async).direction">
     
-    <!-- Surname Column -->
-    <ng-container matColumnDef="date">
-      <mat-header-cell class="date-cell" mat-sort-header *matHeaderCellDef 
-      matTooltip = "Sort deals by date"
-      disableClear> Date </mat-header-cell>
-      <mat-cell class="date-cell" *matCellDef="let deal"> {{deal.date | date:'dd.MM.yyyy'}} </mat-cell>
-    </ng-container>
+        <!-- Surname Column -->
+        <ng-container matColumnDef="date">
+            <mat-header-cell class="date-cell" 
+                mat-sort-header 
+                *matHeaderCellDef 
+                matTooltip = "Sort deals by date"
+                disableClear> 
+                Date 
+            </mat-header-cell>
+            <mat-cell class="date-cell" *matCellDef="let deal"> 
+                {{deal.date | date:'dd.MM.yyyy'}} 
+            </mat-cell>
+        </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="price">
-      <mat-header-cell class="price-cell" *matHeaderCellDef mat-sort-header 
-      matTooltip = "Sort deals by price"
-      disableClear> Price </mat-header-cell>
-      <mat-cell class="price-cell" *matCellDef="let deal"> {{deal.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}} </mat-cell>
-    </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="price">
+            <mat-header-cell class="price-cell" 
+                *matHeaderCellDef 
+                mat-sort-header 
+                matTooltip = "Sort deals by price"
+                disableClear> 
+                Price 
+            </mat-header-cell>
+            <mat-cell class="price-cell" *matCellDef="let deal"> 
+                {{deal.price | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'}} 
+            </mat-cell>
+        </ng-container>
 
-    <!-- Email Column -->
-    <ng-container matColumnDef="client">
-      <mat-header-cell *matHeaderCellDef> Client </mat-header-cell>
-      <mat-cell *matCellDef="let deal" > 
-          <span *ngIf="!deal.client">Client is removed</span>
-          <a mat-button 
-            color="primary"
-            *ngIf="deal.client" 
-            matTooltip = "Open client's profile"
-            routerLink="/clients/profile/{{deal.clientId}}">
-            <h4 class="info">{{deal.client.surname}}</h4>
-            <h4 class="info">{{deal.client.name}}</h4>
-         </a>
-        </mat-cell>
-    </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="client">
+            <mat-header-cell *matHeaderCellDef> Client </mat-header-cell>
+            <mat-cell *matCellDef="let deal" > 
+                <span *ngIf="!deal.client">Client is removed</span>
+                <a mat-button 
+                    color="primary"
+                    *ngIf="deal.client" 
+                    matTooltip = "Open client's profile"
+                    routerLink="/clients/profile/{{deal.clientId}}">
+                    
+                    <h4 class="info">{{deal.client.surname}}</h4>
+                    <h4 class="info">{{deal.client.name}}</h4>
+                </a>
+            </mat-cell>
+        </ng-container>
 
-    <!-- Phone Column -->
-    <ng-container matColumnDef="home">
-        <mat-header-cell class="home-cell" *matHeaderCellDef> Home </mat-header-cell>
-        <mat-cell class="home-cell" *matCellDef="let deal"> 
-            <a mat-button 
-            color="primary"
-            matTooltip = "Open home's details"
-            routerLink="/homes/details/{{deal.homeId}}">
-                <h4 class="info">{{deal.home.home + ', ' + deal.home.street}}</h4>
-                <h4 class="info">{{deal.home.city + ', ' + deal.home.state}}</h4>
-             </a>
-        </mat-cell>
-    </ng-container>
+        <!-- Phone Column -->
+        <ng-container matColumnDef="home">
+            <mat-header-cell class="home-cell" *matHeaderCellDef> Home </mat-header-cell>
+            <mat-cell class="home-cell" *matCellDef="let deal"> 
+                <a mat-button 
+                    color="primary"
+                    matTooltip = "Open home's details"
+                    routerLink="/homes/details/{{deal.homeId}}">
 
-    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    <h4 class="info">{{deal.home.home + ', ' + deal.home.street}}</h4>
+                    <h4 class="info">{{deal.home.city + ', ' + deal.home.state}}</h4>
+                </a>
+            </mat-cell>
+        </ng-container>
 
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
 </div>

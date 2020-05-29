@@ -3,6 +3,7 @@
         <mat-card-header>
           <mat-card-title color="primary">Home's details</mat-card-title>
         </mat-card-header>
+
         <mat-card-content>
             <form [formGroup]="homeForm">
                 <mat-form-field class="form-control" appearance="outline">
@@ -31,7 +32,9 @@
                         formControlName="street"
                         maxlength="30"
                         >
+
                     <mat-icon matSuffix>location_city</mat-icon>
+
                     <mat-error *ngIf="homeForm.controls['street'].invalid 
                                     && (homeForm.controls['street'].touched)">
                         Incorrect street
@@ -96,7 +99,9 @@
                         formControlName="price"
                         maxlength="30"
                         >
+                    
                     <mat-icon matSuffix>monetization_on</mat-icon>
+
                     <mat-error *ngIf="homeForm.controls['price'].invalid 
                                     && (homeForm.controls['price'].touched)">
                         Incorrect price
@@ -121,9 +126,11 @@
                                     && (homeForm.controls['start_date'].touched)">
                         Incorrect date
                     </mat-error>
+
                     <mat-error *ngIf="homeForm.controls['start_date'].hasError('maxDateValidator')">
                         More than today's date
                     </mat-error>
+                    
                     <mat-error *ngIf="homeForm.controls['start_date'].hasError('minDateValidator')">
                         Home is over 200 years old
                     </mat-error>
@@ -131,13 +138,12 @@
                 <br>
             </form>
 
-
             <table *ngIf="!isAddingMode" class="table">
                 <tr>
                     <td>Adding Date</td>
                     <td>{{home.createdAt | date:'dd-MM-yyyy'}}</td>
                 </tr>
-                <tr *ngIf="home.clientOwner">
+                <tr *ngIf="home.clientOwner && home.clientOwner.id">
                     <td>Bought By</td>
                     <td>
                         <a mat-button color="primary" [routerLink]="['/clients/profile', home?.clientOwner.id]">
@@ -146,16 +152,16 @@
                     </td>
                 </tr>
             </table>
-
         </mat-card-content>
+
         <mat-card-actions class="actions-wrapper">
             <button mat-raised-button
-            (click)="onCancelButtonClick()">
+                (click)="onCancelButtonClick()">
                 Cancel
             </button>
 
             <button mat-raised-button
-            (click)="onCancelButtonClick()">
+                 (click)="onCancelButtonClick()">
                 Back
             </button>
 
@@ -163,14 +169,11 @@
                 class="button"
                 color="primary"
                 [disabled]="!homeForm.valid"
-                (click)="onSave()"
-            >
-            Save
+                (click)="onSave()">
+                Save
             </button>
         </mat-card-actions>
     </mat-card>
-
-    
 </div>
 
 

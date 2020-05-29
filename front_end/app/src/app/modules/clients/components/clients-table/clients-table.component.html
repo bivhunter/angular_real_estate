@@ -6,71 +6,74 @@
         [matSortActive]="(sortingConf$ | async).active"
         [matSortDirection]="(sortingConf$ | async).direction">
     
-    <!-- Surname Column -->
-    <ng-container matColumnDef="surname">
-      <mat-header-cell mat-sort-header *matHeaderCellDef disableClear  
-        matTooltip = "Sort clients by surname"> Surname </mat-header-cell>
-      <mat-cell *matCellDef="let client"> {{client.surname}} </mat-cell>
-    </ng-container>
+        <!-- Surname Column -->
+        <ng-container matColumnDef="surname">
+        <mat-header-cell mat-sort-header *matHeaderCellDef disableClear  
+            matTooltip = "Sort clients by surname"> Surname </mat-header-cell>
+        <mat-cell *matCellDef="let client"> {{client.surname}} </mat-cell>
+        </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header disableClear  
-        matTooltip = "Sort clients by name"> Name </mat-header-cell>
-      <mat-cell *matCellDef="let client"> {{client.name}} </mat-cell>
-    </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear  
+            matTooltip = "Sort clients by name"> Name </mat-header-cell>
+        <mat-cell *matCellDef="let client"> {{client.name}} </mat-cell>
+        </ng-container>
 
-    <!-- Email Column -->
-    <ng-container matColumnDef="email">
-      <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-      <mat-cell *matCellDef="let client"> {{client.email}} </mat-cell>
-    </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let client"> {{client.email}} </mat-cell>
+        </ng-container>
 
-    <!-- Phone Column -->
-    <ng-container matColumnDef="phone">
-        <mat-header-cell class="phone-cell" *matHeaderCellDef> Phone </mat-header-cell>
-        <mat-cell class="phone-cell" *matCellDef="let client"> {{client.phone}} </mat-cell>
-    </ng-container>
+        <!-- Phone Column -->
+        <ng-container matColumnDef="phone">
+            <mat-header-cell class="phone-cell" *matHeaderCellDef> Phone </mat-header-cell>
+            <mat-cell class="phone-cell" *matCellDef="let client"> {{client.phone}} </mat-cell>
+        </ng-container>
 
-    <!-- Actions Column -->
-    <ng-container matColumnDef="actions" stickyEnd>
-        <mat-header-cell class="actions-cell" *matHeaderCellDef> Home's actions </mat-header-cell>
-        <mat-cell class="actions-cell" *matCellDef="let client"> 
-            <button mat-raised-button [matMenuTriggerFor]="menu" 
-                matTooltip = "Open actions menu"
-                color="basic">
-                <mat-icon>menu</mat-icon>
-                Choose action
-            </button>
-            <mat-menu  #menu="matMenu">
-                <button mat-menu-item (click)="openBoughtHomes(client)">
-                    <mat-icon>payment</mat-icon>
-                    Look bought homes
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions" stickyEnd>
+            <mat-header-cell class="actions-cell" *matHeaderCellDef> Home's actions </mat-header-cell>
+
+            <mat-cell class="actions-cell" *matCellDef="let client"> 
+                <button mat-raised-button [matMenuTriggerFor]="menu" 
+                    matTooltip = "Open actions menu"
+                    color="basic">
+                    <mat-icon>menu</mat-icon>
+                    Choose action
                 </button>
-                <button mat-menu-item (click)="openViewedHome(client)">
-                    <mat-icon>list</mat-icon>
-                    Look viewed homes
-                </button>
-                <button mat-menu-item (click)="onAddHome(client)">
-                    <mat-icon>add</mat-icon>
-                    Add viewed home
-                </button>
-            </mat-menu>
-            <button mat-icon-button color="primary" 
-                routerLink="/clients/profile/{{client.id}}"
-                matTooltip = "Open client's profile">
-                <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="onDeleteButton(client)"
-                matTooltip = "Delete current client">
-                <mat-icon>delete_forever</mat-icon>
-            </button>
-        </mat-cell>
-    </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-menu  #menu="matMenu">
+                    <button mat-menu-item (click)="openBoughtHomes(client)">
+                        <mat-icon>payment</mat-icon>
+                        Look bought homes
+                    </button>
+                    <button mat-menu-item (click)="openViewedHome(client)">
+                        <mat-icon>list</mat-icon>
+                        Look viewed homes
+                    </button>
+                    <button mat-menu-item (click)="onAddHome(client)">
+                        <mat-icon>add</mat-icon>
+                        Add viewed home
+                    </button>
+                </mat-menu>
 
+                <button mat-icon-button color="primary" 
+                    routerLink="/clients/profile/{{client.id}}"
+                    matTooltip = "Open client's profile">
+                    <mat-icon>edit</mat-icon>
+                </button>
+
+                <button mat-icon-button color="warn" (click)="onDeleteButton(client)"
+                    matTooltip = "Delete current client">
+                    <mat-icon>delete_forever</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
 </div>
 

@@ -3,36 +3,38 @@
     <mat-form-field  appearance="outline">
         <mat-label>Search</mat-label>
         <input type="text" matInput placeholder="search" 
-        name="searching"
-        [ngModel]
-        (ngModelChange)="filterClients($event)">
+            name="searching"
+            [ngModel]
+            (ngModelChange)="filterClients($event)">
         <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     
     <mat-table 
-    [dataSource]="filteredClients" 
-    class="mat-elevation-z8 table" 
-    >
+        [dataSource]="filteredClients" 
+        class="mat-elevation-z8 table" 
+        >
         <ng-container matColumnDef="surname">
-        <mat-header-cell  class="surname-cell"*matHeaderCellDef>
-            Surname </mat-header-cell>
-        <mat-cell *matCellDef="let client" class="surname-cell"> {{client.surname}} </mat-cell>
+            <mat-header-cell  class="surname-cell"*matHeaderCellDef>
+                Surname </mat-header-cell>
+            <mat-cell *matCellDef="let client" class="surname-cell"> {{client.surname}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let client"> {{client.name}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let client"> {{client.name}} </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" 
             (click)="onClickClient(row)"
             [class.selected]="isAddingMode && row.id === selectedClientId"
-            [class.sale]="row.clientOwner"></mat-row>
+            [class.sale]="row.clientOwner">
+        </mat-row>
     </mat-table>
 
   
 </div>
+
 <div mat-dialog-actions>
     <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>Cnacel</button>
     <button mat-raised-button 
@@ -40,5 +42,6 @@
         color="primary" 
         [mat-dialog-close]="selectedClientId"
         [disabled]="!selectedClientId">
-        Submit</button>
-  </div>
+        Submit
+    </button>
+</div>

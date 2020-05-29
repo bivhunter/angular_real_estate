@@ -4,6 +4,7 @@
           <mat-card-title color="primary">Registration</mat-card-title>
           <mat-card-subtitle>Don't have an account? Create free account</mat-card-subtitle>
         </mat-card-header>
+
         <mat-card-content *ngIf="!registration.status">
             <form [formGroup]="registrationForm">
                 <mat-form-field class="form-control" appearance="outline">
@@ -39,7 +40,8 @@
                                 && (registrationForm.controls['email'].touched)">
                         Incorrect email
                     </mat-error>
-                    <mat-error *ngIf=" registrationForm.controls['email'].errors && registrationForm.controls['email'].errors.toggleValidator">
+                    <mat-error *ngIf=" registrationForm.controls['email'].errors 
+                                && registrationForm.controls['email'].errors.toggleValidator">
                         This email already exist
                     </mat-error>
                 </mat-form-field>
@@ -61,7 +63,10 @@
                         <mat-icon>{{isHidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
 
-                    <mat-error *ngIf="registrationForm.controls['password'].invalid && (registrationForm.controls['password'].touched)">Password must be longer than 5 characters</mat-error>
+                    <mat-error *ngIf="registrationForm.controls['password'].invalid 
+                                && (registrationForm.controls['password'].touched)">
+                        Password must be longer than 5 characters
+                    </mat-error>
                 </mat-form-field>
     
                 <br>
@@ -75,7 +80,8 @@
                         >
                     <mat-icon matSuffix>attach_money</mat-icon>
 
-                    <mat-error *ngIf="registrationForm.controls['rate'].invalid && (registrationForm.controls['rate'].touched)">
+                    <mat-error *ngIf="registrationForm.controls['rate'].invalid 
+                            && (registrationForm.controls['rate'].touched)">
                         Incorrect number
                     </mat-error>
                 </mat-form-field>
@@ -90,6 +96,7 @@
                 </mat-checkbox>
             </form>
         </mat-card-content>
+        
         <mat-card-actions *ngIf="!registration.status">
             <button mat-raised-button
                 class="button"

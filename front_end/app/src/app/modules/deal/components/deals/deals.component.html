@@ -1,6 +1,6 @@
 
 <div class="container">
-        <app-deals-control-panel class="control-panel"></app-deals-control-panel>
+    <app-deals-control-panel class="control-panel"></app-deals-control-panel>
 
     <!-- <div class="no-deals" *ngIf="(deals$ | async) && !(deals$ | async).length">
         <h1>No Deals</h1>
@@ -10,11 +10,11 @@
         </button>
     </div> -->
 
-        <app-deals-list
+    <app-deals-list
         class="deals-list" 
         *ngIf="(deals$ | async) && (deals$ | async).length"
-        [deals]="filteredDeals$ | async"
-        ></app-deals-list>
+        [deals]="filteredDeals$ | async">
+    </app-deals-list>
 </div>
 
 

@@ -1,9 +1,3 @@
-
-/* :host {
-    height: 100%;
-    width: 100%;
-} */
-
 .card-view  {
     display: flex;
     flex-wrap: wrap;
@@ -27,60 +21,3 @@ th.mat-sort-header-sorted {
 th {
     padding-left: 15px;
 }
-/* .cards-wrapper {
-    
-}
-
- */
-/* .list-view {
-    display: flex;
-    height: 100%;
-}
-
-*/
-
-/* styles for sorting panel */
-/* .sorting-menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 70px;
-}
-
-.sorting-button.sort-up::before {
-    content: '↑';
-}
-
-.sorting-button.sort-down::before {
-    content: '↓';
-}
-
-.sort-down, .sort-up {
-    background-color: #D8D8D8;
-}
-
-button, .main {
-    outline: none;
-    width: 90px;
-    font-size: 15px;
-    border-radius: 5px;
-    text-shadow: 1px 1px 2px rgba(0,114,188,1);
-    margin: 5px;
-    padding: 5px;
-}
-
-button:hover{
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
-}
-
-.main {
-    width: auto;
-    font-size: 18px;
-    align-self: center;
-    justify-self: right;
-    margin-right: 0;
-
-} */
-
-

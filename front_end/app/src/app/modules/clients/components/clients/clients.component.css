@@ -1,8 +1,3 @@
-/* :host {
-    height: 100%;
-    width: 100%;
-} */
-
 .container {
     display: flex;
     flex-direction: column;
@@ -14,34 +9,6 @@
     height: 93px;
 }
 
-
 .cliets-list {
     height: calc(100% - 93px);
 }
-/* 
-.no-clients {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-shadow: 1px 1px 2px rgba(0,114,188,1);
-}
-
-button {
-    padding: 5px;
-    font-size: 15px;
-    border-radius: 5px;
-    text-shadow: 1px 1px 2px rgba(0,114,188,1);
-    margin: 5px;
-}
-
-button:hover{
-    cursor: pointer;
-    box-shadow: 2px 2px 4px rgba(0,114,188,1);
-    text-shadow: -1px -1px 2px rgba(0,114,188,1);
-} */
-
-/* .container {
-    min-width: 100%;
-} */
-
-

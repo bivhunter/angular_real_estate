@@ -19,8 +19,6 @@
                     <span *ngIf="home.clientOwner">sold</span>
                 </mat-list-item>
             </mat-list>
-            
-            <p></p>
         </mat-card-content>
         
         <mat-card-actions class="actions">
@@ -30,6 +28,7 @@
                 <mat-icon>menu</mat-icon>
                 Choose action
             </button>
+
             <mat-menu  #menu="matMenu">
                 <button mat-menu-item (click)="onViewedClient()">
                     <mat-icon>list</mat-icon>
@@ -42,11 +41,13 @@
                     Add clients who viewed home
                 </button>
             </mat-menu>
+
             <button mat-icon-button color="primary" 
                 matTooltip = "Open home's details"
                 routerLink="/homes/details/{{home.id}}">
                 <mat-icon>edit</mat-icon>
             </button>
+            
             <button mat-icon-button color="warn" 
                 matTooltip = "Delete current home"
                 [matTooltipDisabled] = "home.clientOwner"
