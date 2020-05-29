@@ -1,118 +1,114 @@
 <div class="container">
-   
-            <mat-card elevation="20" class="form-card">
-            <mat-card-header>
+    <mat-card elevation="20" class="form-card">
+        <mat-card-header>
             <mat-card-title color="primary">Sign In</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <form [formGroup]="loginForm">
-                    <mat-form-field class="form-control" appearance="outline">
-                        <mat-label>Email</mat-label>
-                        <input 
-                            matInput 
-                            placeholder="your@email"
-                            type="text" 
-                            autocomplete="email"
-                            formControlName="email"
-                            >
-                        <mat-icon matSuffix>alternate_email</mat-icon>
+        </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="loginForm">
+            <mat-form-field class="form-control" appearance="outline">
+                <mat-label>Email</mat-label>
 
-                        <mat-error *ngIf="( loginForm.controls['email'].errors 
-                                    && (loginForm.controls['email'].errors.email || loginForm.controls['email'].errors.required)) 
-                                    && (loginForm.controls['email'].touched)">
-                            Incorrect email
-                        </mat-error>
-                        
-                    </mat-form-field>
-                    <br>
-        
-                    <mat-form-field class="form-control" appearance="outline">
-                        <mat-label>Password</mat-label>
-                        <input 
-                            matInput 
-                            placeholder="Password"
-                            [type]="isHidePassword ? 'password' : 'text'"
-                            autocomplete="password"
-                            formControlName="password"
-                            >
-                        <button mat-icon-button matSuffix 
-                            (click)="isHidePassword = !isHidePassword" 
-                            [attr.aria-label]="'Hide password'" 
-                            [attr.aria-pressed]="isHidePassword">
-                            <mat-icon>{{isHidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
+                <input 
+                    matInput 
+                    placeholder="your@email"
+                    type="text" 
+                    autocomplete="email"
+                    formControlName="email"
+                    >
+                <mat-icon matSuffix>alternate_email</mat-icon>
 
-                        <mat-error *ngIf="(loginForm.controls['password'].errors 
-                                && loginForm.controls['password'].errors.minlength) 
-                                && (loginForm.controls['password'].touched)">
-                                Password must be longer than 5 characters
-                        </mat-error>
+                <mat-error *ngIf="( loginForm.controls['email'].errors 
+                            && (loginForm.controls['email'].errors.email || loginForm.controls['email'].errors.required)) 
+                            && (loginForm.controls['email'].touched)">
+                    Incorrect email
+                </mat-error>
+            </mat-form-field>
 
-                        <mat-error *ngIf="(loginForm.controls['password'].errors 
-                                && loginForm.controls['password'].errors.pattern) 
-                                && (loginForm.controls['password'].touched)">
-                                Password contains incorrect symbols
-                        </mat-error>
+            <br>
+            <mat-form-field class="form-control" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input 
+                    matInput 
+                    placeholder="Password"
+                    [type]="isHidePassword ? 'password' : 'text'"
+                    autocomplete="password"
+                    formControlName="password"
+                    >
 
-                        <mat-error *ngIf=" loginForm.controls['password'].errors 
-                            && loginForm.controls['password'].errors.toggleValidator">
-                            Incorrect email or password, try again or register
-                        </mat-error>
-                    </mat-form-field>
-        
-                    <br>
-                    
-                    
-                    <mat-checkbox 
-                    formControlName="rememberMe"
+                <button mat-icon-button matSuffix 
+                    (click)="isHidePassword = !isHidePassword" 
+                    [attr.aria-label]="'Hide password'" 
+                    [attr.aria-pressed]="isHidePassword">
+                    <mat-icon>{{isHidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+
+                <mat-error *ngIf="(loginForm.controls['password'].errors 
+                        && loginForm.controls['password'].errors.minlength) 
+                        && (loginForm.controls['password'].touched)">
+                        Password must be longer than 5 characters
+                </mat-error>
+
+                <mat-error *ngIf="(loginForm.controls['password'].errors 
+                        && loginForm.controls['password'].errors.pattern) 
+                        && (loginForm.controls['password'].touched)">
+                        Password contains incorrect symbols
+                </mat-error>
+
+                <mat-error *ngIf="loginForm.controls['password'].errors 
+                    && loginForm.controls['password'].errors.toggleValidator">
+                    Incorrect email or password, try again or register
+                </mat-error>
+            </mat-form-field>
+            <br>
+            
+            <mat-checkbox 
+            formControlName="rememberMe"
+            color="primary"
+                >
+                Remember me
+            </mat-checkbox>
+        </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <mat-list>
+            <mat-list-item >
+                <div class="button-wrapper">
+                    <button mat-raised-button
+                    class="button"
                     color="primary"
-                        >
-                        Remember me
-                    </mat-checkbox>
-                </form>
-            </mat-card-content>
-            <mat-card-actions>
-                <mat-list>
-                    <mat-list-item >
-                        <div class="button-wrapper">
-                            <button mat-raised-button
-                            class="button"
-                            color="primary"
-                            [disabled]="!loginForm.valid"
-                            (click)="onSubmit()"
-                            >
-                                Sign In
-                            </button>
-                        </div>
-                        
-                    </mat-list-item>
+                    [disabled]="!loginForm.valid"
+                    (click)="onSubmit()"
+                    >
+                        Sign In
+                    </button>
+                </div>
+            </mat-list-item>
 
-                    <br>
-                    <mat-divider></mat-divider>
-                    <br>
-                    <mat-list-item >
-                        <div class="button-wrapper">
-                             <a routerLink="/authorization/registration" 
+            <br>
+            <mat-divider></mat-divider>
+            <br>
+
+            <mat-list-item >
+                <div class="button-wrapper">
+                    <a routerLink="/authorization/registration" 
                         mat-stroked-button 
                         class="button">
-                            Create account
-                        </a>
-                        </div>
-                       
-                    </mat-list-item>
-                </mat-list>
-                
-            </mat-card-actions>
-        
-        </mat-card>
-        
-            <mat-card class="logo-card">
-                <div class="logo-wrapper">
-                    <img class="logo" src="../../../assets/images/logo.png">
-                    <div class="logo-text">
-                        <p >Welcome to HunterData </p>
-                        <p >Client Management App </p>
+                        Create account
+                    </a>
                 </div>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-actions>
+    </mat-card>
+    
+    <mat-card class="logo-card">
+        <div class="logo-wrapper">
+            <img class="logo" src="../../../assets/images/logo.png">
+            <div class="logo-text">
+                <p >Welcome to HunterData </p>
+                <p >Client Management App </p>
             </div>
-            </mat-card>
+        </div>
+    </mat-card>
 </div>

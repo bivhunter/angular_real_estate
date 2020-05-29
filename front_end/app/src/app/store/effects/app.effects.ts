@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as clientsAction from '../actions/clients.action';
 import * as clientsApiAction from '../actions/clients-api.actions';
 import * as homesApiAction from '../actions/homes-api.actions';
 import * as dealsApiAction from '../actions/deals-api.actions';
 import * as userApiAction from '../actions/user-api.actions';
-import * as appApiAction from '../actions/app-api.actions';
-import * as dealsActions from '../actions/deals.action';
 import * as appActions from '../actions/app.actions';
-import { switchMap, map, tap, merge, endWith, take, zip } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 import { ClientService } from 'src/app/modules/clients/services/clients.service';
 import { Store } from '@ngrx/store';
 import { HomesService } from './../../modules/homes/services/homes.service';
 import { DealsService } from 'src/app/modules/deal/services/deals.service';
 import { UserService } from './../../modules/user/services/user.service';
-import { of } from 'rxjs';
 import { User } from 'src/app/modules/user/model/user';
+import { ProgressBarService } from './../../modules/shared/services/progress-bar.service';
 
 @Injectable()
 export class AppEffects {
@@ -23,7 +20,7 @@ export class AppEffects {
   initStore$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(appActions.initStore),
-      tap(() => console.log('initSotre')),
+      tap(() => this.progressBarService.openProgressBar()),
       switchMap(() => this.clientsService.getClients().pipe(
         tap(clients => this.store.dispatch(clientsApiAction.getClientsSuccess({clients}))),
       )),
@@ -38,11 +35,9 @@ export class AppEffects {
       )),
 
       map((res) => {
-         // console.log(res);
-          return userApiAction.initStoreSuccess();
+        this.progressBarService.closeProgressBar();
+        return userApiAction.initStoreSuccess();
       }),
-      // endWith(userApiAction.initStoreSuccess()),
-      // tap((res) => console.log(res))
     );
   });
 
@@ -52,6 +47,7 @@ export class AppEffects {
     private homesService: HomesService,
     private dealsService: DealsService,
     private userService: UserService,
-    private store: Store
+    private store: Store,
+    private progressBarService: ProgressBarService
   ) {}
 }

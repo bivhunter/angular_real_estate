@@ -1,20 +1,13 @@
 import {
   ActionReducer,
   ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
   MetaReducer,
-  on,
-  createReducer
 } from '@ngrx/store';
-import { environment } from '../../../environments/environment';
 
 import * as dealsReducer from '../reducers/deals.reducer';
 import * as homesReducer from '../reducers/homes.reducer';
 import * as clientsReducer from './clients.reducer';
 import * as usersReducer from './user.reducer';
-import * as appActions from '../actions/app.actions';
-import { Actions } from '@ngrx/effects';
 
 export interface State {
   dealsState: dealsReducer.State;
@@ -40,7 +33,6 @@ export const reducers: ActionReducerMap<State> = {
 export function clearState(reducer: ActionReducer<any>): ActionReducer<any> {
   return (state, action) => {
     if (action.type === '[App] Logout') {
-      console.log("clear store")
       state = undefined;
     }
     return reducer(state, action);

@@ -45,25 +45,30 @@
     </mat-grid-tile>
 </mat-grid-list> -->
 
-<div class="message-wrapper">
+<!-- <div class="message-wrapper">
     <app-status-message 
         *ngIf="isStatusMessage"
         [message]="statusMessage"></app-status-message>    
-</div>
+</div> -->
 
 <app-header></app-header>
+
 <div class="container">
-    <mat-grid-list cols="10" [rowHeight]="'100%'">
+    <app-navigation *ngIf="isNavigationPanel"></app-navigation>
+    <div class="router-outlet" [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+    <!-- <mat-grid-list cols="8" [rowHeight]="'100%'">
     <mat-grid-tile colspan="1" >
         <app-navigation *ngIf="isNavigationPanel"></app-navigation>
     </mat-grid-tile>
 
-    <mat-grid-tile colspan="9" >
+    <mat-grid-tile colspan="7" >
         <div class="router-outlet" [@routeAnimations]="prepareRoute(outlet)">
             <router-outlet #outlet="outlet"></router-outlet>
         </div>
     </mat-grid-tile>
- </mat-grid-list>
+    </mat-grid-list> -->
 </div>
 <app-footer></app-footer>
  

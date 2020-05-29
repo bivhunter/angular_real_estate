@@ -8,13 +8,15 @@
     
     <!-- Surname Column -->
     <ng-container matColumnDef="surname">
-      <mat-header-cell mat-sort-header *matHeaderCellDef disableClear> Surname </mat-header-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef disableClear  
+        matTooltip = "Sort clients by surname"> Surname </mat-header-cell>
       <mat-cell *matCellDef="let client"> {{client.surname}} </mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Name </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header disableClear  
+        matTooltip = "Sort clients by name"> Name </mat-header-cell>
       <mat-cell *matCellDef="let client"> {{client.name}} </mat-cell>
     </ng-container>
 
@@ -34,7 +36,9 @@
     <ng-container matColumnDef="actions" stickyEnd>
         <mat-header-cell class="actions-cell" *matHeaderCellDef> Home's actions </mat-header-cell>
         <mat-cell class="actions-cell" *matCellDef="let client"> 
-            <button mat-raised-button [matMenuTriggerFor]="menu" color="basic">
+            <button mat-raised-button [matMenuTriggerFor]="menu" 
+                matTooltip = "Open actions menu"
+                color="basic">
                 <mat-icon>menu</mat-icon>
                 Choose action
             </button>
@@ -52,10 +56,13 @@
                     Add viewed home
                 </button>
             </mat-menu>
-            <button mat-icon-button color="primary" routerLink="/clients/profile/{{client.id}}">
+            <button mat-icon-button color="primary" 
+                routerLink="/clients/profile/{{client.id}}"
+                matTooltip = "Open client's profile">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="onDeleteButton(client)">
+            <button mat-icon-button color="warn" (click)="onDeleteButton(client)"
+                matTooltip = "Delete current client">
                 <mat-icon>delete_forever</mat-icon>
             </button>
         </mat-cell>

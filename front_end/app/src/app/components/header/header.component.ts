@@ -6,6 +6,7 @@ import { filter, tap } from 'rxjs/operators';
 import { User } from 'src/app/modules/user/model/user';
 import { Store } from '@ngrx/store';
 import * as userSelectors from 'src/app/store/selectors/user.selector';
+import { ProgressBarService } from 'src/app/modules/shared/services/progress-bar.service';
 
 @Component({
   selector: 'app-header',
@@ -17,13 +18,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean;
   isLogin: boolean;
   user$: Observable<User>;
+  isProgressBar$: Observable<boolean>;
 
   private routeChangingSubscription: Subscription;
 
   constructor(
     private authorizationService: AuthorizationService,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private progressBarService: ProgressBarService
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private initSubscribtion(): void {
+    this.isProgressBar$ = this.progressBarService.getProgressBarEvent();
     // listen router navigation
     this.routeChangingSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)

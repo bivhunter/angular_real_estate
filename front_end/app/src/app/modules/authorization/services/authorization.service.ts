@@ -7,6 +7,7 @@ import { StatusMessageService } from '../../shared/services/status-message.servi
 import { Store, select } from '@ngrx/store';
 import * as appActions from 'src/app/store/actions/app.actions';
 import * as userSelectors from 'src/app/store/selectors/user.selector';
+import { ProgressBarService } from '../../shared/services/progress-bar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class AuthorizationService {
     private http: HttpClient,
     private router: Router,
     private statusMessageService: StatusMessageService,
-    private store: Store
+    private store: Store,
+    private progressBarService: ProgressBarService
   ) { }
 
 
@@ -44,14 +46,17 @@ export class AuthorizationService {
 
   // for auth.guard
   checkAuthorization(): Observable<boolean> {
+    this.progressBarService.openProgressBar();
     return this.http.get<any>(this.clientUrl).pipe(
       map((resp) => {
         this.iniStore();
         return true;
       }),
       tap (resp => {
+        this.progressBarService.closeProgressBar();
       }),
       catchError(error => {
+        this.progressBarService.closeProgressBar();
         this.redirectToLogin();
         return of(false);
       })
@@ -63,7 +68,6 @@ export class AuthorizationService {
   }
 
   private iniStore() {
-    
     this.store.select(userSelectors.getInitStoreStatus).subscribe(
       check => this.isStoreInit = check
     );

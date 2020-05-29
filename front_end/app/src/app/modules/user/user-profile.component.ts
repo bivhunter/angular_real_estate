@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/modules/user/model/user';
-import { UserService } from './services/user.service';
 import { CanComponentDeactivate } from '../shared/guards/can-deactivate.guard';
 import { RouterStateSnapshot, ActivatedRoute } from '@angular/router';
-import { PopupService } from './../shared/services/popup.service';
 import { Location, CurrencyPipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
@@ -43,8 +41,6 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
   private currencyPipe: CurrencyPipe = new CurrencyPipe('fr');
 
   constructor(
-    private userService: UserService,
-    private popupService: PopupService,
     private location: Location,
     private route: ActivatedRoute,
     private store: Store,

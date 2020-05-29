@@ -1,8 +1,8 @@
 :host {
     display: flex;
     width: 100%;
-   
-}
+    position: relative;
+}   
 
 .container {
     display: flex;
@@ -54,5 +54,11 @@ img {
 
 .auth-button, .user-img {
     cursor: pointer;
+}
+
+.progress-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
 }
 

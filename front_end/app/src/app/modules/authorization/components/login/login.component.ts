@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../user/services/user.service';
 import { User } from '../../../user/model/user';
-import { InitDataService } from './../../../shared/services/init-data.service';
 import { FormGroup, FormControl, AbstractControl, Validators, AsyncValidatorFn } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { take, map} from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +23,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private initDataService: InitDataService
   ) { }
 
   ngOnInit(): void {
@@ -43,27 +41,21 @@ export class LoginComponent implements OnInit {
     const formValue = this.loginForm.value;
     this.user.email = formValue.email;
     this.user.password = formValue.password;
-    
     this.userService.authorizeUser(this.user).subscribe(
       () => {
-        this.initDataService.initData();
       },
       (error) => this.onSubmitError(error)
     );
   }
 
   onSubmitError(message: string) {
+    console.log(message)
     if (message === 'Invalid login') {
       this.loginErrorChanged(false);
     }
   }
 
   private initFormSubscription(): void {
-    this.loginForm.statusChanges.subscribe(
-      (status) => {
-      }
-    )
-
     this.loginForm.controls.email.valueChanges.subscribe(
       (value) => {
         this.loginErrorChanged(true);
@@ -82,6 +74,7 @@ export class LoginComponent implements OnInit {
       onlySelf: true,
       emitEvent: false
     });
+
     this.loginForm.controls.password.updateValueAndValidity({
       onlySelf: true,
       emitEvent: false

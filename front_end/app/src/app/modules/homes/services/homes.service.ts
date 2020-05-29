@@ -56,7 +56,7 @@ export class HomesService {
       .pipe(
         tap(newHome => this.statusMessageService.showMessage({
           status: 'info',
-          text: `Home's details was updated`
+          text: `New home was added`
         })),
         catchError(this.handlePostHomeError)
       );

@@ -74,11 +74,16 @@
  */
 
  .router-outlet {
-    width: 100%;
+    width: calc(100% - 150px);
     height: 100%;
 }
 
 .container {
+    display: flex;
     width: 100%;
     height: calc(100vh - 130px);
 }
+
+/* app-navigation {
+    width: 150px;
+} */

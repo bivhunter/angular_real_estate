@@ -24,7 +24,9 @@
         </mat-card-content>
         
         <mat-card-actions class="actions">
-            <button mat-raised-button [matMenuTriggerFor]="menu" color="basic">
+            <button mat-raised-button [matMenuTriggerFor]="menu" 
+            matTooltip = "Open actions menu"
+            color="basic">
                 <mat-icon>menu</mat-icon>
                 Choose action
             </button>
@@ -40,10 +42,14 @@
                     Add clients who viewed home
                 </button>
             </mat-menu>
-            <button mat-icon-button color="primary" routerLink="/homes/details/{{home.id}}">
+            <button mat-icon-button color="primary" 
+                matTooltip = "Open home's details"
+                routerLink="/homes/details/{{home.id}}">
                 <mat-icon>edit</mat-icon>
             </button>
             <button mat-icon-button color="warn" 
+                matTooltip = "Delete current home"
+                [matTooltipDisabled] = "home.clientOwner"
                 (click)="onDeleteButton()"
                 [disabled]="home.clientOwner">
                 <mat-icon>delete_forever</mat-icon>

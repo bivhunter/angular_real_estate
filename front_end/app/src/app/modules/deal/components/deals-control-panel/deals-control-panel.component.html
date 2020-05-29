@@ -1,6 +1,8 @@
 <mat-grid-list cols="3" rowHeight="100%"> 
     <mat-grid-tile >
-        <button mat-raised-button color="primary" routerLink="/deals/adding">
+        <button mat-raised-button color="primary" 
+            matTooltip = "Add new deal"
+            routerLink="/deals/adding">
             <mat-icon>add</mat-icon>
             Add Deal
         </button>
@@ -18,7 +20,9 @@
     </mat-grid-tile>
 
     <mat-grid-tile>
-        <button mat-raised-button [matMenuTriggerFor]="menu" color="basic">
+        <button mat-raised-button [matMenuTriggerFor]="menu" 
+        matTooltip = "Change view"
+        color="basic">
             <mat-icon>menu</mat-icon>
             View mode
         </button>

@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, RouterOutlet, NavigationStart, NavigationEnd } from '@angular/router';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { slideInAnimation } from './modules/shared/animation/animation';
 import { StatusMessageService } from './modules/shared/services/status-message.service';
 import { TMessage } from './modules/shared/types/types';
-import { InitDataService } from './modules/shared/services/init-data.service';
 
 
 @Component({
@@ -19,14 +18,12 @@ export class AppComponent implements OnInit, OnDestroy {
   isStatusMessage = false;
   statusMessage: TMessage;
 
-
   private routeChangingSubscription: Subscription;
   private messageChangesSubscription: Subscription;
 
   constructor(
     private router: Router,
     private statusMessageService: StatusMessageService,
-    private initDataService: InitDataService
   ) {}
 
   ngOnInit(): void {

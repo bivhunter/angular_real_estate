@@ -22,6 +22,7 @@
                     <a mat-button 
                       color="primary"
                       *ngIf="deal.client" 
+                      matTooltip = "Open client's profile"
                       routerLink="/clients/profile/{{deal.clientId}}">
                       <h4 class="info">{{deal.client.surname}}</h4>
                       <h4 class="info">{{deal.client.name}}</h4>
@@ -31,6 +32,7 @@
                     <mat-icon>house</mat-icon>
                     <a mat-button 
                     color="primary"
+                    matTooltip = "Open home's details"
                     routerLink="/homes/details/{{deal.homeId}}">
                         <h4 class="info">{{deal.home.home + ', ' + deal.home.street}}</h4>
                         <h4 class="info">{{deal.home.city + ', ' + deal.home.state}}</h4>

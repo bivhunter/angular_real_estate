@@ -32,6 +32,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MinDateValidatorDirective } from './directives/min-date-validator.directive';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 registerLocaleData(localeFr);
@@ -55,7 +59,10 @@ const materialModules = [
   MatSortModule,
   MatDatepickerModule,
   MatDialogModule,
-  MatStepperModule
+  MatStepperModule,
+  MatSnackBarModule,
+  MatTooltipModule,
+  MatProgressBarModule
 ];
 
 

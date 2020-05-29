@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AuthorizationService } from '../../authorization/services/authorization.service';
 import * as jwt_decode from 'jwt-decode';
 import { StatusMessageService } from '../../shared/services/status-message.service';
+import { ProgressBarService } from '../../shared/services/progress-bar.service';
 
 @Injectable(
   { providedIn: 'root'}
@@ -29,23 +30,27 @@ export class UserService {
     private http: HttpClient,
     private router: Router,
     private authService: AuthorizationService,
-    private statusMessageService: StatusMessageService
+    private statusMessageService: StatusMessageService,
+    private progressBarService: ProgressBarService
   ) { }
 
   registerUser(user: User): Observable<User | string> {
+    this.progressBarService.openProgressBar();
     return this.http.post<User>(this.userUrl, user).pipe(
-      tap(newUser => this.statusMessageService.showMessage({
+      tap(newUser => {
+        this.progressBarService.closeProgressBar();
+        this.statusMessageService.showMessage({
         status: 'info',
         text: `${newUser.name} ${newUser.surname} successfull registered`
-      })),
-      catchError(this.handleAuthorizationError)
+      });
+    }),
+      catchError(this.handleAuthorizationError())
     );
   }
 
   authorizeUser(user: User): Observable<any> {
     const body = {...user, strategy: 'local'};
-    console.log('authorizeUser');
-    
+    this.progressBarService.openProgressBar();
     return this.http.post<any>(this.authenticationUrl, body).pipe(
       tap((resp) => {
         this.log(resp.accessToken);
@@ -54,11 +59,14 @@ export class UserService {
         this.router.navigateByUrl(url);
       }),
       switchMap(() => this.getUser()),
-      tap(newUser => this.statusMessageService.showMessage({
+      tap(newUser => {
+        this.progressBarService.closeProgressBar();
+        this.statusMessageService.showMessage({
         status: 'info',
         text: `${newUser.name} ${newUser.surname} logged in`
-      })),
-      catchError(this.handleAuthorizationError)
+      });
+    }),
+      catchError(this.handleAuthorizationError())
     );
   }
 
@@ -95,29 +103,30 @@ export class UserService {
 
   // get userId from token
   private getUserId(): number | string {
-    if (!this.authToken) {
-      return 2;
-    }
     return jwt_decode(this.authToken).userId;
   }
 
-  private handleAuthorizationError(error: HttpErrorResponse): Observable<string> {
-    if (error.statusText === 'Bad Request') {      // using when invalid data in request
-      if (error.error.errors instanceof Array) {   // respons has array of errors
-        const errorMessage = error.error.errors.map((curentError: any) => curentError.message).join('; ');
-        return throwError(errorMessage);
+  private handleAuthorizationError(): (error: HttpErrorResponse) => Observable<string> {
+    return (error) => {
+      this.progressBarService.closeProgressBar();
+      if (error.statusText === 'Bad Request') {      // using when invalid data in request
+        if (error.error.errors instanceof Array) {   // respons has array of errors
+          const errorMessage = error.error.errors.map((curentError: any) => curentError.message).join('; ');
+          return throwError(errorMessage);
+        }
+        return throwError(error.error.message);
       }
-      return throwError(error.error.message);
-    }
 
-    if (error.statusText === 'Unauthorized') {    // using when user Unauthorized
-      return throwError(error.error.message);
-    }
+      if (error.statusText === 'Unauthorized') {    // using when user Unauthorized
+        return throwError(error.error.message);
+      }
 
-    return throwError(error.statusText);         // other errors
-    }
+      return throwError(error.statusText);         // other errors
+      };
+  }
 
   private log(user: User | string): void {
+    
   }
 
 }

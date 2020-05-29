@@ -3,9 +3,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as clientsAction from '../actions/clients.action';
 import * as clientsApiAction from '../actions/clients-api.actions';
 import * as dealsActions from '../actions/deals.action';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 import { ClientService } from 'src/app/modules/clients/services/clients.service';
 import { Store } from '@ngrx/store';
+import { ProgressBarService } from 'src/app/modules/shared/services/progress-bar.service';
 
 @Injectable()
 export class ClientsEffects {
@@ -13,9 +14,11 @@ export class ClientsEffects {
   loadClients$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(clientsAction.loadClients),
+      tap(() => this.progressBarService.openProgressBar()),
       switchMap(() => this.clientsService.getClients()),
       map(
         clients => {
+          this.progressBarService.closeProgressBar();
           return clientsApiAction.getClientsSuccess({clients});
         }
       )
@@ -37,6 +40,7 @@ export class ClientsEffects {
   addClient$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(clientsAction.addClient),
+      tap(() => this.progressBarService.openProgressBar()),
       switchMap(({client}) => {
         return this.clientsService.addClient(client);
       }),
@@ -44,6 +48,7 @@ export class ClientsEffects {
         return this.clientsService.getClient(client.id);
       }),
       map(client => {
+        this.progressBarService.closeProgressBar();
         return clientsApiAction.addClientSuccess({client});
       })
     );
@@ -52,6 +57,7 @@ export class ClientsEffects {
   updateClient$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(clientsAction.updateClient),
+      tap(() => this.progressBarService.openProgressBar()),
       switchMap(({client}) => {
         return this.clientsService.updateClient(client);
       }),
@@ -59,6 +65,7 @@ export class ClientsEffects {
         return this.clientsService.getClient(client.id);
       }),
       map(client => {
+        this.progressBarService.closeProgressBar();
         return clientsApiAction.updateClientSuccess({client});
       })
     );
@@ -67,11 +74,13 @@ export class ClientsEffects {
   deleteClient$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(clientsAction.deleteClient),
+      tap(() => this.progressBarService.openProgressBar()),
       switchMap(({id}) => {
         return this.clientsService.deleteClient(id);
       }),
       map(client => {
         this.store.dispatch(dealsActions.loadDeals());
+        this.progressBarService.closeProgressBar();
         return clientsApiAction.deleteClientSuccess({id: client.id});
       })
     );
@@ -80,11 +89,13 @@ export class ClientsEffects {
   addHomeToClient$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(clientsAction.addHomeToClient),
+      tap(() => this.progressBarService.openProgressBar()),
       switchMap(({homeId, clientId}) => {
         return this.clientsService.addHomeToClient(homeId, clientId);
       }),
       switchMap(client => this.clientsService.getClient(client.id)),
       map(client => {
+        this.progressBarService.closeProgressBar();
         return clientsApiAction.updateClientSuccess({client});
       })
     );
@@ -93,6 +104,7 @@ export class ClientsEffects {
   constructor(
     private actions$: Actions,
     private clientsService: ClientService,
-    private store: Store
+    private store: Store,
+    private progressBarService: ProgressBarService
   ) {}
 }

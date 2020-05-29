@@ -121,26 +121,34 @@ label, .label {
 
    */
 
-:host {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+   .container {
     height: 100%;
+    overflow-y: auto;
 }
 
-.container {
-    flex: 0 1 350px;
+mat-card {
+    width: 350px;
+    margin: 30px auto;
+}
+
+.info {
+    flex: 1 1 60%;
+    height: 30px;
 }
 
 .form-control {
-    margin-bottom: 15px;
     width: 100%;
+}
+
+.actions-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .table {
     width: 100%;
 }
-
 
 /* .mat-card-actions {
     display: flex;

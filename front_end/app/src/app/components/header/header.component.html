@@ -1,3 +1,10 @@
+<mat-progress-bar 
+    mode="indeterminate" 
+    *ngIf="isProgressBar$ | async"
+    color="warn"
+    class="progress-bar">
+</mat-progress-bar>
+
 <mat-toolbar color="primary" class="mat-elevation-z8">
     <mat-toolbar-row>
         <img src="../../../assets/images/logo_clear_white.png">
@@ -9,6 +16,7 @@
                 <button 
                     mat-mini-fab color="primary" 
                     routerLinkActive="activated"
+                    matTooltip="View user's profile"
                     routerLink="/user">
                     <mat-icon>account_circle</mat-icon>
                   </button>

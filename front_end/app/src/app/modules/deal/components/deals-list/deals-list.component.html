@@ -1,42 +1,3 @@
-
-
-<!-- <div class="container" [ngSwitch]="viewMode$ | async">
-    <div class=list-view *ngSwitchCase="'list'">
-        <app-deals-table
-        [deals]="deals"
-        >
-        </app-deals-table>        
-    </div> -->
-
-    <!-- sorting menu -->
-    <!-- <div class="sorting-menu" *ngSwitchCase="'cards'">
-        <span class="main">Sort by:</span>
-
-        <button class="sorting-button" 
-        type="button"
-        [class.sort-up]="(sortingMethod$ | async)  === 'DATE_UP'"
-        [class.sort-down]="(sortingMethod$ | async) === 'DATE_DOWN'"
-        (click)="changeSortingMethod('DATE')"
-        >Date</button>
-
-        <button class="sorting-button" 
-        type="button"
-        [class.sort-up]="(sortingMethod$ | async) === 'PRICE_UP'"
-        [class.sort-down]="(sortingMethod$ | async) === 'PRICE_DOWN'"
-        (click)="changeSortingMethod('PRICE')">Price</button>
-    </div> -->
-    <!-- cards-view -->
-    <!-- <div class="card-view" *ngSwitchCase="'cards'">
-        <h2 *ngIf="!deals?.length">No deals</h2>
-        <app-deal-card 
-        *ngFor="let deal of deals"
-        [deal]="deal"
-        >
-        </app-deal-card>
-    </div>
-</div> -->
-
-
 <div class="container" [ngSwitch]="viewMode$ | async">
     <div class=list-view *ngSwitchCase="'list'">
         <app-deals-table
@@ -52,10 +13,13 @@
         
         <tr>
             <!-- <th>Sort: </th> -->
-            <th mat-sort-header="date" disableClear>
+            <th mat-sort-header="date" disableClear
+                matTooltip = "Sort deals by date">
                 Date
             </th>
-            <th mat-sort-header="price" disableClear>Price</th>
+            <th mat-sort-header="price" 
+            matTooltip = "Sort deals by price"
+            disableClear>Price</th>
         </tr>
     </table>
 
