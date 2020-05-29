@@ -1,30 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PopupService } from '../../services/popup.service';
-import { Subject } from 'rxjs';
+import { Component, OnInit,  } from '@angular/core';
 
 @Component({
   selector: 'app-popup-deactivate',
   templateUrl: './popup-deactivate.component.html',
   styleUrls: ['./popup-deactivate.component.css']
 })
-export class PopupDeactivateComponent implements OnInit, OnDestroy {
+export class PopupDeactivateComponent implements OnInit {
 
   constructor(
-    private popupService: PopupService
   ) { }
 
   ngOnInit(): void {
   }
-
-  ngOnDestroy(): void {
-  }
-
-  onYes(): void {
-    this.popupService.submitRouteDeactivate();
-  }
-
-  onNo(): void {
-    this.popupService.cancelRouteDeactivate();
-  }
-
 }

@@ -10,61 +10,11 @@ import { PopupQuestionComponent } from './components/popup-question/popup-questi
 import { ClientsListSelectorComponent } from './components/clients-list-selector/clients-list-selector.component';
 import { PopupDeactivateComponent } from 'src/app/modules/shared/components/popup-deactivate/popup-deactivate.component';
 import { MaxDateValidatorDirective } from './directives/max-date-validator.directive';
-
-import { MatSliderModule } from '@angular/material/slider';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ToogleValidatoreDirective } from './directives/toogle-validatore.directive';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatListModule} from '@angular/material/list';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatTableModule} from '@angular/material/table';
-import {MatSortModule} from '@angular/material/sort';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MinDateValidatorDirective } from './directives/min-date-validator.directive';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { MaterialModule } from '../material/material.module';
 
 registerLocaleData(localeFr);
-const materialModules = [
-  MatSliderModule,
-  MatButtonModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  ReactiveFormsModule,
-  MatCheckboxModule,
-  MatToolbarModule,
-  MatGridListModule,
-  MatDividerModule,
-  MatListModule,
-  MatSidenavModule,
-  MatMenuModule,
-  MatRadioModule,
-  MatTableModule,
-  MatSortModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatStepperModule,
-  MatSnackBarModule,
-  MatTooltipModule,
-  MatProgressBarModule
-];
-
 
 @NgModule({
   declarations: [
@@ -80,7 +30,8 @@ const materialModules = [
     CommonModule,
     QuicklinkModule,
     FormsModule,
-    materialModules
+    ReactiveFormsModule,
+    MaterialModule
   ],
   exports: [
     CommonModule,
@@ -94,7 +45,8 @@ const materialModules = [
     MaxDateValidatorDirective,
     MinDateValidatorDirective,
     ToogleValidatoreDirective,
-    materialModules
+    MaterialModule,
+    ReactiveFormsModule,
   ],
   providers: [
   ]

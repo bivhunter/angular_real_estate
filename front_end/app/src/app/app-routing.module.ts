@@ -4,8 +4,6 @@ import { AuthGuard } from './modules/shared/guards/auth.guard';
 import { QuicklinkStrategy, QuicklinkModule } from 'ngx-quicklink';
 import { PopupDeactivateComponent } from './modules/shared/components/popup-deactivate/popup-deactivate.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ComponentTestComponent } from './component-test/component-test.component';
-
 
 const routes: Routes = [
   {
@@ -17,15 +15,6 @@ const routes: Routes = [
     path: 'authorization',
     loadChildren: () => import('./modules/authorization/authorization.module')
       .then(module => module.AuthorizationModule, (error) => console.log(error))
-  },
-  // {
-  //   path: 'material',
-  //   loadChildren: () => import('./modules/material/material.module')
-  //     .then(module => module.MaterialModule, (error) => console.log(error))
-  // },
-  {
-    path: 'test',
-    component: ComponentTestComponent
   },
   {
     path: 'dashboard',

@@ -1,179 +1,3 @@
-<!-- 
-
-    <div class="container">
-    <form  #userProfileForm="ngForm"> 
-        
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input 
-                #name="ngModel"
-                type="text" 
-                class="form-control" 
-                id="name"
-                [ngModel] = "user?.name"
-                (ngModelChange) = "user.name = $event"
-                name="name"
-                placeholder="Enter user's name"
-                maxlength="20"
-                pattern="[A-Za-zА-Яа-яЁё]+"
-                required
-               >
-            <div class="alert" >
-                <div class="alert-danger" *ngIf="name.invalid && (name.touched)">Incorrect name</div>
-                <div> </div>
-            </div>       
-        </div>
-
-         <div class="form-group">
-            <label for="surname">Surname</label>
-            <input 
-                #surname="ngModel"
-                type="text" 
-                class="form-control" 
-                id="surname"
-                [ngModel] = "user?.surname"
-                (ngModelChange) = "user.surname = $event"
-                name="surname"
-                placeholder="Enter user's surname"
-                maxlength="25"
-                pattern="[A-Za-zА-Яа-яЁё]+"
-                required
-               >
-            <div class="alert">
-                <div class="alert-danger" *ngIf="surname.invalid && (surname.touched)">Incorrect surname</div>
-                <div> </div>
-            </div>       
-        </div>
-      
-        
-
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input 
-                [disabled]="true"
-                #email="ngModel"
-                type="email" 
-                class="form-control" 
-                id="email" 
-                required
-                [ngModel] = "user?.email"
-                (ngModelChange) = "user.email = $event"
-                name="email"
-                placeholder="Enter user's email"
-                pattern= "\w[[A-Za-z0-9_]*[@]\w\S+$"
-                >
-
-            <div class="alert" 
-                >
-                <div class="alert-danger" *ngIf="email.invalid && (email.touched)">Incorrect email</div>
-                <div> </div>
-            </div>   
-        </div>
-
-        <div class="form-group">
-            <label for="birthday">Birthday Date</label>
-            <input 
-                #birthday="ngModel"
-                type="date" 
-                class="form-control birthday" 
-                id="birthday"
-                [ngModel]="user?.birthday | date:'yyyy-MM-dd'"
-                (ngModelChange)="onBirthdayChange($event)"
-                pattern="\d\d\d\d-\d\d-\d\d"
-                required
-                name="birthday"
-                placeholder="Enter user's Birthday Date"
-                [appMaxDateValidator]="18"
-                >
-
-                <div class="alert" 
-                >
-                <div class="alert-danger" 
-                *ngIf="(birthday.invalid ) && (birthday.touched) ">Incorrect Date</div>
-                <div> </div>
-                </div>     
-        </div>
-
-         <div class="form-group">
-            <label for="price">Rate</label>
-            <input 
-                #rate="ngModel"
-                type="text"
-                class="form-control" 
-                id="rate"
-                [ngModel]="user?.rate | currency:'CAD':'symbol-narrow':'1.0-0':'fr'"
-                (ngModelChange)="onRateChange($event)"
-                pattern="[0-9,\s]*[$]{1}"
-                required
-                name="rate"
-                placeholder="Enter rate"
-                >
-
-                <div class="alert" 
-                >
-                <div class="alert-danger" 
-                *ngIf="rate.invalid && (rate.touched)">Incorrect rate</div>
-                <div> </div>
-                </div>     
-        </div>
-
-         <div class="form-group">
-            <label for="company">Company</label>
-            <input 
-                #company="ngModel"
-                type="text" 
-                class="form-control" 
-                id="company"
-                [ngModel] = "user?.company"
-                (ngModelChange) = "user.company = $event"
-                name="company"
-                placeholder="Enter company"
-                maxlength="25"
-                pattern="[A-Za-zА-Яа-яЁё/\s\d]*"
-               >
-            <div class="alert" 
-                >
-                <div class="alert-danger" *ngIf="company.invalid">Incorrect company</div>
-                <div> </div>
-            </div>       
-        </div>
-
-         <div class="form-group">
-            <span class="label">Registration date</span>
-            <span class="info">{{user?.createdAt | date:'dd-MM-yyyy'}}</span>
-        </div>
-
-         <div class="form-group">
-            <span class="label">Completed deals</span>
-            <span class="info">{{user?.level}}</span>
-        </div>
-
-        <div class="button-wrapper">
-        <button type="button" class="button-cancel"
-        (click)="onCancelButtonClick()"
-        >Cancel</button>
-
-        <button type="button" class="button-cancel"
-        (click)="onCancelButtonClick()"
-        >Back</button>
-        
-        <button type="submit" 
-        class="button-submit"
-        [disabled]="!userProfileForm.form.valid"
-        (click)="onEditUser()"
-        >Save</button>
-
-        
-        </div>
-
-
-       
-
-    </form>
-    
-    </div>
- -->
-
  <div class="container">
     <mat-card elevation="20">
         <mat-card-header>
@@ -191,7 +15,7 @@
                         maxlength="30"
                         >
                     <mat-icon matSuffix>face</mat-icon>
-                    <!-- <mat-hint>Type surname and name</mat-hint> -->
+
                     <mat-error *ngIf="userForm.controls['fullname'].invalid && (userForm.controls['fullname'].touched)">
                         Incorrect Fullname
                     </mat-error>
@@ -225,9 +49,11 @@
                                     && (userForm.controls['birthday'].touched)">
                         Incorrect date
                     </mat-error>
+
                     <mat-error *ngIf="userForm.controls['birthday'].hasError('maxDateValidator')">
                         You are under 18 years old
                     </mat-error>
+
                     <mat-error *ngIf="userForm.controls['birthday'].hasError('minDateValidator')">
                         You are over 100 years old
                     </mat-error>
@@ -260,6 +86,7 @@
                         maxlength="30"
                         >
                     <mat-icon matSuffix>location_city</mat-icon>
+
                     <mat-error *ngIf="userForm.controls['company'].invalid 
                                     && (userForm.controls['company'].touched)">
                         Incorrect location
@@ -267,6 +94,7 @@
                 </mat-form-field>
                 <br>
             </form>
+
             <table class="table">
                 <tr>
                     <td>Registration date</td>
@@ -278,6 +106,7 @@
                 </tr>
             </table>
         </mat-card-content>
+
         <mat-card-actions class="actions-wrapper">
             <button mat-raised-button
             (click)="onCancelButtonClick()">
@@ -293,9 +122,8 @@
                 class="button"
                 color="primary"
                 [disabled]="!userForm.valid"
-                (click)="onSave()"
-            >
-            Save
+                (click)="onSave()">
+                Save
             </button>
         </mat-card-actions>
     </mat-card>

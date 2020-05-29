@@ -16,10 +16,10 @@ const animationOpacityMetadata: AnimationMetadata[] = [
     sequence([
         query(':leave', [
             animate('300ms ease-in', style({ opacity: '0'})),
-        ]),
+        ], { optional: true }),
         query(':enter', [
             animate('300ms ease-in', style({ opacity: '1'}))
-        ]),
+        ], ),
     ])
   ];
 
