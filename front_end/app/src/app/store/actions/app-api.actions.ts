@@ -1,7 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from 'src/app/modules/user/model/user';
 
-
+export const initStoreSuccess = createAction(
+    '[App] Init Store Success',
+  );
 
 
 

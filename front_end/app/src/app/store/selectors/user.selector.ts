@@ -9,9 +9,6 @@ export const getUser = createSelector(
     fromUser.getUser,
 );
 
-export const getInitStoreStatus = createSelector(
-    getUserState,
-    fromUser.getStoreStatus,
-);
+
 
 

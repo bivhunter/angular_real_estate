@@ -21,7 +21,6 @@ import { DealsEffects } from './store/effects/deals.effects';
 import { HomesEffects } from './store/effects/homes.effects';
 import { ClientsEffects } from './store/effects/clients.effects';
 import { UserEffects } from './store/effects/user.effects';
-import { ComponentTestComponent } from './component-test/component-test.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -41,7 +40,6 @@ import { AppEffects } from './store/effects/app.effects';
     FooterComponent,
     NotFoundComponent,
     StatusMessageComponent,
-    ComponentTestComponent,
   ],
   imports: [
     BrowserModule,

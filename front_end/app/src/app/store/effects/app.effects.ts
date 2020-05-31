@@ -4,6 +4,7 @@ import * as clientsApiAction from '../actions/clients-api.actions';
 import * as homesApiAction from '../actions/homes-api.actions';
 import * as dealsApiAction from '../actions/deals-api.actions';
 import * as userApiAction from '../actions/user-api.actions';
+import * as appApiAction from '../actions/app-api.actions';
 import * as appActions from '../actions/app.actions';
 import { switchMap, map, tap } from 'rxjs/operators';
 import { ClientService } from 'src/app/modules/clients/services/clients.service';
@@ -36,7 +37,7 @@ export class AppEffects {
 
       map((res) => {
         this.progressBarService.closeProgressBar();
-        return userApiAction.initStoreSuccess();
+        return appApiAction.initStoreSuccess();
       }),
     );
   });
