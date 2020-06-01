@@ -17,7 +17,6 @@ export class HomesService {
 
   private homesListChangesSubject: Subject<any> = new Subject();
 
-  
   constructor(
     private http: HttpClient,
     private dealsService: DealsService,
@@ -29,6 +28,9 @@ export class HomesService {
     const mapHomes = (homes: Home[], deals: Deal[]): Home[] => {
       return homes.map(home => {
         for (const deal of deals) {
+          if (!deal.home) {
+            continue;
+          }
           if (home.id === deal.home.id) {
             return {...home, clientOwner: deal.client || new Client()};
           }

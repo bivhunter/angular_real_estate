@@ -6,7 +6,7 @@ import * as dealsApiAction from '../actions/deals-api.actions';
 import * as userApiAction from '../actions/user-api.actions';
 import * as appApiAction from '../actions/app-api.actions';
 import * as appActions from '../actions/app.actions';
-import { switchMap, map, tap } from 'rxjs/operators';
+import { switchMap, map, tap, exhaustMap } from 'rxjs/operators';
 import { ClientService } from 'src/app/modules/clients/services/clients.service';
 import { Store } from '@ngrx/store';
 import { HomesService } from './../../modules/homes/services/homes.service';
@@ -21,8 +21,10 @@ export class AppEffects {
   initStore$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(appActions.initStore),
-      tap(() => this.progressBarService.openProgressBar()),
-      switchMap(() => this.clientsService.getClients().pipe(
+      tap(() => {
+        this.progressBarService.openProgressBar();
+      }),
+      exhaustMap(() => this.clientsService.getClients().pipe(
         tap(clients => this.store.dispatch(clientsApiAction.getClientsSuccess({clients}))),
       )),
       switchMap(() => this.homesService.getHomes().pipe(
