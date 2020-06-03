@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription, Observable} from 'rxjs';
 import { AuthorizationService } from 'src/app/modules/authorization/services/authorization.service';
 import { Router, NavigationEnd } from '@angular/router';
@@ -11,7 +11,8 @@ import { ProgressBarService } from 'src/app/modules/shared/services/progress-bar
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
@@ -66,7 +67,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private getFromStore(): void {
     this.user$ = this.store.select(userSelectors.getUser).pipe(
-     
     );
   }
 

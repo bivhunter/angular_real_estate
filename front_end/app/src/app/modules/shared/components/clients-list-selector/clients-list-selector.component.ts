@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { Home } from 'src/app/modules/homes/model/home';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
@@ -7,11 +7,15 @@ import * as clientsSelector from 'src/app/store/selectors/clients.selector';
 import { filterClients } from 'src/app/store/functions/filtered-functions';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IPopupClientsSelectorConf } from '../../types/types';
+import { FormControl } from '@angular/forms';
+import { Observable, combineLatest } from 'rxjs';
+import { map, tap, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-clients-list-selector',
   templateUrl: './clients-list-selector.component.html',
-  styleUrls: ['./clients-list-selector.component.css']
+  styleUrls: ['./clients-list-selector.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientsListSelectorComponent implements OnInit {
 
@@ -20,11 +24,12 @@ export class ClientsListSelectorComponent implements OnInit {
 
   displayedColumns: string[] = ['surname', 'name'];
 
-  clients: Client[];
-  filteredClients: Client[];
+  clients$: Observable<Client[]>;
 
   title: string;
   isAddingMode = false;
+
+  searchControl: FormControl;
 
   constructor(
     public dialogRef: MatDialogRef<ClientsListSelectorComponent>,
@@ -35,11 +40,8 @@ export class ClientsListSelectorComponent implements OnInit {
 
   ngOnInit(): void {
     this.title = this.data.title;
-    this.getClients();
-  }
-
-  filterClients(searchString: string): void {
-    this.filteredClients = filterClients(this.clients, searchString);
+    this.initSearchControl();
+    this.initSubscriptions();
   }
 
   onClickClient(client: Client): void {
@@ -51,29 +53,36 @@ export class ClientsListSelectorComponent implements OnInit {
     }
   }
 
-  private getClients(): void {
-    this.store.select(clientsSelector.getClients).subscribe(
-      (clients) => {
-        if (!clients) {
-          this.clients = [];
-          return;
-        }
-
-        switch (this.title) {
-          case 'Add client who viewed home': {
-            this.isAddingMode = true;
-            this.clients = this.cutOwnClients(clients);
-            break;
-          }
-
-          case 'Look Clients who viewed home': {
-            this.clients = this.getOwnClients(clients);
-            break;
-          }
-        }
-        this.filterClients('');
-      }
+  private initSubscriptions(): void {
+    const clients$ = this.store.select(clientsSelector.getClients).pipe(
+      map((clients) =>  {
+        const choseClients = this.chooseClients(clients);
+        console.log(choseClients);
+        return choseClients;
+      })
     );
+
+    const searchString$ = this.searchControl.valueChanges.pipe(
+      startWith('')
+    );
+
+    this.clients$ = combineLatest([clients$, searchString$]).pipe(
+      tap(res => console.log(res)),
+      map(([clients, searchingString]) => filterClients(clients, searchingString))
+    );
+  }
+
+  private chooseClients(clients: Client[]): Client[] {
+    if (!clients) {
+      return clients;
+    }
+
+    if (this.title === 'Add client who viewed home') {
+      this.isAddingMode = true;
+      return this.cutOwnClients(clients);
+    } else if (this.title === 'Look Clients who viewed home') {
+      return this.getOwnClients(clients);
+    }
   }
 
   private getOwnClients(clients: Client[]): Client[] {
@@ -98,4 +107,7 @@ export class ClientsListSelectorComponent implements OnInit {
     });
   }
 
+  private initSearchControl(): void {
+    this.searchControl = new FormControl('');
+  }
 }

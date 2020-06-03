@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../../../user/model/user';
 import { UserService } from 'src/app/modules/user/services/user.service';
 import { FormControl, Validators, FormGroup, AbstractControl, AsyncValidatorFn } from '@angular/forms';
 import { map, take } from 'rxjs/operators';
 import { CurrencyPipe } from '@angular/common';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
 
   user: User = new User();
   isAcceptedTerms = false;
@@ -30,6 +30,8 @@ export class RegistrationComponent implements OnInit {
     status: false
   };
 
+  private formSubscription: Subscription;
+
   private currencyPipe: CurrencyPipe = new CurrencyPipe('fr');
 
   constructor(private userService: UserService) { }
@@ -37,6 +39,10 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.initFormSubscription();
+  }
+
+  ngOnDestroy(): void {
+    this.formSubscription.unsubscribe();
   }
 
   onSubmit(): void {
@@ -66,11 +72,11 @@ export class RegistrationComponent implements OnInit {
   }
 
   private initFormSubscription(): void {
-    this.registrationForm.controls.email.valueChanges.subscribe(
+    this.formSubscription = this.registrationForm.controls.email.valueChanges.subscribe(
       () => this.isUniqueEmail$.next(true)
     );
 
-    this.registrationForm.controls.rate.valueChanges
+    const rateChangeSubscription = this.registrationForm.controls.rate.valueChanges
       .pipe(
         map(rate => this.onRateChange(rate))
       )
@@ -80,6 +86,8 @@ export class RegistrationComponent implements OnInit {
           .setValue(this.currencyPipe.transform(value, 'CAD', 'symbol-narrow', '1.0-0'), {emitEvent: false});
       }
     );
+
+    this.formSubscription.add(rateChangeSubscription);
   }
 
   private createForm(): void {

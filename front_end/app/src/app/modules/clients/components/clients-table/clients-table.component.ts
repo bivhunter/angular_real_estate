@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ISortingConf } from 'src/app/modules/shared/types/types';
 import { Store } from '@ngrx/store';
 import * as clientsSelector from 'src/app/store/selectors/clients.selector';
@@ -11,9 +11,10 @@ import { ClientsPopupService } from '../../services/clients-popup.service';
 @Component({
   selector: 'app-clients-table',
   templateUrl: './clients-table.component.html',
-  styleUrls: ['./clients-table.component.css']
+  styleUrls: ['./clients-table.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ClientsTableComponent implements OnInit, AfterViewInit  {
+export class ClientsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() clients: Client[];
 
@@ -22,6 +23,8 @@ export class ClientsTableComponent implements OnInit, AfterViewInit  {
   sortingConf$: Observable<ISortingConf>;
 
   @ViewChild(MatSort) matSort: MatSort;
+  private sortingEventSubscription: Subscription;
+
 
   constructor(
     private store: Store,
@@ -30,6 +33,10 @@ export class ClientsTableComponent implements OnInit, AfterViewInit  {
 
   ngOnInit(): void {
     this.getFromStore();
+  }
+
+  ngOnDestroy(): void {
+    this.sortingEventSubscription.unsubscribe();
   }
 
   ngAfterViewInit(): void {
@@ -57,7 +64,7 @@ export class ClientsTableComponent implements OnInit, AfterViewInit  {
   }
 
   private initSortingSubscription(): void {
-    this.matSort.sortChange.subscribe(
+    this.sortingEventSubscription = this.matSort.sortChange.subscribe(
       (event: ISortingConf) => {
         this.setSortingConf(event);
       }

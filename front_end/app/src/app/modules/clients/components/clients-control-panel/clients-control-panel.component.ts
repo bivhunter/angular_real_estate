@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as clientsActions from 'src/app/store/actions/clients.action';
 import * as clientsSelectors from 'src/app/store/selectors/clients.selector';
 import { TViewMode } from 'src/app/modules/shared/types/types';
+import { Subscription } from 'rxjs';
 
 
 @Component({
   selector: 'app-clients-control-panel',
   templateUrl: './clients-control-panel.component.html',
-  styleUrls: ['./clients-control-panel.component.css']
+  styleUrls: ['./clients-control-panel.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ClientsControlPanelComponent implements OnInit {
+export class ClientsControlPanelComponent implements OnInit, OnDestroy {
 
   viewMode: TViewMode;
+  private storeSubscription: Subscription;
 
   constructor(
     private store: Store
@@ -20,9 +23,13 @@ export class ClientsControlPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeFilter('');
-    this.store.select(clientsSelectors.getViewMode).subscribe(
+    this.storeSubscription = this.store.select(clientsSelectors.getViewMode).subscribe(
       viewMode => this.viewMode = viewMode
     );
+  }
+
+  ngOnDestroy(): void {
+    this.storeSubscription.unsubscribe();
   }
 
   onActivateCardView() {

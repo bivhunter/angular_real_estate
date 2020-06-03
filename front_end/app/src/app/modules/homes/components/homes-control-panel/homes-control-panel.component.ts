@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import * as homesActions from 'src/app/store/actions/homes.action';
 import * as homesSelectors from 'src/app/store/selectors/homes.selector';
 import { Store } from '@ngrx/store';
 import { TViewMode } from 'src/app/modules/shared/types/types';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-homes-control-panel',
@@ -12,7 +13,7 @@ import { TViewMode } from 'src/app/modules/shared/types/types';
 })
 export class HomesControlPanelComponent implements OnInit {
 
-  viewMode: TViewMode;
+  viewMode$: Observable<TViewMode>;
 
   constructor(
     private router: Router,
@@ -21,9 +22,7 @@ export class HomesControlPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeFilter('');
-    this.store.select(homesSelectors.getViewMode).subscribe(
-      viewMode => this.viewMode = viewMode
-    );
+    this.viewMode$ = this.store.select(homesSelectors.getViewMode);
   }
 
   onAddButtonClick(): void {
@@ -31,12 +30,10 @@ export class HomesControlPanelComponent implements OnInit {
   }
 
   onActivateCardView() {
-    this.viewMode = 'cards';
     this.store.dispatch(homesActions.setViewMode({viewMode: 'cards'}));
   }
 
   onActivateListView() {
-    this.viewMode = 'list';
     this.store.dispatch(homesActions.setViewMode({viewMode: 'list'}));
   }
 

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../../user/services/user.service';
 import { User } from '../../../user/model/user';
 import { FormGroup, FormControl, AbstractControl, Validators, AsyncValidatorFn } from '@angular/forms';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 
 @Component({
@@ -10,7 +10,7 @@ import { take, map } from 'rxjs/operators';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   user: User = new User();
 
@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isHidePassword = true;
 
+  private formSubscription: Subscription;
+
   constructor(
     private userService: UserService,
   ) { }
@@ -28,6 +30,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.initFormSubscription();
+  }
+
+  ngOnDestroy(): void {
+    this.formSubscription.unsubscribe();
   }
 
   onSubmit(): void {
@@ -56,16 +62,17 @@ export class LoginComponent implements OnInit {
   }
 
   private initFormSubscription(): void {
-    this.loginForm.controls.email.valueChanges.subscribe(
+    this.formSubscription = this.loginForm.controls.email.valueChanges.subscribe(
       (value) => {
         this.loginErrorChanged(true);
       }
     );
-    this.loginForm.controls.password.valueChanges.subscribe(
+    this.formSubscription
+      .add(this.loginForm.controls.password.valueChanges.subscribe(
       (value) => {
         this.loginErrorChanged(true);
       }
-    );
+    ));
   }
 
   private loginErrorChanged(status: boolean): void {

@@ -2,15 +2,15 @@
 <div mat-dialog-content>
     <mat-form-field  appearance="outline">
         <mat-label>Search</mat-label>
-        <input type="text" matInput placeholder="search" 
-            name="searching"
-            [ngModel]
-            (ngModelChange)="filterClients($event)">
+        <input type="text" 
+            matInput 
+            placeholder="search" 
+            [formControl]="searchControl">
         <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     
     <mat-table 
-        [dataSource]="filteredClients" 
+        [dataSource]="clients$ | async" 
         class="mat-elevation-z8 table" 
         >
         <ng-container matColumnDef="surname">

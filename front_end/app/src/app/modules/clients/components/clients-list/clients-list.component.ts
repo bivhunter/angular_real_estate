@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Client } from 'src/app/modules/clients/model/client';
 import { TViewMode, ISortingConf } from 'src/app/modules/shared/types/types';
 import { Observable } from 'rxjs';
@@ -10,7 +10,8 @@ import * as clientsActions from 'src/app/store/actions/clients.action';
 @Component({
   selector: 'app-clients-list',
   templateUrl: './clients-list.component.html',
-  styleUrls: ['./clients-list.component.css']
+  styleUrls: ['./clients-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientsListComponent implements OnInit {
 

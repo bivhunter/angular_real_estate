@@ -8,7 +8,6 @@ a {
 
 .phone-cell {
     max-width: 150px;
-
 }
 
 .actions-cell {
@@ -19,7 +18,6 @@ a {
 .container {
     height: 100%;
     max-width: 100%;
-    
     overflow: auto;
 }
 

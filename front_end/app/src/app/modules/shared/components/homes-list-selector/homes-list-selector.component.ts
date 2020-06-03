@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { Home } from '../../../homes/model/home';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Router } from '@angular/router';
@@ -11,7 +11,8 @@ import { IPopupHomesSelectorConf } from '../../types/types';
 @Component({
   selector: 'app-homes-list-selector',
   templateUrl: './homes-list-selector.component.html',
-  styleUrls: ['./homes-list-selector.component.css']
+  styleUrls: ['./homes-list-selector.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomesListSelectorComponent implements OnInit {
 

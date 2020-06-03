@@ -30,11 +30,11 @@
             <button mat-menu-item (click)="onActivateCardView()">
                 <mat-icon>grid_on</mat-icon>
                 Cards
-                <mat-icon *ngIf="viewMode==='cards'" color="primary">check</mat-icon></button>
+                <mat-icon *ngIf="(viewMode$ | async) ==='cards'" color="primary">check</mat-icon></button>
             <button mat-menu-item (click)="onActivateListView()">
                 <mat-icon >list</mat-icon>
                 List
-                <mat-icon *ngIf="viewMode==='list'" color="primary">check</mat-icon></button>
+                <mat-icon *ngIf="(viewMode$ | async) ==='list'" color="primary">check</mat-icon></button>
         </mat-menu>
     </mat-grid-tile>
 </mat-grid-list>

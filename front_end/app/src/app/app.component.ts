@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subscription, of, Observable } from 'rxjs';
+import { filter, switchMap } from 'rxjs/operators';
 import { slideInAnimation } from './modules/shared/animation/animation';
-import { StatusMessageService } from './modules/shared/services/status-message.service';
 import { TMessage } from './modules/shared/types/types';
 
 
@@ -11,23 +10,21 @@ import { TMessage } from './modules/shared/types/types';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  animations: [slideInAnimation]
+  animations: [slideInAnimation],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, OnDestroy {
-  isNavigationPanel: boolean;
+  isNavigationPanel$: Observable<boolean>;
   isStatusMessage = false;
   statusMessage: TMessage;
 
   private routeChangingSubscription: Subscription;
-  private messageChangesSubscription: Subscription;
 
   constructor(
     private router: Router,
-    private statusMessageService: StatusMessageService,
   ) {}
 
   ngOnInit(): void {
-    // this.initData();
     this.doRememberMe();
     this.initSubscribtion();
   }
@@ -49,44 +46,16 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private initSubscribtion(): void {
-     // listen router navigation
-    this.routeChangingSubscription = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(
-      (event: NavigationEnd) => {
-        const url = event.url;
-        this.isNavigationPanel = !url.includes('authorization');
-        if (!url.includes('authorization')) {
-          // this.initData();
-        }
-      }
+    this.isNavigationPanel$ = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      switchMap((event: NavigationEnd) => {
+        return of(!event.url.includes('authorization'));
+      })
     );
-
-    // listen MessageService
-    this.messageChangesSubscription = this.statusMessageService.getStatusMessageEvent()
-      .subscribe(
-        message => this.showMessage(message)
-      );
-  }
-
-  // private initData(): void {
-  //   if (this.isDataInit) {
-  //     return;
-  //   }
-  //   this.initDataService.initData();
-  // }
-
-  private showMessage(message: TMessage) {
-    this.statusMessage = message;
-    this.isStatusMessage = true;
-    setTimeout(() => {
-      this.isStatusMessage = false;
-    }, 4000);
   }
 
   private unsubscribe(): void {
     this.routeChangingSubscription.unsubscribe();
-    this.messageChangesSubscription.unsubscribe();
   }
 
 }

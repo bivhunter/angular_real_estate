@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Deal } from '../../model/deal';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ISortingConf } from 'src/app/modules/shared/types/types';
 
 import { Store } from '@ngrx/store';
@@ -13,15 +13,17 @@ import { MatSort } from '@angular/material/sort';
   templateUrl: './deals-table.component.html',
   styleUrls: ['./deals-table.component.css']
 })
-export class DealsTableComponent implements OnInit, AfterViewInit {
+export class DealsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() deals: Deal[];
 
   sortingConf$: Observable<ISortingConf>;
+  private sortingEventSubscription: Subscription;
 
   displayedColumns: string[] = ['date', 'price', 'client', 'home'];
 
   @ViewChild(MatSort) matSort: MatSort;
+
 
   constructor(
     private store: Store
@@ -29,6 +31,10 @@ export class DealsTableComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getFromStore();
+  }
+
+  ngOnDestroy(): void {
+    this.sortingEventSubscription.unsubscribe();
   }
 
   ngAfterViewInit(): void {
@@ -40,7 +46,7 @@ export class DealsTableComponent implements OnInit, AfterViewInit {
   }
 
   private initSortingSubscription(): void {
-    this.matSort.sortChange.subscribe(
+    this.sortingEventSubscription = this.matSort.sortChange.subscribe(
       (event: ISortingConf) => {
         this.setSortingConf(event);
       }

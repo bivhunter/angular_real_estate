@@ -2,12 +2,16 @@
     max-width: 50px;
 }
 
+a {
+    padding: 0;
+}
+
 .price-cell {
     max-width: 100px;
 }
 
 .actions-cell {
-    max-width: 240px;
+    width: 260px;
     flex-shrink: 0;
 }
 

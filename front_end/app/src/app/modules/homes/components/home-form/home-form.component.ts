@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { Home } from '../../model/home';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
 import { Location, CurrencyPipe } from '@angular/common';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as homesActions from 'src/app/store/actions/homes.action';
@@ -21,7 +21,7 @@ import { PopupQuestionComponent } from 'src/app/modules/shared/components/popup-
     {provide: MAT_DATE_LOCALE, useValue: 'uk-UA'},
   ]
 })
-export class HomeFormComponent implements OnInit, CanComponentDeactivate {
+export class HomeFormComponent implements OnInit, CanComponentDeactivate, OnDestroy {
 
   private initHome: Home;
   home: Home;
@@ -32,6 +32,8 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   isFormDisabled = false;
 
   homeForm: FormGroup;
+  private routerDataSubscription: Subscription;
+  private formSubscription: Subscription;
 
   // for canDiactivate
   private isSubmit = false;
@@ -47,7 +49,7 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
     ) { }
 
   ngOnInit(): void {
-    this.route.data.subscribe(
+    this.routerDataSubscription = this.route.data.subscribe(
       data => {
         this.isAddingMode = data.mode === 'Adding';
         this.getHome(data.home);
@@ -55,6 +57,12 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
         this.initFormSubscriptions();
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.routerDataSubscription.unsubscribe();
+    this.formSubscription.unsubscribe();
+
   }
 
   canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
@@ -252,12 +260,11 @@ export class HomeFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   private initFormSubscriptions(): void {
-    this.homeForm.controls.price.valueChanges
+    this.formSubscription = this.homeForm.controls.price.valueChanges
       .pipe(
         map(price => this.onPriceChange(price))
       )
       .subscribe(
-
       value => {
         this.homeForm.controls.price
           .setValue(this.currencyPipe.transform(value, 'CAD', 'symbol-narrow', '1.0-0'), {emitEvent: false});

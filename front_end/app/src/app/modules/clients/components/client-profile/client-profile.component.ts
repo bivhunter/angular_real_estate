@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { Client } from 'src/app/modules/clients/model/client';
 import { Location } from '@angular/common';
 import { ClientsFilteringService } from '../../services/clients-filtering.service';
 import { CanComponentDeactivate } from 'src/app/modules/shared/guards/can-deactivate.guard';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as clientsActions from 'src/app/store/actions/clients.action';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
@@ -21,7 +21,7 @@ import { PopupQuestionComponent } from 'src/app/modules/shared/components/popup-
     {provide: MAT_DATE_LOCALE, useValue: 'uk-UA'},
   ]
 })
-export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
+export class ClientProfileComponent implements OnInit, OnDestroy, CanComponentDeactivate {
 
   client: Client;
   private initClient: Client;
@@ -33,6 +33,8 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   // for canDiactivate
   isCanDeactivatePopup = false;
   private isSubmit = false;
+  private routeDataSubscription: Subscription;
+  private formSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +46,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   ) { }
 
   ngOnInit(): void {
-    this.route.data.subscribe(
+    this.routeDataSubscription = this.route.data.subscribe(
       data => {
         this.isAddingMode = (data.mode === 'Adding');
         if (this.isAddingMode) {
@@ -58,6 +60,11 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
         this.initFormSubscriptions();
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.routeDataSubscription.unsubscribe();
+    this.formSubscription.unsubscribe();
   }
 
   // for can deactivate popup
@@ -94,7 +101,7 @@ export class ClientProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   private initFormSubscriptions(): void {
-    this.profileForm.controls.phone.valueChanges.subscribe(
+    this.formSubscription = this.profileForm.controls.phone.valueChanges.subscribe(
       phone => this.profileForm.controls.phone.setValue(
         this.clientsFilteringService.filterPhone(phone),
         {

@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./dashboard.component.css']
 })
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   clients: Client[] = [];
 
@@ -19,6 +19,8 @@ export class DashboardComponent implements OnInit {
 
   displayedColumns: string[] = ['surname', 'name', 'email', 'phone', 'date'];
 
+  private routerDataSubscription: Subscription;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute
@@ -26,6 +28,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
+  }
+
+  ngOnDestroy() {
+    this.routerDataSubscription.unsubscribe();
   }
 
   onProfileButton(id: string | number): void {
@@ -42,7 +48,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private getData(): void {
-    this.route.data.subscribe(
+    this.routerDataSubscription = this.route.data.subscribe(
       data => {
         this.homesTotal = data.homes.length;
         this.dealsTotal = data.deals.length;

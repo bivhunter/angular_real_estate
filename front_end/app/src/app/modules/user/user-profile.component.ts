@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'src/app/modules/user/model/user';
 import { CanComponentDeactivate } from '../shared/guards/can-deactivate.guard';
 import { RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 import { Location, CurrencyPipe } from '@angular/common';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as userActions from 'src/app/store/actions/user.actions';
@@ -21,7 +21,7 @@ import { PopupQuestionComponent } from '../shared/components/popup-question/popu
     {provide: MAT_DATE_LOCALE, useValue: 'uk-UA'},
   ]
 })
-export class UserProfileComponent implements OnInit, CanComponentDeactivate {
+export class UserProfileComponent implements OnInit, OnDestroy, CanComponentDeactivate {
 
   // popup question
   isPopupQuestion = false;
@@ -38,6 +38,7 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
 
   userForm: FormGroup;
   private currencyPipe: CurrencyPipe = new CurrencyPipe('fr');
+  private formSubscription: Subscription;
 
   constructor(
     private location: Location,
@@ -51,6 +52,10 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
     this.route.data.subscribe(
       data => this.getUser(data.user)
     );
+  }
+
+  ngOnDestroy(): void {
+    this.formSubscription.unsubscribe();
   }
 
   canDeactivate(next: RouterStateSnapshot): Observable<boolean> {
@@ -149,7 +154,7 @@ export class UserProfileComponent implements OnInit, CanComponentDeactivate {
   }
 
   private initFormSubscriptions(): void {
-    this.userForm.controls.rate.valueChanges
+    this.formSubscription = this.userForm.controls.rate.valueChanges
       .pipe(
         map(rate => this.onRateChange(rate))
       )

@@ -14,6 +14,7 @@ import { DealsService } from 'src/app/modules/deal/services/deals.service';
 import { UserService } from './../../modules/user/services/user.service';
 import { User } from 'src/app/modules/user/model/user';
 import { ProgressBarService } from './../../modules/shared/services/progress-bar.service';
+import { merge, forkJoin } from 'rxjs';
 
 @Injectable()
 export class AppEffects {
@@ -24,18 +25,39 @@ export class AppEffects {
       tap(() => {
         this.progressBarService.openProgressBar();
       }),
-      exhaustMap(() => this.clientsService.getClients().pipe(
-        tap(clients => this.store.dispatch(clientsApiAction.getClientsSuccess({clients}))),
-      )),
-      switchMap(() => this.homesService.getHomes().pipe(
-        tap(homes => this.store.dispatch(homesApiAction.getHomesSuccess({homes}))),
-      )),
-      switchMap(() => this.dealsService.getDeals().pipe(
-        tap(deals => this.store.dispatch(dealsApiAction.getDealsSuccess({deals})))
-      )),
-      switchMap(() => this.userService.getUser().pipe(
-        tap(user => this.store.dispatch(userApiAction.getUserSuccess({user: new User(user)})))
-      )),
+      exhaustMap(() => {
+        return forkJoin([
+          this.clientsService.getClients().pipe(
+             tap(clients => this.store.dispatch(clientsApiAction.getClientsSuccess({clients}))),
+          ),
+          this.homesService.getHomes().pipe(
+            tap(homes => this.store.dispatch(homesApiAction.getHomesSuccess({homes}))),
+          ),
+          this.dealsService.getDeals().pipe(
+            tap(deals => this.store.dispatch(dealsApiAction.getDealsSuccess({deals})))
+          ),
+          this.userService.getUser().pipe(
+            tap(user => this.store.dispatch(userApiAction.getUserSuccess({user: new User(user)})))
+          ),
+        ]);
+      }),
+
+      // ofType(appActions.initStore),
+      // tap(() => {
+      //   this.progressBarService.openProgressBar();
+      // }),
+      // exhaustMap(() => this.clientsService.getClients().pipe(
+      //   tap(clients => this.store.dispatch(clientsApiAction.getClientsSuccess({clients}))),
+      // )),
+      // switchMap(() => this.homesService.getHomes().pipe(
+      //   tap(homes => this.store.dispatch(homesApiAction.getHomesSuccess({homes}))),
+      // )),
+      // switchMap(() => this.dealsService.getDeals().pipe(
+      //   tap(deals => this.store.dispatch(dealsApiAction.getDealsSuccess({deals})))
+      // )),
+      // switchMap(() => this.userService.getUser().pipe(
+      //   tap(user => this.store.dispatch(userApiAction.getUserSuccess({user: new User(user)})))
+      // )),
 
       map((res) => {
         this.progressBarService.closeProgressBar();
