@@ -1,100 +1,108 @@
 <mat-card>
-    <mat-card-header>
-      <mat-card-title color="primary">Registration</mat-card-title>
-      <mat-card-subtitle>Don't have an account? Create free account</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <form [formGroup]="registrationFormGroup">
-            <mat-form-field class="form-control" appearance="outline">
-                <mat-label>Fullname</mat-label>
-                <input 
-                    matInput 
-                    placeholder="Surname Name"
-                    type="text" 
-                    [formControl]="fullnameControl"
-                    maxlength="30"
-                    >
-                <mat-icon matSuffix>face</mat-icon>
-                <!-- <mat-hint>Type surname and name</mat-hint> -->
-                <mat-error *ngIf="fullnameControl.invalid && (fullnameControl.touched)">
-                    Incorrect Fullname
-                </mat-error>
-            </mat-form-field>
-            <br>
+  <mat-card-header>
+    <mat-card-title color="primary">Registration</mat-card-title>
+    <mat-card-subtitle
+      >Don't have an account? Create free account</mat-card-subtitle
+    >
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="registrationFormGroup">
+      <mat-form-field class="form-control" appearance="outline">
+        <mat-label>Fullname</mat-label>
+        <input
+          matInput
+          placeholder="Surname Name"
+          type="text"
+          [formControl]="fullnameControl"
+          maxlength="30"
+        />
+        <mat-icon matSuffix>face</mat-icon>
+        <!-- <mat-hint>Type surname and name</mat-hint> -->
+        <mat-error *ngIf="fullnameControl.invalid && fullnameControl.touched">
+          Incorrect Fullname
+        </mat-error>
+      </mat-form-field>
+      <br />
 
-            <mat-form-field class="form-control" appearance="outline">
-                <mat-label>Email</mat-label>
-                <input 
-                    matInput 
-                    placeholder="your@email"
-                    type="email" 
-                    autocomplete="email"
-                    [formControl]="emailControl"
-                    >
-                <mat-icon matSuffix>alternate_email</mat-icon>
-                <!-- <mat-hint>Type email</mat-hint> -->
-                <mat-error *ngIf="emailControl.invalid && (emailControl.touched)">
-                    Incorrect email
-                </mat-error>
-            </mat-form-field>
-            <br>
+      <mat-form-field class="form-control" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          placeholder="your@email"
+          type="email"
+          autocomplete="email"
+          [formControl]="emailControl"
+        />
+        <mat-icon matSuffix>alternate_email</mat-icon>
+        <!-- <mat-hint>Type email</mat-hint> -->
+        <mat-error *ngIf="emailControl.invalid && emailControl.touched">
+          Incorrect email
+        </mat-error>
+      </mat-form-field>
+      <br />
 
-            <mat-form-field class="form-control" appearance="outline">
-                <mat-label>Password</mat-label>
-                <input 
-                    matInput 
-                    placeholder="Password"
-                    [type]="isHidePassword ? 'password' : 'text'"
-                    autocomplete="new-password"
-                    [formControl]="passwordControl"
-                    >
-                <button mat-icon-button matSuffix 
-                    (click)="isHidePassword = !isHidePassword" 
-                    [attr.aria-label]="'Hide password'" 
-                    [attr.aria-pressed]="isHidePassword">
-                    <mat-icon>{{isHidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-                <!-- <mat-hint>Type password</mat-hint> -->
-                <mat-error *ngIf="passwordControl.invalid && (passwordControl.touched)">Password must be longer than 5 characters</mat-error>
-            </mat-form-field>
-
-            <br>
-            <mat-form-field class="form-control" appearance="outline">
-                <mat-label>Rate</mat-label>
-                <input 
-                    matInput
-                    placeholder="rate"
-                    type="email" 
-                    autocomplete="email"
-                    [formControl]="rateControl"
-                    [value]="rate | currency:'CAD':'symbol-narrow':'1.0-0':'fr'"
-                    >
-                <mat-icon matSuffix>attach_money</mat-icon>
-                <!-- <mat-hint>Type rate</mat-hint> -->
-                <mat-error *ngIf="rateControl.invalid && (rateControl.touched)">
-                    Incorrect number
-                </mat-error>
-            </mat-form-field>
-            <br>
-
-            <mat-checkbox 
-                color="primary"
-                required>
-                I accept terms and Conditions
-            </mat-checkbox>
-        </form>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button
-            color="primary"
-            [disabled]="!registrationFormGroup.valid"
+      <mat-form-field class="form-control" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder="Password"
+          [type]="isHidePassword ? 'password' : 'text'"
+          autocomplete="new-password"
+          [formControl]="passwordControl"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="isHidePassword = !isHidePassword"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="isHidePassword"
         >
-        Create Account
+          <mat-icon>{{
+            isHidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
         </button>
-    </mat-card-actions>
+        <!-- <mat-hint>Type password</mat-hint> -->
+        <mat-error *ngIf="passwordControl.invalid && passwordControl.touched"
+          >Password must be longer than 5 characters</mat-error
+        >
+      </mat-form-field>
 
-    <mat-card-header>
-        <mat-card-subtitle>Have account</mat-card-subtitle>
-        <a mat-flat-button >Sign in</a>
-    </mat-card-header>
+      <br />
+      <mat-form-field class="form-control" appearance="outline">
+        <mat-label>Rate</mat-label>
+        <input
+          matInput
+          placeholder="rate"
+          type="email"
+          autocomplete="email"
+          [formControl]="rateControl"
+          [value]="rate | currency: 'CAD':'symbol-narrow':'1.0-0':'fr'"
+        />
+        <mat-icon matSuffix>attach_money</mat-icon>
+        <!-- <mat-hint>Type rate</mat-hint> -->
+        <mat-error *ngIf="rateControl.invalid && rateControl.touched">
+          Incorrect number
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <mat-checkbox color="primary" required>
+        I accept terms and Conditions
+      </mat-checkbox>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!registrationFormGroup.valid"
+    >
+      Create Account
+    </button>
+  </mat-card-actions>
+
+  <mat-card-header>
+    <mat-card-subtitle>Have account</mat-card-subtitle>
+    <a mat-flat-button>Sign in</a>
+  </mat-card-header>
 </mat-card>

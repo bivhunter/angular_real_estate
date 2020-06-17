@@ -18,7 +18,7 @@ import { PopupQuestionComponent } from '../shared/components/popup-question/popu
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'uk-UA'},
+    { provide: MAT_DATE_LOCALE, useValue: 'uk-UA' },
   ]
 })
 export class UserProfileComponent implements OnInit, OnDestroy, CanComponentDeactivate {
@@ -118,7 +118,7 @@ export class UserProfileComponent implements OnInit, OnDestroy, CanComponentDeac
     saveDialog.afterClosed().subscribe(
       answer => {
         if (answer) {
-          this.store.dispatch(userActions.updateUser({user: this.user}));
+          this.store.dispatch(userActions.updateUser({ user: this.user }));
           this.goBack();
         }
       }
@@ -159,11 +159,11 @@ export class UserProfileComponent implements OnInit, OnDestroy, CanComponentDeac
         map(rate => this.onRateChange(rate))
       )
       .subscribe(
-      value => {
-        this.userForm.controls.rate
-          .setValue(this.currencyPipe.transform(value, 'CAD', 'symbol-narrow', '1.0-0'), {emitEvent: false});
-      }
-    );
+        value => {
+          this.userForm.controls.rate
+            .setValue(this.currencyPipe.transform(value, 'CAD', 'symbol-narrow', '1.0-0'), { emitEvent: false });
+        }
+      );
   }
 
   private createForm(): void {
@@ -198,7 +198,7 @@ export class UserProfileComponent implements OnInit, OnDestroy, CanComponentDeac
 }
 
 function dateValidator(): ValidatorFn {
-  return (control: AbstractControl): {[key: string]: any} | null => {
-    return Date.parse(control.value) ? null : {dateValidator: true};
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    return Date.parse(control.value) ? null : { dateValidator: true };
   };
 }
